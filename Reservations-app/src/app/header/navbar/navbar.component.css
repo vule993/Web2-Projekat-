@@ -1,0 +1,17 @@
+.nav-item {
+  font-weight: 700;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+
+  padding: 2px;
+}
+
+.nav-item a {
+  color: black;
+}
+
+.navbar-brand img {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+}
