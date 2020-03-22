@@ -1,25 +1,27 @@
-<nav class="box transform fright">
-  <div id="navigation" class="fleft display-none">
-    <div class="fleft">
-      <ul>
-        <li><a routeLink="">Home</a></li>
-        <li><a routeLink="">Aerotransport</a></li>
-        <li><a routeLink="">Rent a car</a></li>
-      </ul>
+<div id="header">
+  <nav class="box transform fright">
+    <div id="navigation" class="fleft display-none">
+      <div class="fleft">
+        <ul>
+          <li><a routerLink="">Home</a></li>
+          <li><a routerLink="">Aerotransport</a></li>
+          <li><a routerLink="">Rent a car</a></li>
+        </ul>
+      </div>
+      <div class="fright">
+        <ul>
+          <li><a routerLink="login">Login</a></li>
+          <li><a routerLink="register">Registration</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="fright">
-      <ul>
-        <li><a routeLink="login">Login</a></li>
-        <li><a routeLink="register">Registration</a></li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="fright">
-    <img
-      src="../../assets/site/menu.png"
-      width="50"
-      (click)="onClick($event)"
-    />
-  </div>
-</nav>
+    <div class="fright">
+      <img
+        src="../../assets/site/menu.png"
+        width="50"
+        (click)="onClick($event)"
+      />
+    </div>
+  </nav>
+</div>

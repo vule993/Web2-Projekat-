@@ -30,5 +30,6 @@ export class NavigationComponent implements OnInit {
       this.open = false;
     }
   }
+
   ngOnInit(): void {}
 }

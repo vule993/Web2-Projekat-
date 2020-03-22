@@ -3,17 +3,19 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { LoginComponent } from "./login/login.component";
-import { RegisterComponent } from "./register/register.component";
+import { LoginComponent } from "./content/login/login.component";
+import { RegisterComponent } from "./content/register/register.component";
 
 import { NavigationComponent } from "./navigation/navigation.component";
+import { ContentComponent } from "./content/content.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NavigationComponent
+    NavigationComponent,
+    ContentComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
