@@ -7,27 +7,50 @@ nav {
   height: 120px;
   margin-top: 20px;
   margin-right: 20px;
+  border-radius: 10px;
+  background: #a8c0ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #3f2b96,
+    #a8c0ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #3f2b96,
+    #a8c0ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 #navigation {
   width: 90%;
 }
+
+#navigation div:first-of-type a {
+  color: #3f2b96;
+}
+
+#navigation div:first-of-type a:hover {
+  color: #fff;
+}
+
 nav ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 nav ul li {
   float: left;
 }
 nav ul li a {
   text-decoration: none;
   display: block;
-  padding: 12px;
+  padding: 13px;
   color: #fff;
   font-weight: bold;
 }
 nav ul li a:hover {
   background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
 }
 .box {
   background-color: rgba(32, 46, 61, 0.5);

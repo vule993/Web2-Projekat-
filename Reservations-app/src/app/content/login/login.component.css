@@ -1,7 +1,8 @@
 .main-section {
   margin: 0 auto;
-  margin-top: 130px;
+  margin-top: 90px;
   padding: 0;
+  text-align: center;
 }
 
 .modal-content {
@@ -12,8 +13,8 @@
 }
 
 .user-img img {
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
 }
 
 .user-img {
@@ -23,6 +24,7 @@
 
 .form-group {
   margin-bottom: 25px;
+  height: 30px;
 }
 
 .form-group input {
