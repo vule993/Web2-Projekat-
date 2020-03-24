@@ -8,6 +8,9 @@ import { RegisterComponent } from "./content/register/register.component";
 
 import { NavigationComponent } from "./navigation/navigation.component";
 import { ContentComponent } from "./content/content.component";
+import { OffersComponent } from './content/offers/offers.component';
+import { OffersListComponent } from './content/offers/offers-list/offers-list.component';
+import { OfferItemComponent } from './content/offers/offers-list/offer-item/offer-item.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { ContentComponent } from "./content/content.component";
     LoginComponent,
     RegisterComponent,
     NavigationComponent,
-    ContentComponent
+    ContentComponent,
+    OffersComponent,
+    OffersListComponent,
+    OfferItemComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

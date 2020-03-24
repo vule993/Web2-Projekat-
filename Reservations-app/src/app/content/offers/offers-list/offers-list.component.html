@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-6 col-lg-4" *ngFor="let offer of offers">
+      <div class="card" style="width: 20rem">
+        <div class="inner">
+          <img
+            src="{{ offer.imagePath }}"
+            class="card-img-top img-responsive"
+            style="max-height: 150px;"
+            alt="travel image"
+          />
+        </div>
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/">Overview</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/">Location</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/">Services</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body shadow text-center">
+          <h5 class="card-title">
+            {{ offer.source }} - {{ offer.destination }}
+          </h5>
+          <h6 class="card-text">{{ offer.price }}e</h6>
+          <a href="#" class="btn btn-primary">Book it!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
