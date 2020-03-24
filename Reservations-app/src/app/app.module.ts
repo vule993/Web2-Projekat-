@@ -8,6 +8,7 @@ import { RegisterComponent } from "./content/register/register.component";
 
 import { NavigationComponent } from "./navigation/navigation.component";
 import { ContentComponent } from "./content/content.component";
+import { ProfileComponent } from "./content/profile/profile.component";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ContentComponent } from "./content/content.component";
     LoginComponent,
     RegisterComponent,
     NavigationComponent,
-    ContentComponent
+    ContentComponent,
+    ProfileComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

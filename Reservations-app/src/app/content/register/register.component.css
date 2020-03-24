@@ -1,11 +1,16 @@
+.modal-dialog {
+  display: flex;
+}
 .main-section {
   margin: 0 auto;
-  margin-top: 70px;
+  margin-top: 5rem;
   padding: 0;
   text-align: center;
 }
 
 .modal-content {
+  justify-content: center;
+  align-items: center;
   background-color: #434e5a;
   opacity: 0.85;
   padding: 0 20px;
