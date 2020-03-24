@@ -8,9 +8,8 @@ import { RegisterComponent } from "./content/register/register.component";
 
 import { NavigationComponent } from "./navigation/navigation.component";
 import { ContentComponent } from "./content/content.component";
-import { OffersComponent } from './content/offers/offers.component';
-import { OffersListComponent } from './content/offers/offers-list/offers-list.component';
-import { OfferItemComponent } from './content/offers/offers-list/offer-item/offer-item.component';
+import { ProfileComponent } from "./content/profile/profile.component";
+import { OffersComponent } from "./content/offers/offers.component";
 
 @NgModule({
   declarations: [
@@ -19,9 +18,8 @@ import { OfferItemComponent } from './content/offers/offers-list/offer-item/offe
     RegisterComponent,
     NavigationComponent,
     ContentComponent,
-    OffersComponent,
-    OffersListComponent,
-    OfferItemComponent
+    ProfileComponent,
+    OffersComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
