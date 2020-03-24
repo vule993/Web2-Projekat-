@@ -9,6 +9,9 @@ export class NavigationComponent implements OnInit {
   open = false;
   constructor() {}
   onClick(event) {
+    var image = (document.getElementById("nav-icon").style.pointerEvents =
+      "none");
+
     var nav = document.getElementsByTagName("nav")[0];
     var navigation = document.getElementById("navigation");
 
@@ -17,6 +20,8 @@ export class NavigationComponent implements OnInit {
 
       let timer = setTimeout(() => {
         navigation.classList.remove("display-none");
+        image = document.getElementById("nav-icon").style.pointerEvents =
+          "auto";
       }, 500);
 
       this.open = true;
@@ -25,6 +30,8 @@ export class NavigationComponent implements OnInit {
 
       let timer = setTimeout(() => {
         navigation.classList.add("display-none");
+        image = document.getElementById("nav-icon").style.pointerEvents =
+          "auto";
       }, 10);
 
       this.open = false;

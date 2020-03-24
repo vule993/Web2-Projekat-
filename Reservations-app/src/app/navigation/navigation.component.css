@@ -20,6 +20,12 @@ nav {
     #a8c0ff
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+#nav-icon {
+  width: 50px;
+  height: 50px;
+  background-image: url("../../assets/site/menu.png");
+  background-size: cover;
+}
 #navigation {
   width: 90%;
 }
@@ -40,6 +46,9 @@ nav ul {
 
 nav ul li {
   float: left;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 nav ul li a {
   text-decoration: none;

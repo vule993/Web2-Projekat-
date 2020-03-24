@@ -10,6 +10,7 @@ import { NavigationComponent } from "./navigation/navigation.component";
 import { ContentComponent } from "./content/content.component";
 import { ProfileComponent } from "./content/profile/profile.component";
 import { OffersComponent } from "./content/offers/offers.component";
+import { OffersListComponent } from "./content/offers/offers-list/offers-list.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { OffersComponent } from "./content/offers/offers.component";
     NavigationComponent,
     ContentComponent,
     ProfileComponent,
-    OffersComponent
+    OffersComponent,
+    OffersListComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
