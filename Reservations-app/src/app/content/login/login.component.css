@@ -34,6 +34,7 @@
   font-size: 18px;
   letter-spacing: 1.5px;
   padding-left: 54px;
+  border: 2px solid #3f2b96;
   background-color: blanchedalmond;
   color: black;
   font-weight: bold;
@@ -46,7 +47,7 @@
   font-size: 22px;
   left: 28px;
   padding-top: 4px;
-  color: #555e60;
+  color: #3f2b96;
 }
 
 .form-group:last-of-type::before {
@@ -56,6 +57,7 @@
 .form-input button {
   width: 40%;
   margin: 5px 0 25px;
+  background: #3f2b96;
 }
 
 .btn-success {
@@ -69,6 +71,7 @@
 .btn-success:hover {
   background-color: #13445e;
   border: 1px solid #daf1ff;
+  opacity: 0.85;
 }
 
 .forgot {

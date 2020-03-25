@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6 col-sm-6 col-lg-4" *ngFor="let offer of offers">
-      <div class="card" style="width: 20rem">
+      <div class="card mb-3" style="width: 20rem">
         <div class="inner">
           <img
             src="{{ offer.imagePath }}"
@@ -13,13 +13,28 @@
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-              <a class="nav-link active" routerLink="/">Overview</a>
+              <a
+                class="nav-link active"
+                style="cursor: pointer;"
+                (click)="activateOverview()"
+                >Overview</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/">Location</a>
+              <a
+                class="nav-link"
+                (click)="activateLocation()"
+                style="cursor: pointer;"
+                >Location</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/">Services</a>
+              <a
+                class="nav-link"
+                (click)="activateServices()"
+                style="cursor: pointer;"
+                >Services</a
+              >
             </li>
           </ul>
         </div>
