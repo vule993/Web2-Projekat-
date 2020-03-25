@@ -48,7 +48,7 @@
   background-repeat: no-repeat;
   border-radius: 0 0 6vw 6vw;
   margin-top: 50%;
-  width: 90%;
+  width: 92%;
   height: 47%;
   background-color: #43309a;
 }
@@ -90,4 +90,59 @@
 .list-group .active {
   background-color: #43309a;
   color: #fff;
+}
+.list-group-item {
+  overflow: hidden;
+}
+.list-group-item > div {
+  margin-right: 2.5vw;
+}
+.list-group-item > div:first-of-type {
+  float: left;
+  height: 1.8vw;
+  width: 1.8vw;
+  margin-left: 2.5vw;
+  margin-right: 0;
+}
+#friends {
+  background-image: url("../../../assets/site/icons/avatar-male.png");
+  background-size: cover;
+}
+.active #friends {
+  background-image: url("../../../assets/site/icons/avatar-male-white.png") !important;
+  background-size: cover;
+}
+.active:hover {
+  background-image: url("../../../assets/site/icons/avatar-male.png") !important;
+  background-size: cover;
+  color: #43309a !important;
+}
+#activity {
+  background-image: url("../../../assets/site/icons/activity.png");
+  background-size: cover;
+}
+.active #activity {
+  background-image: url("../../../assets/site/icons/activity-white.png");
+  background-size: cover;
+}
+.active #activity:hover {
+  background-image: url("../../../assets/site/icons/activity.png");
+  background-size: cover;
+  color: #43309a;
+}
+#reservations {
+  background-image: url("../../../assets/site/icons/reservations.png");
+  background-size: cover;
+}
+.active #reservations {
+  background-image: url("../../../assets/site/icons/reservations-white.png");
+  background-size: cover;
+}
+#edit {
+  background-image: url("../../../assets/site/icons/edit.png");
+  background-size: cover;
+}
+.active #edit {
+  background-image: url("../../../assets/site/icons/edit-white.png");
+  background-size: cover;
 }
