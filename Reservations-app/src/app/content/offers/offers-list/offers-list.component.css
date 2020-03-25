@@ -24,5 +24,13 @@ ul li a {
 }
 
 ul li a:hover {
-  transform: scale(1.2);
+  font-weight: 700;
+}
+
+.btn {
+  background: #3f2b96;
+}
+
+.btn:hover {
+  opacity: 0.85;
 }

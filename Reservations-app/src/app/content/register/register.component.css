@@ -3,11 +3,9 @@
 }
 .main-section {
   margin: 0 auto;
-  margin-top: 5rem;
+  margin-top: 5vh;
   padding: 0;
   text-align: center;
-  margin-top: 5rem;
-  z-index: -1;
 }
 
 .modal-content {
@@ -42,6 +40,7 @@
   font-size: 18px;
   letter-spacing: 1.5px;
   padding-left: 54px;
+  border: 2px solid #3f2b96;
   background-color: blanchedalmond;
   color: black;
   font-weight: bold;
@@ -55,23 +54,33 @@
   left: 28px;
   padding-top: 4px;
   color: #555e60;
+  color: #3f2b96;
 }
 
 .form-group:first-child::before {
   content: "\f007";
+  color: #3f2b96;
 }
 .form-group:nth-child(4)::before {
   content: "\f08d";
+  color: #3f2b96;
 }
 .form-group:nth-child(5)::before {
   content: "\f08d";
+  color: #3f2b96;
 }
 .form-group:nth-child(6)::before {
+  content: "\f095";
+  color: #3f2b96;
+}
+.form-group:nth-child(7)::before {
   content: "\f023";
+  color: #3f2b96;
 }
 
 .form-group:last-of-type::before {
   content: "\f023";
+  color: #3f2b96;
 }
 
 .form-input button {
@@ -80,7 +89,7 @@
 }
 
 .btn-success {
-  background-color: #1c6288;
+  background-color: #3f2b96;
   font-size: 19px;
   border-radius: 5px;
   padding: 7px 14px;
@@ -88,8 +97,8 @@
 }
 
 .btn-success:hover {
-  background-color: #13445e;
   border: 1px solid #daf1ff;
+  opacity: 0.85;
 }
 
 .forgot {
