@@ -11,8 +11,8 @@
 .modal-content {
   justify-content: center;
   align-items: center;
-  background-color: #434e5a;
-  opacity: 0.85;
+  background-color: #fff;
+  opacity: 0.8;
   padding: 0 20px;
   border-radius: 10px;
   margin-top: -15px;
@@ -29,10 +29,40 @@
 }
 
 .form-group {
+  position: relative;
   margin-bottom: 25px;
   height: 25px;
 }
+.form-group > div {
+  position: absolute;
+  top: 10px;
+  left: 28px;
+  width: 23px;
+  height: 23px;
+}
 
+/*  */
+.form-group .username-icon {
+  background-image: url("../../../assets/site/icons/avatar-male.png");
+  background-size: cover;
+}
+.form-group .password-icon {
+  background-image: url("../../../assets/site/icons/lock.png");
+  background-size: cover;
+}
+.form-group .mail-icon {
+  background-image: url("../../../assets/site/icons/mail.png");
+  background-size: cover;
+}
+.form-group .location-icon {
+  background-image: url("../../../assets/site/icons/location.png");
+  background-size: cover;
+}
+.form-group .phone-icon {
+  background-image: url("../../../assets/site/icons/phone.png");
+  background-size: cover;
+}
+/*  */
 .form-group input {
   height: 40px;
   border-radius: 5px;
@@ -48,7 +78,7 @@
 
 .form-group::before {
   font-family: "Font Awesome\ 5 Free";
-  content: "\f1fa";
+  /* content: "\f1fa"; */
   position: absolute;
   font-size: 22px;
   left: 28px;
@@ -58,28 +88,28 @@
 }
 
 .form-group:first-child::before {
-  content: "\f007";
+  /* content: "\f007"; */
   color: #3f2b96;
 }
 .form-group:nth-child(4)::before {
-  content: "\f08d";
+  /* content: "\f08d"; */
   color: #3f2b96;
 }
 .form-group:nth-child(5)::before {
-  content: "\f08d";
+  /* content: "\f08d"; */
   color: #3f2b96;
 }
 .form-group:nth-child(6)::before {
-  content: "\f095";
+  /* content: "\f095"; */
   color: #3f2b96;
 }
 .form-group:nth-child(7)::before {
-  content: "\f023";
+  /* content: "\f023"; */
   color: #3f2b96;
 }
 
 .form-group:last-of-type::before {
-  content: "\f023";
+  /* content: "\f023"; */
   color: #3f2b96;
 }
 

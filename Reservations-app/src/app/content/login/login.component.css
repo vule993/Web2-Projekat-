@@ -1,13 +1,13 @@
 .main-section {
   margin: 0 auto;
-  margin-top: 5rem;
+  margin-top: 5vh;
   padding: 0;
   text-align: center;
 }
 
 .modal-content {
-  background-color: #434e5a;
-  opacity: 0.85;
+  background-color: #fff;
+  opacity: 0.8;
   padding: 0 18px;
   border-radius: 10px;
 }
@@ -23,10 +23,25 @@
 }
 
 .form-group {
+  position: relative;
   margin-bottom: 25px;
   height: 30px;
 }
-
+.form-group > div {
+  position: absolute;
+  top: 10px;
+  left: 28px;
+  width: 23px;
+  height: 23px;
+}
+.form-group #username-icon {
+  background-image: url("../../../assets/site/icons/avatar-male.png");
+  background-size: cover;
+}
+.form-group #password-icon {
+  background-image: url("../../../assets/site/icons/lock.png");
+  background-size: cover;
+}
 .form-group input {
   height: 42px;
   border-radius: 5px;
@@ -42,16 +57,12 @@
 
 .form-group::before {
   font-family: "Font Awesome\ 5 Free";
-  content: "\f1fa";
+  /* content: "\f1fa"; */
   position: absolute;
   font-size: 22px;
   left: 28px;
   padding-top: 4px;
   color: #3f2b96;
-}
-
-.form-group:last-of-type::before {
-  content: "\f023";
 }
 
 .form-input button {
