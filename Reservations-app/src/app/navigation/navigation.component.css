@@ -9,16 +9,22 @@ nav {
   margin-right: 2%;
   border-radius: 10px;
   background: #a8c0ff; /* fallback for old browsers */
+  font-family: "Roboto", sans-serif;
+  font-size: 3vw;
+  letter-spacing: 0.1vw;
+  background: #076585; /* fallback for old browsers */
   background: -webkit-linear-gradient(
-    to left,
-    #3f2b96,
-    #a8c0ff
+    to bottom,
+    #fff,
+    #076585
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    to left,
-    #3f2b96,
-    #a8c0ff
+    to bottom,
+    #fff,
+    #076585
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  cursor: pointer;
+  opacity: 0.9;
 }
 #nav-icon {
   width: 3.6vw;
@@ -31,7 +37,7 @@ nav {
 }
 
 #navigation div:first-of-type a {
-  color: #3f2b96;
+  color: #fff;
 }
 
 #navigation div:first-of-type a:hover {
@@ -55,7 +61,7 @@ nav ul li a {
   display: block;
   padding: 1.06vw;
   font-size: 1vw;
-  color: #fff;
+  color: #000000;
   font-weight: bold;
 }
 nav ul li a:hover {

@@ -1,13 +1,15 @@
 .main-section {
   margin: 0 auto;
-  margin-top: 5vh;
+  margin-top: 5vw;
   padding: 0;
   text-align: center;
 }
 
 .modal-content {
-  background-color: #fff;
-  opacity: 0.8;
+  /* background-color: rgba(67, 78, 90, 0.8); */
+  /* background-color: rgba(166, 122, 106, 0.4); */
+  background-color: rgba(222, 232, 243, 0.2);
+
   padding: 0 18px;
   border-radius: 10px;
 }
@@ -43,16 +45,18 @@
   background-size: cover;
 }
 .form-group input {
-  height: 42px;
+  height: 40px;
   border-radius: 5px;
   border: 0;
-  font-size: 18px;
-  letter-spacing: 1.5px;
+  font-size: 14px;
+  letter-spacing: 1px;
   padding-left: 54px;
   border: 2px solid #3f2b96;
-  background-color: blanchedalmond;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  /* background-color: rgb(218, 241, 255); */
   color: black;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .form-group::before {
@@ -72,11 +76,12 @@
 }
 
 .btn-success {
-  background-color: #1c6288;
+  background-color: #daf1ff;
   font-size: 19px;
   border-radius: 5px;
   padding: 7px 14px;
   border: 1px solid #daf1ff;
+  font-family: "Roboto", sans-serif;
 }
 
 .btn-success:hover {
@@ -90,5 +95,5 @@
 }
 
 .forgot a {
-  color: #daf1ff;
+  color: #000;
 }
