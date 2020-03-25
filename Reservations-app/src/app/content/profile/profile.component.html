@@ -1,1 +1,25 @@
-<p>profil works!</p>
+<div class="profile">
+  <div id="info" class="fleft">
+    <div
+      id="pr-picture"
+      (mouseenter)="onProfilePictureHover()"
+      (mouseleave)="onProfilePictureLeave()"
+    >
+      <div id="photo-icon" class="transparent"></div>
+    </div>
+    <hr />
+    <div class="info-item">Vukasin Radic</div>
+    <div class="info-item">vule993@outlook.com</div>
+    <div class="info-item">Ljubinke Bobic 11, Novi Beograd</div>
+    <div class="info-item">065/523-0691</div>
+    <div class="info-item">Vukasin Radic</div>
+  </div>
+  <div id="pr-panel" class=" fright">
+    <div class="list-group list-group-horizontal clear">
+      <a href="#" class="list-group-item active">Friends</a>
+      <a href="#" class="list-group-item">History</a>
+      <a href="#" class="list-group-item">Active reservations</a>
+      <a href="#" class="list-group-item">Edit profile</a>
+    </div>
+  </div>
+</div>

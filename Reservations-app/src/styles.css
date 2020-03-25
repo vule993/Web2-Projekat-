@@ -15,3 +15,9 @@ body {
 .clear {
   clear: both;
 }
+.display-none {
+  display: none;
+}
+.transparent {
+  opacity: 0;
+}
