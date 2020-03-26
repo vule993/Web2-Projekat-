@@ -1,6 +1,6 @@
 .card {
   border: none;
-  opacity: 0.8;
+  background-color: rgba(222, 232, 243, 0.4);
   z-index: 2;
   border-radius: 5px;
 }

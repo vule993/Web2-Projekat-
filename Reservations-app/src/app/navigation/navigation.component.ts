@@ -6,7 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./navigation.component.css"]
 })
 export class NavigationComponent implements OnInit {
-  open = false;
+  open = true;
   constructor() {}
   onClick(event) {
     var image = (document.getElementById("nav-icon").style.pointerEvents =
