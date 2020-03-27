@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
+  { path: "profile", redirectTo: "profile/friends", pathMatch: "full" },
   {
     path: "profile",
     component: ProfileComponent,
@@ -25,8 +26,7 @@ const routes: Routes = [
       { path: "reservations", component: ReservationsDataListComponent },
       { path: "edit-profile", component: EditProfileComponent }
     ]
-  },
-  { path: "profile", redirectTo: "profile/friends", pathMatch: "full" }
+  }
 ];
 
 @NgModule({
