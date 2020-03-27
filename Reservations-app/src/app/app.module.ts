@@ -11,6 +11,7 @@ import { ContentComponent } from "./content/content.component";
 import { ProfileComponent } from "./content/profile/profile.component";
 import { OffersComponent } from "./content/offers/offers.component";
 import { OffersListComponent } from "./content/offers/offers-list/offers-list.component";
+import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { OffersListComponent } from "./content/offers/offers-list/offers-list.co
     ContentComponent,
     ProfileComponent,
     OffersComponent,
-    OffersListComponent
+    OffersListComponent,
+    OfferItemComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
