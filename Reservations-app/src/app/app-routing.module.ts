@@ -5,13 +5,28 @@ import { RegisterComponent } from "./content/register/register.component";
 import { ContentComponent } from "./content/content.component";
 import { ProfileComponent } from "./content/profile/profile.component";
 import { OffersComponent } from "./content/offers/offers.component";
+import { ArchiveDataListComponent } from "./content/profile/archive-data-list/archive-data-list.component";
+import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
+import { ReservationsDataListComponent } from "./content/profile/reservations-data-list/reservations-data-list.component";
+import { FriendsDataListComponent } from "./content/profile/friends-data-list/friends-data-list.component";
 
 const routes: Routes = [
+  { path: "", redirectTo: "profile/friends", pathMatch: "full" },
   { path: "home", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
-  { path: "profile", component: ProfileComponent }
+  {
+    path: "profile",
+    component: ProfileComponent,
+    children: [
+      { path: "friends", component: FriendsDataListComponent },
+      { path: "archive", component: ArchiveDataListComponent },
+      { path: "reservations", component: ReservationsDataListComponent },
+      { path: "edit-profile", component: EditProfileComponent }
+    ]
+  },
+  { path: "profile", redirectTo: "profile/friends", pathMatch: "full" }
 ];
 
 @NgModule({

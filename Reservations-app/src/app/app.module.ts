@@ -10,7 +10,12 @@ import { NavigationComponent } from "./navigation/navigation.component";
 import { ContentComponent } from "./content/content.component";
 import { ProfileComponent } from "./content/profile/profile.component";
 import { OffersComponent } from "./content/offers/offers.component";
+
 import { OffersListComponent } from "./content/offers/offers-list/offers-list.component";
+import { FriendsDataListComponent } from "./content/profile/friends-data-list/friends-data-list.component";
+import { ArchiveDataListComponent } from "./content/profile/archive-data-list/archive-data-list.component";
+import { ReservationsDataListComponent } from "./content/profile/reservations-data-list/reservations-data-list.component";
+import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
 import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
 
 @NgModule({
@@ -23,7 +28,11 @@ import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offe
     ProfileComponent,
     OffersComponent,
     OffersListComponent,
-    OfferItemComponent
+    OfferItemComponent,
+    FriendsDataListComponent,
+    ArchiveDataListComponent,
+    ReservationsDataListComponent,
+    EditProfileComponent
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
