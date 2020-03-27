@@ -32,4 +32,8 @@ export class ProfileComponent implements OnInit {
       }
     }, 50);
   }
+
+  onProfilePictureClick() {
+    alert("Change picturre dialog...");
+  }
 }

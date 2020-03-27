@@ -26,11 +26,3 @@ ul li a {
 ul li a:hover {
   font-weight: 700;
 }
-
-.btn {
-  background: #3f2b96;
-}
-
-.btn:hover {
-  opacity: 0.85;
-}

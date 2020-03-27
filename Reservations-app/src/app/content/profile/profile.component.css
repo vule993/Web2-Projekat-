@@ -28,10 +28,13 @@
   color: #fff;
   text-align: center;
   font-size: 1vw;
-  background-color: #43309a;
-  padding: 1vw;
+  background-color: rgba(67, 48, 154, 0.8);
+  padding: 0.8vw;
   margin: 1vw auto;
   border-radius: 0.3vw;
+}
+.info-item div img {
+  width: 1.2vw;
 }
 .border-bottom {
   border-bottom: 2px solid rgba(67, 48, 154, 0.8);
@@ -61,7 +64,7 @@
   margin-top: 50%;
   width: 92%;
   height: 47%;
-  background-color: #43309a;
+  background-color: rgba(67, 48, 154, 0.8);
 }
 
 #pr-panel {
@@ -93,13 +96,13 @@
   height: 3vw;
   padding: 0.5vw;
   text-align: center;
-  color: #43309a;
+  color: rgba(67, 48, 154, 0.8);
 }
 .list-group a:hover {
   background-color: rgba(67, 48, 154, 0.2);
 }
 .list-group .active {
-  background-color: #43309a;
+  background-color: rgba(67, 48, 154, 0.8);
   color: #fff;
 }
 .list-group-item {
@@ -116,6 +119,23 @@
   margin-right: 0;
 }
 
+.list-group-flush .list-group-item > div {
+  margin: 0 0.5vw;
+  width: 12.53vw;
+  /* background-color: rebeccapurple; */
+  text-align: center;
+}
+.list-group-flush .list-group-item > div:first-of-type {
+  margin: 0 0.5vw;
+  width: 30vw;
+  /* background-color: rebeccapurple; */
+  text-align: left;
+}
+.list-group-flush .btn {
+  height: 2.2vw !important;
+  padding: 0;
+  width: 7vw !important;
+}
 /*  */
 
 #friends {
@@ -129,7 +149,7 @@
 #friends-tag:hover #friends {
   background-image: url("../../../assets/site/icons/avatar-male.png") !important;
   background-size: cover;
-  color: #43309a;
+  color: rgba(67, 48, 154, 0.8);
 }
 #friends-tag:hover {
   color: #43309a;
@@ -185,4 +205,8 @@
 }
 #edit-tag:hover {
   color: #43309a;
+}
+
+#pr-panel > ul li:nth-child(even) {
+  background-color: rgba(67, 48, 154, 0.2);
 }
