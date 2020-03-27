@@ -6,9 +6,16 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent implements OnInit {
+  activeTab = "friends";
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  // setuje koji je tab selektovan kako bi dobio drugaciji background
+  setActiveTab(value) {
+    this.activeTab = value;
+  }
 
   onProfilePictureHover() {
     var element = document.getElementById("photo-icon");

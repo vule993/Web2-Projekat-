@@ -37,98 +37,62 @@
       <div>065/523-0691</div>
     </div>
   </div>
+
+  <!--  -->
+  <!--  -->
+
   <div id="pr-panel" class=" fright">
+    <!-- 
+      
+     -->
     <div class="list-group list-group-horizontal clear">
-      <a href="#" id="friends-tag" class="list-group-item"
-        ><div id="friends"></div>
+      <a
+        routerLink="friends"
+        id="friends-tag"
+        class="list-group-item"
+        [ngClass]="{ active: activeTab === 'friends' }"
+        (click)="setActiveTab('friends')"
+      >
+        <div id="friends"></div>
         <div>Friends</div>
       </a>
-      <a href="#" id="activity-tag" class="list-group-item active"
-        ><div id="activity"></div>
-        <div>Activity</div></a
+      <a
+        routerLink="archive"
+        id="activity-tag"
+        class="list-group-item"
+        [ngClass]="{ active: activeTab === 'archive' }"
+        (click)="setActiveTab('archive')"
       >
-      <a href="#" id="reservations-tag" class="list-group-item"
-        ><div id="reservations"></div>
-        <div>Reservations</div></a
+        <div id="activity"></div>
+        <div>Archive</div>
+      </a>
+      <a
+        routerLink="reservations"
+        id="reservations-tag"
+        class="list-group-item"
+        [ngClass]="{ active: activeTab === 'reservations' }"
+        (click)="setActiveTab('reservations')"
       >
-      <a href="#" id="edit-tag" class="list-group-item"
-        ><div id="edit"></div>
+        <div id="reservations"></div>
+        <div>Reservations</div>
+      </a>
+      <a
+        routerLink="edit-profile"
+        id="edit-tag"
+        class="list-group-item"
+        [ngClass]="{ active: activeTab === 'edit-profile' }"
+        (click)="setActiveTab('edit-profile')"
+      >
+        <div id="edit"></div>
         <div>Edit profile</div></a
       >
     </div>
+    <!-- 
 
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item overflow-hidden">
-        <div class="fleft">
-          <img src="../../../assets/site/icons/location.png" width="23" />
-          Brasil, Rio de Janeiro
-        </div>
-        <div class="fleft">24-Jan-2018</div>
-        <div class="fleft">
-          <img src="../../../assets/site/icons/seat.png" width="23" />
-          24c
-        </div>
-        <div class="fleft">
-          <button class="btn btn-primary">Intite</button>
-        </div>
-      </li>
 
-      <li class="list-group-item">
-        <div class="fleft">
-          <img src="../../../assets/site/icons/location.png" width="23" />
-          China, Bejing
-        </div>
-        <div class="fleft">20-Sep-2018</div>
-        <div class="fleft">
-          <img src="../../../assets/site/icons/seat.png" width="23" />
-          4c
-        </div>
-        <div class="fleft">
-          <button class="btn btn-primary">Intite</button>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="fleft">
-          <img src="../../../assets/site/icons/location.png" width="23" />
-          Russia, Moscow
-        </div>
-        <div class="fleft">11-Sep-2017</div>
-        <div class="fleft">
-          <img src="../../../assets/site/icons/seat.png" width="23" />
-          01d
-        </div>
-        <div class="fleft">
-          <button class="btn btn-primary">Intite</button>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="fleft">
-          <img src="../../../assets/site/icons/location.png" width="23" />
-          Australia, Melbourne
-        </div>
-        <div class="fleft">04-Feb-2016</div>
-        <div class="fleft">
-          <img src="../../../assets/site/icons/seat.png" width="23" />
-          13d
-        </div>
-        <div class="fleft">
-          <button class="btn btn-primary">Intite</button>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="fleft">
-          <img src="../../../assets/site/icons/location.png" width="23" />
-          France, Paris
-        </div>
-        <div class="fleft">11-Dec-2015</div>
-        <div class="fleft">
-          <img src="../../../assets/site/icons/seat.png" width="23" />
-          32a
-        </div>
-        <div class="fleft">
-          <button class="btn btn-primary">Intite</button>
-        </div>
-      </li>
-    </ul>
+  
+ -->
+    <!-- ovde treba load-ovati ugnjezdenu komponentu -->
+    <router-outlet></router-outlet>
   </div>
 </div>
