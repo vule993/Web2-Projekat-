@@ -1,0 +1,80 @@
+<div class="card mb-3" style="width: 20rem">
+  <div class="inner">
+    <img
+      src="{{ offer.imagePath }}"
+      class="card-img-top img-responsive"
+      style="max-height: 150px;"
+      alt="travel image"
+    />
+  </div>
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          style="cursor: pointer;"
+          (click)="activateOverview()"
+          [ngClass]="{ active: selectedLink === 'overview' }"
+          >Overview</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="activateLocation()"
+          [ngClass]="{ active: selectedLink === 'location' }"
+          style="cursor: pointer;"
+          >Location</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          (click)="activateServices()"
+          [ngClass]="{ active: selectedLink === 'services' }"
+          style="cursor: pointer;"
+          >Services</a
+        >
+      </li>
+    </ul>
+  </div>
+  <!--Ako ne postoji description na nekom offeru prikazace se overview sa 
+    tekstom kao 'Thank you for flying with us!'
+    -->
+  <div class="card-body shadow text-center">
+    <!--Overview-->
+    <div [hidden]="selectedLink !== 'overview'">
+      <h5 class="card-title">{{ offer.description }}</h5>
+      <h5 class="card-title" [hidden]="offer.description !== null">
+        Thank you for flying with us!
+      </h5>
+    </div>
+    <!--Location-->
+    <div [hidden]="selectedLink !== 'location'">
+      <h5 class="card-title">{{ offer.source }} - {{ offer.destination }}</h5>
+      <h6 class="card-text">{{ offer.price }}e</h6>
+    </div>
+    <!--Services-->
+    <div [hidden]="selectedLink !== 'services'">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item overflow-hidden">
+          <div class="fleft">
+            Rent-a-Car
+          </div>
+        </li>
+        <li class="list-group-item overflow-hidden">
+          <div class="fleft">
+            Rent-a-Car
+          </div>
+        </li>
+        <li class="list-group-item overflow-hidden">
+          <div class="fleft">
+            Rent-a-Car
+          </div>
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <a href="#" class="btn btn-primary">Book it!</a>
+  </div>
+</div>

@@ -1,51 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-6 col-lg-4" *ngFor="let offer of offers">
-      <div class="card mb-3" style="width: 20rem">
-        <div class="inner">
-          <img
-            src="{{ offer.imagePath }}"
-            class="card-img-top img-responsive"
-            style="max-height: 150px;"
-            alt="travel image"
-          />
-        </div>
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                style="cursor: pointer;"
-                (click)="activateOverview()"
-                >Overview</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                (click)="activateLocation()"
-                style="cursor: pointer;"
-                >Location</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                (click)="activateServices()"
-                style="cursor: pointer;"
-                >Services</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="card-body shadow text-center">
-          <h5 class="card-title">
-            {{ offer.source }} - {{ offer.destination }}
-          </h5>
-          <h6 class="card-text">{{ offer.price }}e</h6>
-          <a href="#" class="btn btn-primary">Book it!</a>
-        </div>
-      </div>
+    <div class="col-md-6 col-sm-6 col-lg-6" *ngFor="let offerEl of offers">
+      <app-offer-item [offer]="offerEl"></app-offer-item>
     </div>
   </div>
 </div>

@@ -1,0 +1,26 @@
+.list-group-item {
+  overflow: hidden;
+}
+.list-group-item > div {
+  margin-right: 2.5vw;
+}
+.list-group-item > div:first-of-type {
+  float: left;
+  height: 1.8vw;
+  width: 1.8vw;
+  margin-left: 2.5vw;
+  margin-right: 0;
+}
+
+.list-group-flush .list-group-item > div {
+  margin: 0 0.5vw;
+  width: 8vw;
+  /* background-color: rebeccapurple; */
+  text-align: center;
+}
+.list-group-flush .list-group-item > div:first-of-type {
+  margin: 0 0.5vw;
+  width: 30vw;
+  /* background-color: rebeccapurple; */
+  text-align: left;
+}
