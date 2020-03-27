@@ -5,22 +5,45 @@
       (mouseenter)="onProfilePictureHover()"
       (mouseleave)="onProfilePictureLeave()"
     >
-      <div id="photo-icon" class="transparent"></div>
+      <div
+        id="photo-icon"
+        class="transparent"
+        (click)="onProfilePictureClick()"
+      ></div>
     </div>
     <hr />
-    <div class="info-item border-bottom">Vukasin Radic</div>
-    <div class="info-item border-bottom">vule993@outlook.com</div>
-    <div class="info-item border-bottom">Ljubinke Bobic 11, Novi Beograd</div>
-    <div class="info-item border-bottom">065/523-0691</div>
-    <div class="info-item">Vukasin Radic</div>
+    <div class="info-item">
+      <div class="fleft">
+        <img src="../../../assets/site/icons/avatar-male-white.png" />
+      </div>
+      <div>Vukasin Radic</div>
+    </div>
+    <div class="info-item">
+      <div class="fleft">
+        <img src="../../../assets/site/icons/mail-white.png" />
+      </div>
+      <div>vule993@outlook.com</div>
+    </div>
+    <div class="info-item">
+      <div class="fleft">
+        <img src="../../../assets/site/icons/location-white.png" />
+      </div>
+      <div>Ljubinke Bobic 11. Novi Beograd</div>
+    </div>
+    <div class="info-item">
+      <div class="fleft">
+        <img src="../../../assets/site/icons/phone-white.png" />
+      </div>
+      <div>065/523-0691</div>
+    </div>
   </div>
   <div id="pr-panel" class=" fright">
     <div class="list-group list-group-horizontal clear">
-      <a href="#" id="friends-tag" class="list-group-item active"
+      <a href="#" id="friends-tag" class="list-group-item"
         ><div id="friends"></div>
         <div>Friends</div>
       </a>
-      <a href="#" id="activity-tag" class="list-group-item"
+      <a href="#" id="activity-tag" class="list-group-item active"
         ><div id="activity"></div>
         <div>Activity</div></a
       >
@@ -33,5 +56,25 @@
         <div>Edit profile</div></a
       >
     </div>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item overflow-hidden">
+        <div class="fleft">
+          <img src="../../../assets/site/icons/location.png" width="23" />
+          Brasil, Rio de Janeiro
+        </div>
+        <div class="fleft">
+          <img src="../../../assets/site/icons/seat.png" width="23" />
+          24c
+        </div>
+        <div class="fleft">
+          <button class="btn btn-primary">Intite</button>
+        </div>
+      </li>
+      <li class="list-group-item">Dapibus ac facilisis in</li>
+      <li class="list-group-item">Morbi leo risus</li>
+      <li class="list-group-item">Porta ac consectetur ac</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
   </div>
 </div>

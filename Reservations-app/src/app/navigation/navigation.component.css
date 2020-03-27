@@ -8,7 +8,7 @@ nav {
   margin-right: 2%;
   border-radius: 10px;
   letter-spacing: 0.1vw;
-  background-color: rgba(67, 48, 154, 0.8);
+  background-color: rgba(67, 48, 154, 1);
   cursor: pointer;
   opacity: 0.9;
 }
@@ -70,10 +70,14 @@ nav ul li a:hover {
 }
 
 .transform-active {
-  background-color: rgba(67, 48, 154, 0.8);
+  background-color: rgba(67, 48, 154, 1);
   height: 4.2vw;
   width: 96%;
 }
 .display-none {
   display: none;
+}
+.border-separators {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
 }

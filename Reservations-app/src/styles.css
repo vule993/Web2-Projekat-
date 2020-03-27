@@ -1,5 +1,18 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #ff0000;
+}
+
 body {
   /* background: url(assets/avio_background.jpg) no-repeat center center fixed; */
   background: url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=753&q=80")
@@ -7,6 +20,7 @@ body {
   background-size: cover;
   font-family: "Roboto", sans-serif;
 }
+
 .fleft {
   float: left;
 }
@@ -24,4 +38,11 @@ body {
 }
 .transparent {
   opacity: 0;
+}
+.btn {
+  background: rgba(63, 43, 150, 0.8) !important;
+}
+
+.btn:hover {
+  opacity: 0.85;
 }
