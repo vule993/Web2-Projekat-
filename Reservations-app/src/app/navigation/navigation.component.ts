@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-
+declare var $: any;
 @Component({
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
@@ -7,10 +7,21 @@ import { Component, OnInit } from "@angular/core";
 })
 export class NavigationComponent implements OnInit {
   open = true;
+  notificationsOpen = false;
   constructor() {}
 
   onNotificationClick() {
-    alert("obavestenja...");
+    if (this.notificationsOpen) {
+      $(document).ready(function() {
+        $("#notifications-list").fadeIn("slow", function() {});
+      });
+    } else {
+      $(document).ready(function() {
+        $("#notifications-list").fadeOut("slow", function() {});
+      });
+    }
+
+    this.notificationsOpen = this.notificationsOpen ? false : true;
   }
 
   onClick(event) {

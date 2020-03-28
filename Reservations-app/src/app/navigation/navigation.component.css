@@ -52,14 +52,14 @@ nav {
   text-align: center;
 }
 
-#notifications > div {
+#notifications #notifications-list {
   position: absolute;
   top: 3.5vw;
   left: -19vw;
   width: 25vw;
   height: 30vw;
   padding: 4vw 0.2vw;
-  /* display: none; */
+  display: none;
   /* background-color: red; */
   background-image: url("../../assets/site/notification.png");
   background-size: cover;
