@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from "@angular/core";
+import { User } from "src/app/models/User.model";
+import { UsersService } from "src/app/services/users.service";
 
 @Component({
-  selector: 'app-friends-data-list',
-  templateUrl: './friends-data-list.component.html',
-  styleUrls: ['./friends-data-list.component.css']
+  selector: "app-friends-data-list",
+  templateUrl: "./friends-data-list.component.html",
+  styleUrls: ["./friends-data-list.component.css"]
 })
 export class FriendsDataListComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  allUsers: User[];
+  constructor(private userService: UsersService) {
+    this.allUsers = userService.loadAllUsers();
   }
 
+  ngOnInit(): void {}
 }

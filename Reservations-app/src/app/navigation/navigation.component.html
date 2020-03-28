@@ -3,16 +3,105 @@
     <div id="navigation" class="fleft">
       <div class="fleft">
         <ul>
-          <li><a routerLink="">Home</a></li>
-          <li class="border-separators"><a routerLink="flights">Flights</a></li>
-          <li><a routerLink="">Rent a car</a></li>
+          <li>
+            <img src="../../assets/site/icons/home-white.png" class="fleft" />
+            <a routerLink="" class="fleft">Home</a>
+          </li>
+          <li class="border-separators">
+            <img src="../../assets/site/icons/plane-white.png" class="fleft" />
+            <a routerLink="flights" class="fleft">Flights</a>
+          </li>
+          <li>
+            <img src="../../assets/site/icons/car-white.png" class="fleft" />
+            <a routerLink="" class="fleft">Rent a car</a>
+          </li>
         </ul>
       </div>
       <div class="fright">
         <ul>
-          <li><a routerLink="profile">Profile</a></li>
-          <li class="border-separators"><a routerLink="login">Login</a></li>
-          <li><a routerLink="register">Registration</a></li>
+          <li>
+            <img src="../../assets/face.png" class="fleft" />
+            <a routerLink="profile" class="fleft">Profile</a>
+          </li>
+          <li class="border-separators">
+            <img src="../../assets/site/icons/lock-white.png" class="fleft" />
+            <a routerLink="login" class="fleft">Login</a>
+          </li>
+          <li>
+            <img
+              src="../../assets/site/icons/registration-white.png"
+              class="fleft"
+            />
+            <a routerLink="register" class="fleft">Registration</a>
+          </li>
+          <li id="notifications" (click)="onNotificationClick()">
+            <span>1</span>
+            <img src="../../assets/site/icons/bell-white.png" class="fleft" />
+
+            <div id="notifications-list">
+              <div id="viewport">
+                <div class="overflow-hidden">
+                  <a routerLink="" class="fleft"
+                    >Vukasin Radic te je pozvao na putovanje!</a
+                  >
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/check.png" />
+                  </a>
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/cancel.png"
+                  /></a>
+                </div>
+
+                <div class="overflow-hidden">
+                  <a routerLink="" class="fleft"
+                    >Aleksandar Novakovic salje pozivnicu za prijateljstvo!</a
+                  >
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/check.png" />
+                  </a>
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/cancel.png"
+                  /></a>
+                </div>
+
+                <div class="overflow-hidden">
+                  <a routerLink="" class="fleft"
+                    >Vukasin Radic te je pozvao na putovanje!</a
+                  >
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/check.png" />
+                  </a>
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/cancel.png"
+                  /></a>
+                </div>
+
+                <div class="overflow-hidden">
+                  <a routerLink="" class="fleft"
+                    >Vukasin Radic te je pozvao na putovanje!</a
+                  >
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/check.png" />
+                  </a>
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/cancel.png"
+                  /></a>
+                </div>
+
+                <div class="overflow-hidden">
+                  <a routerLink="" class="fleft"
+                    >Vukasin Radic te je pozvao na putovanje!</a
+                  >
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/check.png" />
+                  </a>
+                  <a routerLink="" class="fleft">
+                    <img src="../../assets/site/icons/cancel.png"
+                  /></a>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

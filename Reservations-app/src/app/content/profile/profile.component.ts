@@ -1,4 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { User } from "../../models/User.model";
+import { UsersService } from "src/app/services/users.service";
+import { Router } from "@angular/router";
+import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
 
 @Component({
   selector: "app-profile",
@@ -6,11 +10,24 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent implements OnInit {
-  activeTab = "friends";
+  activeTab;
+  allUsers: User[];
 
-  constructor() {}
+  constructor(private userService: UsersService, router: Router) {
+    this.allUsers = userService.loadAllUsers();
 
-  ngOnInit(): void {}
+    // pretplacujemo se na dogadjaj ponovnog klika na link profila(posto se ne ucitava
+    // kompletna komponenta ova metoda menja this.activeTab na default vrednost)
+    router.events.subscribe(val => {
+      let fullUrl = window.location.href;
+      this.activeTab = fullUrl.split("/")[4];
+    });
+  }
+
+  ngOnInit(): void {
+    let fullUrl = window.location.href;
+    this.activeTab = fullUrl.split("/")[4];
+  }
 
   // setuje koji je tab selektovan kako bi dobio drugaciji background
   setActiveTab(value) {

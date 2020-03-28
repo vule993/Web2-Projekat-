@@ -8,6 +8,11 @@ import { Component, OnInit } from "@angular/core";
 export class NavigationComponent implements OnInit {
   open = true;
   constructor() {}
+
+  onNotificationClick() {
+    alert("obavestenja...");
+  }
+
   onClick(event) {
     var image = (document.getElementById("nav-icon").style.pointerEvents =
       "none");

@@ -1,0 +1,23 @@
+.list-group-flush .list-group-item > div {
+  margin: 0 0.5vw;
+  width: 10.3585vw;
+  /* background-color: rebeccapurple; */
+  text-align: center;
+}
+.list-group-flush .list-group-item > div:first-of-type {
+  margin: 0 0.5vw;
+  width: 23vw;
+  /* background-color: rebeccapurple; */
+  text-align: left;
+}
+.list-group-item img {
+  width: 2vw;
+}
+.list-group-flush .btn {
+  height: 2.2vw !important;
+  padding: 0;
+  width: 7vw !important;
+}
+ul li:nth-child(even) {
+  background-color: rgba(67, 48, 154, 0.2);
+}
