@@ -1,4 +1,4 @@
-<div class="card mb-3" style="width: 20rem">
+<div class="card mb-3" style="width: 20rem;">
   <div class="inner">
     <img
       src="{{ offer.imagePath }}"
@@ -45,7 +45,7 @@
     <!--Overview-->
     <div [hidden]="selectedLink !== 'overview'">
       <h5 class="card-title">{{ offer.description }}</h5>
-      <h5 class="card-title" [hidden]="offer.description !== null">
+      <h5 class="card-text" [hidden]="offer.description !== null">
         Thank you for flying with us!
       </h5>
     </div>
@@ -56,19 +56,19 @@
     </div>
     <!--Services-->
     <div [hidden]="selectedLink !== 'services'">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item overflow-hidden">
-          <div class="fleft">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-success">
+          <div>
             Rent-a-Car
           </div>
         </li>
-        <li class="list-group-item overflow-hidden">
-          <div class="fleft">
+        <li class="list-group-item overflow-hidden list-group-item-success">
+          <div>
             Rent-a-Car
           </div>
         </li>
-        <li class="list-group-item overflow-hidden">
-          <div class="fleft">
+        <li class="list-group-item overflow-hidden list-group-item-success">
+          <div>
             Rent-a-Car
           </div>
         </li>
