@@ -38,6 +38,9 @@ nav {
   position: relative;
   border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
+#notifications img {
+  padding: 0 1vw 0 0;
+}
 #notifications span {
   position: absolute;
   border-radius: 0.6vw;
