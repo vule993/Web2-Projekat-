@@ -1,0 +1,43 @@
+<div class="header">
+  <div class="form form-group">
+    <h1>Where to travel next?</h1>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input
+        type="radio"
+        id="return"
+        name="tickets"
+        class="custom-control-input"
+        checked
+      />
+      <label class="custom-control-label" for="return">Return Ticket</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input
+        type="radio"
+        id="oneWay"
+        name="tickets"
+        class="custom-control-input"
+      />
+      <label class="custom-control-label" for="oneWay">One Way</label>
+    </div>
+    <div class="form-box">
+      <input
+        type="text"
+        class="search-field sourceLocation"
+        placeholder="From"
+      />
+
+      <input
+        type="text"
+        class="search-field destinationLocation"
+        placeholder="To"
+      />
+      <input type="date" class="search-field departTime" placeholder="depart" />
+      <input type="date" class="search-field returnTime" placeholder="return" />
+
+      <button class="btn btn-success" type="button">
+        Search Flights
+      </button>
+    </div>
+  </div>
+</div>
