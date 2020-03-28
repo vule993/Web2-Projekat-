@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { Offer } from "src/app/models/offer.model";
 import { OffersService } from "src/app/services/offers.service";
 
@@ -8,6 +8,8 @@ import { OffersService } from "src/app/services/offers.service";
   styleUrls: ["./offers-list.component.css"]
 })
 export class OffersListComponent implements OnInit {
+  @Output() offerWasSelected = new EventEmitter<Offer>();
+
   selectedLink: string;
   offers: Offer[];
 
@@ -16,4 +18,8 @@ export class OffersListComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onOfferSelected(offer: Offer) {
+    this.offerWasSelected.emit(offer);
+  }
 }
