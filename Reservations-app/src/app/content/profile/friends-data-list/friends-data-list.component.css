@@ -10,8 +10,17 @@
   /* background-color: rebeccapurple; */
   text-align: left;
 }
-.list-group-item img {
+.image {
+  height: 2vw;
   width: 2vw;
+  border-radius: 2vw;
+  overflow: hidden;
+}
+.image img {
+  height: 2.5vw;
+}
+.name {
+  padding: 0.5vw;
 }
 .list-group-flush .btn {
   height: 2.2vw !important;
@@ -20,4 +29,7 @@
 }
 ul li:nth-child(even) {
   background-color: rgba(67, 48, 154, 0.2);
+}
+.btn {
+  font-size: 0.8vw;
 }
