@@ -23,6 +23,7 @@ nav {
   background-size: cover;
 }
 #navigation {
+  position: fixed;
   width: 90%;
   height: 5vw;
 }
