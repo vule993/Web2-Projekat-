@@ -87,6 +87,32 @@
   color: #3f2b96;
 }
 
+.form-group:first-child::before {
+  /* content: "\f007"; */
+  color: #3f2b96;
+}
+.form-group:nth-child(4)::before {
+  /* content: "\f08d"; */
+  color: #3f2b96;
+}
+.form-group:nth-child(5)::before {
+  /* content: "\f08d"; */
+  color: #3f2b96;
+}
+.form-group:nth-child(6)::before {
+  /* content: "\f095"; */
+  color: #3f2b96;
+}
+.form-group:nth-child(7)::before {
+  /* content: "\f023"; */
+  color: #3f2b96;
+}
+
+.form-group:last-of-type::before {
+  /* content: "\f023"; */
+  color: #3f2b96;
+}
+
 .form-input button {
   width: 40%;
   margin: 5px 0 25px;
