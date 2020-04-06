@@ -9,10 +9,11 @@ import { ArchiveDataListComponent } from "./content/profile/archive-data-list/ar
 import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
 import { ReservationsDataListComponent } from "./content/profile/reservations-data-list/reservations-data-list.component";
 import { FriendsDataListComponent } from "./content/profile/friends-data-list/friends-data-list.component";
+import { HomeComponent } from "./content/home/home.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "profile/friends", pathMatch: "full" },
-  { path: "home", component: LoginComponent },
+  { path: "home", component: HomeComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
