@@ -18,9 +18,8 @@ import { ArchiveDataListComponent } from "./content/profile/archive-data-list/ar
 import { ReservationsDataListComponent } from "./content/profile/reservations-data-list/reservations-data-list.component";
 import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
 import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
-import { OfferDetailComponent } from "./content/offers/offer-detail/offer-detail.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HomeComponent } from "./content/home/home.component";
+import { OfferDetailComponent } from './content/offers/offer-detail/offer-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -37,8 +36,7 @@ import { HomeComponent } from "./content/home/home.component";
     ArchiveDataListComponent,
     ReservationsDataListComponent,
     EditProfileComponent,
-    OfferDetailComponent,
-    HomeComponent
+    OfferDetailComponent
   ],
   imports: [
     BrowserModule,
