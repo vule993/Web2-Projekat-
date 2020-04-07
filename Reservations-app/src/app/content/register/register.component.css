@@ -92,13 +92,13 @@
   margin: 5px 0 25px;
 }
 
-.btn-success {
+/* .btn-success {
   background-color: #3f2b96;
   font-size: 19px;
   border-radius: 5px;
   padding: 7px 14px;
   border: 1px solid #daf1ff;
-}
+} */
 
 .btn-success:hover {
   border: 1px solid #daf1ff;
