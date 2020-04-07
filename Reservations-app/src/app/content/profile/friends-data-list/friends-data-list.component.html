@@ -1,15 +1,19 @@
 <ul class="list-group list-group-flush">
   <li *ngFor="let user of allUsers" class="list-group-item overflow-hidden">
     <div class="fleft">
-      <img src="{{ user.image }}" />
-      {{ user.name + " " + user.surname }}
+      <div class="fleft image">
+        <img src="{{ user.image }}" />
+      </div>
+      <div class="name fleft">
+        {{ user.name + " " + user.surname }}
+      </div>
     </div>
     <div class="fleft">{{ user.status }}</div>
     <div class="fleft">
       {{ user.city }}
     </div>
     <div class="fleft">
-      <button class="btn btn-primary">Invite</button>
+      <button class="btn btn-primary">Remove friend</button>
     </div>
   </li>
 </ul>

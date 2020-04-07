@@ -17,8 +17,12 @@
   margin-left: 2%;
 }
 #info .btn {
+<<<<<<< HEAD
   margin: 0 9.7vw;
   font-size: 1vw;
+=======
+  margin: 0 9.4vw;
+>>>>>>> parent of 2b6c5fb... Revert "profil"
 }
 #info .btn > div {
   margin-top: 0.15vw !important;
@@ -32,7 +36,7 @@
   color: #000;
   width: 80%;
   height: 1vw;
-  margin: 6vw auto 4vw auto;
+  margin: 6vw auto 0vw auto;
 }
 .info-item {
   height: 3vw;
@@ -198,4 +202,7 @@
 #edit-tag:hover #edit {
   background-image: url("../../../assets/site/icons/edit.png");
   background-size: cover;
+}
+#edit-tag:hover {
+  color: #43309a;
 }
