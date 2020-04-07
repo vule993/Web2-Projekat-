@@ -40,6 +40,9 @@ body {
 }
 .btn {
   background: rgba(63, 43, 150, 0.8) !important;
+  height: 2.8vw;
+  font-size: 1vw;
+  padding: 0;
 }
 
 .btn:hover {
