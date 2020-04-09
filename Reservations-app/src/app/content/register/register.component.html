@@ -1,5 +1,5 @@
 <div class="modal-dialog text-center">
-  <div class="col-sm-9 main-section">
+  <div class="main-section">
     <div class="modal-content">
       <div class="col-12 user-img">
         <img src="../../assets/face.png" alt="profile" />
@@ -21,35 +21,41 @@
             <input type="email" class="form-control" placeholder="Email" />
           </div>
 
-          <div class="form-group">
-            <div class="location-icon"></div>
-            <input type="text" class="form-control" placeholder="Street" />
+          <div class="form-row">
+            <!--show in single line-->
+            <div class="form-group col-md-6">
+              <div class="location-icon"></div>
+              <input type="text" class="form-control" placeholder="Street" />
+            </div>
+            <div class="form-group col-md-6">
+              <div class="location-icon"></div>
+              <input type="text" class="form-control" placeholder="City" />
+            </div>
           </div>
-          <div class="form-group">
-            <div class="location-icon"></div>
-            <input type="text" class="form-control" placeholder="City" />
-          </div>
+
           <div class="form-group">
             <div class="phone-icon"></div>
             <input type="text" class="form-control" placeholder="Phone" />
           </div>
 
-          <div class="form-group">
-            <div class="password-icon"></div>
-            <input
-              type="password"
-              class="form-control"
-              id="pass1"
-              placeholder="Password"
-            />
-          </div>
-          <div class="form-group">
-            <div class="password-icon"></div>
-            <input
-              type="password"
-              class="form-control pass2"
-              placeholder="Confirm password"
-            />
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <div class="password-icon"></div>
+              <input
+                type="password"
+                class="form-control"
+                id="pass1"
+                placeholder="Password"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <div class="password-icon"></div>
+              <input
+                type="password"
+                class="form-control pass2"
+                placeholder="Confirm password"
+              />
+            </div>
           </div>
 
           <button type="submit" class="btn btn-success">Register</button>

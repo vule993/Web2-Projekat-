@@ -1,10 +1,12 @@
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { Offer } from "../models/offer.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class OffersService {
+  offerSelected = new EventEmitter<Offer>();
+
   constructor() {}
 
   getOffers(): Array<Offer> {
@@ -45,6 +47,8 @@ export class OffersService {
 
     return newOffers;
   }
+
+  /*********METHODS*********/
 
   loadOffers() {
     return this.getOffers();
