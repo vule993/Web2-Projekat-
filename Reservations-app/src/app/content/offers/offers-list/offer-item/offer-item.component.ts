@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Offer } from "src/app/models/offer.model";
+import { OffersService } from "src/app/services/offers.service";
 
 @Component({
   selector: "app-offer-item",
@@ -8,17 +9,16 @@ import { Offer } from "src/app/models/offer.model";
 })
 export class OfferItemComponent implements OnInit {
   @Input() offer: Offer;
-  @Output() offerSelected = new EventEmitter<void>();
+
   selectedLink: string = "overview";
 
-  constructor() {}
+  constructor(private offerService: OffersService) {}
 
   ngOnInit(): void {}
 
   //method for book it button
-  //here I will emit my own event to parent component (offer-list).
   onSelected() {
-    this.offerSelected.emit();
+    this.offerService.offerSelected.emit(this.offer);
   }
 
   activateOverview() {

@@ -62,18 +62,16 @@
   background-image: url("../../../assets/site/icons/phone.png");
   background-size: cover;
 }
-/*  */
+
 .form-group input {
   height: 40px;
   border-radius: 5px;
 
   font-size: 14px;
-  /* letter-spacing: 1.5px; */
   padding-left: 54px;
   border: 2px solid #3f2b96;
   background-color: white;
   color: black;
-  /* font-weight: bold; */
 }
 
 .form-group::before {
@@ -91,14 +89,6 @@
   width: 40%;
   margin: 5px 0 25px;
 }
-
-/* .btn-success {
-  background-color: #3f2b96;
-  font-size: 19px;
-  border-radius: 5px;
-  padding: 7px 14px;
-  border: 1px solid #daf1ff;
-} */
 
 .btn-success:hover {
   border: 1px solid #daf1ff;
