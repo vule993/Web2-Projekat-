@@ -5,6 +5,7 @@ import { RegisterComponent } from "./content/register/register.component";
 import { ContentComponent } from "./content/content.component";
 import { ProfileComponent } from "./content/profile/profile.component";
 import { OffersComponent } from "./content/offers/offers.component";
+import { AdminPanelComponent } from "./content/admin-panel/admin-panel.component";
 import { ArchiveDataListComponent } from "./content/profile/archive-data-list/archive-data-list.component";
 import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
 import { ReservationsDataListComponent } from "./content/profile/reservations-data-list/reservations-data-list.component";
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
+  { path: "admin-panel", component: AdminPanelComponent },
   { path: "profile", redirectTo: "profile/friends", pathMatch: "full" },
   {
     path: "profile",
@@ -25,13 +27,13 @@ const routes: Routes = [
       { path: "friends", component: FriendsDataListComponent },
       { path: "archive", component: ArchiveDataListComponent },
       { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent }
-    ]
-  }
+      { path: "edit-profile", component: EditProfileComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
