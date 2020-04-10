@@ -21,6 +21,7 @@ import { EditProfileComponent } from "./content/profile/edit-profile/edit-profil
 import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
 import { OfferDetailComponent } from "./content/offers/offer-detail/offer-detail.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CompaniesComponent } from './content/companies/companies.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     ArchiveDataListComponent,
     ReservationsDataListComponent,
     EditProfileComponent,
-    OfferDetailComponent
+    OfferDetailComponent,
+    CompaniesComponent
   ],
   imports: [
     BrowserModule,

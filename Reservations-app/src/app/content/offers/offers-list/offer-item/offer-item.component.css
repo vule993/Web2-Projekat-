@@ -30,3 +30,8 @@ ul li a {
   font-weight: bold;
   cursor: auto;
 }
+
+.btn {
+  text-align: center;
+  height: 2.7vw;
+}
