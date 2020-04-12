@@ -21,7 +21,9 @@ import { EditProfileComponent } from "./content/profile/edit-profile/edit-profil
 import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
 import { OfferDetailComponent } from "./content/offers/offer-detail/offer-detail.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CompaniesComponent } from './content/companies/companies.component';
+import { CompaniesComponent } from "./content/companies/companies.component";
+import { CarsListComponent } from "./content/companies/cars-list/cars-list.component";
+import { CarItemComponent } from './content/companies/cars-list/car-item/car-item.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { CompaniesComponent } from './content/companies/companies.component';
     ReservationsDataListComponent,
     EditProfileComponent,
     OfferDetailComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    CarsListComponent,
+    CarItemComponent
   ],
   imports: [
     BrowserModule,
