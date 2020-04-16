@@ -12,6 +12,13 @@ import { ReservationsDataListComponent } from "./content/profile/reservations-da
 import { FriendsDataListComponent } from "./content/profile/friends-data-list/friends-data-list.component";
 import { HomeComponent } from "./content/home/home.component";
 import { CompaniesComponent } from "./content/companies/companies.component";
+import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin-flights.component";
+import { EditAvioProfileComponent } from "./content/admin-panel/admin-flights/edit-avio-profile/edit-avio-profile.component";
+import { EditDestinationsComponent } from "./content/admin-panel/admin-flights/edit-destinations/edit-destinations.component";
+import { EditFlightsComponent } from "./content/admin-panel/admin-flights/edit-flights/edit-flights.component";
+import { EditDiscountComponent } from "./content/admin-panel/admin-flights/edit-discount/edit-discount.component";
+import { EditSeatsComponent } from "./content/admin-panel/admin-flights/edit-seats/edit-seats.component";
+import { EditPricesComponent } from "./content/admin-panel/admin-flights/edit-prices/edit-prices.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "profile/friends", pathMatch: "full" },
@@ -29,13 +36,34 @@ const routes: Routes = [
       { path: "friends", component: FriendsDataListComponent },
       { path: "archive", component: ArchiveDataListComponent },
       { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent }
-    ]
-  }
+      { path: "edit-profile", component: EditProfileComponent },
+    ],
+  },
+  {
+    path: "admin",
+    component: AdminPanelComponent,
+    children: [
+      {
+        path: "avio",
+        component: AdminFlightsComponent,
+        children: [
+          { path: "edit-profile", component: EditAvioProfileComponent },
+          { path: "destinations", component: EditDestinationsComponent },
+          { path: "flights", component: EditFlightsComponent },
+          { path: "discount", component: EditDiscountComponent },
+          { path: "seat-config", component: EditSeatsComponent },
+          { path: "price-list", component: EditPricesComponent },
+        ],
+      },
+      { path: "archive", component: ArchiveDataListComponent },
+      { path: "reservations", component: ReservationsDataListComponent },
+      { path: "edit-profile", component: EditProfileComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

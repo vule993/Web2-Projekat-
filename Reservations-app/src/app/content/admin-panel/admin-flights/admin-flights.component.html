@@ -2,62 +2,45 @@
   <div id="admin-side-nav" class="fleft">
     <ul>
       <li>
-        <img src="../../assets/site/icons/home-white.png" class="fleft" />
-        <a routerLink="home" class="fleft">COMPANY PROFILE</a>
+        <a routerLink="edit-profile" class="overflow-hidden">
+          <img src="../../assets/site/icons/home-white.png" class="fleft" />
+          <span class="fleft">AVIOCOMPANY PROFILE</span>
+        </a>
       </li>
       <li class="border-separators">
-        <img src="../../assets/site/icons/plane-white.png" class="fleft" />
-        <a routerLink="flights" class="fleft">DESTINATIONS</a>
+        <a routerLink="destinations" class="overflow-hidden">
+          <img src="../../assets/site/icons/plane-white.png" class="fleft" />
+          <span class="fleft">DESTINATIONS</span>
+        </a>
       </li>
       <li>
-        <img src="../../assets/site/icons/car-white.png" class="fleft" />
-        <a routerLink="" class="fleft">FLIGHTS</a>
+        <a routerLink="flights" class="overflow-hidden">
+          <img src="../../assets/site/icons/car-white.png" class="fleft" />
+          <span class="fleft">FLIGHTS</span>
+        </a>
       </li>
 
       <li>
-        <img src="../../assets/site/icons/home-white.png" class="fleft" />
-        <a routerLink="home" class="fleft">DISCOUNT</a>
+        <a routerLink="discount" class="overflow-hidden">
+          <img src="../../assets/site/icons/home-white.png" class="fleft" />
+          <span class="fleft">DISCOUNT</span>
+        </a>
       </li>
       <li class="border-separators">
-        <img src="../../assets/site/icons/plane-white.png" class="fleft" />
-        <a routerLink="flights" class="fleft">SEAT CONFIGURATION</a>
+        <a routerLink="seat-config" class="overflow-hidden">
+          <img src="../../assets/site/icons/plane-white.png" class="fleft" />
+          <span class="fleft">SEAT CONFIGURATION</span>
+        </a>
       </li>
       <li>
-        <img src="../../assets/site/icons/car-white.png" class="fleft" />
-        <a routerLink="" class="fleft">PRICE LIST</a>
-      </li>
-      <li>
-        <img src="../../assets/site/icons/home-white.png" class="fleft" />
-        <a routerLink="" class="fleft">OTHER</a>
+        <a routerLink="price-list" class="overflow-hidden">
+          <img src="../../assets/site/icons/car-white.png" class="fleft" />
+          <span class="fleft">PRICE LIST</span>
+        </a>
       </li>
     </ul>
   </div>
   <div id="admin-content" class="fright">
-    <div class="col-cm">
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input type="text" class="form-control" placeholder="Naziv" value="" />
-      </div>
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input type="text" class="form-control" placeholder="Adresa" value="" />
-      </div>
-    </div>
-
-    <div class="col-cm">
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Promotivni opis"
-          value=""
-        />
-      </div>
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input type="text" class="form-control" placeholder="" value="" />
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </div>
 </div>

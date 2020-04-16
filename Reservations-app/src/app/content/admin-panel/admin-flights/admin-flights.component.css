@@ -2,9 +2,6 @@
   margin: 0 auto;
   width: 96%;
 }
-.form-group {
-  align-items: center;
-}
 #admin-side-nav {
   width: 20vw;
   border-radius: 0.5vw;
@@ -17,7 +14,7 @@
 }
 #admin-side-nav li {
   overflow: hidden;
-  padding: 1vw;
+
   margin: 1vw;
 }
 #admin-side-nav li img {
@@ -26,11 +23,17 @@
 }
 #admin-side-nav a {
   text-decoration: none;
-  font-size: 0.9vw;
+  font-size: 0.88vw;
+  letter-spacing: 0.12vw;
   display: block;
-  width: 80%;
+  padding: 1vw 0;
+  width: 100%;
   color: #fff;
   margin-left: 1vw;
+}
+#admin-side-nav a span {
+  padding-top: 0.3vw;
+  padding-left: 0.5vw;
 }
 #admin-side-nav li:hover {
   background-color: rgba(255, 255, 255, 0.4);

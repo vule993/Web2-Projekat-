@@ -27,6 +27,12 @@ import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin
 import { from } from "rxjs";
 import { CarsListComponent } from "./content/companies/cars-list/cars-list.component";
 import { CarItemComponent } from "./content/companies/cars-list/car-item/car-item.component";
+import { EditAvioProfileComponent } from "./content/admin-panel/admin-flights/edit-avio-profile/edit-avio-profile.component";
+import { EditDestinationsComponent } from './content/admin-panel/admin-flights/edit-destinations/edit-destinations.component';
+import { EditFlightsComponent } from './content/admin-panel/admin-flights/edit-flights/edit-flights.component';
+import { EditDiscountComponent } from './content/admin-panel/admin-flights/edit-discount/edit-discount.component';
+import { EditSeatsComponent } from './content/admin-panel/admin-flights/edit-seats/edit-seats.component';
+import { EditPricesComponent } from './content/admin-panel/admin-flights/edit-prices/edit-prices.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +56,12 @@ import { CarItemComponent } from "./content/companies/cars-list/car-item/car-ite
     AdminFlightsComponent,
     CarsListComponent,
     CarItemComponent,
+    EditAvioProfileComponent,
+    EditDestinationsComponent,
+    EditFlightsComponent,
+    EditDiscountComponent,
+    EditSeatsComponent,
+    EditPricesComponent,
   ],
   imports: [
     BrowserModule,

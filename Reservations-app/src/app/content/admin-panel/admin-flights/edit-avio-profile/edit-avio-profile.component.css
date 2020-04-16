@@ -1,0 +1,11 @@
+.form-group {
+  align-items: center;
+}
+.form-group .form-control {
+  opacity: 0.8;
+}
+.form-group textarea {
+  height: 20.2vw;
+  min-height: 20.2vw;
+  max-height: 20.2vw;
+}
