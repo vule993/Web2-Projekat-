@@ -21,7 +21,10 @@ import { EditProfileComponent } from "./content/profile/edit-profile/edit-profil
 import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
 import { OfferDetailComponent } from "./content/offers/offer-detail/offer-detail.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CompaniesComponent } from './content/companies/companies.component';
+import { CompaniesComponent } from "./content/companies/companies.component";
+import { AdminPanelComponent } from "./content/admin-panel/admin-panel.component";
+import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin-flights.component";
+import { from } from "rxjs";
 
 @NgModule({
   declarations: [
@@ -40,15 +43,17 @@ import { CompaniesComponent } from './content/companies/companies.component';
     ReservationsDataListComponent,
     EditProfileComponent,
     OfferDetailComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    AdminPanelComponent,
+    AdminFlightsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

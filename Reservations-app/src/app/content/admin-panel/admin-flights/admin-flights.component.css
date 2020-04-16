@@ -1,0 +1,40 @@
+#panel-wrapper {
+  margin: 0 auto;
+  width: 96%;
+}
+.form-group {
+  align-items: center;
+}
+#admin-side-nav {
+  width: 20vw;
+  border-radius: 0.5vw;
+  background-color: #43309a;
+}
+#admin-side-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#admin-side-nav li {
+  overflow: hidden;
+  padding: 1vw;
+  margin: 1vw;
+}
+#admin-side-nav li img {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+#admin-side-nav a {
+  text-decoration: none;
+  font-size: 0.9vw;
+  display: block;
+  width: 80%;
+  color: #fff;
+  margin-left: 1vw;
+}
+#admin-side-nav li:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+#admin-content {
+  width: 74.5vw;
+}
