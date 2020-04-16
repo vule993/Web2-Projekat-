@@ -11,6 +11,7 @@ import { EditProfileComponent } from "./content/profile/edit-profile/edit-profil
 import { ReservationsDataListComponent } from "./content/profile/reservations-data-list/reservations-data-list.component";
 import { FriendsDataListComponent } from "./content/profile/friends-data-list/friends-data-list.component";
 import { HomeComponent } from "./content/home/home.component";
+import { CompaniesComponent } from "./content/companies/companies.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "profile/friends", pathMatch: "full" },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
   { path: "admin-panel", component: AdminPanelComponent },
+  { path: "companies", component: CompaniesComponent },
   { path: "profile", redirectTo: "profile/friends", pathMatch: "full" },
   {
     path: "profile",
@@ -27,13 +29,13 @@ const routes: Routes = [
       { path: "friends", component: FriendsDataListComponent },
       { path: "archive", component: ArchiveDataListComponent },
       { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent },
-    ],
-  },
+      { path: "edit-profile", component: EditProfileComponent }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
