@@ -27,6 +27,7 @@ import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin
 import { from } from "rxjs";
 import { CarsListComponent } from "./content/companies/cars-list/cars-list.component";
 import { CarItemComponent } from "./content/companies/cars-list/car-item/car-item.component";
+import { AdminCarsComponent } from './content/admin-panel/admin-cars/admin-cars.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CarItemComponent } from "./content/companies/cars-list/car-item/car-ite
     AdminFlightsComponent,
     CarsListComponent,
     CarItemComponent,
+    AdminCarsComponent,
   ],
   imports: [
     BrowserModule,
