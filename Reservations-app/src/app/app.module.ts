@@ -27,7 +27,18 @@ import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin
 import { from } from "rxjs";
 import { CarsListComponent } from "./content/companies/cars-list/cars-list.component";
 import { CarItemComponent } from "./content/companies/cars-list/car-item/car-item.component";
-import { AdminCarsComponent } from './content/admin-panel/admin-cars/admin-cars.component';
+import { EditAvioProfileComponent } from "./content/admin-panel/admin-flights/edit-avio-profile/edit-avio-profile.component";
+import { EditDestinationsComponent } from "./content/admin-panel/admin-flights/edit-destinations/edit-destinations.component";
+import { EditFlightsComponent } from "./content/admin-panel/admin-flights/edit-flights/edit-flights.component";
+import { EditDiscountComponent } from "./content/admin-panel/admin-flights/edit-discount/edit-discount.component";
+import { EditSeatsComponent } from "./content/admin-panel/admin-flights/edit-seats/edit-seats.component";
+import { EditPricesComponent } from "./content/admin-panel/admin-flights/edit-prices/edit-prices.component";
+import { AdminCarsComponent } from "./content/admin-panel/admin-cars/admin-cars.component";
+import { EditCarProfileComponent } from './content/admin-panel/admin-cars/edit-car-profile/edit-car-profile.component';
+import { EditCarListComponent } from './content/admin-panel/admin-cars/edit-car-list/edit-car-list.component';
+import { EditCarPricesComponent } from './content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component';
+import { EditCarStatisticsComponent } from './content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component';
+import { EditAdminProfileComponent } from './content/admin-panel/admin-cars/edit-admin-profile/edit-admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -52,14 +63,25 @@ import { AdminCarsComponent } from './content/admin-panel/admin-cars/admin-cars.
     CarsListComponent,
     CarItemComponent,
     AdminCarsComponent,
+    EditAvioProfileComponent,
+    EditDestinationsComponent,
+    EditFlightsComponent,
+    EditDiscountComponent,
+    EditSeatsComponent,
+    EditPricesComponent,
+    EditCarProfileComponent,
+    EditCarListComponent,
+    EditCarPricesComponent,
+    EditCarStatisticsComponent,
+    EditAdminProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    MaterialModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

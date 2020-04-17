@@ -1,56 +1,49 @@
-<div id="panel-wrapper" class="overflow-hidder">
+<div id="panel-wrapper" class="overflow-hidden">
   <div id="admin-side-nav" class="fleft">
     <ul>
       <li class="active">
-        <img src="../../assets/site/icons/home-white.png" class="fleft" />
-        <a routerLink="home" class="fleft">COMPANY PROFILE</a>
+        <a routerLink="edit-company" class="overflow-hidden">
+          <img src="../../assets/site/icons/home-white.png" class="fleft" />
+          <span class="fleft">Company Details</span>
+        </a>
       </li>
 
       <li>
-        <img src="../../assets/site/icons/car-white.png" class="fleft" />
-        <a routerLink="" class="fleft">CARS</a>
+        <a routerLink="cars" class="overflow-hidden">
+          <img src="../../assets/site/icons/car-white.png" class="fleft" />
+          <span class="fleft">Cars</span>
+        </a>
       </li>
 
       <li>
-        <img src="../../assets/site/icons/home-white.png" class="fleft" />
-        <a routerLink="home" class="fleft">PRICE LIST</a>
-      </li>
-      <li class="border-separators">
-        <img src="../../assets/site/icons/plane-white.png" class="fleft" />
-        <a routerLink="flights" class="fleft">STATISTICS</a>
+        <a routerLink="price-list" class="overflow-hidden">
+          <img
+            src="../../../../assets/site/icons/014-shopping-cart.png"
+            class="fleft"
+          />
+          <span class="fleft">Price List</span>
+        </a>
       </li>
       <li>
-        <img src="../../assets/site/icons/car-white.png" class="fleft" />
-        <a routerLink="" class="fleft">EDIT PROFILE</a>
+        <a routerLink="statistics" class="overflow-hidden">
+          <img
+            src="../../../../assets/site/icons/005-settings.png"
+            class="fleft"
+          />
+          <span class="fleft">Statistics</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="admin-profile" class="overflow-hidden">
+          <img src="../../../../assets/face.png" class="fleft" />
+          <span class="fleft">Edit Profile</span>
+        </a>
       </li>
     </ul>
   </div>
-  <div id="admin-content" class="fright">
-    <div class="col-cm">
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input type="text" class="form-control" placeholder="Naziv" value="" />
-      </div>
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input type="text" class="form-control" placeholder="Adresa" value="" />
-      </div>
-    </div>
 
-    <div class="col-cm">
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Promotivni opis"
-          value=""
-        />
-      </div>
-      <div class="form-group">
-        <div class="username-icon"></div>
-        <input type="text" class="form-control" placeholder="" value="" />
-      </div>
-    </div>
+  <!--Car admin komponente se renderuju ovde-->
+  <div id="admin-content" class="fright">
+    <router-outlet></router-outlet>
   </div>
 </div>

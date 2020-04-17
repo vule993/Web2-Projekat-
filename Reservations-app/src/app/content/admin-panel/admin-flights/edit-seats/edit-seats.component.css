@@ -1,0 +1,43 @@
+#data {
+  width: 49vw;
+  /* background-color: red; */
+}
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
+}
+#seat-selector {
+  /* background-color: red; */
+  width: 24.2vw;
+}
+.row {
+  display: flex;
+  margin: 5px 0;
+}
+.row div {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #000;
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+.free-seat {
+  color: wheat;
+  background-color: #43309a;
+}
+.taken-seat {
+  color: #fff;
+  background-color: #f61112;
+}
+.path-margin {
+  margin-right: 20px;
+}

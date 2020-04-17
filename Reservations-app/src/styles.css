@@ -54,3 +54,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.form-group > .form-control {
+  border: 0.15vw solid rgba(63, 43, 150, 1);
+}
