@@ -1,1 +1,144 @@
-<p>edit-car-list works!</p>
+<div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Photo</th>
+        <th scope="col">Mark</th>
+        <th scope="col">Description</th>
+        <th scope="col">Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of companyCars">
+        <td>photo</td>
+        <td>{{ car.mark }}</td>
+        <td>{{ car.description }}</td>
+        <td>{{ car.year }}</td>
+        <td>
+          <button
+            class="btn btn-success"
+            data-toggle="modal"
+            data-target="#carEdit"
+            (click)="editCarModal(car)"
+          >
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!--Edit car modal-->
+
+<div
+  class="modal fade"
+  id="carEdit"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="carEdit"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="carEdit">Edit car</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <form class="form">
+            <!--Mark-->
+            <div class="form-group row">
+              <label
+                for="mark"
+                class="col-md-4 col-form-label badge text-uppercase"
+                >Mark:</label
+              >
+              <div class="col-md-8">
+                {{ carToEdit.mark }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mark"
+                  placeholder="Enter new car type"
+                />
+              </div>
+            </div>
+
+            <!--Description-->
+            <div class="form-group row">
+              <label
+                for="desc"
+                class="col-md-4 col-form-label badge text-uppercase"
+                >Description:</label
+              >
+              <div class="col-md-8">
+                {{ carToEdit.description }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="desc"
+                  placeholder="Enter new car description"
+                />
+              </div>
+            </div>
+
+            <!--Year-->
+            <div class="form-group row">
+              <label
+                for="year"
+                class="col-md-4 col-form-label badge text-uppercase"
+                >Year:</label
+              >
+              <div class="col-md-8">
+                {{ carToEdit.year }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="year"
+                  placeholder="Enter year"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <button
+            type="button"
+            (click)="updateCar()"
+            class="btn btn-primary"
+            data-dismiss="modal"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
