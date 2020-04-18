@@ -2,7 +2,7 @@ export class Car {
   constructor(
     public description: string,
     public mark: string,
-    public year: string,
+    public year: number,
     public seats: number,
     public price: number,
     public rating: number

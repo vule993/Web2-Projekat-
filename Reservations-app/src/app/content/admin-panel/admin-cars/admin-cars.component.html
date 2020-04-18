@@ -1,0 +1,49 @@
+<div id="panel-wrapper" class="overflow-hidden">
+  <div id="admin-side-nav" class="fleft">
+    <ul>
+      <li routerLinkActive="active">
+        <a routerLink="edit-company" class="overflow-hidden">
+          <img src="../../assets/site/icons/home-white.png" class="fleft" />
+          <span class="fleft">COMPANY DETAILS</span>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="cars" class="overflow-hidden">
+          <img src="../../assets/site/icons/car-white.png" class="fleft" />
+          <span class="fleft">CARS</span>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="price-list" class="overflow-hidden">
+          <img
+            src="../../../../assets/site/icons/014-shopping-cart.png"
+            class="fleft"
+          />
+          <span class="fleft">PRICE LIST</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="statistics" class="overflow-hidden">
+          <img
+            src="../../../../assets/site/icons/005-settings.png"
+            class="fleft"
+          />
+          <span class="fleft">STATISTICS</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="admin-profile" class="overflow-hidden">
+          <img src="../../../../assets/face.png" class="fleft" />
+          <span class="fleft">EDIT PROFILE</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!--Car admin komponente se renderuju ovde-->
+  <div id="admin-content" class="fright">
+    <router-outlet></router-outlet>
+  </div>
+</div>
