@@ -39,5 +39,6 @@
   background-color: rgba(255, 255, 255, 0.4);
 }
 #admin-content {
+  margin-top: 0.1vw;
   width: 74.5vw;
 }
