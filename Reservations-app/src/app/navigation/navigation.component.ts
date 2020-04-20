@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
+
 declare var $: any;
+
 @Component({
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
-  styleUrls: ["./navigation.component.css"]
+  styleUrls: ["./navigation.component.css"],
 })
 export class NavigationComponent implements OnInit {
   open = true;
@@ -12,12 +14,12 @@ export class NavigationComponent implements OnInit {
 
   onNotificationClick() {
     if (this.notificationsOpen) {
-      $(document).ready(function() {
-        $("#notifications-list").fadeIn("slow", function() {});
+      $(document).ready(function () {
+        $("#notifications-list").fadeIn("slow", function () {});
       });
     } else {
-      $(document).ready(function() {
-        $("#notifications-list").fadeOut("slow", function() {});
+      $(document).ready(function () {
+        $("#notifications-list").fadeOut("slow", function () {});
       });
     }
 

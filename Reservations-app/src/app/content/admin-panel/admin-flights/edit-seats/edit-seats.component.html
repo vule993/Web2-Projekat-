@@ -1,38 +1,145 @@
-<div class="fleft">
-  <div id="seat-selector" class="col_sm_12">
-    <div class="row" *ngFor="let row of rows; let raw_index = index">
-      <div
-        *ngFor="let seat of row.seats; let seat_index = index"
-        class="seat free-seat no-select"
-        [ngClass]="{
-          'path-margin': seat_index === 1 || seat_index === 5,
-          'taken-seat': seat.taken
-        }"
-        (click)="onSeatClick($event)"
-      >
-        {{ seat.seat_no }}
+<div class="wrapper">
+  <div class="fleft">
+    <div id="seat-selector" class="col_sm_12">
+      <div class="row" *ngFor="let row of rows; let raw_index = index">
+        <div
+          *ngFor="let seat of row.seats; let seat_index = index"
+          class="seat free-seat no-select"
+          [ngClass]="{
+            'path-margin':
+              seat_index === segmentsWidth[0] - 1 ||
+              seat_index === segmentsWidth[0] + segmentsWidth[1] - 1 ||
+              seat_index ===
+                segmentsWidth[0] + segmentsWidth[1] + segmentsWidth[2] - 1 ||
+              seat_index ===
+                segmentsWidth[0] +
+                  segmentsWidth[1] +
+                  segmentsWidth[2] +
+                  segmentsWidth[3] -
+                  1,
+            'taken-seat': seat.taken
+          }"
+          (click)="onSeatClick($event)"
+        >
+          {{ seat.seat_no }}
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div id="data" class="fright">
-  <div class="form-group">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Company name"
-      value=""
-    />
+  <div id="data" class="fright">
+    <div
+      *ngIf="displayForm[0]"
+      class="form-group"
+      (input)="configName($event.target.value, 1)"
+    >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Configuration name"
+        value=""
+      />
+    </div>
+
+    <div
+      *ngIf="displayForm[1]"
+      class="form-group"
+      (change)="displayNext($event.target.value, 2)"
+    >
+      <select class="form-control">
+        <option value="*">Segments hight</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+      </select>
+    </div>
+
+    <div
+      *ngIf="displayForm[2]"
+      class="form-group"
+      (change)="displayNext($event.target.value, 3)"
+    >
+      <select class="form-control">
+        <option value="*">Number of segments</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+
+    <div
+      *ngIf="displayForm[3]"
+      class="form-group"
+      (change)="displayNext($event.target.value, 4)"
+    >
+      <select class="form-control">
+        <option value="*">Segment one width</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <div
+      *ngIf="displayForm[4]"
+      class="form-group"
+      (change)="displayNext($event.target.value, 5)"
+    >
+      <select class="form-control">
+        <option value="*">Segment two width</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <div
+      *ngIf="displayForm[5]"
+      class="form-group"
+      (change)="displayNext($event.target.value, 6)"
+    >
+      <select class="form-control">
+        <option value="*">Segment three width</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <div
+      *ngIf="displayForm[6]"
+      class="form-group"
+      (change)="displayNext($event.target.value, 7)"
+    >
+      <select class="form-control">
+        <option value="*">Segment four width</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <button class="btn btn-success fright">Save info</button>
   </div>
-
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Address" value="" />
-  </div>
-
-  <div class="form-group">
-    <textarea class="form-control" placeholder="Promo description"></textarea>
-  </div>
-
-  <button class="btn btn-success fright">Save info</button>
 </div>
