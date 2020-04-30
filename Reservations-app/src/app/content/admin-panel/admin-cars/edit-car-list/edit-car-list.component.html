@@ -24,6 +24,11 @@
             Edit
           </button>
         </td>
+        <td>
+          <button type="button" (click)="deleteCar()" class="btn btn-danger">
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -126,7 +131,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <button type="button" class="btn btn-secondary">
             Cancel
           </button>
           <button

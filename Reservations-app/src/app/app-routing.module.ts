@@ -24,7 +24,6 @@ import { EditCarProfileComponent } from "./content/admin-panel/admin-cars/edit-c
 import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-list/edit-car-list.component";
 import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
-import { EditAdminProfileComponent } from "./content/admin-panel/admin-cars/edit-admin-profile/edit-admin-profile.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "profile/friends", pathMatch: "full" },
@@ -68,8 +67,7 @@ const routes: Routes = [
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent },
-          { path: "admin-profile", component: EditAdminProfileComponent }
+          { path: "statistics", component: EditCarStatisticsComponent }
         ]
       },
       { path: "archive", component: ArchiveDataListComponent },

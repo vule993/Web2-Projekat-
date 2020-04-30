@@ -101,3 +101,8 @@
 .forgot a {
   color: #000;
 }
+
+/*validation*/
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

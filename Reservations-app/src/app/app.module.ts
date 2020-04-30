@@ -34,11 +34,11 @@ import { EditDiscountComponent } from "./content/admin-panel/admin-flights/edit-
 import { EditSeatsComponent } from "./content/admin-panel/admin-flights/edit-seats/edit-seats.component";
 import { EditPricesComponent } from "./content/admin-panel/admin-flights/edit-prices/edit-prices.component";
 import { AdminCarsComponent } from "./content/admin-panel/admin-cars/admin-cars.component";
-import { EditCarProfileComponent } from './content/admin-panel/admin-cars/edit-car-profile/edit-car-profile.component';
-import { EditCarListComponent } from './content/admin-panel/admin-cars/edit-car-list/edit-car-list.component';
-import { EditCarPricesComponent } from './content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component';
-import { EditCarStatisticsComponent } from './content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component';
-import { EditAdminProfileComponent } from './content/admin-panel/admin-cars/edit-admin-profile/edit-admin-profile.component';
+import { EditCarProfileComponent } from "./content/admin-panel/admin-cars/edit-car-profile/edit-car-profile.component";
+import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-list/edit-car-list.component";
+import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
+import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -72,14 +72,15 @@ import { EditAdminProfileComponent } from './content/admin-panel/admin-cars/edit
     EditCarProfileComponent,
     EditCarListComponent,
     EditCarPricesComponent,
-    EditCarStatisticsComponent,
-    EditAdminProfileComponent
+    EditCarStatisticsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
