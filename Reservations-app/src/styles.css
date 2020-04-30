@@ -38,14 +38,14 @@ body {
 .transparent {
   opacity: 0;
 }
-.btn {
+.btn-success {
   background: rgba(63, 43, 150, 0.8) !important;
   height: 2.8vw;
   font-size: 1vw;
   padding: 0;
 }
 
-.btn:hover {
+.btn-success:hover {
   opacity: 0.85;
 }
 

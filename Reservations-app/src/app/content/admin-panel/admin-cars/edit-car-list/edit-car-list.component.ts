@@ -52,4 +52,8 @@ export class EditCarListComponent implements OnInit {
     this.companyCars[index].description = description;
     this.companyCars[index].year = +year;
   }
+
+  deleteCar() {
+    this.companyCars.splice(this.companyCars.indexOf(this.carToEdit));
+  }
 }

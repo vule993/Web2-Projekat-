@@ -70,4 +70,8 @@ export class UsersService {
   loadAllUsers() {
     return this.allUsers();
   }
+
+  registerUser(user: User) {
+    this.allUsers().push(user);
+  }
 }
