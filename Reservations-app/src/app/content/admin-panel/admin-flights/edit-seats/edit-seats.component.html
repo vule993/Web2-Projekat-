@@ -31,7 +31,7 @@
     <div
       *ngIf="displayForm[0]"
       class="form-group"
-      (input)="configName($event.target.value, 1)"
+      (input)="configName($event, 1)"
     >
       <input
         type="text"
@@ -44,7 +44,7 @@
     <div
       *ngIf="displayForm[1]"
       class="form-group"
-      (change)="displayNext($event.target.value, 2)"
+      (change)="displayNext($event, 2)"
     >
       <select class="form-control">
         <option value="*">Segments hight</option>
@@ -69,7 +69,7 @@
     <div
       *ngIf="displayForm[2]"
       class="form-group"
-      (change)="displayNext($event.target.value, 3)"
+      (change)="displayNext($event, 3)"
     >
       <select class="form-control">
         <option value="*">Number of segments</option>
@@ -83,7 +83,7 @@
     <div
       *ngIf="displayForm[3]"
       class="form-group"
-      (change)="displayNext($event.target.value, 4)"
+      (change)="displayNext($event, 4)"
     >
       <select class="form-control">
         <option value="*">Segment one width</option>
@@ -98,7 +98,7 @@
     <div
       *ngIf="displayForm[4]"
       class="form-group"
-      (change)="displayNext($event.target.value, 5)"
+      (change)="displayNext($event, 5)"
     >
       <select class="form-control">
         <option value="*">Segment two width</option>
@@ -113,7 +113,7 @@
     <div
       *ngIf="displayForm[5]"
       class="form-group"
-      (change)="displayNext($event.target.value, 6)"
+      (change)="displayNext($event, 6)"
     >
       <select class="form-control">
         <option value="*">Segment three width</option>
@@ -128,7 +128,7 @@
     <div
       *ngIf="displayForm[6]"
       class="form-group"
-      (change)="displayNext($event.target.value, 7)"
+      (change)="displayNext($event, 7)"
     >
       <select class="form-control">
         <option value="*">Segment four width</option>

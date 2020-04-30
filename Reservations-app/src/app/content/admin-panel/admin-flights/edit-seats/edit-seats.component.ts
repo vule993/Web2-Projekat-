@@ -33,16 +33,39 @@ export class EditSeatsComponent implements OnInit {
     if (value !== "") {
       this.displayForm[next] = true;
     } else {
+      this.rows = [];
       for (let i = next; i < this.fieldsNo; i++) {
         this.displayForm[i] = false;
       }
     }
   }
-  displayNext(value, next) {
-    let current = next - 1;
-
+  displayNext(element, next) {
+    let value = element.target.value;
+    this.rows = [];
     //ovde obradjujemo select-e
     if (isNaN(value)) {
+      if (next === 2) {
+        this.segmentsHeight = 0;
+      }
+      if (next === 3) {
+        this.segmentsCount = 0;
+      }
+      if (next === 4) {
+        this.segmentsWidth[0] = 0;
+        this.seats_per_row = this.segmentsWidth.reduce((a, b) => a + b, 0);
+      }
+      if (next === 5) {
+        this.segmentsWidth[1] = 0;
+        this.seats_per_row = this.segmentsWidth.reduce((a, b) => a + b, 0);
+      }
+      if (next === 6) {
+        this.segmentsWidth[2] = 0;
+        this.seats_per_row = this.segmentsWidth.reduce((a, b) => a + b, 0);
+      }
+      if (next === 7) {
+        this.segmentsWidth[3] = 0;
+        this.seats_per_row = this.segmentsWidth.reduce((a, b) => a + b, 0);
+      }
       for (let i = next; i <= this.fieldsNo; i++) {
         this.displayForm[i] = false;
       }
@@ -53,6 +76,12 @@ export class EditSeatsComponent implements OnInit {
       }
       if (next === 3) {
         this.segmentsCount = parseInt(value);
+        for (let i = 3; i < 7; i++) {
+          this.displayForm[i] = false;
+          this.segmentsWidth[i - 3] = 0;
+          //element.target.value = "Number of segments";
+        }
+        this.seats_per_row = this.segmentsWidth.reduce((a, b) => a + b, 0);
       }
       if (next === 4) {
         this.segmentsWidth[0] = parseInt(value);
@@ -71,17 +100,17 @@ export class EditSeatsComponent implements OnInit {
         this.seats_per_row = this.segmentsWidth.reduce((a, b) => a + b, 0);
       }
 
-      //iscrtavam raspored sedista
-      for (let i = 0; i < this.segmentsHeight; i++) {
-        this.rows[i] = new Row();
-        for (let j = 0; j < this.seats_per_row; j++) {
-          this.rows[i].seats[j] = new Seat(i * this.seats_per_row + j + 1);
-        }
-      }
-
       //prikazujem sledeci
       if (next < 3 + this.segmentsCount) {
         this.displayForm[next] = true;
+      }
+    }
+
+    //iscrtavam raspored sedista
+    for (let i = 0; i < this.segmentsHeight; i++) {
+      this.rows[i] = new Row();
+      for (let j = 0; j < this.seats_per_row; j++) {
+        this.rows[i].seats[j] = new Seat(i * this.seats_per_row + j + 1);
       }
     }
   }
