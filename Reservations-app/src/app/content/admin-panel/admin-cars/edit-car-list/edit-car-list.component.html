@@ -10,7 +10,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let car of companyCars">
-        <td>photo</td>
+        <td>
+          <img
+            src="../../../../../assets/logo.PNG"
+            class="img-responsive"
+            style="width: 5vw; height: 5vh;"
+            alt=""
+          />
+        </td>
         <td>{{ car.mark }}</td>
         <td>{{ car.description }}</td>
         <td>{{ car.year }}</td>
