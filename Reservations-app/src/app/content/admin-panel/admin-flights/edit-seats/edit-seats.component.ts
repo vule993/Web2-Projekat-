@@ -20,7 +20,7 @@ export class EditSeatsComponent implements OnInit {
   row_no = 0;
   seats_per_row = 0;
 
-  animation_length = 2000;
+  animation_length = 750;
   d = 17;
   measure_unit = "vw";
   current_position = 0;
