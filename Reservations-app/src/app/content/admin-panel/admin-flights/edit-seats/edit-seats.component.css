@@ -3,7 +3,6 @@
   /* background-color: forestgreen; */
 }
 .wrapper > div {
-  width: 36.5vw;
   overflow: hidden;
   margin: 0 auto;
   /* background-color: rebeccapurple; */
@@ -23,6 +22,7 @@
 }
 #seat-selector {
   margin: 0 auto;
+  min-height: 20vw;
 }
 .row {
   display: flex;
@@ -49,4 +49,87 @@
 }
 .path-margin {
   margin-right: 1.8vw;
+}
+
+/*existing configs*/
+
+#existing-configs {
+  width: 74vw;
+}
+#existing-configs h3 {
+  color: #43309a;
+}
+#existing-configs slider {
+  overflow: hidden;
+}
+.row-container {
+  width: 68vw;
+  height: 10vw;
+  overflow: hidden;
+  background-color: red;
+}
+.klizac a > div {
+  width: 17vw;
+  height: 10vw;
+  background-color: #fff;
+  border: 2px solid #43309a;
+  border-radius: 0.5vw;
+}
+
+.arrow {
+  width: 3vw;
+  height: 3vw;
+}
+.l-arrow {
+  background-image: url("../../../../../assets/site/icons/l_arrow.png");
+  background-size: cover;
+}
+.l-arrow:hover {
+  background-image: url("../../../../../assets/site/icons/l_arrow_hover.png");
+  background-size: cover;
+}
+.r-arrow {
+  background-image: url("../../../../../assets/site/icons/r_arrow.png");
+  background-size: cover;
+}
+
+.r-arrow:hover {
+  background-image: url("../../../../../assets/site/icons/r_arrow_hover.png");
+  background-size: cover;
+}
+
+.slide_show1 {
+  overflow: hidden;
+}
+.nosac {
+  overflow: hidden;
+  margin: 0 auto;
+  width: 68vw;
+  height: 20vw;
+  position: relative;
+  float: left;
+  /*background-color: #dbeff6;*/
+}
+
+/*
+#005A31
+#A8CD1B
+#CBE32D
+#F3FAB6
+*/
+
+.klizac {
+  width: 500vw;
+  height: 20vw;
+  /*background-color: #dbeff6;*/
+  position: absolute;
+  left: 0vw;
+  overflow: hidden;
+}
+.klizac > a {
+  color: #000;
+}
+.klik {
+  float: left;
+  margin-top: 4vw;
 }

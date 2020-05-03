@@ -7,15 +7,15 @@
           class="seat free-seat no-select"
           [ngClass]="{
             'path-margin':
-              seat_index === segmentsWidth[0] - 1 ||
-              seat_index === segmentsWidth[0] + segmentsWidth[1] - 1 ||
+              seat_index === formValues[2] - 1 ||
+              seat_index === formValues[2] + formValues[3] - 1 ||
               seat_index ===
-                segmentsWidth[0] + segmentsWidth[1] + segmentsWidth[2] - 1 ||
+                formValues[2] + formValues[3] + formValues[4] - 1 ||
               seat_index ===
-                segmentsWidth[0] +
-                  segmentsWidth[1] +
-                  segmentsWidth[2] +
-                  segmentsWidth[3] -
+                formValues[2] +
+                  formValues[3] +
+                  formValues[4] +
+                  formValues[5] -
                   1,
             'taken-seat': seat.taken
           }"
@@ -28,11 +28,7 @@
   </div>
 
   <div id="data" class="fright">
-    <div
-      *ngIf="displayForm[0]"
-      class="form-group"
-      (input)="configName($event, 1)"
-    >
+    <div class="form-group" (input)="configName($event, 0)">
       <input
         type="text"
         class="form-control"
@@ -42,12 +38,12 @@
     </div>
 
     <div
-      *ngIf="displayForm[1]"
+      *ngIf="displayForm[0]"
       class="form-group"
-      (change)="displayNext($event, 2)"
+      (change)="displayNext($event, 1)"
     >
-      <select class="form-control">
-        <option value="*">Segments hight</option>
+      <select id="formId0" class="form-control">
+        <option value="*">Segments height</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -67,11 +63,11 @@
     </div>
 
     <div
-      *ngIf="displayForm[2]"
+      *ngIf="displayForm[1]"
       class="form-group"
-      (change)="displayNext($event, 3)"
+      (change)="displayNext($event, 2)"
     >
-      <select class="form-control">
+      <select id="formId1" class="form-control">
         <option value="*">Number of segments</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -81,12 +77,27 @@
     </div>
 
     <div
+      *ngIf="displayForm[2]"
+      class="form-group"
+      (change)="displayNext($event, 3)"
+    >
+      <select id="formId2" class="form-control">
+        <option value="*">Segment one width</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+
+    <div
       *ngIf="displayForm[3]"
       class="form-group"
       (change)="displayNext($event, 4)"
     >
-      <select class="form-control">
-        <option value="*">Segment one width</option>
+      <select id="formId3" class="form-control">
+        <option value="*">Segment two width</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -100,8 +111,8 @@
       class="form-group"
       (change)="displayNext($event, 5)"
     >
-      <select class="form-control">
-        <option value="*">Segment two width</option>
+      <select id="formId4" class="form-control">
+        <option value="*">Segment three width</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -115,22 +126,7 @@
       class="form-group"
       (change)="displayNext($event, 6)"
     >
-      <select class="form-control">
-        <option value="*">Segment three width</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-    </div>
-
-    <div
-      *ngIf="displayForm[6]"
-      class="form-group"
-      (change)="displayNext($event, 7)"
-    >
-      <select class="form-control">
+      <select id="formId5" class="form-control">
         <option value="*">Segment four width</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -141,5 +137,47 @@
     </div>
 
     <button class="btn btn-success fright">Save info</button>
+  </div>
+
+  <div id="existing-configs" class="clear">
+    <h3>Existing seat configurations:</h3>
+    <div class="slide_show">
+      <img
+        src="../../../../../assets/site/icons/l_arrow.png"
+        class="klik"
+        (click)="prev()"
+        width="30"
+      />
+      <div class="nosac">
+        <div class="klizac">
+          <a class="fleft overflow-hidden"><div></div></a>
+          <a class="fleft overflow-hidden"><div></div></a>
+          <a class="fleft overflow-hidden">
+            <div></div>
+          </a>
+          <a class="fleft overflow-hidden">
+            <div></div>
+          </a>
+          <a class="fleft overflow-hidden">
+            <div></div>
+          </a>
+          <a class="fleft overflow-hidden">
+            <div></div>
+          </a>
+          <a class="fleft overflow-hidden">
+            <div></div>
+          </a>
+          <a class="fleft overflow-hidden">
+            <div></div>
+          </a>
+        </div>
+      </div>
+      <img
+        src="../../../../../assets/site/icons/r_arrow.png"
+        class="klik"
+        (click)="next()"
+        width="30"
+      />
+    </div>
   </div>
 </div>
