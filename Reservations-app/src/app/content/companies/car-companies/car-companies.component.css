@@ -2,7 +2,6 @@
   position: absolute;
   transform: scale(1, 1);
 }
-
 .carousel-control-prev {
   width: 2rem;
   background: rgb(49, 8, 230);

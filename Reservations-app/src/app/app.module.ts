@@ -25,8 +25,7 @@ import { CompaniesComponent } from "./content/companies/companies.component";
 import { AdminPanelComponent } from "./content/admin-panel/admin-panel.component";
 import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin-flights.component";
 import { from } from "rxjs";
-import { CarsListComponent } from "./content/companies/cars-list/cars-list.component";
-import { CarItemComponent } from "./content/companies/cars-list/car-item/car-item.component";
+
 import { EditAvioProfileComponent } from "./content/admin-panel/admin-flights/edit-avio-profile/edit-avio-profile.component";
 import { EditDestinationsComponent } from "./content/admin-panel/admin-flights/edit-destinations/edit-destinations.component";
 import { EditFlightsComponent } from "./content/admin-panel/admin-flights/edit-flights/edit-flights.component";
@@ -39,6 +38,9 @@ import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-
 import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
+import { CarCompanyProfileComponent } from "./content/companies/car-company-profile/car-company-profile.component";
+import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
 
 @NgModule({
   declarations: [
@@ -60,8 +62,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     CompaniesComponent,
     AdminPanelComponent,
     AdminFlightsComponent,
-    CarsListComponent,
-    CarItemComponent,
+
     AdminCarsComponent,
     EditAvioProfileComponent,
     EditDestinationsComponent,
@@ -72,7 +73,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     EditCarProfileComponent,
     EditCarListComponent,
     EditCarPricesComponent,
-    EditCarStatisticsComponent
+    EditCarStatisticsComponent,
+    CarCompaniesComponent,
+
+    CarCompanyProfileComponent,
+    CompaniesPageComponent
   ],
   imports: [
     BrowserModule,

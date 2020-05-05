@@ -25,6 +25,9 @@ import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-
 import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 
+import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
+import { CarCompanyProfileComponent } from "./content/companies/car-company-profile/car-company-profile.component";
+
 const routes: Routes = [
   { path: "", redirectTo: "profile/friends", pathMatch: "full" },
   { path: "home", component: HomeComponent },
@@ -32,7 +35,17 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
   { path: "admin-panel", component: AdminPanelComponent },
-  { path: "companies", component: CompaniesComponent },
+  {
+    path: "companies",
+    component: CompaniesComponent,
+    children: [
+      { path: "", component: CompaniesPageComponent },
+      {
+        path: "car-company/:id",
+        component: CarCompanyProfileComponent
+      }
+    ]
+  },
   { path: "profile", redirectTo: "profile/friends", pathMatch: "full" },
   {
     path: "profile",
