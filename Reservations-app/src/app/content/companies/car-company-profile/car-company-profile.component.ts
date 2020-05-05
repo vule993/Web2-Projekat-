@@ -6,7 +6,10 @@ import { ActivatedRoute, Params } from "@angular/router";
 @Component({
   selector: "app-car-company-profile",
   templateUrl: "./car-company-profile.component.html",
-  styleUrls: ["./car-company-profile.component.css"]
+  styleUrls: [
+    "./car-company-profile.component.css",
+    "../../profile/profile.component.css"
+  ]
 })
 export class CarCompanyProfileComponent implements OnInit {
   carCompany: CarCompany;

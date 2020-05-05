@@ -1,1 +1,152 @@
 <!--TODO: napraviti dinamicnu profil stranicu za carCompany-->
+
+<!-- <div class="profile">
+  <div id="pr-panel" class="fright">
+    <h3>{{ carCompany.name }}</h3>
+    <hr />
+    <h3>{{ carCompany.address }}</h3>
+    <hr />
+    <h3>{{ carCompany.description }}</h3>
+    <hr />
+    <h3>{{ carCompany.rating }}</h3>
+    <hr />
+    <img src="{{ carCompany.thumbnail }}" class="company-pic" alt="" />
+    <hr />
+    <span>Our cars:</span>
+  </div>
+</div> -->
+
+<!--- Landing Page -->
+<div id="home">
+  <div class="landing">
+    <div class="home-wrap">
+      <div class="home-inner"></div>
+    </div>
+  </div>
+
+  <div class="caption text-center">
+    <h1>{{ carCompany.name }}</h1>
+    <h3>{{ carCompany.description }}</h3>
+    <a class="btn btn-outline-light btn-lg">Drive with us</a>
+  </div>
+</div>
+<!--- End of Landing Page Section -->
+
+<!--Services Section-->
+<div id="services" class="offset">
+  <div class="jumbotron">
+    <div class="narrow text-center">
+      <div class="col-12">
+        <h3 class="heading">Services</h3>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="row text-center">
+        <!--Usluga #1-->
+        <div class="col-md-4">
+          <div class="usluga">
+            <i
+              class="far fa-lightbulb fa-4x"
+              data-fa-transform="shrink-3 up-5"
+            ></i>
+            <h3>Booking car</h3>
+          </div>
+        </div>
+
+        <!--Usluga #2-->
+        <div class="col-md-4">
+          <div class="usluga">
+            <i class="fas fa-car fa-4x" data-fa-transform="shrink-3 up-5"></i>
+            <h3>Car Insurance</h3>
+          </div>
+        </div>
+
+        <!--Usluga #3-->
+        <div class="col-md-4">
+          <div class="usluga">
+            <i class="fas fa-cogs fa-4x" data-fa-transform="shrink-3 up-5"></i>
+            <h3>Cheap Prices</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--End of Services Section-->
+
+<!--About Section-->
+<div id="about" class="offset">
+  <div class="fixed-background">
+    <div class="row purple text-center">
+      <div class="col-12">
+        <h3 class="heading">Our Cars</h3>
+      </div>
+
+      <div class="col-md-12">
+        <div>
+          <table class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Mark</th>
+                <th scope="col">Description</th>
+                <th scope="col">Year</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Seats</th>
+                <th scope="col">Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let car of carCompany.cars">
+                <td>
+                  <img
+                    src="{{ car.image }}"
+                    class="img-responsive"
+                    style="width: 5vw; height: 5vh;"
+                    alt="slika auta"
+                  />
+                </td>
+                <td>{{ car.mark }}</td>
+                <td>{{ car.description }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.rating }}</td>
+                <td>{{ car.seats }}</td>
+                <td>{{ car.price }}$</td>
+                <td>
+                  <button class="btn btn-success">
+                    Book Me
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="fixed-wrap">
+      <div class="fixed"></div>
+    </div> -->
+  </div>
+</div>
+
+<!--End of About Section-->
+
+<!--Contact Section-->
+<div id="contact" class="offset">
+  <div class="jumbotron">
+    <footer>
+      <div class="row justify-content-center">
+        <div class="col-md-5 text-center">
+          <strong>Contact us</strong>
+          <p>Address: {{ carCompany.address }}</p>
+          <span>Ovde moze ici google mapa sa obelezenom adresom</span>
+        </div>
+        <!-- <hr class="socket" />
+      &copy; Aleksandar 2019 -->
+      </div>
+    </footer>
+  </div>
+</div>
