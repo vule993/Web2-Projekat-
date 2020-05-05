@@ -72,36 +72,14 @@
   width: 17vw;
   height: 10vw;
   background-color: #fff;
-  border: 2px solid #43309a;
+  border: 0.15vw solid #43309a;
   border-radius: 0.5vw;
 }
 
-.arrow {
-  width: 3vw;
-  height: 3vw;
-}
-.l-arrow {
-  background-image: url("../../../../../assets/site/icons/l_arrow.png");
-  background-size: cover;
-}
-.l-arrow:hover {
-  background-image: url("../../../../../assets/site/icons/l_arrow_hover.png");
-  background-size: cover;
-}
-.r-arrow {
-  background-image: url("../../../../../assets/site/icons/r_arrow.png");
-  background-size: cover;
-}
-
-.r-arrow:hover {
-  background-image: url("../../../../../assets/site/icons/r_arrow_hover.png");
-  background-size: cover;
-}
-
-.slide_show1 {
+.slide_show {
   overflow: hidden;
 }
-.nosac {
+.slide_show .nosac {
   overflow: hidden;
   margin: 0 auto;
   width: 68vw;
@@ -131,5 +109,5 @@
 }
 .klik {
   float: left;
-  margin-top: 4vw;
+  margin-top: 10%;
 }
