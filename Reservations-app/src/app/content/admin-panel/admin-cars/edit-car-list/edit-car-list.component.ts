@@ -17,7 +17,8 @@ export class EditCarListComponent implements OnInit {
       year: 2009,
       seats: 5,
       price: 8500,
-      rating: 4.2
+      rating: 4.2,
+      image: ""
     },
     {
       description:
@@ -26,12 +27,13 @@ export class EditCarListComponent implements OnInit {
       year: 2018,
       seats: 5,
       price: 10000,
-      rating: 4.6
+      rating: 4.6,
+      image: ""
     }
   ];
 
   constructor() {
-    this.carToEdit = new Car("", "", 0, 0, 0, 0);
+    this.carToEdit = new Car("", "", 0, 0, 0, 0, "");
   }
 
   ngOnInit(): void {}

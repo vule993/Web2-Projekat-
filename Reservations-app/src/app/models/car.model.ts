@@ -5,6 +5,7 @@ export class Car {
     public year: number,
     public seats: number,
     public price: number,
-    public rating: number
+    public rating: number,
+    public image: string
   ) {}
 }

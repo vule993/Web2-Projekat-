@@ -6,11 +6,19 @@
 >
   <div class="carousel-inner">
     <!--Slider1-->
+
     <div class="carousel-item active">
       <div class="row">
-        <div class="col-3" *ngFor="let company of companies">
-          <a href="" class="slider-item">
-            <img src="{{ company.thumbnail }}" class="d-block w-100" alt="" />
+        <div
+          class="col-3"
+          *ngFor="let carCompanyEl of carCompanies; let i = index"
+        >
+          <a [routerLink]="['car-company', i]" class="slider-item">
+            <img
+              src="{{ carCompanyEl.thumbnail }}"
+              class="d-block w-100"
+              alt="car-company image"
+            />
           </a>
         </div>
       </div>
