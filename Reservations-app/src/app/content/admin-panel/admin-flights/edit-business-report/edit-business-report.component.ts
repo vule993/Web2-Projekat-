@@ -1,15 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { Chart } from "chart.js";
-import { LineToLineMappedSource } from "webpack-sources";
-
 @Component({
-  selector: "app-edit-car-statistics",
-  templateUrl: "./edit-car-statistics.component.html",
-  styleUrls: ["./edit-car-statistics.component.css"],
+  selector: "app-edit-business-report",
+  templateUrl: "./edit-business-report.component.html",
+  styleUrls: ["./edit-business-report.component.css"],
 })
-export class EditCarStatisticsComponent implements OnInit {
+export class EditBusinessReportComponent implements OnInit {
   chart = [];
-
   constructor() {}
 
   ngOnInit(): void {

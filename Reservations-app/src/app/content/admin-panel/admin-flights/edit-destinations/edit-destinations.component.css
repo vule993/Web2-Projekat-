@@ -1,0 +1,16 @@
+.item {
+  background-color: #513f9f;
+  color: #fff;
+  display: inline-block;
+  padding: 0.5vw;
+  margin: 0.2vw 0.3vw;
+}
+.item span {
+  padding: 0 0.5vw;
+  font-size: 1.2vw;
+}
+.item img {
+  width: 1.5vw;
+  height: 1.5vw;
+  margin-top: 0.2vw;
+}

@@ -31,7 +31,7 @@ import { EditDestinationsComponent } from "./content/admin-panel/admin-flights/e
 import { EditFlightsComponent } from "./content/admin-panel/admin-flights/edit-flights/edit-flights.component";
 import { EditDiscountComponent } from "./content/admin-panel/admin-flights/edit-discount/edit-discount.component";
 import { EditSeatsComponent } from "./content/admin-panel/admin-flights/edit-seats/edit-seats.component";
-import { EditPricesComponent } from "./content/admin-panel/admin-flights/edit-prices/edit-prices.component";
+
 import { AdminCarsComponent } from "./content/admin-panel/admin-cars/admin-cars.component";
 import { EditCarProfileComponent } from "./content/admin-panel/admin-cars/edit-car-profile/edit-car-profile.component";
 import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-list/edit-car-list.component";
@@ -69,7 +69,7 @@ import { CompaniesPageComponent } from "./content/companies/companies-page/compa
     EditFlightsComponent,
     EditDiscountComponent,
     EditSeatsComponent,
-    EditPricesComponent,
+
     EditCarProfileComponent,
     EditCarListComponent,
     EditCarPricesComponent,
@@ -77,7 +77,7 @@ import { CompaniesPageComponent } from "./content/companies/companies-page/compa
     CarCompaniesComponent,
 
     CarCompanyProfileComponent,
-    CompaniesPageComponent
+    CompaniesPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,9 +85,9 @@ import { CompaniesPageComponent } from "./content/companies/companies-page/compa
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
