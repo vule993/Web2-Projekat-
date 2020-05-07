@@ -1,8 +1,21 @@
 h2 {
   text-align: center;
-  color: rgb(64, 44, 151);
+  color: #4c3d9e;
 }
 
 h3 {
   color: white;
+}
+
+row {
+  position: relative;
+}
+
+span {
+  position: absolute;
+  top: 10.1vw;
+  left: 13.6vw;
+  font-size: 2vw;
+  color: #4c3d9e;
+  font-weight: bold;
 }
