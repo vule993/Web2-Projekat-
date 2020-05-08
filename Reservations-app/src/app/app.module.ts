@@ -41,6 +41,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-company-profile/car-company-profile.component";
 import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
+import { AirlinesComponent } from './content/companies/airlines/airlines.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { CompaniesPageComponent } from "./content/companies/companies-page/compa
 
     CarCompanyProfileComponent,
     CompaniesPageComponent,
+    AirlinesComponent,
   ],
   imports: [
     BrowserModule,

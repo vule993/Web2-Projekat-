@@ -1,15 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { Seat, Row } from "src/app/models/Seat.model";
 
 declare var $: any;
-
-class Seat {
-  taken = false;
-  constructor(public seat_no: number = -1) {}
-}
-class Row {
-  seats: Seat[] = [];
-  constructor() {}
-}
 
 @Component({
   selector: "app-edit-seats",
