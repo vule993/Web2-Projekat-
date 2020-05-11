@@ -1,0 +1,47 @@
+<div id="admin-side-nav" class="fleft">
+  <ul>
+    <li *ngFor="let link of links" routerLinkActive="active">
+      <a routerLink="{{ link.routerLink }}" class="overflow-hidden">
+        <img src="{{ link.path }}" class="fleft" />
+        <span class="fleft">{{ link.title }}</span>
+      </a>
+    </li>
+    <!-- <li routerLinkActive="active">
+      <a routerLink="edit-profile" class="overflow-hidden">
+        <img src="../../assets/site/icons/home-white.png" class="fleft" />
+        <span class="fleft">AVIOCOMPANY PROFILE</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="destinations" class="overflow-hidden">
+        <img src="../../assets/site/icons/plane-white.png" class="fleft" />
+        <span class="fleft">DESTINATIONS</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="flights" class="overflow-hidden">
+        <img src="../../assets/site/icons/car-white.png" class="fleft" />
+        <span class="fleft">FLIGHTS</span>
+      </a>
+    </li>
+
+    <li routerLinkActive="active">
+      <a routerLink="discount" class="overflow-hidden">
+        <img src="../../assets/site/icons/home-white.png" class="fleft" />
+        <span class="fleft">DISCOUNT</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="seat-config" class="overflow-hidden">
+        <img src="../../assets/site/icons/plane-white.png" class="fleft" />
+        <span class="fleft">SEAT CONFIGURATION</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="business-report" class="overflow-hidden">
+        <img src="../../assets/site/icons/car-white.png" class="fleft" />
+        <span class="fleft">BUSINESS REPORT</span>
+      </a>
+    </li> -->
+  </ul>
+</div>

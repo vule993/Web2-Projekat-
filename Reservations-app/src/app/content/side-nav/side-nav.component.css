@@ -1,0 +1,46 @@
+#admin-side-nav {
+  width: 20vw;
+  border-radius: 0.5vw;
+  background-color: #43309a;
+}
+#admin-side-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#admin-side-nav li {
+  overflow: hidden;
+
+  margin: 1vw;
+}
+#admin-side-nav li img {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+#admin-side-nav a {
+  text-decoration: none;
+  font-size: 0.88vw;
+  letter-spacing: 0.12vw;
+  display: block;
+  padding: 1vw 0;
+  width: 100%;
+  color: #fff;
+  margin-left: 1vw;
+}
+#admin-side-nav a span {
+  padding-top: 0.3vw;
+  padding-left: 0.5vw;
+}
+#admin-side-nav li:hover {
+  border-radius: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+#admin-content {
+  margin-top: 0.1vw;
+  width: 74.5vw;
+}
+
+.active {
+  border-radius: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.15);
+}

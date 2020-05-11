@@ -1,5 +1,5 @@
 <div id="panel-wrapper" class="overflow-hidden">
-  <div id="admin-side-nav" class="fleft">
+  <!-- <div id="admin-side-nav" class="fleft">
     <ul>
       <li routerLinkActive="active">
         <a routerLink="edit-company" class="overflow-hidden">
@@ -34,8 +34,9 @@
         </a>
       </li>
     </ul>
-  </div>
+  </div> -->
 
+  <app-side-nav [links]="links"></app-side-nav>
   <!--Car admin komponente se renderuju ovde-->
   <div id="admin-content" class="fright">
     <router-outlet></router-outlet>

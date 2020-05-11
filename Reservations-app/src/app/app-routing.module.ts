@@ -27,9 +27,11 @@ import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edi
 import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-company-profile/car-company-profile.component";
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
+import { SideNavComponent } from "./content/side-nav/side-nav.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "profile/friends", pathMatch: "full" },
+
   { path: "home", component: HomeComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
@@ -65,6 +67,7 @@ const routes: Routes = [
         path: "avio",
         component: AdminFlightsComponent,
         children: [
+          // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-profile", component: EditAvioProfileComponent },
           { path: "destinations", component: EditDestinationsComponent },
           { path: "flights", component: EditFlightsComponent },
@@ -77,6 +80,7 @@ const routes: Routes = [
         path: "car",
         component: AdminCarsComponent,
         children: [
+          // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
