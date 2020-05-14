@@ -39,10 +39,10 @@ import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-ca
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
-import { CarCompanyProfileComponent } from "./content/companies/car-company-profile/car-company-profile.component";
+import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
-import { AirlinesComponent } from './content/companies/airlines/airlines.component';
-import { SideNavComponent } from './content/side-nav/side-nav.component';
+import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
+import { SideNavComponent } from "./content/side-nav/side-nav.component";
 
 @NgModule({
   declarations: [
@@ -81,7 +81,7 @@ import { SideNavComponent } from './content/side-nav/side-nav.component';
     CarCompanyProfileComponent,
     CompaniesPageComponent,
     AirlinesComponent,
-    SideNavComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,
@@ -89,9 +89,9 @@ import { SideNavComponent } from './content/side-nav/side-nav.component';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -8,7 +8,7 @@ import { ActivatedRoute, Params } from "@angular/router";
   templateUrl: "./car-company-profile.component.html",
   styleUrls: [
     "./car-company-profile.component.css",
-    "../../profile/profile.component.css"
+    "../../../profile/profile.component.css"
   ]
 })
 export class CarCompanyProfileComponent implements OnInit {

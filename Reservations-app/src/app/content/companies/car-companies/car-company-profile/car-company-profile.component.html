@@ -1,21 +1,3 @@
-<!--TODO: napraviti dinamicnu profil stranicu za carCompany-->
-
-<!-- <div class="profile">
-  <div id="pr-panel" class="fright">
-    <h3>{{ carCompany.name }}</h3>
-    <hr />
-    <h3>{{ carCompany.address }}</h3>
-    <hr />
-    <h3>{{ carCompany.description }}</h3>
-    <hr />
-    <h3>{{ carCompany.rating }}</h3>
-    <hr />
-    <img src="{{ carCompany.thumbnail }}" class="company-pic" alt="" />
-    <hr />
-    <span>Our cars:</span>
-  </div>
-</div> -->
-
 <!--- Landing Page -->
 <div id="home">
   <div class="landing">
@@ -28,6 +10,18 @@
     <h1>{{ carCompany.name }}</h1>
     <h3>{{ carCompany.description }}</h3>
     <a class="btn btn-outline-light btn-lg">Drive with us</a>
+
+    <div
+      class="scroll-prompt"
+      scroll-prompt=""
+      ng-show="showPrompt"
+      style="opacity: 1;"
+    >
+      <div class="scroll-prompt-arrow-container">
+        <div class="scroll-prompt-arrow"><div></div></div>
+        <div class="scroll-prompt-arrow"><div></div></div>
+      </div>
+    </div>
   </div>
 </div>
 <!--- End of Landing Page Section -->
@@ -75,7 +69,7 @@
 
 <!--End of Services Section-->
 
-<!--About Section-->
+<!--About Section -> cars section -->
 <div id="about" class="offset">
   <div class="fixed-background">
     <div class="row purple text-center">
@@ -84,9 +78,9 @@
       </div>
 
       <div class="col-md-12">
-        <div>
-          <table class="table table-hover table-condensed">
-            <thead>
+        <div class="table-responsive">
+          <table class="table table-hover table-condensed ">
+            <thead class="thead-dark">
               <tr>
                 <th scope="col">Photo</th>
                 <th scope="col">Mark</th>
@@ -139,10 +133,26 @@
   <div class="jumbotron">
     <footer>
       <div class="row justify-content-center">
-        <div class="col-md-5 text-center">
-          <strong>Contact us</strong>
+        <div class="col-md-12 text-center">
+          <h3 class="heading">Contact Us</h3>
           <p>Address: {{ carCompany.address }}</p>
-          <span>Ovde moze ici google mapa sa obelezenom adresom</span>
+          <hr />
+          <div class="card map-card" style="height: 20vw;">
+            <!--Google map-->
+            <div
+              id="map-container-google-1"
+              class="z-depth-1-half map-container"
+              style="height: 20vw;"
+            >
+              <iframe
+                src="https://maps.google.com/maps?q=Mumbai&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                frameborder="0"
+                style="border:0; height: 100%"
+                class="col-md-12"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
         </div>
         <!-- <hr class="socket" />
       &copy; Aleksandar 2019 -->
