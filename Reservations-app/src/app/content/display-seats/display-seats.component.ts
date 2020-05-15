@@ -45,9 +45,9 @@ export class DisplaySeatsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.data.currentData.subscribe((data) => this.x(data));
+    this.data.currentData.subscribe((data) => this.seatsDataHandler(data));
   }
-  x = function (data) {
+  seatsDataHandler = function (data) {
     this.formValues = data;
     this.displayChanges();
   };
