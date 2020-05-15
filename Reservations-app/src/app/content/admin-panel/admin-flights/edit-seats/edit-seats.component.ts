@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Seat, Row } from "src/app/models/Seat.model";
+import { SeatsConfigService } from "src/app/services/seats-config.service";
 
 declare var $: any;
 
@@ -9,6 +10,7 @@ declare var $: any;
   styleUrls: ["./edit-seats.component.css"],
 })
 export class EditSeatsComponent implements OnInit {
+  //OVAJ TREBA DA EMITUJE
   row_no = 0;
   seats_per_row = 0;
 
@@ -21,10 +23,10 @@ export class EditSeatsComponent implements OnInit {
   fieldsNo = 6;
 
   displayForm = [false, false, false, false, false, false];
-  formValues = [0, 0, 0, 0, 0, 0];
+  formValues: [number, number, number, number, number, number];
   rows = [];
 
-  constructor() {}
+  constructor(private data: SeatsConfigService) {}
 
   configName(value, next) {
     if (value.data !== null) {
@@ -75,19 +77,20 @@ export class EditSeatsComponent implements OnInit {
       this.hideSelects(next, this.fieldsNo);
       this.unsetFormValues(next - 1, this.fieldsNo);
     }
-
+    this.data.changeData(this.formValues);
     //iscrtam prikaz sedista
-    this.displayChanges();
+    //this.displayChanges();
   }
 
-  displayChanges() {
-    for (let i = 0; i < this.formValues[0]; i++) {
-      this.rows[i] = new Row();
-      for (let j = 0; j < this.getRowWidth(); j++) {
-        this.rows[i].seats[j] = new Seat(i * this.getRowWidth() + j + 1);
-      }
-    }
+  getRowWidth() {
+    return (
+      this.formValues[2] +
+      this.formValues[3] +
+      this.formValues[4] +
+      this.formValues[5]
+    );
   }
+
   hideSelects(from, to) {
     for (let i = from; i < to; i++) {
       this.displayForm[i] = false;
@@ -100,26 +103,7 @@ export class EditSeatsComponent implements OnInit {
       $("#" + this.idName + i).val("*");
     }
   }
-  getRowWidth() {
-    return (
-      this.formValues[2] +
-      this.formValues[3] +
-      this.formValues[4] +
-      this.formValues[5]
-    );
-  }
-
-  onSeatClick(event) {
-    let seat_number = parseInt(event.toElement.innerText) - 1;
-    let row_number = Math.floor(seat_number / this.getRowWidth());
-    let col_number = seat_number % this.getRowWidth();
-
-    if (event.toElement.classList.contains("taken-seat")) {
-      this.rows[row_number].seats[col_number].taken = false;
-    } else {
-      this.rows[row_number].seats[col_number].taken = true;
-    }
-  }
+  //za slider
   prev() {
     var pozicija = $(".klizac").get(0).style.left;
     //var trenutna = pozicija.split(".")[0];
@@ -153,5 +137,7 @@ export class EditSeatsComponent implements OnInit {
       }
     }
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.data.currentData.subscribe((data) => (this.formValues = data));
+  }
 }

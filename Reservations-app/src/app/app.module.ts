@@ -43,6 +43,7 @@ import { CarCompanyProfileComponent } from "./content/companies/car-companies/ca
 import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
+import { DisplaySeatsComponent } from './content/display-seats/display-seats.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { SideNavComponent } from "./content/side-nav/side-nav.component";
     CarCompanyProfileComponent,
     CompaniesPageComponent,
     AirlinesComponent,
-    SideNavComponent
+    SideNavComponent,
+    DisplaySeatsComponent
   ],
   imports: [
     BrowserModule,
