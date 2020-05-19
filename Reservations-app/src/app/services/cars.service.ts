@@ -69,6 +69,7 @@ export class CarsService {
       3.5,
       "kompanija za rent a car smestena u indiji bla bla bla",
       "India",
+      "Mumbai",
       "https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.rentalcariran.com/wp-content/uploads/2018/10/logo-min-1.png",
       this.cars.slice(0, 4)
     ),
@@ -76,7 +77,8 @@ export class CarsService {
       "Ime kompanije 2",
       4.5,
       "kompanija za rent a car smestena u beogradu bla bla bla",
-      "neka adresa",
+      "Srbija",
+      "Beograd",
       "https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.rentalcariran.com/wp-content/uploads/2018/10/logo-min-1.png",
       this.cars.slice(3, 5)
     ),
@@ -85,6 +87,7 @@ export class CarsService {
       4.8,
       "kompanija za rent a car smestena u indiji bla bla bla",
       "India",
+      "Mumbai",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
       this.cars.slice(1, 5)
     ),
@@ -93,6 +96,7 @@ export class CarsService {
       4.2,
       "kompanija za rent a car smestena u indiji bla bla bla",
       "India",
+      "Mumbai",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
       this.cars.slice(0, 4).reverse()
     )

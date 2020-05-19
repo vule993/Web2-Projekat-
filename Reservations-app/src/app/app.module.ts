@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "./material.module";
+import { SafePipeModule } from "safe-pipe";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -43,7 +44,7 @@ import { CarCompanyProfileComponent } from "./content/companies/car-companies/ca
 import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
-import { DisplaySeatsComponent } from './content/display-seats/display-seats.component';
+import { DisplaySeatsComponent } from "./content/display-seats/display-seats.component";
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { DisplaySeatsComponent } from './content/display-seats/display-seats.com
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SafePipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
