@@ -126,8 +126,38 @@
       />
       <div class="nosac">
         <div class="klizac">
-          <a class="fleft overflow-hidden"><div></div></a>
-          <a class="fleft overflow-hidden"><div></div></a>
+          <a
+            *ngFor="let seatConfiguration of allSeatConfigurations"
+            class="fleft overflow-hidden"
+          >
+            <div class="slider-card">
+              <h3>{{ seatConfiguration.name }}</h3>
+              <ul>
+                <li>
+                  <b>height :</b>
+                  {{ seatConfiguration.segmentsHeight }}
+                </li>
+                <li>
+                  <b>segment one width :</b>
+                  {{ seatConfiguration.segmentOneWidth }}
+                </li>
+                <li>
+                  <b>segment two width :</b>
+                  {{ seatConfiguration.segmentTwoWidth }}
+                </li>
+                <li>
+                  <b>segment three width:</b>
+                  {{ seatConfiguration.segmentThreeWidth }}
+                </li>
+                <li>
+                  <b>segment four width :</b>
+                  {{ seatConfiguration.segmentFourWidth }}
+                </li>
+              </ul>
+            </div></a
+          >
+
+          <!-- <a class="fleft overflow-hidden"><div></div></a>
           <a class="fleft overflow-hidden">
             <div></div>
           </a>
@@ -145,7 +175,7 @@
           </a>
           <a class="fleft overflow-hidden">
             <div></div>
-          </a>
+          </a> -->
         </div>
       </div>
       <img

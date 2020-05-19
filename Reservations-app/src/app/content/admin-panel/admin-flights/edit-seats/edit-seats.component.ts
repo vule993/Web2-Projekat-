@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Seat, Row } from "src/app/models/Seat.model";
 import { SeatsConfigService } from "src/app/services/seats-config.service";
+import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
 
 declare var $: any;
 
@@ -10,27 +11,34 @@ declare var $: any;
   styleUrls: ["./edit-seats.component.css"],
 })
 export class EditSeatsComponent implements OnInit {
+  allSeatConfigurations: SeatConfiguration[];
   //OVAJ TREBA DA EMITUJE
   row_no = 0;
   seats_per_row = 0;
 
   animation_length = 750;
-  d = 17;
-  measure_unit = "vw";
-  current_position = 0;
-
+  d = 17; //sirina jednog elementa unutar slajdera
+  measure_unit = "vw"; //merna jedinica za koliko se pomera slajder
+  current_position = 0; //tekuca pozicija slajdera
+  elementNumber = 0; //ukupan broj elemenata za prikaz
+  elementDisplayedNo = 4; //broj vidljivih elemenata u slajderu
   idName = "formId";
   fieldsNo = 6;
 
+  configurationName: string;
   displayForm = [false, false, false, false, false, false];
   formValues: [number, number, number, number, number, number];
   rows = [];
 
-  constructor(private data: SeatsConfigService) {}
+  constructor(private data: SeatsConfigService) {
+    this.allSeatConfigurations = data.loadAllSeatConfigurations();
+    this.elementNumber = data.getSeatConfigurationNumber();
+  }
 
   configName(value, next) {
     if (value.data !== null) {
       this.displayForm[next] = true;
+      this.configurationName = value.data;
     } else {
       this.rows = [];
       for (let i = next; i < this.fieldsNo; i++) {
@@ -124,12 +132,16 @@ export class EditSeatsComponent implements OnInit {
     var pozicija = $(".klizac").get(0).style.left;
     //2 je broj elemenata u slajderu van vidnog polja
     //(n - 4 - jer se 4 vide) ?mozda 2 - 1
-    if (Math.abs(this.current_position) >= 2) {
+    if (
+      Math.abs(this.current_position) ==
+      this.elementNumber - this.elementDisplayedNo
+    ) {
     } else {
       if (!$(".klizac").is(":animated")) {
         this.current_position--;
 
         $(".klizac").animate(
+          // 0..k * 17 (sirina jednog elementa) + 'px' (merna jedinica)
           { left: this.current_position * this.d + this.measure_unit },
           this.animation_length,
           "linear"

@@ -21,7 +21,6 @@
                                     supported by Chrome, Opera and Firefox */
 }
 
-
 /*existing configs*/
 
 #existing-configs {
@@ -81,4 +80,17 @@
 .klik {
   float: left;
   margin-top: 4vw;
+}
+.slider-card h3 {
+  text-align: center;
+  font-size: 1.8vw;
+}
+.slider-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.slider-card li {
+  font-size: 0.95vw;
+  margin-left: 1vw;
 }

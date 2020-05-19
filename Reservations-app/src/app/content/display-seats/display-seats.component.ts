@@ -26,6 +26,7 @@ export class DisplaySeatsComponent implements OnInit {
     );
   }
   displayChanges() {
+    this.rows = [];
     for (let i = 0; i < this.formValues[0]; i++) {
       this.rows[i] = new Row();
       for (let j = 0; j < this.getRowWidth(); j++) {
