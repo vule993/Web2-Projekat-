@@ -135,7 +135,8 @@
       <div class="row justify-content-center">
         <div class="col-md-12 text-center">
           <h3 class="heading">Contact Us</h3>
-          <p>Address: {{ carCompany.address }}</p>
+
+          <p>Address: {{ carCompany.address }}, {{ carCompany.city }}</p>
           <hr />
           <div class="card map-card" style="height: 20vw;">
             <!--Google map-->
@@ -145,7 +146,7 @@
               style="height: 20vw;"
             >
               <iframe
-                src="https://maps.google.com/maps?q=Mumbai&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                [src]="createURL() | safe: 'resourceUrl'"
                 frameborder="0"
                 style="border:0; height: 100%"
                 class="col-md-12"
@@ -153,6 +154,24 @@
               ></iframe>
             </div>
           </div>
+          <!--Rating -> ovo ce morati biti forma? -->
+          <br />
+          <h3 class="heading">Please Rate Us</h3>
+
+          <ul
+            class="list-inline rating-list"
+            *ngFor="let star of stars"
+            style="display: inline-block"
+          >
+            <li
+              (click)="countStar(star)"
+              [ngClass]="{ selected: star <= selectedValue }"
+            >
+              <i class="fa fa-star fa-3x"></i>
+            </li>
+          </ul>
+
+          <!--end rating-->
         </div>
         <!-- <hr class="socket" />
       &copy; Aleksandar 2019 -->
