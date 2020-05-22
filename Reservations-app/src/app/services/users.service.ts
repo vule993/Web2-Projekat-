@@ -1,11 +1,16 @@
 import { Injectable } from "@angular/core";
 import { User } from "../models/User.model";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { FormModel } from "../models/formModel";
 
 @Injectable({
   providedIn: "root"
 })
 export class UsersService {
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
+
+  readonly baseURL = "http://localhost:5000/api";
+
   allUsers() {
     let allUsers: User[] = [
       new User(
@@ -71,7 +76,19 @@ export class UsersService {
     return this.allUsers();
   }
 
-  registerUser(user: User) {
-    this.allUsers().push(user);
+  registerUser(user: FormModel) {
+    //this.allUsers().push(user);
+
+    return this.httpClient.post(this.baseURL + "/User/Register", user);
+  }
+
+  loginUser(formData) {
+    return this.httpClient.post(this.baseURL + "/User/Login", formData);
+  }
+
+  getUserProfile() {
+    //need to append jwt token into this request -> this is now done in auth.interceptor
+
+    return this.httpClient.get(this.baseURL + "/User/Profile");
   }
 }

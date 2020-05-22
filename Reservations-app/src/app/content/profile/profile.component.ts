@@ -27,6 +27,21 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     let fullUrl = window.location.href;
     this.activeTab = fullUrl.split("/")[4];
+
+    //ovde moze da se pogodi metoda getUserProfile() iz userService-a i da se uzmu podaci korisnika
+    //ona vraca observable kolekciju, samo ide .subscribe i kupe se podaci...
+    //objekat koji ce se vratiti je:
+    /*
+      {
+        user.FirstName,
+        user.LastName,
+        user.UserName,
+        user.Email,
+        user.Street,
+        user.City,
+        user.PhoneNumber,
+      }
+    */
   }
 
   // setuje koji je tab selektovan kako bi dobio drugaciji background

@@ -28,9 +28,10 @@ import { CompaniesPageComponent } from "./content/companies/companies-page/compa
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
+import { AuthGuard } from "./auth/auth.guard";
 
 const routes: Routes = [
-  { path: "", redirectTo: "profile/friends", pathMatch: "full" },
+  { path: "", redirectTo: "home", pathMatch: "full" },
 
   { path: "home", component: HomeComponent },
   { path: "login", component: LoginComponent },
@@ -48,20 +49,39 @@ const routes: Routes = [
       }
     ]
   },
-  { path: "profile", redirectTo: "profile/friends", pathMatch: "full" },
+  {
+    path: "profile",
+    redirectTo: "profile/friends",
+    pathMatch: "full",
+    canActivate: [AuthGuard]
+  },
   {
     path: "profile",
     component: ProfileComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: "friends", component: FriendsDataListComponent },
-      { path: "archive", component: ArchiveDataListComponent },
-      { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent }
+      {
+        path: "friends",
+        component: FriendsDataListComponent
+      },
+      {
+        path: "archive",
+        component: ArchiveDataListComponent
+      },
+      {
+        path: "reservations",
+        component: ReservationsDataListComponent
+      },
+      {
+        path: "edit-profile",
+        component: EditProfileComponent
+      }
     ]
   },
   {
     path: "admin",
     component: AdminPanelComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "avio",

@@ -70,3 +70,6 @@ body {
   width: 23% !important;
   margin: 0 5%;
 }
+#toast-container > div {
+  opacity: 1;
+}

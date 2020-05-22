@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "src/app/services/users.service";
 import { User } from "src/app/models/User.model";
+import { FormModel } from "../../models/formModel";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-register",
@@ -11,7 +14,11 @@ import { User } from "src/app/models/User.model";
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private router: Router,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -19,21 +26,49 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     //ovo kasnije mozda obrisati i proslediti samo registerUser(this.registerForm.value)
-    const newUser = new User(
-      1,
+    const newUser = new FormModel(
       this.registerForm.value["firstName"],
       this.registerForm.value["secondName"],
       this.registerForm.value["email"],
       this.registerForm.value["password1"],
-      "https://lh3.googleusercontent.com/-Iz0gN6v9Mjw/AAAAAAAAAAI/AAAAAAAAABg/6gTLYKMexAw/photo.jpg",
       this.registerForm.value["city"],
-      this.registerForm.value["phone"],
-      "user"
+      this.registerForm.value["street"],
+      this.registerForm.value["phone"]
     );
 
-    this.userService.registerUser(newUser);
-    console.log("user: " + newUser.name + "  ----- uspesno registrovan");
-    this.registerForm.reset();
+    this.userService.registerUser(newUser).subscribe(
+      (res: any) => {
+        if (res.succeeded) {
+          this.registerForm.reset();
+          this.toastrService.success(
+            "You are succesfully registered!",
+            "Succesfull Registration"
+          );
+          this.router.navigate(["login"]);
+        } else {
+          res.errors.forEach(element => {
+            switch (element.code) {
+              case "DuplicateUserName":
+                //
+                this.toastrService.error(
+                  element.desctiption,
+                  "Registration failed"
+                );
+                break;
+              default:
+                this.toastrService.error(
+                  element.desctiption,
+                  "Registration failed"
+                );
+            }
+          });
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    // console.log("user: " + newUser.name + "  ----- uspesno registrovan");
   }
 
   private initForm() {
