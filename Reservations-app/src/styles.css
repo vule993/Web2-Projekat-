@@ -58,3 +58,15 @@ body {
 .form-group > .form-control {
   border: 0.15vw solid rgba(63, 43, 150, 1);
 }
+.width-40 {
+  width: 40% !important;
+  margin: 0 5%;
+}
+.width-50 {
+  width: 40% !important;
+  margin: 0 5%;
+}
+.width-33 {
+  width: 23% !important;
+  margin: 0 5%;
+}

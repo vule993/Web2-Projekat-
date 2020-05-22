@@ -21,7 +21,7 @@
 .form-group > h6 {
   color: #43309a;
 }
-.form-group > div {
+.form-group > .checkbox {
   background-color: #43309a;
   padding: 0.75vw;
   margin: 0.75vw;
