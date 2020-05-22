@@ -18,3 +18,16 @@
   height: 1.5vw;
   margin-top: 0.2vw;
 }
+.form-group > h6 {
+  color: #43309a;
+}
+.form-group > div {
+  background-color: #43309a;
+  padding: 0.75vw;
+  margin: 0.75vw;
+  color: #fff;
+  border-radius: 0.5vw;
+}
+.form-group > div > span {
+  margin: 0.2vw;
+}

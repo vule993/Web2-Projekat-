@@ -4,8 +4,9 @@
   </div>
 
   <div id="data" class="fright">
-    <div class="form-group" (input)="configName($event, 0)">
+    <div class="form-group">
       <input
+        (keyup)="configName($event, 0)"
         type="text"
         class="form-control"
         placeholder="Configuration name"
@@ -112,7 +113,21 @@
       </select>
     </div>
 
-    <button class="btn btn-success fright">Save info</button>
+    <button
+      class="btn btn-success fright display-none"
+      (click)="saveSeatConfiguration()"
+    >
+      Save info
+    </button>
+
+    <div class="alert alert-success overflow-hidden clear" role="alert">
+      <span class="fleft message">Config saved!</span>
+      <span class="fright"
+        ><img
+          (click)="disableWarning($event)"
+          src="../../../../../assets/site/icons/cancel.png"
+      /></span>
+    </div>
   </div>
 
   <div id="existing-configs" class="clear">

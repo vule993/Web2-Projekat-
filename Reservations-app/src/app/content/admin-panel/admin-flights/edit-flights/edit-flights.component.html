@@ -22,9 +22,29 @@
     <input
       type="text"
       class="form-control"
-      placeholder="Flight time"
+      placeholder="Flight esimation time"
       value=""
     />
+  </div>
+
+  <div class="form-group">
+    <select class="form-control">
+      <option value="0">Select discount</option>
+      <option *ngFor="let discount of allDiscounts" value="{{ discount }}"
+        >{{ discount }}%</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <select class="form-control">
+      <option value="0">Select plane type</option>
+      <option
+        *ngFor="let seatConfiguration of allSeatConfigurations"
+        value="{{ seatConfiguration.name }}"
+        >{{ seatConfiguration.name }}</option
+      >
+    </select>
   </div>
 
   <div class="form-group">
@@ -36,63 +56,11 @@
     />
   </div>
 
-  <div>
-    <div class="add-item overflow-hidden">
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter location"
-          value=""
-        />
-      </div>
-
-      <button class="btn btn-success fright">Add location</button>
-    </div>
-    <div class="overflow-hidden">
-      <div class="item">
-        <span class="fleft">Sao Paolo, Brasil</span>
-        <a href="" class="overflow-hidden">
-          <img
-            class="fright"
-            src="../../../../../assets/site/icons/cancel.png"
-            alt=""
-          />
-        </a>
-      </div>
-
-      <div class="item">
-        <span class="fleft">Belgrade, Serbia</span>
-        <a href="" class="overflow-hidden">
-          <img
-            class="fright"
-            src="../../../../../assets/site/icons/cancel.png"
-            alt=""
-          />
-        </a>
-      </div>
-
-      <div class="item">
-        <span class="fleft">New York, United states of America</span>
-        <a href="" class="overflow-hidden">
-          <img
-            class="fright"
-            src="../../../../../assets/site/icons/cancel.png"
-            alt=""
-          />
-        </a>
-      </div>
-
-      <div class="item">
-        <span class="fleft">Rome, Italy</span>
-        <a href="" class="overflow-hidden">
-          <img
-            class="fright"
-            src="../../../../../assets/site/icons/cancel.png"
-            alt=""
-          />
-        </a>
-      </div>
+  <div class="form-group">
+    <h6>Check flight destinations:</h6>
+    <div *ngFor="let destination of allDestinations" class="fleft">
+      <span><input type="checkbox" value="{{ destination.id }}" /></span>
+      <span>{{ destination.info() }}</span>
     </div>
   </div>
 

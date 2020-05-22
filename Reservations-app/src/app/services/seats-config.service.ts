@@ -12,33 +12,29 @@ export class SeatsConfigService {
 
   currentData = this._dataArray.asObservable();
   AllSeatConfigurations: SeatConfiguration[];
-  constructor() {}
+  constructor() {
+    this.AllSeatConfigurations = [
+      new SeatConfiguration(1, "Boeing 747", 10, 2, 2, 2, 0, 0),
+      new SeatConfiguration(2, "Concord", 8, 3, 2, 3, 2, 0),
+      new SeatConfiguration(3, "Boeing 747", 10, 2, 2, 2, 0, 0),
+      new SeatConfiguration(4, "Boeing 747", 10, 2, 2, 2, 7, 0),
+      new SeatConfiguration(5, "Boeing 747", 10, 2, 2, 2, 0, 7),
+      new SeatConfiguration(6, "Boeing 747", 10, 2, 2, 2, 5, 0),
+      new SeatConfiguration(7, "Boeing 747", 10, 2, 2, 2, 11, 0),
+      new SeatConfiguration(8, "Boeing 747", 10, 2, 2, 2, 0, 11),
+    ];
+  }
 
   changeData(newData) {
     this._dataArray.next(newData);
   }
 
-  //dodato
-  allSeatConfigurations() {
-    this.AllSeatConfigurations = [
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 0, 0),
-      new SeatConfiguration("Concord", 8, 3, 2, 3, 2, 0),
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 0, 0),
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 7, 0),
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 0, 7),
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 5, 0),
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 11, 0),
-      new SeatConfiguration("Boeing 747", 10, 2, 2, 2, 0, 11),
-    ];
+  loadAllSeatConfigurations() {
     return this.AllSeatConfigurations;
   }
 
-  loadAllSeatConfigurations() {
-    return this.allSeatConfigurations();
-  }
-
   addSeatConfig(seatConfiguration: SeatConfiguration) {
-    this.allSeatConfigurations().push(seatConfiguration);
+    this.AllSeatConfigurations.push(seatConfiguration);
   }
 
   getSeatConfigurationNumber() {
