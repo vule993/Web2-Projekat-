@@ -58,3 +58,7 @@ body {
 .form-group > .form-control {
   border: 0.15vw solid rgba(63, 43, 150, 1);
 }
+
+#toast-container > div {
+  opacity: 1;
+}

@@ -41,9 +41,14 @@
           </li>
           <li class="border-separators">
             <img src="../../assets/site/icons/lock-white.png" class="fleft" />
-            <a routerLink="login" class="fleft">Login</a>
+            <a routerLink="login" class="fleft" (click)="logOut()" *ngIf="checkIfLoggedIn()">
+              Logout
+            </a>
+            <a routerLink="login" class="fleft" *ngIf="!checkIfLoggedIn()">
+              Login
+            </a>
           </li>
-          <li>
+          <li *ngIf="!checkIfLoggedIn()">
             <img
               src="../../assets/site/icons/registration-white.png"
               class="fleft"

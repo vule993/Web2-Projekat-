@@ -1,7 +1,12 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "./material.module";
+
 import { SafePipeModule } from "safe-pipe";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+import { ToastrModule } from "ngx-toastr";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -21,7 +26,7 @@ import { ReservationsDataListComponent } from "./content/profile/reservations-da
 import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
 import { OfferItemComponent } from "./content/offers/offers-list/offer-item/offer-item.component";
 import { OfferDetailComponent } from "./content/offers/offer-detail/offer-detail.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 import { CompaniesComponent } from "./content/companies/companies.component";
 import { AdminPanelComponent } from "./content/admin-panel/admin-panel.component";
 import { AdminFlightsComponent } from "./content/admin-panel/admin-flights/admin-flights.component";
@@ -45,6 +50,8 @@ import { CompaniesPageComponent } from "./content/companies/companies-page/compa
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { DisplaySeatsComponent } from "./content/display-seats/display-seats.component";
+import { UsersService } from "./services/users.service";
+import { AuthInterceptor } from "./auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -90,12 +97,23 @@ import { DisplaySeatsComponent } from "./content/display-seats/display-seats.com
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      progressBar: true
+    }),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    SafePipeModule
+    SafePipeModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    UsersService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
