@@ -21,6 +21,19 @@
                                     supported by Chrome, Opera and Firefox */
 }
 
+button {
+  margin-bottom: 1vw;
+}
+.alert {
+  margin: 1vw 0;
+  padding: 0.75vw 0.75vw;
+  font-size: 1.2vw;
+  display: none;
+}
+.alert img {
+  width: 1.5vw;
+  height: 1.5vw;
+}
 /*existing configs*/
 
 #existing-configs {

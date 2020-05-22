@@ -38,7 +38,7 @@ export class EditSeatsComponent implements OnInit {
   configName(value, next) {
     if (value.data !== null) {
       this.displayForm[next] = true;
-      this.configurationName = value.data;
+      this.configurationName = value.target.value;
     } else {
       this.rows = [];
       for (let i = next; i < this.fieldsNo; i++) {
@@ -111,6 +111,51 @@ export class EditSeatsComponent implements OnInit {
       $("#" + this.idName + i).val("*");
     }
   }
+
+  saveSeatConfiguration() {
+    if (this.validate()) {
+      this.data.addSeatConfig(
+        new SeatConfiguration(
+          SeatConfiguration.count + 1,
+          this.configurationName,
+          this.formValues[0],
+          this.formValues[1],
+          this.formValues[2],
+          this.formValues[3],
+          this.formValues[4],
+          this.formValues[5]
+        )
+      );
+      this.elementNumber = this.data.getSeatConfigurationNumber();
+      this.allSeatConfigurations = this.data.loadAllSeatConfigurations();
+      $(".message")[0].innerText = "Config saved!";
+      $(".alert").removeClass("alert-danger").addClass("alert-success");
+    } else {
+      $(".message")[0].innerText = "Config incomplete!";
+      $(".alert").removeClass("alert-success").addClass("alert-danger");
+    }
+    $(".alert").fadeIn(1000);
+  }
+  validate(): boolean {
+    if (
+      this.configurationName != undefined &&
+      this.configurationName != "" &&
+      this.formValues[0] > 0 && //height
+      this.formValues[1] > 0 //segments no
+    ) {
+      for (let i = 2; i < 2 + this.formValues[1]; i++) {
+        if (this.formValues[i] < 1) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  disableWarning(data) {
+    $(".alert").fadeOut(1000);
+  }
   //za slider
   prev() {
     var pozicija = $(".klizac").get(0).style.left;
@@ -150,6 +195,11 @@ export class EditSeatsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.data.currentData.subscribe((data) => (this.formValues = data));
+    this.data.currentData.subscribe((data) => this.loadData(data));
   }
+  loadData = function (data) {
+    this.formValues = data;
+    this.elementNumber = this.data.getSeatConfigurationNumber();
+    this.allSeatConfigurations = this.data.loadAllSeatConfigurations();
+  };
 }
