@@ -29,6 +29,7 @@ import { CarCompanyProfileComponent } from "./content/companies/car-companies/ca
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { AuthGuard } from "./auth/auth.guard";
+import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -38,22 +39,30 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
   { path: "admin-panel", component: AdminPanelComponent },
+  // ovo je samo za redirect, airlines je default komponenta za stranicu companies
+  {
+    path: "companies",
+    redirectTo: "companies/airlines",
+    pathMatch: "full",
+    // canActivate: [AuthGuard],
+  },
   {
     path: "companies",
     component: CompaniesComponent,
     children: [
+      { path: "airlines", component: AirlinesComponent },
       { path: "", component: CompaniesPageComponent },
       {
         path: "car-company/:id",
-        component: CarCompanyProfileComponent
-      }
-    ]
+        component: CarCompanyProfileComponent,
+      },
+    ],
   },
   {
     path: "profile",
     redirectTo: "profile/friends",
     pathMatch: "full",
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: "profile",
@@ -62,21 +71,21 @@ const routes: Routes = [
     children: [
       {
         path: "friends",
-        component: FriendsDataListComponent
+        component: FriendsDataListComponent,
       },
       {
         path: "archive",
-        component: ArchiveDataListComponent
+        component: ArchiveDataListComponent,
       },
       {
         path: "reservations",
-        component: ReservationsDataListComponent
+        component: ReservationsDataListComponent,
       },
       {
         path: "edit-profile",
-        component: EditProfileComponent
-      }
-    ]
+        component: EditProfileComponent,
+      },
+    ],
   },
   {
     path: "admin",
@@ -93,8 +102,8 @@ const routes: Routes = [
           { path: "flights", component: EditFlightsComponent },
           { path: "discount", component: EditDiscountComponent },
           { path: "seat-config", component: EditSeatsComponent },
-          { path: "business-report", component: EditBusinessReportComponent }
-        ]
+          { path: "business-report", component: EditBusinessReportComponent },
+        ],
       },
       {
         path: "car",
@@ -104,18 +113,18 @@ const routes: Routes = [
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent }
-        ]
+          { path: "statistics", component: EditCarStatisticsComponent },
+        ],
       },
       { path: "archive", component: ArchiveDataListComponent },
       { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent }
-    ]
-  }
+      { path: "edit-profile", component: EditProfileComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

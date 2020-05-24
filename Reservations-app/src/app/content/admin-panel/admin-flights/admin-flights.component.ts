@@ -19,27 +19,31 @@ export class AdminFlightsComponent implements OnInit {
     );
     this.links.push(
       new Link(
-        "../../assets/site/icons/plane-white.png",
+        "../../assets/site/icons/destination-white.png",
         "DESTINATIONS",
         "destinations"
       )
     );
     this.links.push(
-      new Link("../../assets/site/icons/car-white.png", "FLIGHTS", "flights")
-    );
-    this.links.push(
-      new Link("../../assets/site/icons/home-white.png", "DISCOUNT", "discount")
+      new Link("../../assets/site/icons/plane-white.png", "FLIGHTS", "flights")
     );
     this.links.push(
       new Link(
-        "../../assets/site/icons/plane-white.png",
+        "../../assets/site/icons/discount-white.png",
+        "DISCOUNT",
+        "discount"
+      )
+    );
+    this.links.push(
+      new Link(
+        "../../assets/site/icons/seat-white.png",
         "SEAT CONFIGURATION",
         "seat-config"
       )
     );
     this.links.push(
       new Link(
-        "../../assets/site/icons/car-white.png",
+        "../../assets/site/icons/statistics-white.png",
         "BUSINESS REPORT",
         "business-report"
       )

@@ -25,14 +25,14 @@ export class AdminCarsComponent implements OnInit {
 
     this.links.push(
       new Link(
-        "../../../../assets/site/icons/014-shopping-cart.png",
+        "../../../../assets/site/icons/money-white.png",
         "PRICE LIST",
         "price-list"
       )
     );
     this.links.push(
       new Link(
-        "../../../../assets/site/icons/005-settings.png",
+        "../../../../assets/site/icons/statistics-white.png",
         "STATISTICS",
         "statistics"
       )

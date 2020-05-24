@@ -1,0 +1,23 @@
+.search,
+.filter {
+  background-color: #4d3d9d;
+  border-radius: 0.5vw 0.5vw 0 0;
+  padding: 2vw;
+}
+.filter {
+  border-radius: 0;
+}
+.search-field {
+  width: 12vw;
+}
+.search img,
+.filter img {
+  width: 1.8vw;
+  height: 1.8vw;
+}
+.form-control {
+  margin: 0 0.5vw;
+}
+.departTime .returnTime {
+  width: 3vw !important;
+}

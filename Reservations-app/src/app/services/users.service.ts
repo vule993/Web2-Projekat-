@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -67,7 +67,7 @@ export class UsersService {
         "Paris",
         "063/555-333",
         "user"
-      )
+      ),
     ];
     return allUsers;
   }
@@ -89,6 +89,7 @@ export class UsersService {
   getUserProfile() {
     //need to append jwt token into this request -> this is now done in auth.interceptor
 
-    return this.httpClient.get(this.baseURL + "/User/Profile");
+    let a = this.httpClient.get(this.baseURL + "/User/Profile");
+    return a;
   }
 }

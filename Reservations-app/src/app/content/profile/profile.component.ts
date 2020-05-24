@@ -7,18 +7,18 @@ import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"]
+  styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
   activeTab;
   allUsers: User[];
-
+  public currentUser;
   constructor(private userService: UsersService, router: Router) {
     this.allUsers = userService.loadAllUsers();
 
     // pretplacujemo se na dogadjaj ponovnog klika na link profila(posto se ne ucitava
     // kompletna komponenta ova metoda menja this.activeTab na default vrednost)
-    router.events.subscribe(val => {
+    router.events.subscribe((val) => {
       let fullUrl = window.location.href;
       this.activeTab = fullUrl.split("/")[4];
     });
@@ -27,7 +27,12 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     let fullUrl = window.location.href;
     this.activeTab = fullUrl.split("/")[4];
-
+    this.userService.getUserProfile().subscribe((user: any) => {
+      this.currentUser = user;
+      localStorage.setItem("name", user.firstName);
+      localStorage.setItem("surname", user.lastName);
+      //dodati i ostalo
+    });
     //ovde moze da se pogodi metoda getUserProfile() iz userService-a i da se uzmu podaci korisnika
     //ona vraca observable kolekciju, samo ide .subscribe i kupe se podaci...
     //objekat koji ce se vratiti je:
