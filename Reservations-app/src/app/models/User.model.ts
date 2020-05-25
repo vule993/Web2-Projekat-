@@ -8,6 +8,6 @@ export class User {
     public image: string,
     public city: string,
     public telephone: string,
-    public status: string //0->registrovan korisnik 1->avio-admin 2->rent-a-car admin 3->head admin 4->blok
+    public status: string //1->head admin 2->car-admin 3->avio-admin 4->user
   ) {}
 }

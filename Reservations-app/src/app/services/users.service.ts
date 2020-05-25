@@ -91,4 +91,23 @@ export class UsersService {
 
     return this.httpClient.get(this.baseURL + "/User/Profile");
   }
+
+  //function for managing user roles
+  roleMatch(allowedRoles): boolean {
+    var isMatch = false;
+    //token = header.payload.signature
+    var payload = JSON.parse(
+      window.atob(localStorage.getItem("token").split(".")[1])
+    );
+    var userRole = payload.role;
+
+    allowedRoles.forEach(element => {
+      if (userRole == element) {
+        isMatch = true;
+        return false;
+      }
+    });
+
+    return isMatch;
+  }
 }

@@ -41,6 +41,7 @@ namespace ReservationAPI
                 );
 
             services.AddIdentity<User, IdentityRole>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AuthenticationContext>();
 
             //customize validations

@@ -29,6 +29,12 @@
         <ul>
           <li>
             <img src="../../assets/face.png" class="fleft" />
+            <a routerLink="admin/head-admin/profile" class="fleft"
+              >Administrator</a
+            >
+          </li>
+          <li>
+            <img src="../../assets/face.png" class="fleft" />
             <a routerLink="admin/avio/edit-profile" class="fleft">Admin avio</a>
           </li>
           <li>
@@ -41,7 +47,12 @@
           </li>
           <li class="border-separators">
             <img src="../../assets/site/icons/lock-white.png" class="fleft" />
-            <a routerLink="login" class="fleft" (click)="logOut()" *ngIf="checkIfLoggedIn()">
+            <a
+              routerLink="login"
+              class="fleft"
+              (click)="logOut()"
+              *ngIf="checkIfLoggedIn()"
+            >
               Logout
             </a>
             <a routerLink="login" class="fleft" *ngIf="!checkIfLoggedIn()">

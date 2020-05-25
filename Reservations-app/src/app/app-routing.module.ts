@@ -29,6 +29,11 @@ import { CarCompanyProfileComponent } from "./content/companies/car-companies/ca
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { AuthGuard } from "./auth/auth.guard";
+import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
+import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
+import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
+import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
+import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -52,8 +57,7 @@ const routes: Routes = [
   {
     path: "profile",
     redirectTo: "profile/friends",
-    pathMatch: "full",
-    canActivate: [AuthGuard]
+    pathMatch: "full"
   },
   {
     path: "profile",
@@ -81,8 +85,20 @@ const routes: Routes = [
   {
     path: "admin",
     component: AdminPanelComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
+      {
+        path: "head-admin",
+        component: HeadAdminComponent,
+        // canActivate: [AuthGuard],
+        // data: { permittedRoles: ["Admin"] },
+        children: [
+          { path: "car-companies", component: CarCompaniesComponent },
+          { path: "avio-companies", component: AirlinesComponent },
+          { path: "users", component: UsersComponent },
+          { path: "profile", component: AdminProfileComponent }
+        ]
+      },
       {
         path: "avio",
         component: AdminFlightsComponent,
@@ -99,6 +115,8 @@ const routes: Routes = [
       {
         path: "car",
         component: AdminCarsComponent,
+        canActivate: [AuthGuard],
+        data: { permittedRoles: ["CarAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },

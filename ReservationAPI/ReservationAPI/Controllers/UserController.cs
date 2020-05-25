@@ -35,6 +35,7 @@ namespace ReservationAPI.Controllers
         [Route("Register")]
         public async Task<Object> PostUser(UserModel model)
         {
+            model.Role = "CarAdmin";
             var newUser = new User()
             {
                  UserName = model.FirstName,
@@ -49,6 +50,7 @@ namespace ReservationAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
+                await _userManager.AddToRoleAsync(newUser, model.Role);
                 return Ok(result);
 
             }catch(Exception ex)
@@ -68,9 +70,16 @@ namespace ReservationAPI.Controllers
 
             if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
+                //check for roles of this user
+                var role = await _userManager.GetRolesAsync(user); //put this role to the claims
+                IdentityOptions options = new IdentityOptions();
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new Claim[]{ new Claim("UserID", user.Id.ToString())}),
+                    Subject = new ClaimsIdentity(new Claim[]{ 
+                        new Claim("UserID", user.Id.ToString()),
+                        new Claim(options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
+                    }),
 
                     Expires = DateTime.UtcNow.AddDays(1), //after 1 day
 

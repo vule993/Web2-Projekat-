@@ -52,6 +52,9 @@ import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { DisplaySeatsComponent } from "./content/display-seats/display-seats.component";
 import { UsersService } from "./services/users.service";
 import { AuthInterceptor } from "./auth/auth.interceptor";
+import { HeadAdminComponent } from './content/admin-panel/head-admin/head-admin.component';
+import { UsersComponent } from './content/admin-panel/head-admin/users/users.component';
+import { AdminProfileComponent } from './content/admin-panel/head-admin/admin-profile/admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +94,10 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
     CompaniesPageComponent,
     AirlinesComponent,
     SideNavComponent,
-    DisplaySeatsComponent
+    DisplaySeatsComponent,
+    HeadAdminComponent,
+    UsersComponent,
+    AdminProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ namespace ReservationAPI.Models
         public string City { get; set; }
         public string Phone { get; set; }
         public string Password { get; set; }
+        public string Role { get; set; }
 
     }
 }
