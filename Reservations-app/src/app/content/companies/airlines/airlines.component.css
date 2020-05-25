@@ -21,3 +21,7 @@
 .departTime .returnTime {
   width: 3vw !important;
 }
+
+.result {
+  overflow: hidden;
+}
