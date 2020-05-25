@@ -1,1 +1,52 @@
+<div class="search overflow-hidden">
+  <select class="form-control search-field fleft">
+    <option value="starting airport">Starting airport</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="ending airport">Ending airport</option>
+  </select>
+
+  <input
+    type="text"
+    autocomplete="off"
+    id="departTime"
+    class="form-control search-field departTime fleft"
+    placeholder="Starting date"
+  />
+  <input
+    type="text"
+    autocomplete="off"
+    id="returnTime"
+    class="form-control search-field returnTime fleft"
+    placeholder="Returning date"
+  />
+  <button class="btn btn-success fleft">Search</button>
+
+  <img
+    (click)="openFilter()"
+    class="fright"
+    src="../../../../assets/site/icons/filter-white.png"
+  />
+</div>
+
+<div class="filter display-none overflow-hidden">
+  <select class="form-control search-field fleft">
+    <option value="starting airport">Company</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="ending airport">Price</option>
+  </select>
+
+  <select class="form-control search-field fleft">
+    <option value="ending airport">Flight duration</option>
+  </select>
+  <button class="btn btn-success fleft">Filter</button>
+
+  <img
+    (click)="closeFilter()"
+    class="fright"
+    src="../../../../assets/site/icons/close-white.png"
+  />
+</div>
+
 <p>airlines works!</p>

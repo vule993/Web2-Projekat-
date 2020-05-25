@@ -1,1 +1,7 @@
-
+#panel-wrapper {
+  margin: 0 auto;
+  width: 96%;
+}
+#admin-content {
+  width: 75vw;
+}

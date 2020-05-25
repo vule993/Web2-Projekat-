@@ -31,9 +31,9 @@ import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
-import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
+import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -43,10 +43,18 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "flights", component: OffersComponent },
   { path: "admin-panel", component: AdminPanelComponent },
+  // ovo je samo za redirect, airlines je default komponenta za stranicu companies
+  {
+    path: "companies",
+    redirectTo: "companies/airlines",
+    pathMatch: "full"
+    // canActivate: [AuthGuard],
+  },
   {
     path: "companies",
     component: CompaniesComponent,
     children: [
+      { path: "airlines", component: AirlinesComponent },
       { path: "", component: CompaniesPageComponent },
       {
         path: "car-company/:id",
@@ -57,7 +65,8 @@ const routes: Routes = [
   {
     path: "profile",
     redirectTo: "profile/friends",
-    pathMatch: "full"
+    pathMatch: "full",
+    canActivate: [AuthGuard]
   },
   {
     path: "profile",
