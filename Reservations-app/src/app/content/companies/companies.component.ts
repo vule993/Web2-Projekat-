@@ -4,7 +4,7 @@ import { Link } from "src/app/models/Link";
 @Component({
   selector: "app-companies",
   templateUrl: "./companies.component.html",
-  styleUrls: ["./companies.component.css"],
+  styleUrls: ["./companies.component.css"]
 })
 export class CompaniesComponent implements OnInit {
   links: Link[] = [];
@@ -20,7 +20,7 @@ export class CompaniesComponent implements OnInit {
       new Link(
         "../../assets/site/icons/car-white.png",
         "RENT A CAR COMPANIES",
-        "destinations"
+        "car-companies"
       )
     );
   }

@@ -34,6 +34,7 @@ import { CarCompaniesComponent } from "./content/companies/car-companies/car-com
 import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
+import { Z_FULL_FLUSH } from "zlib";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -55,10 +56,20 @@ const routes: Routes = [
     component: CompaniesComponent,
     children: [
       { path: "airlines", component: AirlinesComponent },
-      { path: "", component: CompaniesPageComponent },
       {
-        path: "car-company/:id",
-        component: CarCompanyProfileComponent
+        path: "car-companies",
+        component: CarCompaniesComponent,
+        children: [
+          {
+            path: "car-company/:id",
+            component: CarCompanyProfileComponent
+          }
+        ]
+      },
+      {
+        path: "",
+        component: CompaniesPageComponent,
+        children: []
       }
     ]
   },

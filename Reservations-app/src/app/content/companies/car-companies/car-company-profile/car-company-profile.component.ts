@@ -22,9 +22,11 @@ export class CarCompanyProfileComponent implements OnInit {
   constructor(private carService: CarsService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    console.log("renderr");
     //fetch id of car component, id is index in the list
     this.route.params.subscribe((params: Params) => {
       this.id = +params["id"];
+
       this.carCompany = this.carService.getCarCompany(this.id);
     });
   }
