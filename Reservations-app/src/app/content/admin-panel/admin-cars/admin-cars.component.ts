@@ -6,8 +6,8 @@ import { Link } from "src/app/models/Link";
   templateUrl: "./admin-cars.component.html",
   styleUrls: [
     "../admin-flights/admin-flights.component.css",
-    "./admin-cars.component.css",
-  ],
+    "./admin-cars.component.css"
+  ]
 })
 export class AdminCarsComponent implements OnInit {
   links: Link[] = [];

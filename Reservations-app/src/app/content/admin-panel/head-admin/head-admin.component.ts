@@ -32,6 +32,12 @@ export class HeadAdminComponent implements OnInit {
         "../../assets/site/icons/home-white.png",
         "CAR COMPANIES",
         "car-companies"
+      ),
+
+      new Link(
+        "../../../../assets/site/icons/plus.png",
+        "REGISTER ADMINS",
+        "register-admin"
       )
     );
   }

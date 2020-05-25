@@ -35,7 +35,7 @@ namespace ReservationAPI.Controllers
         [Route("Register")]
         public async Task<Object> PostUser(UserModel model)
         {
-            model.Role = "CarAdmin";
+            model.Role = "User";
             var newUser = new User()
             {
                  UserName = model.FirstName,

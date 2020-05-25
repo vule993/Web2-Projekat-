@@ -52,9 +52,10 @@ import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { DisplaySeatsComponent } from "./content/display-seats/display-seats.component";
 import { UsersService } from "./services/users.service";
 import { AuthInterceptor } from "./auth/auth.interceptor";
-import { HeadAdminComponent } from './content/admin-panel/head-admin/head-admin.component';
-import { UsersComponent } from './content/admin-panel/head-admin/users/users.component';
-import { AdminProfileComponent } from './content/admin-panel/head-admin/admin-profile/admin-profile.component';
+import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
+import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
+import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
+import { RegisterAdminComponent } from './content/admin-panel/head-admin/register-admin/register-admin.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { AdminProfileComponent } from './content/admin-panel/head-admin/admin-pr
     DisplaySeatsComponent,
     HeadAdminComponent,
     UsersComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    RegisterAdminComponent
   ],
   imports: [
     BrowserModule,

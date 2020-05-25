@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ReservationAPI.Models;
 
 namespace ReservationAPI.Controllers
 {
@@ -12,6 +14,80 @@ namespace ReservationAPI.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
+        private UserManager<User> _userManager;
+        private SignInManager<User> _signInManager;
+
+        public AdminController(UserManager<User> userManager, SignInManager<User> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        //POST : /api/Admin/RegisterCarAdmin
+        [HttpPost]
+        [Route("RegisterCarAdmin")]
+        public async Task<Object> RegisterCarAdmin(UserModel model)
+        {
+            model.Role = "CarAdmin";
+
+            var newUser = new User()
+            {
+                UserName = model.FirstName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                Street = model.Street,
+                City = model.City
+            };
+
+            try
+            {
+                var result = await _userManager.CreateAsync(newUser, model.Password);
+                await _userManager.AddToRoleAsync(newUser, model.Role);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+
+        //POST : /api/Admin/RegisterAvioAdmin
+        [HttpPost]
+        [Route("RegisterAvioAdmin")]
+        public async Task<Object> RegisterAvioAdmin(UserModel model)
+        {
+            model.Role = "AvioAdmin";
+
+            var newUser = new User()
+            {
+                UserName = model.FirstName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                Street = model.Street,
+                City = model.City
+            };
+
+            try
+            {
+                var result = await _userManager.CreateAsync(newUser, model.Password);
+                await _userManager.AddToRoleAsync(newUser, model.Role);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
 
         [HttpGet]
         [Authorize(Roles = "CarAdmin")]
@@ -21,6 +97,6 @@ namespace ReservationAPI.Controllers
             return "Car admin details";
         }
 
-        
+
     }
 }

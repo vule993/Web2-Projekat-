@@ -34,7 +34,7 @@ import { CarCompaniesComponent } from "./content/companies/car-companies/car-com
 import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
-import { Z_FULL_FLUSH } from "zlib";
+import { RegisterAdminComponent } from "./content/admin-panel/head-admin/register-admin/register-admin.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -58,13 +58,11 @@ const routes: Routes = [
       { path: "airlines", component: AirlinesComponent },
       {
         path: "car-companies",
-        component: CarCompaniesComponent,
-        children: [
-          {
-            path: "car-company/:id",
-            component: CarCompanyProfileComponent
-          }
-        ]
+        component: CarCompaniesComponent
+      },
+      {
+        path: "car-companies/car-company/:id",
+        component: CarCompanyProfileComponent
       },
       {
         path: "",
@@ -116,7 +114,8 @@ const routes: Routes = [
           { path: "car-companies", component: CarCompaniesComponent },
           { path: "avio-companies", component: AirlinesComponent },
           { path: "users", component: UsersComponent },
-          { path: "profile", component: AdminProfileComponent }
+          { path: "profile", component: AdminProfileComponent },
+          { path: "register-admin", component: RegisterAdminComponent }
         ]
       },
       {
@@ -135,8 +134,8 @@ const routes: Routes = [
       {
         path: "car",
         component: AdminCarsComponent,
-        canActivate: [AuthGuard],
-        data: { permittedRoles: ["CarAdmin"] },
+        // canActivate: [AuthGuard],
+        // data: { permittedRoles: ["CarAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },
@@ -144,10 +143,7 @@ const routes: Routes = [
           { path: "price-list", component: EditCarPricesComponent },
           { path: "statistics", component: EditCarStatisticsComponent }
         ]
-      },
-      { path: "archive", component: ArchiveDataListComponent },
-      { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent }
+      }
     ]
   }
 ];
