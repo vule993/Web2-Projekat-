@@ -25,7 +25,7 @@ export class AdminCarsComponent implements OnInit {
 
     this.links.push(
       new Link(
-        "../../../../assets/site/icons/money-white.png",
+        "../../../../assets/site/icons/discount-white.png",
         "PRICE LIST",
         "price-list"
       )

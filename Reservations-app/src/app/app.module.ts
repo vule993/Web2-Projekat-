@@ -46,15 +46,16 @@ import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edi
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
-import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
+
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { DisplaySeatsComponent } from "./content/display-seats/display-seats.component";
 import { UsersService } from "./services/users.service";
 import { AuthInterceptor } from "./auth/auth.interceptor";
-import { HeadAdminComponent } from './content/admin-panel/head-admin/head-admin.component';
-import { UsersComponent } from './content/admin-panel/head-admin/users/users.component';
-import { AdminProfileComponent } from './content/admin-panel/head-admin/admin-profile/admin-profile.component';
+import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
+import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
+import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
+import { SliderComponent } from './slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -91,35 +92,35 @@ import { AdminProfileComponent } from './content/admin-panel/head-admin/admin-pr
     CarCompaniesComponent,
 
     CarCompanyProfileComponent,
-    CompaniesPageComponent,
     AirlinesComponent,
     SideNavComponent,
     DisplaySeatsComponent,
     HeadAdminComponent,
     UsersComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    SliderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      progressBar: true
+      progressBar: true,
     }),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     SafePipeModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -24,7 +24,6 @@ import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-
 import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 
-import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
@@ -48,7 +47,7 @@ const routes: Routes = [
   {
     path: "companies",
     redirectTo: "companies/airlines",
-    pathMatch: "full"
+    pathMatch: "full",
     // canActivate: [AuthGuard],
   },
   {
@@ -62,45 +61,40 @@ const routes: Routes = [
         children: [
           {
             path: "car-company/:id",
-            component: CarCompanyProfileComponent
-          }
-        ]
+            component: CarCompanyProfileComponent,
+          },
+        ],
       },
-      {
-        path: "",
-        component: CompaniesPageComponent,
-        children: []
-      }
-    ]
+    ],
   },
   {
     path: "profile",
     redirectTo: "profile/friends",
     pathMatch: "full",
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: "profile",
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: "friends",
-        component: FriendsDataListComponent
+        component: FriendsDataListComponent,
       },
       {
         path: "archive",
-        component: ArchiveDataListComponent
+        component: ArchiveDataListComponent,
       },
       {
         path: "reservations",
-        component: ReservationsDataListComponent
+        component: ReservationsDataListComponent,
       },
       {
         path: "edit-profile",
-        component: EditProfileComponent
-      }
-    ]
+        component: EditProfileComponent,
+      },
+    ],
   },
   {
     path: "admin",
@@ -116,8 +110,8 @@ const routes: Routes = [
           { path: "car-companies", component: CarCompaniesComponent },
           { path: "avio-companies", component: AirlinesComponent },
           { path: "users", component: UsersComponent },
-          { path: "profile", component: AdminProfileComponent }
-        ]
+          { path: "profile", component: AdminProfileComponent },
+        ],
       },
       {
         path: "avio",
@@ -129,31 +123,31 @@ const routes: Routes = [
           { path: "flights", component: EditFlightsComponent },
           { path: "discount", component: EditDiscountComponent },
           { path: "seat-config", component: EditSeatsComponent },
-          { path: "business-report", component: EditBusinessReportComponent }
-        ]
+          { path: "business-report", component: EditBusinessReportComponent },
+        ],
       },
       {
         path: "car",
         component: AdminCarsComponent,
-        canActivate: [AuthGuard],
-        data: { permittedRoles: ["CarAdmin"] },
+        // canActivate: [AuthGuard],
+        // data: { permittedRoles: ["CarAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent }
-        ]
+          { path: "statistics", component: EditCarStatisticsComponent },
+        ],
       },
       { path: "archive", component: ArchiveDataListComponent },
       { path: "reservations", component: ReservationsDataListComponent },
-      { path: "edit-profile", component: EditProfileComponent }
-    ]
-  }
+      { path: "edit-profile", component: EditProfileComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

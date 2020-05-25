@@ -1,0 +1,67 @@
+.existing-companies {
+  /* height: 300px; */
+  max-height: 15vw;
+  /* background-color: red; */
+}
+
+.klizac a > div {
+  width: 17vw;
+  height: 10vw;
+  background-color: #fff;
+  border: 0.15vw solid #43309a;
+  border-radius: 0.5vw;
+}
+
+.slide_show {
+  overflow: hidden;
+  height: 30vw !important;
+}
+.slide_show .nosac {
+  overflow: hidden;
+  margin: 0 auto;
+  width: 68vw;
+  height: 20vw;
+  position: relative;
+  float: left;
+  /*background-color: #dbeff6;*/
+}
+
+/*
+#005A31
+#A8CD1B
+#CBE32D
+#F3FAB6
+*/
+
+.klizac {
+  width: 500vw;
+  height: 20vw;
+  /*background-color: #dbeff6;*/
+  position: absolute;
+  left: 0vw;
+  overflow: hidden;
+}
+.klizac > a {
+  text-decoration: none;
+  color: #43309a;
+}
+.klizac b {
+  color: #000;
+}
+.klik {
+  float: left;
+  margin-top: 4vw;
+}
+.slider-card h3 {
+  text-align: center;
+  font-size: 1.4vw;
+}
+.slider-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.slider-card li {
+  font-size: 0.95vw;
+  margin-left: 1vw;
+}
