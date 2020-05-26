@@ -55,7 +55,8 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
 import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
-import { SliderComponent } from './slider/slider.component';
+import { SliderComponent } from "./content/slider/slider.component";
+import { CompanyListComponent } from "./content/companies/company-list/company-list.component";
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { SliderComponent } from './slider/slider.component';
     UsersComponent,
     AdminProfileComponent,
     SliderComponent,
+    CompanyListComponent,
   ],
   imports: [
     BrowserModule,

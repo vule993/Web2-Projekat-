@@ -1,5 +1,12 @@
 <div id="panel-wrapper" class="overflow-hidden">
-  <app-side-nav [links]="links"></app-side-nav>
+  <div class="fleft">
+    <app-side-nav [links]="links"></app-side-nav>
+    <!-- ovde dodati bindovanje na sve rent-a car firme -->
+    <app-company-list
+      [avCompanies]="allAvioCompanies"
+      [rcCompanies]="allAvioCompanies"
+    ></app-company-list>
+  </div>
   <div id="admin-content" class="fright">
     <router-outlet></router-outlet>
   </div>
