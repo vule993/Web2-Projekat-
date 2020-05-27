@@ -56,7 +56,8 @@ import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
 import { RegisterAdminComponent } from "./content/admin-panel/head-admin/register-admin/register-admin.component";
-import { SliderComponent } from "./slider/slider.component";
+import { SliderComponent } from "./content/slider/slider.component";
+import { CompanyListComponent } from "./content/companies/company-list/company-list.component";
 
 @NgModule({
   declarations: [
@@ -99,8 +100,9 @@ import { SliderComponent } from "./slider/slider.component";
     HeadAdminComponent,
     UsersComponent,
     AdminProfileComponent,
+    RegisterAdminComponent,
     SliderComponent,
-    RegisterAdminComponent
+    CompanyListComponent
   ],
   imports: [
     BrowserModule,

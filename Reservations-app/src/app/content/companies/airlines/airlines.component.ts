@@ -14,7 +14,7 @@ export class AirlinesComponent implements OnInit {
   allAvioCompanies: AvioCompany[] = [];
 
   sliderData = {
-    title: "Aviocompanies asd",
+    title: "All companies",
     hints: ["Likes", "Address", "Description"],
     values: [],
   };
