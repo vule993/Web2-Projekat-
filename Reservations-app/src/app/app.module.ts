@@ -46,7 +46,7 @@ import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edi
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
-import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
+
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { DisplaySeatsComponent } from "./content/display-seats/display-seats.component";
@@ -55,7 +55,8 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
 import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-profile/admin-profile.component";
-import { RegisterAdminComponent } from './content/admin-panel/head-admin/register-admin/register-admin.component';
+import { RegisterAdminComponent } from "./content/admin-panel/head-admin/register-admin/register-admin.component";
+import { SliderComponent } from "./slider/slider.component";
 
 @NgModule({
   declarations: [
@@ -92,13 +93,13 @@ import { RegisterAdminComponent } from './content/admin-panel/head-admin/registe
     CarCompaniesComponent,
 
     CarCompanyProfileComponent,
-    CompaniesPageComponent,
     AirlinesComponent,
     SideNavComponent,
     DisplaySeatsComponent,
     HeadAdminComponent,
     UsersComponent,
     AdminProfileComponent,
+    SliderComponent,
     RegisterAdminComponent
   ],
   imports: [

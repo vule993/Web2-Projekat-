@@ -12,7 +12,10 @@ import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
 export class ProfileComponent implements OnInit {
   activeTab;
   allUsers: User[];
-  public currentUser;
+  public currentUser = {
+    firstName: "",
+    lastName: "",
+  };
   constructor(private userService: UsersService, router: Router) {
     this.allUsers = userService.loadAllUsers();
 

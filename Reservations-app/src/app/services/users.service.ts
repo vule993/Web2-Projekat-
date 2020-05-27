@@ -52,7 +52,7 @@ export class UsersService {
         "Novic",
         "nov21@outlook.com",
         "a",
-        "https://lh3.googleusercontent.com/-Iz0gN6v9Mjw/AAAAAAAAAAI/AAAAAAAAABg/6gTLYKMexAw/photo.jpg",
+        "https://scontent.fbeg1-1.fna.fbcdn.net/v/t1.0-9/s960x960/57116380_2354409607950971_1631347725708558336_o.jpg?_nc_cat=110&_nc_sid=85a577&_nc_eui2=AeErDU3OB6EJUNpRoU9pE9XCRnAqhX7uThpGcCqFfu5OGl7wcugAX2mhlcv0XDHmXodv0N95yLyK8nJBz3Uh0tcB&_nc_ohc=xBesFVegyfkAX8NcJxZ&_nc_ht=scontent.fbeg1-1.fna&_nc_tp=7&oh=27e7a9878e7aa03738eb533e108773c1&oe=5EEF5C10",
         "New Now",
         "063/124-456",
         "car-admin"
@@ -102,7 +102,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach(element => {
+    allowedRoles.forEach((element) => {
       if (userRole == element) {
         isMatch = true;
         return false;

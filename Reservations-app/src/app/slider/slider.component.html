@@ -1,0 +1,36 @@
+<div class="existing-companies clear">
+  <h3>{{ data.title }}</h3>
+  <div class="slide_show">
+    <img
+      src="../../../../../assets/site/icons/l_arrow.png"
+      class="klik"
+      (click)="prev()"
+      width="30"
+    />
+    <div class="nosac">
+      <div class="klizac">
+        <a
+          *ngFor="let item of data.values"
+          routerLink="{{ item.v0 }}"
+          class="fleft overflow-hidden"
+        >
+          <div class="slider-card">
+            <h3>{{ item.v1 }}</h3>
+            <ul>
+              <li *ngFor="let hint of data.hints; let i = index">
+                <b>{{ hint }}:</b>
+                {{ item["v" + (i + 2)] }}
+              </li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </div>
+    <img
+      src="../../../../../assets/site/icons/r_arrow.png"
+      class="klik"
+      (click)="next()"
+      width="30"
+    />
+  </div>
+</div>

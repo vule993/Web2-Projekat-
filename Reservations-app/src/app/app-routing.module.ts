@@ -24,7 +24,6 @@ import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-
 import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 
-import { CompaniesPageComponent } from "./content/companies/companies-page/companies-page.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
@@ -49,7 +48,6 @@ const routes: Routes = [
     path: "companies",
     redirectTo: "companies/airlines",
     pathMatch: "full"
-    // canActivate: [AuthGuard],
   },
   {
     path: "companies",
@@ -63,19 +61,14 @@ const routes: Routes = [
       {
         path: "car-companies/car-company/:id",
         component: CarCompanyProfileComponent
-      },
-      {
-        path: "",
-        component: CompaniesPageComponent,
-        children: []
       }
     ]
   },
   {
     path: "profile",
     redirectTo: "profile/friends",
-    pathMatch: "full",
-    canActivate: [AuthGuard]
+    pathMatch: "full"
+    // canActivate: [AuthGuard]
   },
   {
     path: "profile",
@@ -121,6 +114,8 @@ const routes: Routes = [
       {
         path: "avio",
         component: AdminFlightsComponent,
+        canActivate: [AuthGuard],
+        data: { permittedRoles: ["AvioAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-profile", component: EditAvioProfileComponent },
@@ -134,8 +129,8 @@ const routes: Routes = [
       {
         path: "car",
         component: AdminCarsComponent,
-        // canActivate: [AuthGuard],
-        // data: { permittedRoles: ["CarAdmin"] },
+        canActivate: [AuthGuard],
+        data: { permittedRoles: ["CarAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },
