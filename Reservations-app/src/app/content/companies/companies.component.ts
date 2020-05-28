@@ -1,17 +1,21 @@
 import { Component, OnInit } from "@angular/core";
 import { Link } from "src/app/models/Link";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
+import { CarsService } from "src/app/services/cars.service";
 
 @Component({
   selector: "app-companies",
   templateUrl: "./companies.component.html",
-  styleUrls: ["./companies.component.css"],
+  styleUrls: ["./companies.component.css"]
 })
 export class CompaniesComponent implements OnInit {
   links: Link[] = [];
   allAvioCompanies = [];
   //ovde fale sve rent a car kompanije
-  constructor(private allAirlineCompaniesData: AviocompaniesService) {
+  constructor(
+    private allAirlineCompaniesData: AviocompaniesService,
+    private allCarCompanies: CarsService
+  ) {
     this.links.push(
       new Link(
         "../../assets/site/icons/plane-white.png",
@@ -30,7 +34,7 @@ export class CompaniesComponent implements OnInit {
 
   ngOnInit(): void {
     this.allAirlineCompaniesData.allAvioCompanies.subscribe(
-      (data) => (this.allAvioCompanies = data)
+      data => (this.allAvioCompanies = data)
     );
   }
 }

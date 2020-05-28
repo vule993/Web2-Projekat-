@@ -36,13 +36,13 @@ namespace ReservationAPI
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
             services.AddControllers();
-            services.AddDbContext<AuthenticationContext>(
+            services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 );
 
             services.AddIdentity<User, IdentityRole>()
                     .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<AuthenticationContext>();
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //customize validations
             services.Configure<IdentityOptions>(options =>

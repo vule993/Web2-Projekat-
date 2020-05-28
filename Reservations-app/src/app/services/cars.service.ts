@@ -2,10 +2,15 @@ import { Injectable } from "@angular/core";
 import { CarCompany } from "../models/CarCompany.model";
 import { Car } from "../models/car.model";
 
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs";
+
 @Injectable({
   providedIn: "root"
 })
 export class CarsService {
+  readonly baseURL = "http://localhost:5000/api";
+
   private cars: Car[] = [
     new Car(
       "brand new ferary",
@@ -63,8 +68,9 @@ export class CarsService {
     )
   ];
 
-  private carCompanies: CarCompany[] = [
+  private _allCarCompanies = new BehaviorSubject<CarCompany[]>([
     new CarCompany(
+      1,
       "Ime kompanije",
       3.5,
       "kompanija za rent a car smestena u indiji bla bla bla",
@@ -74,6 +80,7 @@ export class CarsService {
       this.cars.slice(0, 4)
     ),
     new CarCompany(
+      2,
       "Ime kompanije 2",
       4.5,
       "kompanija za rent a car smestena u beogradu bla bla bla",
@@ -83,6 +90,7 @@ export class CarsService {
       this.cars.slice(3, 5)
     ),
     new CarCompany(
+      3,
       "Ime kompanije 3",
       4.8,
       "kompanija za rent a car smestena u indiji bla bla bla",
@@ -92,6 +100,7 @@ export class CarsService {
       this.cars.slice(1, 5)
     ),
     new CarCompany(
+      4,
       "Ime kompanije 4",
       4.2,
       "kompanija za rent a car smestena u indiji bla bla bla",
@@ -100,19 +109,19 @@ export class CarsService {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
       this.cars.slice(0, 4).reverse()
     )
-  ];
+  ]);
 
-  constructor() {}
+  public allCarCompanies = this._allCarCompanies.asObservable();
+
+  constructor(private httpClient: HttpClient) {}
 
   /***** METHODS *****/
 
-  getCarCompanies = () => {
-    return this.carCompanies;
-  };
-
-  getCarCompany(index: number) {
-    return this.carCompanies[index];
+  getCarCompanies(): CarCompany[] {
+    return this._allCarCompanies.getValue();
   }
+
+  getCarCompany(index: number) {}
 
   getCars = () => {
     return this.cars;
@@ -121,4 +130,10 @@ export class CarsService {
   getCar = index => {
     return this.cars[index];
   };
+
+  //connection to api
+
+  addCar(car: Car) {
+    return this.httpClient.post(this.baseURL + "Car", car);
+  }
 }

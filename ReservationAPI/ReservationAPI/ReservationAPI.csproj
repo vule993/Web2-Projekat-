@@ -16,5 +16,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Shared\" />
+  </ItemGroup>
+
 
 </Project>

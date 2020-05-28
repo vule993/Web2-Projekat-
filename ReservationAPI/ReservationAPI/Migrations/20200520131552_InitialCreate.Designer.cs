@@ -9,7 +9,7 @@ using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200520131552_InitialCreate")]
     partial class InitialCreate
     {

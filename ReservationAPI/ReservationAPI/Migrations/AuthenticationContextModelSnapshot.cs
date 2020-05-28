@@ -8,7 +8,7 @@ using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
-    [DbContext(typeof(AuthenticationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class AuthenticationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
