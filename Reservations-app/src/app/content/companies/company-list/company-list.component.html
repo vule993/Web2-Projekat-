@@ -1,5 +1,5 @@
+<h3>All companies</h3>
 <div>
-  <h3>All companies</h3>
   <ul *ngIf="url.includes('companies/car-companies')">
     <li *ngFor="let company of rentACarCompanies">
       <a routerLink="{{ url + company.getId() }}">{{ company.name }}</a>
