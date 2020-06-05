@@ -24,7 +24,6 @@ import { EditCarListComponent } from "./content/admin-panel/admin-cars/edit-car-
 import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-car-prices/edit-car-prices.component";
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 
-import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { AuthGuard } from "./auth/auth.guard";
@@ -34,6 +33,8 @@ import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-pr
 import { UsersComponent } from "./content/admin-panel/head-admin/users/users.component";
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { RegisterAdminComponent } from "./content/admin-panel/head-admin/register-admin/register-admin.component";
+import { AirlineCompanyProfileComponent } from "./content/companies/airlines/airline-company-profile/airline-company-profile.component";
+import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -47,51 +48,46 @@ const routes: Routes = [
   {
     path: "companies",
     redirectTo: "companies/airlines",
-    pathMatch: "full"
+    pathMatch: "full",
   },
   {
     path: "companies",
     component: CompaniesComponent,
     children: [
       { path: "airlines", component: AirlinesComponent },
-      {
-        path: "car-companies",
-        component: CarCompaniesComponent
-      }
-    ]
-  },
-  {
-    path: "companies/car-companies/car-company/:id",
-    component: CarCompanyProfileComponent
+      { path: "airlines/:id", component: AirlineCompanyProfileComponent },
+      { path: "car-companies", component: CarCompaniesComponent },
+      { path: "car-companies/:id", component: CarCompanyProfileComponent },
+    ],
   },
   {
     path: "profile",
     redirectTo: "profile/friends",
-    pathMatch: "full"
+    pathMatch: "full",
     // canActivate: [AuthGuard]
   },
   {
     path: "profile",
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: "friends",
-        component: FriendsDataListComponent
+        component: FriendsDataListComponent,
       },
       {
         path: "archive",
-        component: ArchiveDataListComponent
+        component: ArchiveDataListComponent,
       },
       {
         path: "reservations",
-        component: ReservationsDataListComponent
+        component: ReservationsDataListComponent,
       },
       {
         path: "edit-profile",
-        component: EditProfileComponent
-      }
-    ]
+        component: EditProfileComponent,
+      },
+    ],
   },
   {
     path: "admin",
@@ -108,13 +104,13 @@ const routes: Routes = [
           { path: "avio-companies", component: AirlinesComponent },
           { path: "users", component: UsersComponent },
           { path: "profile", component: AdminProfileComponent },
-          { path: "register-admin", component: RegisterAdminComponent }
-        ]
+          { path: "register-admin", component: RegisterAdminComponent },
+        ],
       },
       {
         path: "avio",
         component: AdminFlightsComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         data: { permittedRoles: ["AvioAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
@@ -123,28 +119,28 @@ const routes: Routes = [
           { path: "flights", component: EditFlightsComponent },
           { path: "discount", component: EditDiscountComponent },
           { path: "seat-config", component: EditSeatsComponent },
-          { path: "business-report", component: EditBusinessReportComponent }
-        ]
+          { path: "business-report", component: EditBusinessReportComponent },
+        ],
       },
       {
         path: "car",
         component: AdminCarsComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         data: { permittedRoles: ["CarAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent }
-        ]
-      }
-    ]
-  }
+          { path: "statistics", component: EditCarStatisticsComponent },
+        ],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

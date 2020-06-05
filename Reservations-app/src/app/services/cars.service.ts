@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class CarsService {
   readonly baseURL = "http://localhost:5000/api";
@@ -65,7 +65,7 @@ export class CarsService {
       3500,
       3.5,
       "https://images3.polovniautomobili.tv/user-images/thumbs/1574/15745318/6d98cfab9f51-800x600.jpg"
-    )
+    ),
   ];
 
   private _allCarCompanies = new BehaviorSubject<CarCompany[]>([
@@ -108,7 +108,7 @@ export class CarsService {
       "Mumbai",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
       this.cars.slice(0, 4).reverse()
-    )
+    ),
   ]);
 
   public allCarCompanies = this._allCarCompanies.asObservable();
@@ -122,14 +122,16 @@ export class CarsService {
   }
 
   getCarCompany(index: number) {
-    return this._allCarCompanies.getValue()[index];
+    return this._allCarCompanies
+      .getValue()
+      .find((carCompany) => carCompany.id === index);
   }
 
   getCars = () => {
     return this.cars;
   };
 
-  getCar = index => {
+  getCar = (index) => {
     return this.cars[index];
   };
 

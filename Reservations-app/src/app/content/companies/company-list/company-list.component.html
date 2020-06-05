@@ -1,11 +1,11 @@
 <h3>All companies</h3>
 <div>
-  <ul *ngIf="url.includes('companies/car-companies')">
+  <ul *ngIf="url.includes('car-companies')">
     <li *ngFor="let company of rentACarCompanies">
       <a routerLink="{{ url + company.getId() }}">{{ company.name }}</a>
     </li>
   </ul>
-  <ul *ngIf="url.includes('companies/airlines')">
+  <ul *ngIf="url.includes('airlines')">
     <li *ngFor="let company of avioCompanies">
       <a routerLink="{{ url + company.getId() }}">{{ company.name }}</a>
     </li>

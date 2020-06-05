@@ -13,7 +13,7 @@ export class AvioCompany {
     private discounts: string[],
     private seatConfigurations: SeatConfiguration[],
     private likes: number,
-    private id: number
+    public id: number
   ) {}
   getName() {
     return this.name;

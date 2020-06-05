@@ -30,9 +30,9 @@ export class EditSeatsComponent implements OnInit {
   formValues: [number, number, number, number, number, number];
   rows = [];
 
-  constructor(private data: SeatsConfigService) {
-    this.allSeatConfigurations = data.loadAllSeatConfigurations();
-    this.elementNumber = data.getSeatConfigurationNumber();
+  constructor(private seatService: SeatsConfigService) {
+    this.allSeatConfigurations = seatService.loadAllSeatConfigurations();
+    this.elementNumber = seatService.getSeatConfigurationNumber();
   }
 
   configName(value, next) {
@@ -85,7 +85,7 @@ export class EditSeatsComponent implements OnInit {
       this.hideSelects(next, this.fieldsNo);
       this.unsetFormValues(next - 1, this.fieldsNo);
     }
-    this.data.changeData(this.formValues);
+    this.seatService.changeData(this.formValues);
     //iscrtam prikaz sedista
     //this.displayChanges();
   }
@@ -114,7 +114,7 @@ export class EditSeatsComponent implements OnInit {
 
   saveSeatConfiguration() {
     if (this.validate()) {
-      this.data.addSeatConfig(
+      this.seatService.addSeatConfig(
         new SeatConfiguration(
           SeatConfiguration.count + 1,
           this.configurationName,
@@ -126,8 +126,8 @@ export class EditSeatsComponent implements OnInit {
           this.formValues[5]
         )
       );
-      this.elementNumber = this.data.getSeatConfigurationNumber();
-      this.allSeatConfigurations = this.data.loadAllSeatConfigurations();
+      this.elementNumber = this.seatService.getSeatConfigurationNumber();
+      this.allSeatConfigurations = this.seatService.loadAllSeatConfigurations();
       $(".message")[0].innerText = "Config saved!";
       $(".alert").removeClass("alert-danger").addClass("alert-success");
     } else {
@@ -195,7 +195,7 @@ export class EditSeatsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.data.currentData.subscribe((data) => this.loadData(data));
+    this.seatService.currentData.subscribe((data) => this.loadData(data));
   }
   loadData = function (data) {
     this.formValues = data;

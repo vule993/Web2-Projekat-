@@ -7,8 +7,8 @@
   </div>
 
   <div class="caption text-center">
-    <h1>{{ carCompany !== undefined ? carCompany.name : "" }}</h1>
-    <h3>{{ carCompany.description }}</h3>
+    <h1>{{ currentCompany.name }}</h1>
+    <h3>{{ currentCompany.description }}</h3>
     <a class="btn btn-outline-light btn-lg">Drive with us</a>
 
     <div
@@ -81,7 +81,7 @@
         <h3 class="heading">Our Cars</h3>
       </div>
 
-      <div class="col-md-12">
+      <!-- <div class="col-md-12">
         <div class="table-responsive">
           <table class="table table-hover table-condensed">
             <thead class="thead-dark">
@@ -122,64 +122,65 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- <div class="fixed-wrap">
+      <!-- <div class="fixed-wrap">
       <div class="fixed"></div>
     </div> -->
+    </div>
   </div>
-</div>
 
-<!--End of About Section-->
+  <!--End of About Section-->
 
-<!--Contact Section-->
-<div id="contact" class="offset">
-  <div class="jumbotron">
-    <footer>
-      <div class="row justify-content-center">
-        <div class="col-md-12 text-center">
-          <h3 class="heading">Contact Us</h3>
+  <!--Contact Section-->
+  <div id="contact" class="offset">
+    <div class="jumbotron">
+      <footer>
+        <div class="row justify-content-center">
+          <div class="col-md-12 text-center">
+            <h3 class="heading">Contact Us</h3>
 
-          <p>Address: {{ carCompany.address }}, {{ carCompany.city }}</p>
-          <hr />
-          <div class="card map-card" style="height: 20vw;">
-            <!--Google map-->
-            <div
-              id="map-container-google-1"
-              class="z-depth-1-half map-container"
-              style="height: 20vw;"
-            >
-              <iframe
-                [src]="createURL() | safe: 'resourceUrl'"
-                frameborder="0"
-                style="border: 0; height: 100%;"
-                class="col-md-12"
-                allowfullscreen
-              ></iframe>
+            <!-- <p>Address: {{ carCompany.address }}, {{ carCompany.city }}</p> -->
+            <hr />
+            <div class="card map-card" style="height: 20vw;">
+              <!--Google map-->
+              <div
+                id="map-container-google-1"
+                class="z-depth-1-half map-container"
+                style="height: 20vw;"
+              >
+                <iframe
+                  [src]="createURL() | safe: 'resourceUrl'"
+                  frameborder="0"
+                  style="border: 0; height: 100%;"
+                  class="col-md-12"
+                  allowfullscreen
+                ></iframe>
+              </div>
             </div>
-          </div>
-          <!--Rating -> ovo ce morati biti forma? -->
-          <br />
-          <h3 class="heading">Please Rate Us</h3>
+            <!--Rating -> ovo ce morati biti forma? -->
+            <br />
+            <h3 class="heading">Please Rate Us</h3>
 
-          <ul
-            class="list-inline rating-list"
-            *ngFor="let star of stars"
-            style="display: inline-block;"
-          >
-            <li
-              (click)="countStar(star)"
-              [ngClass]="{ selected: star <= selectedValue }"
+            <!-- <ul
+              class="list-inline rating-list"
+              *ngFor="let star of stars"
+              style="display: inline-block;"
             >
-              <i class="fa fa-star fa-3x"></i>
-            </li>
-          </ul>
+              <li
+                (click)="countStar(star)"
+                [ngClass]="{ selected: star <= selectedValue }"
+              >
+                <i class="fa fa-star fa-3x"></i>
+              </li>
+            </ul> -->
 
-          <!--end rating-->
-        </div>
-        <!-- <hr class="socket" />
+            <!--end rating-->
+          </div>
+          <!-- <hr class="socket" />
       &copy; Aleksandar 2019 -->
-      </div>
-    </footer>
+        </div>
+      </footer>
+    </div>
   </div>
 </div>

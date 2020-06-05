@@ -45,7 +45,6 @@ import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-ca
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
-import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 
 import { AirlinesComponent } from "./content/companies/airlines/airlines.component";
 import { SideNavComponent } from "./content/side-nav/side-nav.component";
@@ -58,6 +57,8 @@ import { AdminProfileComponent } from "./content/admin-panel/head-admin/admin-pr
 import { RegisterAdminComponent } from "./content/admin-panel/head-admin/register-admin/register-admin.component";
 import { SliderComponent } from "./content/slider/slider.component";
 import { CompanyListComponent } from "./content/companies/company-list/company-list.component";
+import { AirlineCompanyProfileComponent } from "./content/companies/airlines/airline-company-profile/airline-company-profile.component";
+import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 
 @NgModule({
   declarations: [
@@ -92,8 +93,6 @@ import { CompanyListComponent } from "./content/companies/company-list/company-l
     EditCarPricesComponent,
     EditCarStatisticsComponent,
     CarCompaniesComponent,
-
-    CarCompanyProfileComponent,
     AirlinesComponent,
     SideNavComponent,
     DisplaySeatsComponent,
@@ -102,29 +101,31 @@ import { CompanyListComponent } from "./content/companies/company-list/company-l
     AdminProfileComponent,
     RegisterAdminComponent,
     SliderComponent,
-    CompanyListComponent
+    CompanyListComponent,
+    AirlineCompanyProfileComponent,
+    CarCompanyProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      progressBar: true
+      progressBar: true,
     }),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     SafePipeModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
