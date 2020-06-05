@@ -57,12 +57,12 @@ const routes: Routes = [
       {
         path: "car-companies",
         component: CarCompaniesComponent
-      },
-      {
-        path: "car-companies/car-company/:id",
-        component: CarCompanyProfileComponent
       }
     ]
+  },
+  {
+    path: "companies/car-companies/car-company/:id",
+    component: CarCompanyProfileComponent
   },
   {
     path: "profile",

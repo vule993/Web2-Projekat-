@@ -17,6 +17,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
+using ReservationAPI.Models.Interfaces;
+using ReservationAPI.Services;
 
 namespace ReservationAPI
 {
@@ -39,6 +41,9 @@ namespace ReservationAPI
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 );
+
+            // my services
+            services.AddScoped<ICarRepository, CarService>();
 
             services.AddIdentity<User, IdentityRole>()
                     .AddRoles<IdentityRole>()

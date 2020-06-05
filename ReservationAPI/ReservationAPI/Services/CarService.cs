@@ -20,12 +20,12 @@ namespace ReservationAPI.Services
 
         public async Task<bool> AddCar(Car car)
         {
-            var c = await _context.FindAsync<Car>(car.Id);
+            var c = await _context.Car.FindAsync(car.Id);
 
             if (c != null) 
                 return false;
 
-            await _context.AddAsync(car);
+            await _context.Car.AddAsync(car);
             await _context.SaveChangesAsync();
 
             return true;
@@ -43,12 +43,13 @@ namespace ReservationAPI.Services
 
         public async Task<Car> GetCar(long id)
         {
-            return await _context.FindAsync<Car>(id);
+            return await _context.Car.FindAsync(id);
         }
 
         public async Task UpdateCar(Car car)
         {
-            _context.Update(car);
+           // _context.Update(car);
+            _context.Car.Update(car);
             await _context.SaveChangesAsync();
         }
     }

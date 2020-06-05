@@ -121,7 +121,9 @@ export class CarsService {
     return this._allCarCompanies.getValue();
   }
 
-  getCarCompany(index: number) {}
+  getCarCompany(index: number) {
+    return this._allCarCompanies.getValue()[index];
+  }
 
   getCars = () => {
     return this.cars;
