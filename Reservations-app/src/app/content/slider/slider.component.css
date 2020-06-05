@@ -16,13 +16,12 @@
 
 .slide_show {
   overflow: hidden;
-  height: 30vw !important;
 }
 .slide_show .nosac {
   overflow: hidden;
   margin: 0 auto;
   width: 68vw;
-  height: 20vw;
+  height: 12vw;
   position: relative;
   float: left;
   /*background-color: #dbeff6;*/

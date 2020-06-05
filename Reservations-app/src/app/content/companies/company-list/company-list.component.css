@@ -2,8 +2,8 @@ h3 {
   color: #43309a;
 }
 div {
-  margin-top: 100px;
-  clear: both;
+  background-color: #43309a;
+  border-radius: 0.5vw;
 }
 ul {
   list-style: none;
@@ -13,7 +13,6 @@ ul {
 a {
   text-decoration: none;
   display: block;
-  background-color: #43309a;
   color: #fff;
   padding: 0.5vw 1vw;
 }
