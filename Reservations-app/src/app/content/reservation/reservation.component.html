@@ -1,3 +1,72 @@
 <div id="panel-wrapper" class="overflow-hidden">
-  <p>radi</p>
+  <div class="result overflow-hidden">
+    <div class="fleft">
+      <div>
+        <h6>Flight termin</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ reservation.airlineReservation.flight.startDate }}
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/clock.png" alt="" />
+          {{ reservation.airlineReservation.flight.startTime }}
+        </span>
+      </div>
+      <div>
+        <h6>Return termin</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ reservation.airlineReservation.flight.returnDate }}
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/clock.png" alt="" />
+          {{ reservation.airlineReservation.flight.endTime }}
+        </span>
+      </div>
+    </div>
+
+    <div class="fleft separator">
+      <div>
+        <h6>Connecting flights number</h6>
+        <span>
+          <img
+            src="../../../../assets/site/icons/connecting-flights.png"
+            alt=""
+          />
+          {{ reservation.airlineReservation.flight.destinations.length }}
+        </span>
+      </div>
+      <div>
+        <h6>Flight duration</h6>
+        <span>
+          <img src="../../../../assets/site/icons/flight-duration.png" alt="" />
+          {{ reservation.airlineReservation.flight.estimationTime }}
+        </span>
+      </div>
+      <div>
+        <h6>Flight prize</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.airlineReservation.flight.price }}$
+        </span>
+      </div>
+    </div>
+
+    <div class="fleft">
+      <div>
+        <h6>Aviocompany</h6>
+        <span>
+          <img src="../../../../assets/site/icons/plane.png" alt="" />
+          {{ reservation.airlineReservation.flight.company.name }}
+        </span>
+      </div>
+      <a routerLink="/reservation/{{ reservation.id }}"
+        ><button class="btn btn-success fright">
+          Book IT
+        </button>
+      </a>
+    </div>
+  </div>
 </div>

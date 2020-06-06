@@ -5,3 +5,35 @@
 #admin-content {
   width: 75vw;
 }
+.result {
+  width: 100%;
+  color: #4d3d9d;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5vw;
+  margin: 1vw 0;
+}
+.result h6 {
+  margin: 0.8vw 0;
+}
+.result > div {
+  margin: 1vw 0;
+  padding: 1vw;
+  width: 25vw;
+}
+.result > div span {
+  display: block;
+  padding: 0.5vw;
+}
+.result > div span img {
+  width: 2vw;
+  height: 2vw;
+}
+.separator {
+  padding: 0 0, 1vw;
+  border-left: 0.1vw solid rgba(77, 61, 157, 0.3);
+  border-right: 0.1vw solid rgba(77, 61, 157, 0.3);
+}
+.result .btn {
+  margin-top: 10.3vw;
+  width: 100%;
+}

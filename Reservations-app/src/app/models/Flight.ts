@@ -3,15 +3,17 @@ import { AvioCompany } from "./AvioCompany.model";
 
 export class Flight {
   constructor(
-    private id: number,
+    public id: number,
     public company: AvioCompany,
-    private startDate: string,
-    private returnDate: string,
-    private estimationTime: string,
-    private discount: string,
-    private planeType: string,
-    private destinations: Destination[],
-    private otherServices: string,
-    private price: string
+    public startDate: string,
+    public returnDate: string,
+    public startTime: string,
+    public endTime: string,
+    public estimationTime: string,
+    public discount: string,
+    public planeType: string,
+    public destinations: Destination[],
+    public otherServices: string,
+    public price: string
   ) {}
 }

@@ -36,14 +36,14 @@ export class EditFlightsComponent implements OnInit {
 
     this.departCalendar = $(function () {
       $("#departTime").datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd-MM-yyyy",
         autoclose: true,
       });
     });
 
     this.returnCalendar = $(function () {
       $("#returnTime").datepicker({
-        format: "yyyy-mm-dd",
+        format: "dd-MM-yyyy",
         autoclose: true,
       });
     });
