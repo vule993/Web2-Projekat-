@@ -1,16 +1,108 @@
 <app-slider [data]="sliderData"></app-slider>
 
-<!--
-    <div
-          class="col-3"
-          *ngFor="let carCompanyEl of carCompanies; let i = index"
-        >
-          <a [routerLink]="['car-company', i]" class="slider-item"> mora i ovaj routerLink da se prosledi u app-slider?
-            <img
-              src="{{ carCompanyEl.thumbnail }}"
-              class="d-block w-100"
-              alt="car-company image"
-            />
-          </a>
+<div class="search overflow-hidden">
+  <select class="form-control search-field fleft">
+    <option value="starting point">Starting point</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="ending point">Ending point</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="available cars">Choose car</option>
+  </select>
+  <input
+    type="text"
+    autocomplete="off"
+    id="startDate"
+    class="form-control search-field departTime fleft"
+    placeholder="Starting date"
+  />
+
+  <button class="btn btn-success fleft">Search</button>
+  <!-- (click)="openFilter()" -->
+  <img
+    class="fright"
+    (click)="openFilter()"
+    src="../../../../assets/site/icons/filter-white.png"
+  />
+</div>
+
+<div class="filter display-none overflow-hidden">
+  <select class="form-control search-field fleft">
+    <option value="company">Company</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="price">Price</option>
+  </select>
+
+  <select class="form-control search-field fleft">
+    <option value="estimated time">Drive time</option>
+  </select>
+  <button class="btn btn-success fleft">Filter</button>
+
+  <!-- (click)="closeFilter()" -->
+  <img
+    class="fright"
+    (click)="closeFilter()"
+    src="../../../../assets/site/icons/close-white.png"
+  />
+</div>
+
+<div class="results">
+  <div class="result overflow-hidden">
+    <div class="fleft">
+      <div>
+        <h6>Drive termin</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          24-aug-2020
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          2-sep-2020
+        </span>
+      </div>
+      <div>
+        <h6>Company</h6>
+        <span>
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          Ime kompanije
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/location.png" alt="" />
+          Beograd
+        </span>
+      </div>
     </div>
--->
+
+    <div class="fleft separator">
+      <div>
+        <h6>Passengers</h6>
+        <span>
+          <img src="../../../../assets/site/icons/avatar-male.png" alt="" />
+          2
+        </span>
+      </div>
+      <div>
+        <h6>Choosed car</h6>
+        <span>
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          Audi a6
+        </span>
+      </div>
+      <div>
+        <h6>Prise</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          50$
+        </span>
+      </div>
+    </div>
+
+    <div class="fleft">
+      <button class="btn btn-success fright">Book IT</button>
+    </div>
+  </div>
+</div>
