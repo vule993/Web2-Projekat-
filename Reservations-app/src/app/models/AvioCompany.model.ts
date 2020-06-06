@@ -5,7 +5,7 @@ import { Flight } from "./Flight";
 
 export class AvioCompany {
   constructor(
-    private name: string,
+    public name: string,
     private address: Address,
     private description: string,
     private destinations: Destination[],

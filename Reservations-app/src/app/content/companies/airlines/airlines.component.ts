@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { Reservation } from "src/app/models/Reservation.model";
+import { ReservationService } from "src/app/services/reservation.service";
 
 declare var $: any;
 @Component({
@@ -12,6 +14,7 @@ export class AirlinesComponent implements OnInit {
   departCalendar: any;
   returnCalendar: any;
   allAvioCompanies: AvioCompany[] = [];
+  allReservations: Reservation[];
 
   sliderData = {
     title: "All companies",
@@ -19,7 +22,10 @@ export class AirlinesComponent implements OnInit {
     values: [],
   };
 
-  constructor(private allAirlineCompaniesData: AviocompaniesService) {}
+  constructor(
+    private allAirlineCompaniesData: AviocompaniesService,
+    private reservationService: ReservationService
+  ) {}
 
   openFilter() {
     $(".filter").fadeIn(300);
@@ -27,7 +33,14 @@ export class AirlinesComponent implements OnInit {
   closeFilter() {
     $(".filter").fadeOut(300);
   }
+
+  openReservation(id: number) {}
+
   ngOnInit(): void {
+    this.reservationService.allReservations.subscribe(
+      (data) => (this.allReservations = data)
+    );
+
     this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
       this.allAvioCompanies = data;
       this.sliderData.values = [];
