@@ -35,6 +35,7 @@ import { AirlinesComponent } from "./content/companies/airlines/airlines.compone
 import { RegisterAdminComponent } from "./content/admin-panel/head-admin/register-admin/register-admin.component";
 import { AirlineCompanyProfileComponent } from "./content/companies/airlines/airline-company-profile/airline-company-profile.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
+import { ReservationComponent } from "./content/reservation/reservation.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -59,6 +60,10 @@ const routes: Routes = [
       { path: "car-companies", component: CarCompaniesComponent },
       { path: "car-companies/:id", component: CarCompanyProfileComponent },
     ],
+  },
+  {
+    path: "reservation/:id",
+    component: ReservationComponent,
   },
   {
     path: "profile",

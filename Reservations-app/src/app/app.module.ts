@@ -59,6 +59,7 @@ import { SliderComponent } from "./content/slider/slider.component";
 import { CompanyListComponent } from "./content/companies/company-list/company-list.component";
 import { AirlineCompanyProfileComponent } from "./content/companies/airlines/airline-company-profile/airline-company-profile.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
+import { ReservationComponent } from './content/reservation/reservation.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { CarCompanyProfileComponent } from "./content/companies/car-companies/ca
     CompanyListComponent,
     AirlineCompanyProfileComponent,
     CarCompanyProfileComponent,
+    ReservationComponent,
   ],
   imports: [
     BrowserModule,
