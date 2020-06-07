@@ -10,6 +10,7 @@
   <select class="form-control search-field fleft">
     <option value="available cars">Choose car</option>
   </select>
+
   <input
     type="text"
     autocomplete="off"
@@ -19,6 +20,7 @@
   />
 
   <button class="btn btn-success fleft">Search</button>
+
   <!-- (click)="openFilter()" -->
   <img
     class="fright"
@@ -30,13 +32,19 @@
 <div class="filter display-none overflow-hidden">
   <select class="form-control search-field fleft">
     <option value="company">Company</option>
+    <option *ngFor="let company of carCompanies" value="{{ company.name }}">
+      {{ company.name }}
+    </option>
   </select>
   <select class="form-control search-field fleft">
     <option value="price">Price</option>
   </select>
 
   <select class="form-control search-field fleft">
-    <option value="estimated time">Drive time</option>
+    <option value="category">Category plan</option>
+    <option value="basic">Basic</option>
+    <option value="plus">Plus</option>
+    <option value="pro">Pro</option>
   </select>
   <button class="btn btn-success fleft">Filter</button>
 
@@ -49,59 +57,62 @@
 </div>
 
 <div class="results">
-  <div class="result overflow-hidden">
+  <div
+    class="result overflow-hidden"
+    *ngFor="let reservation of allReservations"
+  >
     <div class="fleft">
       <div>
         <h6>Drive termin</h6>
         <span>
           <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          24-aug-2020
+          {{ reservation.carReservation.startDate }}
         </span>
 
         <span>
           <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          2-sep-2020
+          {{ reservation.carReservation.endDate }}
         </span>
       </div>
       <div>
         <h6>Company</h6>
         <span>
           <img src="../../../../assets/site/icons/car.png" alt="" />
-          Ime kompanije
+          {{ reservation.carReservation.carCompany.name }}
         </span>
 
         <span>
           <img src="../../../../assets/site/icons/location.png" alt="" />
-          Beograd
+          {{ reservation.carReservation.carCompany.address }}
         </span>
       </div>
     </div>
 
     <div class="fleft separator">
       <div>
-        <h6>Passengers</h6>
-        <span>
-          <img src="../../../../assets/site/icons/avatar-male.png" alt="" />
-          2
-        </span>
-      </div>
-      <div>
         <h6>Choosed car</h6>
         <span>
           <img src="../../../../assets/site/icons/car.png" alt="" />
-          Audi a6
+          {{ reservation.carReservation.car.mark }}
         </span>
       </div>
       <div>
         <h6>Prise</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          50$
+          {{ reservation.carReservation.price }}$
         </span>
       </div>
     </div>
-
     <div class="fleft">
+      <div>
+        <h6>Choosed plan</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.carReservation.car.plan.toUpperCase() }}
+        </span>
+      </div>
+
       <button class="btn btn-success fright">Book IT</button>
     </div>
   </div>

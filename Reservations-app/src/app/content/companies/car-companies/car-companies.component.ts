@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { CarCompany } from "src/app/models/CarCompany.model";
 import { CarsService } from "src/app/services/cars.service";
+import { ReservationService } from "src/app/services/reservation.service";
+import { Reservation } from "src/app/models/Reservation.model";
 
 declare var $: any;
 @Component({
@@ -14,6 +16,7 @@ declare var $: any;
 export class CarCompaniesComponent implements OnInit {
   carCompanies: CarCompany[];
   startCalendar: any;
+  allReservations: Reservation[];
 
   sliderData = {
     title: "All companies",
@@ -21,9 +24,17 @@ export class CarCompaniesComponent implements OnInit {
     values: []
   };
 
-  constructor(private carService: CarsService) {}
+  constructor(
+    private carService: CarsService,
+    private reservationService: ReservationService
+  ) {}
 
   ngOnInit(): void {
+    //load reservations
+    this.reservationService.allReservations.subscribe(
+      data => (this.allReservations = data)
+    );
+
     this.carService.allCarCompanies.subscribe(data => {
       this.carCompanies = data;
       this.sliderData.values = [];

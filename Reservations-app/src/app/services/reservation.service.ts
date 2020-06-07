@@ -8,9 +8,10 @@ import { CarReservation } from "../models/CarReservation";
 import { User } from "../models/User.model";
 import { Address } from "../models/address.model";
 import { BehaviorSubject } from "rxjs";
+import { CarsService } from "./cars.service";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
@@ -45,7 +46,7 @@ export class ReservationService {
               "Belgrade",
               "Serbia",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "coffee service, wifi...",
           "300"
@@ -61,10 +62,23 @@ export class ReservationService {
             "Belgreade",
             "065555333",
             "1"
-          ),
+          )
         ]
       ),
-      new CarReservation(),
+      new CarReservation(
+        1,
+        this.carService.getCar(1),
+        this.carService.getCarCompany(1),
+        "02-Jul-2020",
+        "25-Jul-2020",
+        this.carService.getPrice(
+          this.carService.getCar(2).plan,
+          this.calculateNumOfDays(
+            this.parseDate("02-07-2020"),
+            this.parseDate("25-07-2020")
+          )
+        )
+      ),
       false,
       false
     ),
@@ -99,7 +113,7 @@ export class ReservationService {
               "Negde tamo",
               "Nedodjija",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "coffee service, wifi, NESTO NOVO...",
           "500"
@@ -118,13 +132,26 @@ export class ReservationService {
           //   ),
         ]
       ),
-      new CarReservation(),
+      new CarReservation(
+        2,
+        this.carService.getCar(2),
+        this.carService.getCarCompany(2),
+        "05-Aug-2020",
+        "23-Aug-2020",
+        this.carService.getPrice(
+          this.carService.getCar(2).plan,
+          this.calculateNumOfDays(
+            this.parseDate("05-08-2020"),
+            this.parseDate("23-08-2020")
+          )
+        )
+      ),
       false,
       false
-    ),
+    )
   ]);
   allReservations = this._allReservations.asObservable();
-  constructor() {}
+  constructor(private carService: CarsService) {}
 
   loadAllReservations() {
     return this.allReservations;
@@ -142,9 +169,20 @@ export class ReservationService {
   getSpecificReservation(id: number) {
     return this._allReservations
       .getValue()
-      .find((reservation) => reservation.id === id);
+      .find(reservation => reservation.id === id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;
+  }
+
+  calculateNumOfDays(first, second) {
+    // Take the difference between the dates and divide by milliseconds per day.
+    // Round to nearest whole number to deal with DST.
+    return Math.round((second - first) / (1000 * 60 * 60 * 24));
+  }
+
+  parseDate(str) {
+    var mdy = str.split("-");
+    return new Date(mdy[2], mdy[1] - 1, mdy[0]);
   }
 }

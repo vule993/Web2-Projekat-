@@ -1,13 +1,1 @@
-.slider-item:hover {
-  position: absolute;
-  transform: scale(1, 1);
-}
-.carousel-control-prev {
-  width: 2rem;
-  background: rgb(49, 8, 230);
-}
 
-.carousel-control-next {
-  width: 2rem;
-  background: rgb(49, 8, 230);
-}

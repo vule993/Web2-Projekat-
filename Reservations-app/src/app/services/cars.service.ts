@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class CarsService {
   readonly baseURL = "http://localhost:5000/api";
@@ -19,7 +19,8 @@ export class CarsService {
       2,
       350000,
       5,
-      "https://www.automagazin.rs/slike/vesti/20190530080049_photo_1.jpg"
+      "https://www.automagazin.rs/slike/vesti/20190530080049_photo_1.jpg",
+      "pro"
     ),
     new Car(
       "brand new BMW",
@@ -28,7 +29,8 @@ export class CarsService {
       5,
       170000,
       5,
-      "https://www.cstatic-images.com/car-pictures/xl/usd00bmc931a021001.png"
+      "https://www.cstatic-images.com/car-pictures/xl/usd00bmc931a021001.png",
+      "pro"
     ),
     new Car(
       "super cool Mercedes",
@@ -37,7 +39,8 @@ export class CarsService {
       5,
       120000,
       4.8,
-      "https://www.luxlife.rs/storage/posts/thumbnail/2018/Nov/2514/najskuplji-2019-mercedes-cls-kosta-115905-dolara.jpg"
+      "https://www.luxlife.rs/storage/posts/thumbnail/2018/Nov/2514/najskuplji-2019-mercedes-cls-kosta-115905-dolara.jpg",
+      "plus"
     ),
     new Car(
       "fast car",
@@ -46,7 +49,8 @@ export class CarsService {
       2,
       140000,
       4.8,
-      "https://images3.polovniautomobili.tv/user-images/thumbs/1618/16180464/28354d9abf05-800x600.jpg"
+      "https://images3.polovniautomobili.tv/user-images/thumbs/1618/16180464/28354d9abf05-800x600.jpg",
+      "pro"
     ),
     new Car(
       "family car",
@@ -55,7 +59,8 @@ export class CarsService {
       6,
       10000,
       4.2,
-      "https://secureservercdn.net/198.71.233.161/f0a.34d.myftpupload.com/wp-content/uploads/2018/11/ww-tiguan-696x469.jpg"
+      "https://secureservercdn.net/198.71.233.161/f0a.34d.myftpupload.com/wp-content/uploads/2018/11/ww-tiguan-696x469.jpg",
+      "plus"
     ),
     new Car(
       "polo",
@@ -64,8 +69,9 @@ export class CarsService {
       5,
       3500,
       3.5,
-      "https://images3.polovniautomobili.tv/user-images/thumbs/1574/15745318/6d98cfab9f51-800x600.jpg"
-    ),
+      "https://images3.polovniautomobili.tv/user-images/thumbs/1574/15745318/6d98cfab9f51-800x600.jpg",
+      "basic"
+    )
   ];
 
   private _allCarCompanies = new BehaviorSubject<CarCompany[]>([
@@ -108,7 +114,7 @@ export class CarsService {
       "Mumbai",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
       this.cars.slice(0, 4).reverse()
-    ),
+    )
   ]);
 
   public allCarCompanies = this._allCarCompanies.asObservable();
@@ -124,17 +130,32 @@ export class CarsService {
   getCarCompany(index: number) {
     return this._allCarCompanies
       .getValue()
-      .find((carCompany) => carCompany.id === index);
+      .find(carCompany => carCompany.id === index);
   }
 
   getCars = () => {
     return this.cars;
   };
 
-  getCar = (index) => {
+  getCar = index => {
     return this.cars[index];
   };
 
+  getPrice(plan: string, numOfDays: number) {
+    switch (plan) {
+      case "pro":
+        return 49 * numOfDays;
+        break;
+      case "plus":
+        return 30 * numOfDays;
+        break;
+      case "basic":
+        return 20 * numOfDays;
+        break;
+      default:
+        console.log("wrong input");
+    }
+  }
   //connection to api
 
   addCar(car: Car) {
