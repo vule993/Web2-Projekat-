@@ -1,16 +1,119 @@
 <app-slider [data]="sliderData"></app-slider>
 
-<!--
-    <div
-          class="col-3"
-          *ngFor="let carCompanyEl of carCompanies; let i = index"
-        >
-          <a [routerLink]="['car-company', i]" class="slider-item"> mora i ovaj routerLink da se prosledi u app-slider?
-            <img
-              src="{{ carCompanyEl.thumbnail }}"
-              class="d-block w-100"
-              alt="car-company image"
-            />
-          </a>
+<div class="search overflow-hidden">
+  <select class="form-control search-field fleft">
+    <option value="starting point">Starting point</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="ending point">Ending point</option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="available cars">Choose car</option>
+  </select>
+
+  <input
+    type="text"
+    autocomplete="off"
+    id="startDate"
+    class="form-control search-field departTime fleft"
+    placeholder="Starting date"
+  />
+
+  <button class="btn btn-success fleft">Search</button>
+
+  <!-- (click)="openFilter()" -->
+  <img
+    class="fright"
+    (click)="openFilter()"
+    src="../../../../assets/site/icons/filter-white.png"
+  />
+</div>
+
+<div class="filter display-none overflow-hidden">
+  <select class="form-control search-field fleft">
+    <option value="company">Company</option>
+    <option *ngFor="let company of carCompanies" value="{{ company.name }}">
+      {{ company.name }}
+    </option>
+  </select>
+  <select class="form-control search-field fleft">
+    <option value="price">Price</option>
+  </select>
+
+  <select class="form-control search-field fleft">
+    <option value="category">Category plan</option>
+    <option value="basic">Basic</option>
+    <option value="plus">Plus</option>
+    <option value="pro">Pro</option>
+  </select>
+  <button class="btn btn-success fleft">Filter</button>
+
+  <!-- (click)="closeFilter()" -->
+  <img
+    class="fright"
+    (click)="closeFilter()"
+    src="../../../../assets/site/icons/close-white.png"
+  />
+</div>
+
+<div class="results">
+  <div
+    class="result overflow-hidden"
+    *ngFor="let reservation of allReservations"
+  >
+    <div class="fleft">
+      <div>
+        <h6>Drive termin</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ reservation.carReservation.startDate }}
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ reservation.carReservation.endDate }}
+        </span>
+      </div>
+      <div>
+        <h6>Company</h6>
+        <span>
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ reservation.carReservation.carCompany.name }}
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/location.png" alt="" />
+          {{ reservation.carReservation.carCompany.address }}
+        </span>
+      </div>
     </div>
--->
+
+    <div class="fleft separator">
+      <div>
+        <h6>Choosed car</h6>
+        <span>
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ reservation.carReservation.car.mark }}
+        </span>
+      </div>
+      <div>
+        <h6>Prise</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.carReservation.price }}$
+        </span>
+      </div>
+    </div>
+    <div class="fleft">
+      <div>
+        <h6>Choosed plan</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.carReservation.car.plan.toUpperCase() }}
+        </span>
+      </div>
+
+      <button class="btn btn-success fright">Book IT</button>
+    </div>
+  </div>
+</div>

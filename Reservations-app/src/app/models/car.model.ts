@@ -6,6 +6,7 @@ export class Car {
     public seats: number,
     public price: number,
     public rating: number,
-    public image: string
+    public image: string,
+    public plan: string
   ) {}
 }

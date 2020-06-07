@@ -8,9 +8,9 @@ import { FormControl, Validators } from "@angular/forms";
   selector: "app-car-company-profile",
   templateUrl: "./car-company-profile.component.html",
   styleUrls: [
-    "./car-company-profile.component.css",
+    "./car-company-profile.component.css"
     // "../../profile/profile.component.css",
-  ],
+  ]
 })
 export class CarCompanyProfileComponent implements OnInit {
   carCompany: CarCompany;
@@ -22,7 +22,6 @@ export class CarCompanyProfileComponent implements OnInit {
   constructor(private carService: CarsService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log("renderr");
     //fetch id of car component, id is index in the list
     this.route.params.subscribe((params: Params) => {
       this.id = +params["id"];
