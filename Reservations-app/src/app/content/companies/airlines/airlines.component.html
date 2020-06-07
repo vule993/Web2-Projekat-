@@ -1,28 +1,40 @@
 <app-slider [data]="sliderData"></app-slider>
 
 <div class="search overflow-hidden">
-  <select class="form-control search-field fleft">
-    <option value="starting airport">Starting airport</option>
+  <select id="startingAirport" class="form-control search-field fleft">
+    <option value="">Starting airport</option>
+    <option
+      *ngFor="let destination of allDestinations"
+      value="{{ destination.airportName }}"
+      >{{ destination.airportName }}
+    </option>
   </select>
-  <select class="form-control search-field fleft">
-    <option value="ending airport">Ending airport</option>
+  <select id="endingAirport" class="form-control search-field fleft">
+    <option value="">Ending airport</option>
+    <option
+      *ngFor="let destination of allDestinations"
+      value="{{ destination.airportName }}"
+      >{{ destination.airportName }}
+    </option>
   </select>
 
   <input
     type="text"
     autocomplete="off"
-    id="departTime"
+    id="departDate"
     class="form-control search-field departTime fleft"
     placeholder="Starting date"
   />
   <input
     type="text"
     autocomplete="off"
-    id="returnTime"
+    id="returnDate"
     class="form-control search-field returnTime fleft"
     placeholder="Returning date"
   />
-  <button class="btn btn-success fleft">Search</button>
+  <button (click)="searchReservations()" class="btn btn-success fleft">
+    Search
+  </button>
 
   <img
     (click)="openFilter()"
@@ -30,19 +42,39 @@
     src="../../../../assets/site/icons/filter-white.png"
   />
 </div>
+<!-- DODATI display-none -->
+<div class="filter overflow-hidden">
+  <select id="company" class="form-control search-field fleft">
+    <option value="">Company</option>
+    <option
+      *ngFor="let company of allAvioCompanies"
+      value="{{ company.name }}"
+      >{{ company.name }}</option
+    >
+  </select>
+  <select id="price" class="form-control search-field fleft">
+    <option value="">Price range</option>
+    <option value="  0-100"> 0-100$</option>
+    <option value="100-200">100-200$</option>
+    <option value="200-300">200-300$</option>
+    <option value="300-500">300-500$</option>
+    <option value="500-1000">300-1000$</option>
+    <option value="1000-20000">1000+$</option>
+  </select>
 
-<div class="filter display-none overflow-hidden">
-  <select class="form-control search-field fleft">
-    <option value="starting airport">Company</option>
+  <select id="flightDuration" class="form-control search-field fleft">
+    <option value="">Flight duration</option>
+    <option value="00h:00min-01h:00min">00h:00min-01h:00min</option>
+    <option value="01h:00min-01h:30min">01h:00min-01h:30min</option>
+    <option value="01h:30min-03h:00min">01h:30min-03h:00min</option>
+    <option value="03h:00min-05h:00min">03h:00min-05h:00min</option>
+    <option value="05h:00min-10h:00min">05h:00min-10h:00min</option>
+    <option value="10h:00min-15h:00min">10h:00min-15h:00min</option>
+    <option value="15h:00min-23h:59min">15h:00min+</option>
   </select>
-  <select class="form-control search-field fleft">
-    <option value="ending airport">Price</option>
-  </select>
-
-  <select class="form-control search-field fleft">
-    <option value="ending airport">Flight duration</option>
-  </select>
-  <button class="btn btn-success fleft">Filter</button>
+  <button (click)="filterReservations()" class="btn btn-success fleft">
+    Filter
+  </button>
 
   <img
     (click)="closeFilter()"
@@ -53,7 +85,7 @@
 
 <div class="results">
   <div
-    *ngFor="let reservation of allReservations"
+    *ngFor="let reservation of allReservationsToShow"
     class="result overflow-hidden"
   >
     <div class="fleft">
@@ -116,6 +148,20 @@
         <span>
           <img src="../../../../assets/site/icons/plane.png" alt="" />
           {{ reservation.airlineReservation.flight.company.name }}
+        </span>
+      </div>
+      <div>
+        <h6>Relation</h6>
+        <span>
+          <img src="../../../../assets/site/icons/connected.png" alt="" />
+          {{
+            reservation.airlineReservation.flight.startingDestination
+              .airportName
+          }}
+          -
+          {{
+            reservation.airlineReservation.flight.endingDestination.airportName
+          }}
         </span>
       </div>
       <a routerLink="/reservation/{{ reservation.id }}"

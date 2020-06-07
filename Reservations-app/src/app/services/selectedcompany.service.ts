@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject } from "rxjs";
   providedIn: "root",
 })
 export class SelectedcompanyService {
-  private data = new BehaviorSubject("");
+  private data = new BehaviorSubject(null);
   currentCompany = this.data.asObservable();
 
   constructor() {}

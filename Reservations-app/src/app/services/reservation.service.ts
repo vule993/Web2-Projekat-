@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Reservation } from "../models/Reservation.model";
 import { AirlineReservation } from "../models/AirlineReservation";
-import { Flight } from "../models/Flight";
+import { Flight } from "../models/Flight.model";
 import { AvioCompany } from "../models/AvioCompany.model";
 import { Destination } from "../models/Destination.model";
 import { CarReservation } from "../models/CarReservation";
 import { User } from "../models/User.model";
 import { Address } from "../models/address.model";
 import { BehaviorSubject } from "rxjs";
+import { DestinationsService } from "./destinations.service";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +31,20 @@ export class ReservationService {
             [],
             132,
             1
+          ),
+          new Destination(
+            1,
+            "Nikola Tesla",
+            "Belgrade",
+            "Serbia",
+            "Neznanog junaka jebem li ga 1/1"
+          ),
+          new Destination(
+            2,
+            "Heathrow",
+            "London",
+            "UK",
+            "Some bloody address 1/1"
           ),
           "06-June-2020",
           "09-June-2020",
@@ -84,6 +99,20 @@ export class ReservationService {
             [],
             132,
             1
+          ),
+          new Destination(
+            2,
+            "Heathrow",
+            "London",
+            "UK",
+            "Some bloody address 1/1"
+          ),
+          new Destination(
+            1,
+            "Nikola Tesla",
+            "Belgrade",
+            "Serbia",
+            "Neznanog junaka jebem li ga 1/1"
           ),
           "09-June-2020",
           "12-June-2020",

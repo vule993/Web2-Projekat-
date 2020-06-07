@@ -3,6 +3,9 @@ import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { AvioCompany } from "src/app/models/AvioCompany.model";
 import { Reservation } from "src/app/models/Reservation.model";
 import { ReservationService } from "src/app/services/reservation.service";
+import { Destination } from "src/app/models/Destination.model";
+import { DestinationsService } from "src/app/services/destinations.service";
+import { ReservationComponent } from "../../reservation/reservation.component";
 
 declare var $: any;
 @Component({
@@ -15,6 +18,9 @@ export class AirlinesComponent implements OnInit {
   returnCalendar: any;
   allAvioCompanies: AvioCompany[] = [];
   allReservations: Reservation[];
+  allReservationsToShow: Reservation[];
+  allReservationsPreFilter: Reservation[];
+  allDestinations: Destination[];
 
   sliderData = {
     title: "All companies",
@@ -24,8 +30,112 @@ export class AirlinesComponent implements OnInit {
 
   constructor(
     private allAirlineCompaniesData: AviocompaniesService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private destinationService: DestinationsService
   ) {}
+
+  searchReservations() {
+    this.allReservationsToShow = this.allReservations;
+    if ($("#departDate").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) =>
+          new Date(reservation.airlineReservation.flight.startDate) >=
+          new Date($("#departDate").val())
+      );
+    }
+    if ($("#returnDate").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) =>
+          new Date(reservation.airlineReservation.flight.returnDate) >=
+          new Date($("#returnDate").val())
+      );
+    }
+    if ($("#startingAirport").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) =>
+          reservation.airlineReservation.flight.startingDestination
+            .airportName === $("#startingAirport").val()
+      );
+    }
+    if ($("#endingAirport").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) =>
+          reservation.airlineReservation.flight.endingDestination
+            .airportName === $("#endingAirport").val()
+      );
+    }
+    this.allReservationsPreFilter = this.allReservationsToShow;
+  }
+
+  filterReservations() {
+    this.allReservationsToShow = this.allReservationsPreFilter;
+
+    if ($("#company").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) =>
+          reservation.airlineReservation.flight.company.name ===
+          $("#company").val()
+      );
+    }
+
+    if ($("#price").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) => {
+          let price = reservation.airlineReservation.flight.price;
+          let lowerPrice = $("#price").val().split("-")[0];
+          let upperPrice = $("#price").val().split("-")[1];
+          if (price >= lowerPrice && price <= upperPrice) {
+            return true;
+          }
+          return false;
+        }
+      );
+    }
+
+    if ($("#flightDuration").val() != "") {
+      let pattern1 = /:/g;
+      let pattern2 = /h:|min/g;
+      //
+      let lowerHr = $("#flightDuration").val().split("-")[0].split(pattern2)[0];
+      let lowerMin = $("#flightDuration")
+        .val()
+        .split("-")[1]
+        .split(pattern2)[1];
+      let higherHr = $("#flightDuration")
+        .val()
+        .split("-")[1]
+        .split(pattern2)[0];
+      let higherMin = $("#flightDuration")
+        .val()
+        .split("-")[1]
+        .split(pattern2)[1];
+      //
+      let lowerDate = new Date();
+      lowerDate.setHours(lowerHr);
+      lowerDate.setMinutes(lowerMin);
+      //
+      let higherDate = new Date();
+      higherDate.setHours(higherHr);
+      higherDate.setMinutes(higherMin);
+      //
+      let durationDate = new Date();
+      //
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        (reservation) => {
+          let duration = reservation.airlineReservation.flight.estimationTime;
+          let durationHr = +duration.split(pattern2)[0];
+          let durationMin = +duration.split(pattern2)[1];
+
+          durationDate.setHours(durationHr);
+          durationDate.setMinutes(durationMin);
+          if (lowerDate <= durationDate && durationDate <= higherDate) {
+            return true;
+          }
+          return false;
+        }
+      );
+    }
+  }
 
   openFilter() {
     $(".filter").fadeIn(300);
@@ -37,8 +147,11 @@ export class AirlinesComponent implements OnInit {
   openReservation(id: number) {}
 
   ngOnInit(): void {
+    this.destinationService.allDestinations.subscribe(
+      (destinations) => (this.allDestinations = destinations)
+    );
     this.reservationService.allReservations.subscribe(
-      (data) => (this.allReservations = data)
+      (reservatons) => (this.allReservations = reservatons)
     );
 
     this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
@@ -56,7 +169,7 @@ export class AirlinesComponent implements OnInit {
     });
 
     this.departCalendar = $(function () {
-      $("#departTime").datepicker({
+      $("#departDate").datepicker({
         // format: "yyyy-mm-dd",
         format: "dd-MM-yyyy",
         autoclose: true,
@@ -64,7 +177,7 @@ export class AirlinesComponent implements OnInit {
     });
 
     this.returnCalendar = $(function () {
-      $("#returnTime").datepicker({
+      $("#returnDate").datepicker({
         format: "dd-MM-yyyy",
         autoclose: true,
       });

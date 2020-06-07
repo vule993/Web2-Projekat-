@@ -90,20 +90,21 @@
   width: 100%;
   max-width: 100%;
   position: absolute;
-  top: 15%;
+  top: 5%;
   z-index: 1;
   color: black;
   text-transform: uppercase;
   font-family: "Roboto Sans-Serif";
 }
 .caption h1 {
-  margin-top: 5vw;
-  font-size: 3.8rem;
+  margin-top: 2.5vw;
+  font-size: 4.2vw;
   font-weight: 700;
   letter-spacing: 0.3rem;
   text-shadow: 0.1rem 0.1rem 0.8rem #fff;
   padding-bottom: 1rem;
   font-family: "Roboto Sans-Serif";
+  color: #43309a;
 }
 .caption h3 {
   font-size: 2rem;

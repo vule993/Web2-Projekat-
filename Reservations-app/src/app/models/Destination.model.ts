@@ -1,10 +1,10 @@
 export class Destination {
   constructor(
     public id,
-    private airportName: string,
-    private city: string,
-    private country: string,
-    private address: string
+    public airportName: string,
+    public city: string,
+    public country: string,
+    public address: string
   ) {}
   info() {
     return (

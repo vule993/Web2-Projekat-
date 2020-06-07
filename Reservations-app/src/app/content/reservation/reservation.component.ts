@@ -20,7 +20,6 @@ export class ReservationComponent implements OnInit {
     this.reservationService.allReservations.subscribe((data) => {
       let id = +this.routes.url.split("/")[2];
       this.reservation = data.find((reservation) => reservation.id == id);
-      alert(this.reservation.id);
     });
   }
 }

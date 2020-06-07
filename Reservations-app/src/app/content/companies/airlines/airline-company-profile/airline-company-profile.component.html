@@ -4,30 +4,31 @@
     <div class="home-wrap">
       <div class="home-inner"></div>
     </div>
-  </div>
 
-  <div class="caption text-center">
-    <h1>{{ currentCompany.name }}</h1>
-    <h3>{{ currentCompany.description }}</h3>
-    <a class="btn btn-outline-light btn-lg">Drive with us</a>
+    <div class="caption text-center overflow-hidden">
+      <h1>{{ currentCompany.name }}</h1>
+      <h3>{{ currentCompany.description }}</h3>
+      <a class="btn btn-outline-light btn-lg">Drive with us</a>
 
-    <div
-      class="scroll-prompt"
-      scroll-prompt=""
-      ng-show="showPrompt"
-      style="opacity: 1;"
-    >
-      <div class="scroll-prompt-arrow-container">
-        <div class="scroll-prompt-arrow">
-          <div></div>
-        </div>
-        <div class="scroll-prompt-arrow">
-          <div></div>
+      <div
+        class="scroll-prompt"
+        scroll-prompt=""
+        ng-show="showPrompt"
+        style="opacity: 1;"
+      >
+        <div class="scroll-prompt-arrow-container">
+          <div class="scroll-prompt-arrow">
+            <div></div>
+          </div>
+          <div class="scroll-prompt-arrow">
+            <div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!--- End of Landing Page Section -->
 
 <!--Services Section-->
@@ -44,18 +45,18 @@
         <div class="col-md-4">
           <div class="usluga">
             <i
-              class="far fa-lightbulb fa-4x"
+              class="far fa-bookmark fa-4x"
               data-fa-transform="shrink-3 up-5"
             ></i>
-            <h3>Booking car</h3>
+            <h3>Booking tickets</h3>
           </div>
         </div>
 
         <!--Usluga #2-->
         <div class="col-md-4">
           <div class="usluga">
-            <i class="fas fa-car fa-4x" data-fa-transform="shrink-3 up-5"></i>
-            <h3>Car Insurance</h3>
+            <i class="fas fa-plane fa-4x" data-fa-transform="shrink-3 up-5"></i>
+            <h3>The best planes</h3>
           </div>
         </div>
 
@@ -63,7 +64,7 @@
         <div class="col-md-4">
           <div class="usluga">
             <i class="fas fa-cogs fa-4x" data-fa-transform="shrink-3 up-5"></i>
-            <h3>Cheap Prices</h3>
+            <h3>Easy booking</h3>
           </div>
         </div>
       </div>
@@ -78,10 +79,10 @@
   <div class="fixed-background">
     <div class="row purple text-center">
       <div class="col-12">
-        <h3 class="heading">Our Cars</h3>
+        <h3 class="heading">Fast reservations</h3>
       </div>
 
-      <!-- <div class="col-md-12">
+      <div class="col-md-12">
         <div class="table-responsive">
           <table class="table table-hover table-condensed">
             <thead class="thead-dark">
@@ -97,21 +98,50 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let car of carCompany.cars">
+              <tr *ngFor="let reservation of getReservationsWithDiscount()">
                 <td>
                   <img
-                    src="{{ car.image }}"
-                    class="img-responsive"
+                    class="far fa-bookmark fa-4x img-responsive"
                     style="width: 5vw; height: 5vh;"
                     alt="slika auta"
                   />
                 </td>
-                <td>{{ car.mark }}</td>
-                <td>{{ car.description }}</td>
-                <td>{{ car.year }}</td>
-                <td>{{ car.rating }}</td>
-                <td>{{ car.seats }}</td>
-                <td>{{ car.price }}$</td>
+                <td>
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .airportName
+                  }}
+                </td>
+                <td>
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .airportName
+                  }}
+                </td>
+                <td>
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .airportName
+                  }}
+                </td>
+                <td>
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .airportName
+                  }}
+                </td>
+                <td>
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .airportName
+                  }}
+                </td>
+                <td>
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .airportName
+                  }}$
+                </td>
                 <td>
                   <button class="btn btn-success">
                     Book Me
@@ -122,47 +152,47 @@
           </table>
         </div>
       </div>
-    </div> -->
+    </div>
 
-      <!-- <div class="fixed-wrap">
+    <!-- <div class="fixed-wrap">
       <div class="fixed"></div>
-    </div> -->
+    </div>
     </div>
   </div>
 
   <!--End of About Section-->
 
-  <!--Contact Section-->
-  <div id="contact" class="offset">
-    <div class="jumbotron">
-      <footer>
-        <div class="row justify-content-center">
-          <div class="col-md-12 text-center">
-            <h3 class="heading">Contact Us</h3>
+    <!--Contact Section-->
+    <div id="contact" class="offset">
+      <div class="jumbotron">
+        <footer>
+          <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+              <h3 class="heading">Contact Us</h3>
 
-            <!-- <p>Address: {{ carCompany.address }}, {{ carCompany.city }}</p> -->
-            <hr />
-            <div class="card map-card" style="height: 20vw;">
-              <!--Google map-->
-              <div
-                id="map-container-google-1"
-                class="z-depth-1-half map-container"
-                style="height: 20vw;"
-              >
-                <iframe
-                  [src]="createURL() | safe: 'resourceUrl'"
-                  frameborder="0"
-                  style="border: 0; height: 100%;"
-                  class="col-md-12"
-                  allowfullscreen
-                ></iframe>
+              <!-- <p>Address: {{ carCompany.address }}, {{ carCompany.city }}</p> -->
+              <hr />
+              <div class="card map-card" style="height: 20vw;">
+                <!--Google map-->
+                <div
+                  id="map-container-google-1"
+                  class="z-depth-1-half map-container"
+                  style="height: 20vw;"
+                >
+                  <iframe
+                    [src]="createURL() | safe: 'resourceUrl'"
+                    frameborder="0"
+                    style="border: 0; height: 100%;"
+                    class="col-md-12"
+                    allowfullscreen
+                  ></iframe>
+                </div>
               </div>
-            </div>
-            <!--Rating -> ovo ce morati biti forma? -->
-            <br />
-            <h3 class="heading">Please Rate Us</h3>
+              <!--Rating -> ovo ce morati biti forma? -->
+              <br />
+              <h3 class="heading">Please Rate Us</h3>
 
-            <!-- <ul
+              <!-- <ul
               class="list-inline rating-list"
               *ngFor="let star of stars"
               style="display: inline-block;"
@@ -175,12 +205,13 @@
               </li>
             </ul> -->
 
-            <!--end rating-->
-          </div>
-          <!-- <hr class="socket" />
+              <!--end rating-->
+            </div>
+            <!-- <hr class="socket" />
       &copy; Aleksandar 2019 -->
-        </div>
-      </footer>
+          </div>
+        </footer>
+      </div>
     </div>
   </div>
 </div>

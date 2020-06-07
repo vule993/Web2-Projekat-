@@ -1,4 +1,4 @@
-import { Flight } from "./Flight";
+import { Flight } from "./Flight.model";
 import { User } from "./User.model";
 
 export class AirlineReservation {

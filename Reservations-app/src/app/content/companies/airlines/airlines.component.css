@@ -1,3 +1,6 @@
+.search-field {
+  width: 13vw;
+}
 .search,
 .filter {
   background-color: #4d3d9d;
@@ -7,8 +10,8 @@
 .filter {
   border-radius: 0;
 }
-.search-field {
-  width: 12vw;
+.filter .search-field {
+  width: 16vw;
 }
 .search img,
 .filter img {
@@ -50,6 +53,6 @@
   border-right: 0.1vw solid rgba(77, 61, 157, 0.3);
 }
 .result .btn {
-  margin-top: 10.3vw;
+  margin-top: 4.3vw;
   width: 100%;
 }

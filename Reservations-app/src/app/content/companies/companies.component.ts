@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Link } from "src/app/models/Link";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { CarsService } from "src/app/services/cars.service";
-import { Router, NavigationStart } from "@angular/router";
+import { Router, NavigationStart, NavigationEnd } from "@angular/router";
 
 import { BehaviorSubject } from "rxjs";
 import { SelectedcompanyService } from "src/app/services/selectedcompany.service";
@@ -19,9 +19,7 @@ export class CompaniesComponent implements OnInit {
   allAvioCompanies: AvioCompany[] = [];
   allRentACarCompanies: CarCompany[] = [];
 
-  //predstavlja ili avio ili rent-a-car
-  selectedCompany = new BehaviorSubject("");
-  getSelectedCompany = this.selectedCompany.asObservable();
+  company;
   id: number;
   urlSelector = "";
   //ovde fale sve rent a car kompanije
@@ -48,32 +46,35 @@ export class CompaniesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.allCarCompaniesData.allCarCompanies.subscribe((data) => {
+      this.allRentACarCompanies = data;
+    });
+    this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
+      this.allAvioCompanies = data;
+      //ispravka za refresh stranice
+      let id = 1;
+      this.company = data.find((company) => company.id === id);
+      this.selectedCompanyService.setData(this.company);
+    });
+
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
         this.urlSelector = val.url.split("/")[2];
         this.id = +val.url.split("/")[3];
 
         if (this.urlSelector !== "" && !isNaN(this.id)) {
-          let company;
           if (this.urlSelector === "airlines") {
-            company = this.allAvioCompanies.find(
+            this.company = this.allAvioCompanies.find(
               (aviocompany) => aviocompany.id == this.id
             );
           } else if (this.urlSelector === "car-companies") {
-            company = this.allRentACarCompanies.find(
+            this.company = this.allRentACarCompanies.find(
               (rentACarCompany) => rentACarCompany.id == this.id
             );
           }
-          this.selectedCompanyService.setData(company);
+          this.selectedCompanyService.setData(this.company);
         }
       }
-    });
-
-    this.allCarCompaniesData.allCarCompanies.subscribe((data) => {
-      this.allRentACarCompanies = data;
-    });
-    this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
-      this.allAvioCompanies = data;
     });
   }
 }

@@ -5,6 +5,8 @@ export class Flight {
   constructor(
     public id: number,
     public company: AvioCompany,
+    public startingDestination: Destination,
+    public endingDestination: Destination,
     public startDate: string,
     public returnDate: string,
     public startTime: string,
