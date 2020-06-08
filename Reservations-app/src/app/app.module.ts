@@ -59,7 +59,9 @@ import { SliderComponent } from "./content/slider/slider.component";
 import { CompanyListComponent } from "./content/companies/company-list/company-list.component";
 import { AirlineCompanyProfileComponent } from "./content/companies/airlines/airline-company-profile/airline-company-profile.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
-import { ReservationComponent } from './content/reservation/reservation.component';
+import { ReservationComponent } from "./content/reservation/reservation.component";
+import { HeadCarCompaniesComponent } from "./content/admin-panel/head-admin/head-car-companies/head-car-companies.component";
+import { HeadAvioCompaniesComponent } from "./content/admin-panel/head-admin/head-avio-companies/head-avio-companies.component";
 
 @NgModule({
   declarations: [
@@ -106,28 +108,30 @@ import { ReservationComponent } from './content/reservation/reservation.componen
     AirlineCompanyProfileComponent,
     CarCompanyProfileComponent,
     ReservationComponent,
+    HeadCarCompaniesComponent,
+    HeadAvioCompaniesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      progressBar: true,
+      progressBar: true
     }),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     SafePipeModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
     UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true,
-    },
+      multi: true
+    }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

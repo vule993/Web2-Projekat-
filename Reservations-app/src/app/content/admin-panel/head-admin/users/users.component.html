@@ -1,1 +1,40 @@
-<p>users works!</p>
+<div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">FirstName</th>
+        <th scope="col">SecondName</th>
+        <th scope="col">Email</th>
+        <th scope="col">City</th>
+        <th scope="col">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of allUsers">
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.city }}</td>
+        <td>{{ user.phone }}</td>
+
+        <!-- <td>
+          <button
+            class="btn btn-success"
+            data-toggle="modal"
+            data-target="#carEdit"
+            (click)="editCarModal(car)"
+          >
+            Edit
+          </button>
+        </td> -->
+        <!-- <td>
+          <button type="button" (click)="deleteCar()" class="btn btn-danger">
+            Delete
+          </button>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!--Edit car modal-->

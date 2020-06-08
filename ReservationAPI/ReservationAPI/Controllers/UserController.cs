@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ReservationAPI.Models;
+using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Controllers
 {
@@ -22,12 +23,14 @@ namespace ReservationAPI.Controllers
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
+        private ApplicationDbContext _context;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<ApplicationSettings> appSettings)
+        public UserController(UserManager<User> userManager, ApplicationDbContext context, SignInManager<User> signInManager, IOptions<ApplicationSettings> appSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         //POST : /api/User/Register
@@ -103,6 +106,26 @@ namespace ReservationAPI.Controllers
         }
 
 
+        //GET: /api/User/GetAll
+        [HttpGet]
+        //[Authorize]
+        //[Authorize(Roles = "Admin")]
+        [Route("GetAll")]
+        public IEnumerable<UserModel> GetAll()
+        {
+            var users = _context.Users.ToList();
+            return users.Select(u => new UserModel()
+            {
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                Phone = u.PhoneNumber,
+                Password = u.PasswordHash,
+                Street = u.Street,
+                City = u.City,
+                Role = "User"
+            }).ToList();
+        }
 
         //GET: /api/User/Profile
         [HttpGet]

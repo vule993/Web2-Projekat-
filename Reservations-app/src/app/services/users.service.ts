@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { User } from "../models/User.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -67,13 +68,17 @@ export class UsersService {
         "Paris",
         "063/555-333",
         "user"
-      ),
+      )
     ];
     return allUsers;
   }
 
   loadAllUsers() {
     return this.allUsers();
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.baseURL + "/User/GetAll");
   }
 
   registerUser(user: FormModel) {
@@ -102,7 +107,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach((element) => {
+    allowedRoles.forEach(element => {
       if (userRole == element) {
         isMatch = true;
         return false;
