@@ -1,3 +1,5 @@
+import { Seat, Row } from "./Seat.model";
+
 export class SeatConfiguration {
   public static count: number = 0;
   constructor(
@@ -8,8 +10,27 @@ export class SeatConfiguration {
     public segmentOneWidth: number,
     public segmentTwoWidth: number,
     public segmentThreeWidth: number,
-    public segmentFourWidth: number
+    public segmentFourWidth: number,
+    public seats
   ) {
+    this.generateSeats();
     SeatConfiguration.count = SeatConfiguration.count + 1;
+  }
+  generateSeats() {
+    this.seats = [];
+    for (let i = 0; i < this.segmentsHeight; i++) {
+      this.seats[i] = new Row();
+      for (let j = 0; j < this.getRowWidth(); j++) {
+        this.seats[i].seats[j] = new Seat(i * this.getRowWidth() + j + 1);
+      }
+    }
+  }
+  getRowWidth() {
+    return (
+      this.segmentOneWidth +
+      this.segmentTwoWidth +
+      this.segmentThreeWidth +
+      this.segmentFourWidth
+    );
   }
 }

@@ -147,7 +147,13 @@
         <h6>Aviocompany</h6>
         <span>
           <img src="../../../../assets/site/icons/plane.png" alt="" />
-          {{ reservation.airlineReservation.flight.company.name }}
+          <a
+            routerLink="/companies/airlines/{{
+              reservation.airlineReservation.flight.company.id
+            }}"
+          >
+            {{ reservation.airlineReservation.flight.company.name }}
+          </a>
         </span>
       </div>
       <div>

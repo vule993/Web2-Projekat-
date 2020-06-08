@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Seat, Row } from "src/app/models/Seat.model";
 import { SeatsConfigService } from "src/app/services/seats-config.service";
-import { futimes } from "fs";
+import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
 
 @Component({
   selector: "app-display-seats",
@@ -9,12 +9,11 @@ import { futimes } from "fs";
   styleUrls: ["./display-seats.component.css"],
 })
 export class DisplaySeatsComponent implements OnInit {
-  //OVAJ TREBA DA PRIMA
-  row_no = 0;
-  seats_per_row = 0;
   formValues: [number, number, number, number, number, number];
-  rows = [];
+  seats = [];
 
+  //na ovo cemo bindovati
+  @Input() currentSeatConfiguration: SeatConfiguration;
   constructor(private data: SeatsConfigService) {}
 
   getRowWidth() {
@@ -26,11 +25,11 @@ export class DisplaySeatsComponent implements OnInit {
     );
   }
   displayChanges() {
-    this.rows = [];
+    this.seats = [];
     for (let i = 0; i < this.formValues[0]; i++) {
-      this.rows[i] = new Row();
+      this.seats[i] = new Row();
       for (let j = 0; j < this.getRowWidth(); j++) {
-        this.rows[i].seats[j] = new Seat(i * this.getRowWidth() + j + 1);
+        this.seats[i].seats[j] = new Seat(i * this.getRowWidth() + j + 1);
       }
     }
   }
@@ -40,13 +39,23 @@ export class DisplaySeatsComponent implements OnInit {
     let col_number = seat_number % this.getRowWidth();
 
     if (event.toElement.classList.contains("taken-seat")) {
-      this.rows[row_number].seats[col_number].taken = false;
+      this.seats[row_number].seats[col_number].taken = false;
     } else {
-      this.rows[row_number].seats[col_number].taken = true;
+      this.seats[row_number].seats[col_number].taken = true;
     }
   }
   ngOnInit(): void {
     this.data.currentData.subscribe((data) => this.seatsDataHandler(data));
+
+    this.formValues = [
+      this.currentSeatConfiguration.segmentsHeight,
+      this.currentSeatConfiguration.segmentsNumber,
+      this.currentSeatConfiguration.segmentOneWidth,
+      this.currentSeatConfiguration.segmentTwoWidth,
+      this.currentSeatConfiguration.segmentThreeWidth,
+      this.currentSeatConfiguration.segmentFourWidth,
+    ];
+    this.displayChanges();
   }
   seatsDataHandler = function (data) {
     this.formValues = data;

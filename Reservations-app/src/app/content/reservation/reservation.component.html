@@ -46,15 +46,62 @@
         </span>
       </div>
       <div>
-        <h6>Flight prize</h6>
+        <h6>Luggage (kg)</h6>
         <span>
-          <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.airlineReservation.flight.price }}$
+          <img src="../../../../assets/site/icons/suitcase.png" alt="" />
+          {{ reservation.airlineReservation.flight.luggage }}
         </span>
       </div>
     </div>
 
+    <!---->
+
     <div class="fleft">
+      <div>
+        <h6>Airplane type</h6>
+        <span>
+          <img src="../../../../assets/site/icons/propeller.png" alt="" />
+          {{ reservation.airlineReservation.flight.planeType.name }}
+        </span>
+      </div>
+      <div>
+        <h6>Additional services</h6>
+        <span>
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/wifi.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/wc.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/tv.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/power supply.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/newspapers.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/serving.png"
+            alt=""
+          />
+        </span>
+      </div>
+    </div>
+
+    <div class="fleft separator">
       <div>
         <h6>Aviocompany</h6>
         <span>
@@ -62,11 +109,47 @@
           {{ reservation.airlineReservation.flight.company.name }}
         </span>
       </div>
-      <a routerLink="/reservation/{{ reservation.id }}"
-        ><button class="btn btn-success fright">
-          Book IT
-        </button>
-      </a>
+      <div>
+        <h6>Aviocompany rating</h6>
+        <span>
+          <img src="../../../../assets/site/icons/like.png" alt="" />
+          {{ reservation.airlineReservation.flight.company.likes }}
+        </span>
+      </div>
+      <div>
+        <h6>Relation</h6>
+        <span>
+          <img src="../../../../assets/site/icons/connected.png" alt="" />
+          {{
+            reservation.airlineReservation.flight.startingDestination
+              .airportName
+          }}
+          -
+          {{
+            reservation.airlineReservation.flight.endingDestination.airportName
+          }}
+          asda adsada
+        </span>
+      </div>
+    </div>
+
+    <!---->
+
+    <div class="fleft">
+      <div>
+        <h6>Flight prize</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.airlineReservation.flight.price }}$
+        </span>
+      </div>
+
+      <button class="btn btn-success fright">
+        Proceed
+      </button>
     </div>
   </div>
+  <app-display-seats
+    [currentSeatConfiguration]="reservation.airlineReservation.flight.planeType"
+  ></app-display-seats>
 </div>

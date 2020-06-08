@@ -87,12 +87,12 @@
           <table class="table table-hover table-condensed">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">Photo</th>
-                <th scope="col">Mark</th>
-                <th scope="col">Description</th>
-                <th scope="col">Year</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Seats</th>
+                <th scope="col"></th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Flight date</th>
+                <th scope="col">Return date</th>
+                <th scope="col">Free seats</th>
                 <th scope="col">Price</th>
                 <th></th>
               </tr>
@@ -100,52 +100,47 @@
             <tbody>
               <tr *ngFor="let reservation of getReservationsWithDiscount()">
                 <td>
-                  <img
-                    class="far fa-bookmark fa-4x img-responsive"
-                    style="width: 5vw; height: 5vh;"
-                    alt="slika auta"
-                  />
+                  <i
+                    class="far fa-bookmark fa-2x"
+                    data-fa-transform="shrink-3 up-5"
+                  ></i>
                 </td>
-                <td>
+                <td class="table-padding">
+                  {{
+                    reservation.airlineReservation.flight.startingDestination
+                      .city
+                  }}
+                </td>
+                <td class="table-padding">
+                  {{
+                    reservation.airlineReservation.flight.endingDestination.city
+                  }}
+                </td>
+                <td class="table-padding">
+                  {{ reservation.airlineReservation.flight.startDate }}
+                </td>
+                <td class="table-padding">
+                  {{ reservation.airlineReservation.flight.returnDate }}
+                </td>
+                <td class="table-padding">
                   {{
                     reservation.airlineReservation.flight.startingDestination
                       .airportName
                   }}
                 </td>
-                <td>
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .airportName
-                  }}
+                <td class="table-padding">
+                  {{ reservation.airlineReservation.flight.price }}$
                 </td>
                 <td>
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .airportName
-                  }}
-                </td>
-                <td>
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .airportName
-                  }}
-                </td>
-                <td>
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .airportName
-                  }}
-                </td>
-                <td>
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .airportName
-                  }}$
-                </td>
-                <td>
-                  <button class="btn btn-success">
-                    Book Me
-                  </button>
+                  <a
+                    routerLink="/reservation/{{
+                      reservation.airlineReservation.id
+                    }}"
+                  >
+                    <button class="btn btn-success">
+                      Book Me
+                    </button>
+                  </a>
                 </td>
               </tr>
             </tbody>
@@ -192,23 +187,23 @@
               <br />
               <h3 class="heading">Please Rate Us</h3>
 
-              <!-- <ul
-              class="list-inline rating-list"
-              *ngFor="let star of stars"
-              style="display: inline-block;"
-            >
-              <li
-                (click)="countStar(star)"
-                [ngClass]="{ selected: star <= selectedValue }"
+              <ul
+                class="list-inline rating-list"
+                *ngFor="let star of stars"
+                style="display: inline-block;"
               >
-                <i class="fa fa-star fa-3x"></i>
-              </li>
-            </ul> -->
+                <li
+                  (click)="countStar(star)"
+                  [ngClass]="{ selected: star <= selectedValue }"
+                >
+                  <i class="fa fa-star fa-3x"></i>
+                </li>
+              </ul>
 
               <!--end rating-->
             </div>
-            <!-- <hr class="socket" />
-      &copy; Aleksandar 2019 -->
+            <hr class="socket" />
+            &copy; Webici 2020
           </div>
         </footer>
       </div>

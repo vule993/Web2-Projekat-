@@ -1,5 +1,6 @@
 import { Destination } from "./Destination.model";
 import { AvioCompany } from "./AvioCompany.model";
+import { SeatConfiguration } from "./Seat-configuration.model";
 
 export class Flight {
   constructor(
@@ -13,9 +14,10 @@ export class Flight {
     public endTime: string,
     public estimationTime: string,
     public discount: string,
-    public planeType: string,
+    public planeType: SeatConfiguration,
     public destinations: Destination[],
     public otherServices: string,
-    public price: string
+    public price: string,
+    public luggage: string
   ) {}
 }

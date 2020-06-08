@@ -5,7 +5,6 @@ import { Reservation } from "src/app/models/Reservation.model";
 import { ReservationService } from "src/app/services/reservation.service";
 import { Destination } from "src/app/models/Destination.model";
 import { DestinationsService } from "src/app/services/destinations.service";
-import { ReservationComponent } from "../../reservation/reservation.component";
 
 declare var $: any;
 @Component({

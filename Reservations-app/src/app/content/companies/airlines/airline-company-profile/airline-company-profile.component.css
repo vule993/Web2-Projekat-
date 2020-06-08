@@ -320,6 +320,17 @@ h3.heading {
 .table {
   color: black;
 }
+.table tr {
+  height: 2vw;
+}
+
+.table-padding {
+  padding-top: 1.3vw;
+}
+/*
+OVDE GLEDAJ MAMLAZE
+*/
+
 /*CONTACT SEKCIJA*/
 
 .rating-list li {
