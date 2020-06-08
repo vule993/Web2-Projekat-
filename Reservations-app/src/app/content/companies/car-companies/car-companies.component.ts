@@ -3,6 +3,7 @@ import { CarCompany } from "src/app/models/CarCompany.model";
 import { CarsService } from "src/app/services/cars.service";
 import { ReservationService } from "src/app/services/reservation.service";
 import { Reservation } from "src/app/models/Reservation.model";
+import { Car } from "src/app/models/car.model";
 
 declare var $: any;
 @Component({
@@ -16,7 +17,11 @@ declare var $: any;
 export class CarCompaniesComponent implements OnInit {
   carCompanies: CarCompany[];
   startCalendar: any;
+  endCalendar: any;
   allReservations: Reservation[];
+  allCars: Car[];
+  allReservationsToShow: Reservation[];
+  allReservationsPreFilter: Reservation[];
 
   sliderData = {
     title: "All companies",
@@ -34,6 +39,9 @@ export class CarCompaniesComponent implements OnInit {
     this.reservationService.allReservations.subscribe(
       data => (this.allReservations = data)
     );
+
+    //load cars
+    this.allCars = this.carService.getCars();
 
     this.carService.allCarCompanies.subscribe(data => {
       this.carCompanies = data;
@@ -56,6 +64,62 @@ export class CarCompaniesComponent implements OnInit {
         autoclose: true
       });
     });
+    this.endCalendar = $(function() {
+      $("#endDate").datepicker({
+        format: "dd-MM-yyyy",
+        autoclose: true
+      });
+    });
+  }
+
+  searchReservations() {
+    this.allReservationsToShow = this.allReservations;
+    console.log(this.allReservationsToShow.length);
+
+    if ($("#cars").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        reservation => reservation.carReservation.car.mark == $("#cars").val()
+      );
+    }
+
+    if ($("#startDate").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        reservation =>
+          new Date(reservation.carReservation.startDate) >=
+          new Date($("#startDate").val())
+      );
+    }
+
+    if ($("#endDate").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        reservation =>
+          new Date(reservation.carReservation.endDate) >=
+          new Date($("#endDate").val())
+      );
+    }
+
+    console.log(this.allReservationsToShow);
+
+    this.allReservationsPreFilter = this.allReservationsToShow;
+  }
+
+  //filter
+  filterReservations() {
+    this.allReservationsToShow = this.allReservationsPreFilter;
+
+    if ($("#company").val() != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        reservation =>
+          reservation.carReservation.carCompany.name === $("#company").val()
+      );
+    }
+
+    if ($("#category").val != "") {
+      this.allReservationsToShow = this.allReservationsToShow.filter(
+        reservation =>
+          reservation.carReservation.car.plan === $("#category").val()
+      );
+    }
   }
 
   openFilter() {

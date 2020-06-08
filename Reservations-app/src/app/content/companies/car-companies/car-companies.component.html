@@ -1,14 +1,11 @@
 <app-slider [data]="sliderData"></app-slider>
 
 <div class="search overflow-hidden">
-  <select class="form-control search-field fleft">
-    <option value="starting point">Starting point</option>
-  </select>
-  <select class="form-control search-field fleft">
-    <option value="ending point">Ending point</option>
-  </select>
-  <select class="form-control search-field fleft">
-    <option value="available cars">Choose car</option>
+  <select id="cars" class="form-control search-field fleft">
+    <option value="">Choose car</option>
+    <option *ngFor="let car of allCars" value="{{ car.mark }}">
+      {{ car.mark }}
+    </option>
   </select>
 
   <input
@@ -18,35 +15,43 @@
     class="form-control search-field departTime fleft"
     placeholder="Starting date"
   />
+  <input
+    type="text"
+    autocomplete="off"
+    id="endDate"
+    class="form-control search-field departTime fleft"
+    placeholder="Ending date"
+  />
 
-  <button class="btn btn-success fleft">Search</button>
+  <button (click)="searchReservations()" class="btn btn-success fleft">
+    Search
+  </button>
 
-  <!-- (click)="openFilter()" -->
   <img
     class="fright"
     (click)="openFilter()"
     src="../../../../assets/site/icons/filter-white.png"
   />
 </div>
-
+<!-- display-none-->
 <div class="filter display-none overflow-hidden">
-  <select class="form-control search-field fleft">
+  <select id="company" class="form-control search-field fleft">
     <option value="company">Company</option>
     <option *ngFor="let company of carCompanies" value="{{ company.name }}">
       {{ company.name }}
     </option>
   </select>
-  <select class="form-control search-field fleft">
-    <option value="price">Price</option>
-  </select>
 
-  <select class="form-control search-field fleft">
+  <select id="category" class="form-control search-field fleft">
     <option value="category">Category plan</option>
     <option value="basic">Basic</option>
     <option value="plus">Plus</option>
     <option value="pro">Pro</option>
   </select>
-  <button class="btn btn-success fleft">Filter</button>
+
+  <button (click)="filterReservations()" class="btn btn-success fleft">
+    Filter
+  </button>
 
   <!-- (click)="closeFilter()" -->
   <img
@@ -59,7 +64,7 @@
 <div class="results">
   <div
     class="result overflow-hidden"
-    *ngFor="let reservation of allReservations"
+    *ngFor="let reservation of allReservationsToShow"
   >
     <div class="fleft">
       <div>
@@ -106,7 +111,7 @@
     </div>
     <div class="fleft">
       <div>
-        <h6>Choosed plan</h6>
+        <h6>Category plan</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
           {{ reservation.carReservation.car.plan.toUpperCase() }}
