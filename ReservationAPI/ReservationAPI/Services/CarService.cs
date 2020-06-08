@@ -1,4 +1,5 @@
-﻿using ReservationAPI.Models.DbRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
 using System;
@@ -46,11 +47,22 @@ namespace ReservationAPI.Services
             return await _context.Car.FindAsync(id);
         }
 
+        //getCar of some car-company
+        public async Task<IEnumerable<Car>> GetCarOfCompany(long companyID)
+        {
+            var cars = (await _context.CarCompanies.Include(c => c.Cars)
+                .FirstOrDefaultAsync(company => company.Id == companyID)).Cars.ToList();
+
+            return cars;
+        }
+
         public async Task UpdateCar(Car car)
         {
            // _context.Update(car);
             _context.Car.Update(car);
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

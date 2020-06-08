@@ -15,10 +15,9 @@ namespace ReservationAPI.Models.Rent_a_Car
         public double Price { get; set; } //per day
         public double Rating { get; set; }
         public string Image { get; set; }
-        public int PassengerNumber { get; set; }
-        public DateTime? ReservedFrom { get; set; }
-
-        public DateTime? ReservedTo { get; set; }
+        
+        public string Category { get; set; }
+        public bool IsReserved { get; set; }
 
     }
 }

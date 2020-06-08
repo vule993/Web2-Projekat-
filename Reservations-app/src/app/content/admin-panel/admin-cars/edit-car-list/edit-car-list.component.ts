@@ -11,6 +11,7 @@ export class EditCarListComponent implements OnInit {
   carToEdit: Car;
   companyCars: Car[] = [
     {
+      id: 1,
       description:
         "100kW (136KS), Manuelni 6 brzina, Automatska klima, 4/5 vrata, 5 sedišta",
       mark: "AUDI A6",
@@ -19,9 +20,11 @@ export class EditCarListComponent implements OnInit {
       price: 8500,
       rating: 4.2,
       image: "",
-      plan: "basic"
+      category: "basic",
+      isReserved: false
     },
     {
+      id: 2,
       description:
         "Polovno vozilo Opel Insignia 2018. godište 80.963 km Limuzina Dizel 1598 cm3",
       mark: "Opel",
@@ -30,12 +33,13 @@ export class EditCarListComponent implements OnInit {
       price: 10000,
       rating: 4.6,
       image: "",
-      plan: "basic"
+      category: "basic",
+      isReserved: false
     }
   ];
 
   constructor() {
-    this.carToEdit = new Car("", "", 0, 0, 0, 0, "", "");
+    this.carToEdit = new Car(-1, "", "", 0, 0, 0, 0, "", "", false);
   }
 
   ngOnInit(): void {}

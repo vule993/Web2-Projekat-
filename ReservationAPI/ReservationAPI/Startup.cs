@@ -44,6 +44,8 @@ namespace ReservationAPI
 
             // my services
             services.AddScoped<ICarRepository, CarService>();
+            services.AddScoped<IRefreshTokenGenerator, RefreshTokenService>();
+            services.AddScoped<ICarCompany, CarCompanyService>();
 
             services.AddIdentity<User, IdentityRole>()
                     .AddRoles<IdentityRole>()
@@ -79,7 +81,7 @@ namespace ReservationAPI
             {
                 x.RequireHttpsMetadata = false; //Only https request restriction
                 x.SaveToken = false; //after succesfull reg should we save token on the server?
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
