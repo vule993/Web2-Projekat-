@@ -8,8 +8,8 @@ import { CarReservation } from "../models/CarReservation";
 import { User } from "../models/User.model";
 import { Address } from "../models/address.model";
 import { BehaviorSubject } from "rxjs";
-import { DestinationsService } from "./destinations.service";
 import { CarsService } from "./cars.service";
+import { SeatConfiguration } from "../models/Seat-configuration.model";
 
 @Injectable({
   providedIn: "root",
@@ -53,7 +53,8 @@ export class ReservationService {
           "20:00",
           "2h:30min",
           "10",
-          "Boeing 747",
+          //ovde treba popnuniti seats u zavisnosti od ovih brojeva
+          new SeatConfiguration(1, "Boeing 747", 10, 3, 2, 3, 2, 0, []),
           [
             new Destination(
               1,
@@ -64,7 +65,8 @@ export class ReservationService {
             ),
           ],
           "coffee service, wifi...",
-          "300"
+          "300",
+          "2"
         ),
         [
           new User(
@@ -134,7 +136,7 @@ export class ReservationService {
           "07:30",
           "0h:30min",
           "15",
-          "Boeing 747",
+          new SeatConfiguration(1, "Concord", 10, 4, 2, 3, 3, 2, []),
           [
             new Destination(
               1,
@@ -145,7 +147,8 @@ export class ReservationService {
             ),
           ],
           "coffee service, wifi, NESTO NOVO...",
-          "500"
+          "500",
+          "3.4"
         ),
         [
           //   new User(

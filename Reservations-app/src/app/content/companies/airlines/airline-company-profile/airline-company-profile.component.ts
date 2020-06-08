@@ -13,7 +13,8 @@ import { ReservationService } from "src/app/services/reservation.service";
 export class AirlineCompanyProfileComponent implements OnInit {
   currentCompany;
   allReservatons: Reservation[];
-  selectedValue;
+  stars: number[] = [1, 2, 3, 4, 5];
+  selectedValue; //for stars
   iframeSrc = "";
   constructor(
     private route: ActivatedRoute,

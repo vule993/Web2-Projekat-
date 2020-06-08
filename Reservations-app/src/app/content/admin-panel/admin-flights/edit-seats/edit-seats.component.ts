@@ -123,7 +123,8 @@ export class EditSeatsComponent implements OnInit {
           this.formValues[2],
           this.formValues[3],
           this.formValues[4],
-          this.formValues[5]
+          this.formValues[5],
+          []
         )
       );
       this.elementNumber = this.seatService.getSeatConfigurationNumber();

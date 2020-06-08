@@ -1,9 +1,6 @@
 #panel-wrapper {
-  margin: 0 auto;
   width: 96%;
-}
-#admin-content {
-  width: 75vw;
+  margin: 0 auto;
 }
 .result {
   width: 100%;
@@ -18,7 +15,8 @@
 .result > div {
   margin: 1vw 0;
   padding: 1vw;
-  width: 25vw;
+  width: 19.1vw;
+  max-height: 20vw;
 }
 .result > div span {
   display: block;
@@ -32,6 +30,9 @@
   padding: 0 0, 1vw;
   border-left: 0.1vw solid rgba(77, 61, 157, 0.3);
   border-right: 0.1vw solid rgba(77, 61, 157, 0.3);
+}
+.additional-services {
+  margin: 0 1vw;
 }
 .result .btn {
   margin-top: 10.3vw;
