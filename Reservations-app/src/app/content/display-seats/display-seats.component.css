@@ -17,6 +17,9 @@
   font-size: 1.2vw;
   font-weight: bold;
 }
+.row div:hover {
+  cursor: pointer;
+}
 .free-seat {
   color: wheat;
   background-color: #43309a;

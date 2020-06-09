@@ -13,7 +13,7 @@
     <div id="message">Select {{ selectedSeats.length }} friends</div>
     <div class="friends">
       <div *ngFor="let user of users" class="friend overflow-hidden">
-        <span class="fleft">{{ user.name + " " + user.surname }}</span>
+        <span class="fleft">{{ user.FirstName + " " + user.LastName }}</span>
         <span class="fright">
           <input type="checkbox" (click)="onCheck(user)" class="checkbox" />
         </span>
