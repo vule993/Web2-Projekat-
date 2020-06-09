@@ -38,22 +38,23 @@ namespace ReservationAPI.Controllers
         [Route("Register")]
         public async Task<Object> PostUser(UserModel model)
         {
-            model.Role = "User";
+            model.Status = "User";
             var newUser = new User()
             {
-                 UserName = model.FirstName,
-                 FirstName = model.FirstName,
-                 LastName = model.LastName,
+                 UserName = model.Email,
+                 FirstName = model.Name,
+                 LastName = model.Surname,
                  Email = model.Email,
-                 PhoneNumber = model.Phone,
+                 PhoneNumber = model.Telephone,
                  Street = model.Street,
-                 City = model.City
+                 City = model.City,
+                 Image = model.Image
             };
 
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Role);
+                await _userManager.AddToRoleAsync(newUser, model.Status);
                 return Ok(result);
 
             }catch(Exception ex)
@@ -116,14 +117,15 @@ namespace ReservationAPI.Controllers
             var users = _context.Users.ToList();
             return users.Select(u => new UserModel()
             {
-                FirstName = u.FirstName,
-                LastName = u.LastName,
+                Name = u.FirstName,
+                Surname = u.LastName,
                 Email = u.Email,
-                Phone = u.PhoneNumber,
+                Telephone = u.PhoneNumber,
                 Password = u.PasswordHash,
                 Street = u.Street,
                 City = u.City,
-                Role = "User"
+                Status = "User",
+                Image = u.Image
             }).ToList();
         }
 
@@ -137,18 +139,23 @@ namespace ReservationAPI.Controllers
 
             string userID = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userID);
-
-            return new
+            var role = await _userManager.GetRolesAsync(user);
+            
+            UserModel returnUser = new UserModel()
             {
-                user.FirstName,
-                user.LastName,
-                user.UserName,
-                user.Email,
-                user.Street,
-                user.City,
-                user.PhoneNumber,
-               
+                Name = user.FirstName,
+                Surname = user.LastName,
+                Email = user.Email,
+                Password = user.PasswordHash,
+                City = user.City,
+                Street = user.Street,
+                Status = role.ToString(),
+                Telephone = user.PhoneNumber,
+                Image = user.Image
+
             };
+
+            return returnUser;
 
         }
     }

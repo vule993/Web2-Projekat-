@@ -28,23 +28,25 @@ namespace ReservationAPI.Controllers
         [Route("RegisterCarAdmin")]
         public async Task<Object> RegisterCarAdmin(UserModel model)
         {
-            model.Role = "CarAdmin";
+            model.Status = "CarAdmin";
 
             var newUser = new User()
             {
-                UserName = model.FirstName,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                UserName = model.Email,
+                FirstName = model.Name,
+                LastName = model.Surname,
                 Email = model.Email,
-                PhoneNumber = model.Phone,
+                PhoneNumber = model.Telephone,
                 Street = model.Street,
-                City = model.City
+                City = model.City,
+                Image = model.Image,
+                
             };
 
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Role);
+                await _userManager.AddToRoleAsync(newUser, model.Status);
                 return Ok(result);
 
             }
@@ -61,23 +63,24 @@ namespace ReservationAPI.Controllers
         [Route("RegisterAvioAdmin")]
         public async Task<Object> RegisterAvioAdmin(UserModel model)
         {
-            model.Role = "AvioAdmin";
+            model.Status = "AvioAdmin";
 
             var newUser = new User()
             {
-                UserName = model.FirstName,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                UserName = model.Email,
+                FirstName = model.Name,
+                LastName = model.Surname,
                 Email = model.Email,
-                PhoneNumber = model.Phone,
+                PhoneNumber = model.Telephone,
                 Street = model.Street,
-                City = model.City
+                City = model.City,
+                Image = model.Image
             };
 
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Role);
+                await _userManager.AddToRoleAsync(newUser, model.Status);
                 return Ok(result);
 
             }

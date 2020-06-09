@@ -15,7 +15,6 @@ export class UsersService {
   allUsers() {
     let allUsers: User[] = [
       new User(
-        1,
         "Vukasin",
         "Radic",
         "vule993@outlook.com",
@@ -26,7 +25,6 @@ export class UsersService {
         "admin"
       ),
       new User(
-        1,
         "Aleksandar",
         "Novakovic",
         "sale.novakovic97@gmail.com",
@@ -37,7 +35,6 @@ export class UsersService {
         "admin"
       ),
       new User(
-        1,
         "Pera",
         "Peric",
         "peki91@gmail.com",
@@ -48,7 +45,6 @@ export class UsersService {
         "plane-admin"
       ),
       new User(
-        1,
         "Novica",
         "Novic",
         "nov21@outlook.com",
@@ -59,7 +55,6 @@ export class UsersService {
         "car-admin"
       ),
       new User(
-        1,
         "Nekodugackoime",
         "Nekojosduzeprezime",
         "a@a.com",

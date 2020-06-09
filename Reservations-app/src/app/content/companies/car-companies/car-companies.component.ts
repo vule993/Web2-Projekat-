@@ -117,7 +117,7 @@ export class CarCompaniesComponent implements OnInit {
     if ($("#category").val != "") {
       this.allReservationsToShow = this.allReservationsToShow.filter(
         reservation =>
-          reservation.carReservation.car.plan === $("#category").val()
+          reservation.carReservation.car.category === $("#category").val()
       );
     }
   }

@@ -12,7 +12,7 @@ import { CarsService } from "./cars.service";
 import { SeatConfiguration } from "../models/Seat-configuration.model";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
@@ -62,7 +62,7 @@ export class ReservationService {
               "Belgrade",
               "Serbia",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "coffee service, wifi...",
           "300",
@@ -70,7 +70,6 @@ export class ReservationService {
         ),
         [
           new User(
-            1,
             "Testoje",
             "Testivojevic",
             "testoje@gmail.com",
@@ -79,7 +78,7 @@ export class ReservationService {
             "Belgreade",
             "065555333",
             "1"
-          ),
+          )
         ]
       ),
       new CarReservation(
@@ -89,7 +88,7 @@ export class ReservationService {
         "02-Jul-2020",
         "25-Jul-2020",
         this.carService.getPrice(
-          this.carService.getCar(2).plan,
+          this.carService.getCar(2).category,
           this.calculateNumOfDays(
             this.parseDate("02-07-2020"),
             this.parseDate("25-07-2020")
@@ -144,7 +143,7 @@ export class ReservationService {
               "Negde tamo",
               "Nedodjija",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "coffee service, wifi, NESTO NOVO...",
           "500",
@@ -171,7 +170,7 @@ export class ReservationService {
         "05-Aug-2020",
         "23-Aug-2020",
         this.carService.getPrice(
-          this.carService.getCar(2).plan,
+          this.carService.getCar(2).category,
           this.calculateNumOfDays(
             this.parseDate("05-08-2020"),
             this.parseDate("23-08-2020")
@@ -180,7 +179,7 @@ export class ReservationService {
       ),
       false,
       false
-    ),
+    )
   ]);
   allReservations = this._allReservations.asObservable();
   constructor(private carService: CarsService) {}
@@ -201,7 +200,7 @@ export class ReservationService {
   getSpecificReservation(id: number) {
     return this._allReservations
       .getValue()
-      .find((reservation) => reservation.id === id);
+      .find(reservation => reservation.id === id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;
