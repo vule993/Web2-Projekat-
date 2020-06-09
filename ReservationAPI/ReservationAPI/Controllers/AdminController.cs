@@ -33,10 +33,10 @@ namespace ReservationAPI.Controllers
             var newUser = new User()
             {
                 UserName = model.Email,
-                FirstName = model.Name,
-                LastName = model.Surname,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
-                PhoneNumber = model.Telephone,
+                PhoneNumber = model.PhoneNumber,
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
@@ -68,10 +68,10 @@ namespace ReservationAPI.Controllers
             var newUser = new User()
             {
                 UserName = model.Email,
-                FirstName = model.Name,
-                LastName = model.Surname,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
-                PhoneNumber = model.Telephone,
+                PhoneNumber = model.PhoneNumber,
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image

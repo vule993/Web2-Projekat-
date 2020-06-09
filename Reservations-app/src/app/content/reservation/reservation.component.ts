@@ -3,6 +3,8 @@ import { ReservationService } from "src/app/services/reservation.service";
 import { Reservation } from "src/app/models/Reservation.model";
 import { Router } from "@angular/router";
 
+declare var $: any;
+
 @Component({
   selector: "app-reservation",
   templateUrl: "./reservation.component.html",
@@ -10,7 +12,6 @@ import { Router } from "@angular/router";
 })
 export class ReservationComponent implements OnInit {
   reservation: Reservation;
-
   constructor(
     private reservationService: ReservationService,
     private routes: Router
@@ -21,5 +22,32 @@ export class ReservationComponent implements OnInit {
       let id = +this.routes.url.split("/")[2];
       this.reservation = data.find((reservation) => reservation.id == id);
     });
+    $(window).resize(function () {
+      let h = +$("#seat-picker").css("height").split("px")[0];
+
+      $("#friends-selector").css({ height: h + "px" });
+      $(".friends").css({ height: h - 80 + "px" });
+      $("html, body").animate(
+        {
+          scrollTop: $("#proceed").offset().top,
+        },
+        1200
+      );
+    });
+  }
+  proceed() {
+    $("#proceed").slideDown(1200);
+
+    let h = +$("#seat-picker").css("height").split("px")[0];
+
+    $("#friends-selector").css({ height: h + "px" });
+    $(".friends").css({ height: h - 100 + "px" });
+
+    $("html, body").animate(
+      {
+        scrollTop: $("#proceed").offset().top,
+      },
+      1200
+    );
   }
 }

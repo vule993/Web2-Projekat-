@@ -1,0 +1,39 @@
+h2 {
+  width: 100%;
+  margin: 0vw auto;
+  padding: 2vw 0;
+  color: #4d3d9d;
+  text-align: center;
+}
+.wrapper > div {
+  width: 49%;
+  overflow: hidden;
+  border-radius: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1vw;
+}
+.wrapper > div > div {
+  margin: 0 auto;
+}
+#friends-selector > #message {
+  margin: 0 auto;
+  text-align: center;
+  color: #4d3d9d;
+  font-weight: bold;
+}
+.friends {
+  overflow-y: scroll;
+  height: 300px; /*ovo se gazi u ts fajlu*/
+}
+.friend {
+  padding: 1vw;
+}
+.friend:nth-child(even) {
+  background-color: #fff;
+}
+.friend:nth-child(odd) {
+  background-color: rgba(67, 48, 154, 0.2);
+}
+#friends-selector button {
+  margin-top: 0.5vw;
+}

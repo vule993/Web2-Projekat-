@@ -2,6 +2,7 @@ import { Seat, Row } from "./Seat.model";
 
 export class SeatConfiguration {
   public static count: number = 0;
+
   constructor(
     public id: number = 0,
     public name: string,

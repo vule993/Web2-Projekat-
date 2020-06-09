@@ -60,6 +60,7 @@ import { CompanyListComponent } from "./content/companies/company-list/company-l
 import { AirlineCompanyProfileComponent } from "./content/companies/airlines/airline-company-profile/airline-company-profile.component";
 import { CarCompanyProfileComponent } from "./content/companies/car-companies/car-company-profile/car-company-profile.component";
 import { ReservationComponent } from "./content/reservation/reservation.component";
+import { AirlineReservationComponent } from "./content/reservation/airline-reservation/airline-reservation.component";
 import { HeadCarCompaniesComponent } from "./content/admin-panel/head-admin/head-car-companies/head-car-companies.component";
 import { HeadAvioCompaniesComponent } from "./content/admin-panel/head-admin/head-avio-companies/head-avio-companies.component";
 import { CarReservationComponent } from "./content/reservation/car-reservation/car-reservation.component";
@@ -109,6 +110,7 @@ import { CarReservationComponent } from "./content/reservation/car-reservation/c
     AirlineCompanyProfileComponent,
     CarCompanyProfileComponent,
     ReservationComponent,
+    AirlineReservationComponent,
     HeadCarCompaniesComponent,
     HeadAvioCompaniesComponent,
     CarReservationComponent

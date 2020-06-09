@@ -1,4 +1,5 @@
 <div id="panel-wrapper" class="overflow-hidden">
+  <h2>Reservation details</h2>
   <div class="result overflow-hidden">
     <div class="fleft">
       <div>
@@ -68,33 +69,14 @@
         <h6>Additional services</h6>
         <span>
           <img
+            *ngFor="
+              let service of reservation.airlineReservation.flight.otherServices.split(
+                ','
+              )
+            "
             class="additional-services"
-            src="../../../../assets/site/icons/wifi.png"
-            alt=""
-          />
-          <img
-            class="additional-services"
-            src="../../../../assets/site/icons/wc.png"
-            alt=""
-          />
-          <img
-            class="additional-services"
-            src="../../../../assets/site/icons/tv.png"
-            alt=""
-          />
-          <img
-            class="additional-services"
-            src="../../../../assets/site/icons/power supply.png"
-            alt=""
-          />
-          <img
-            class="additional-services"
-            src="../../../../assets/site/icons/newspapers.png"
-            alt=""
-          />
-          <img
-            class="additional-services"
-            src="../../../../assets/site/icons/serving.png"
+            src="../../../../assets/site/icons/{{ service }}.png"
+            title="{{ service }}"
             alt=""
           />
         </span>
@@ -104,10 +86,14 @@
     <div class="fleft separator">
       <div>
         <h6>Aviocompany</h6>
-        <span>
-          <img src="../../../../assets/site/icons/plane.png" alt="" />
-          {{ reservation.airlineReservation.flight.company.name }}
-        </span>
+        <a
+          routerLink="/companies/airlines/{{reservation.airlineReservation.flight.company.id}"
+        >
+          <span>
+            <img src="../../../../assets/site/icons/plane.png" alt="" />
+            {{ reservation.airlineReservation.flight.company.name }}
+          </span>
+        </a>
       </div>
       <div>
         <h6>Aviocompany rating</h6>
@@ -144,12 +130,15 @@
         </span>
       </div>
 
-      <button class="btn btn-success fright">
+      <button class="btn btn-success fright" (click)="proceed()">
         Proceed
       </button>
     </div>
   </div>
-  <app-display-seats
-    [currentSeatConfiguration]="reservation.airlineReservation.flight.planeType"
-  ></app-display-seats>
+  <div id="space"></div>
+  <div id="proceed" class="overflow-hidden display-none">
+    <app-airline-reservation
+      [reservation]="reservation"
+    ></app-airline-reservation>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-<div id="seat-selector" class="col_sm_12">
+<div id="seat-selector" class="">
   <div class="row" *ngFor="let row of seats; let raw_index = index">
     <div
       *ngFor="let seat of row.seats; let seat_index = index"
@@ -13,6 +13,9 @@
         'taken-seat': seat.taken
       }"
       (click)="onSeatClick($event)"
+      [attr.title]="
+        seat == null ? seat.user.name + ' ' + seat.user.surname : ''
+      "
     >
       {{ seat.seat_no }}
     </div>

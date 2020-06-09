@@ -42,10 +42,10 @@ namespace ReservationAPI.Controllers
             var newUser = new User()
             {
                  UserName = model.Email,
-                 FirstName = model.Name,
-                 LastName = model.Surname,
+                 FirstName = model.FirstName,
+                 LastName = model.LastName,
                  Email = model.Email,
-                 PhoneNumber = model.Telephone,
+                 PhoneNumber = model.PhoneNumber,
                  Street = model.Street,
                  City = model.City,
                  Image = model.Image
@@ -117,10 +117,10 @@ namespace ReservationAPI.Controllers
             var users = _context.Users.ToList();
             return users.Select(u => new UserModel()
             {
-                Name = u.FirstName,
-                Surname = u.LastName,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
                 Email = u.Email,
-                Telephone = u.PhoneNumber,
+                PhoneNumber = u.PhoneNumber,
                 Password = u.PasswordHash,
                 Street = u.Street,
                 City = u.City,
@@ -143,14 +143,14 @@ namespace ReservationAPI.Controllers
             
             UserModel returnUser = new UserModel()
             {
-                Name = user.FirstName,
-                Surname = user.LastName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Email = user.Email,
                 Password = user.PasswordHash,
                 City = user.City,
                 Street = user.Street,
                 Status = role.ToString(),
-                Telephone = user.PhoneNumber,
+                PhoneNumber = user.PhoneNumber,
                 Image = user.Image
 
             };
