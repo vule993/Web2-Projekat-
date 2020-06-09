@@ -8,6 +8,7 @@ export class User {
     public image: string,
     public city: string,
     public telephone: string,
-    public status: string //1->head admin 2->car-admin 3->avio-admin 4->user
+    public status: string, //1->head admin 2->car-admin 3->avio-admin 4->user
+    public friends: User[] = []
   ) {}
 }

@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <h2 class="fleft">Choose your seats!</h2>
+
+  <div id="seat-picker" class="fleft overflow-hidden">
+    <app-display-seats
+      [currentSeatConfiguration]="
+        reservation.airlineReservation.flight.planeType
+      "
+    >
+    </app-display-seats>
+  </div>
+  <div id="friends-selector" class="fright">
+    <div id="message">Select {{ selectedSeats.length }} friends</div>
+    <div class="friends">
+      <div *ngFor="let user of users" class="friend overflow-hidden">
+        <span class="fleft">{{ user.name + " " + user.surname }}</span>
+        <span class="fright">
+          <input type="checkbox" (click)="onCheck(user)" class="checkbox" />
+        </span>
+      </div>
+    </div>
+    <button class="btn btn-success fright">Finish reservation</button>
+  </div>
+</div>

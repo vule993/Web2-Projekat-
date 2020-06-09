@@ -64,7 +64,7 @@ export class ReservationService {
               "Neznanog junaka jebem li ga 1/1"
             ),
           ],
-          "coffee service, wifi...",
+          "wc,tv,wifi,power supply,newspapers,bar",
           "300",
           "2"
         ),

@@ -5,13 +5,15 @@ import { UsersService } from "src/app/services/users.service";
 @Component({
   selector: "app-friends-data-list",
   templateUrl: "./friends-data-list.component.html",
-  styleUrls: ["./friends-data-list.component.css"]
+  styleUrls: ["./friends-data-list.component.css"],
 })
 export class FriendsDataListComponent implements OnInit {
   allUsers: User[];
   constructor(private userService: UsersService) {
     this.allUsers = userService.loadAllUsers();
   }
-
+  removeFriend(id: number) {
+    alert(id);
+  }
   ngOnInit(): void {}
 }

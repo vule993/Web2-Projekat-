@@ -60,6 +60,8 @@ export class EditSeatsComponent implements OnInit {
 
       //fix za povecanje broja segmenata
       if (next == 2) {
+        this.formValues[1] = value;
+
         for (let i = 2; i < 2 + this.formValues[1]; i++) {
           if (this.displayForm[i] === false) {
             this.displayForm[i] = true;
