@@ -96,8 +96,9 @@
                 <th></th>
               </tr>
             </thead>
+            <!--Ovde ce ipak da se izlistavaju rezervacije ove kompanije-->
             <tbody>
-              <tr *ngFor="let car of carCompany.cars">
+              <tr *ngFor="let car of availableCars">
                 <td>
                   <img
                     src="{{ car.image }}"
@@ -114,6 +115,7 @@
                 <td>{{ car.price }}$</td>
                 <td>
                   <button class="btn btn-success">
+                    <!--Ovde da izadje modal za brzu rezervaciju-->
                     Book Me
                   </button>
                 </td>
@@ -183,3 +185,5 @@
     </footer>
   </div>
 </div>
+
+<!--TODO:Modal za brzu rezervaciju vozila kompanije-->

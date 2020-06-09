@@ -1,0 +1,131 @@
+<div id="panel-wrapper" class="overflow-hidden">
+  <div class="result overflow-hidden">
+    <div class="fleft">
+      <div>
+        <h6>Drive Termin</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ reservation.carReservation.startDate }}
+        </span>
+
+        <span>
+          <img src="../../../../assets/site/icons/clock.png" alt="" />
+          {{ reservation.carReservation.endDate }}
+        </span>
+      </div>
+      <div>
+        <h6>Car</h6>
+        <span>
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ reservation.carReservation.car.mark }}
+        </span>
+      </div>
+    </div>
+
+    <div class="fleft separator">
+      <div>
+        <h6>Category</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.carReservation.car.category.toUpperCase() }}
+        </span>
+      </div>
+      <div>
+        <h6>Total price</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ reservation.carReservation.price }}$
+        </span>
+      </div>
+    </div>
+
+    <!---->
+
+    <div class="fleft">
+      <div>
+        <h6>Company</h6>
+        <span>
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ reservation.carReservation.carCompany.name }}
+        </span>
+      </div>
+      <!-- <div>
+        <h6>Additional services</h6>
+        <span>
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/wifi.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/wc.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/tv.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/power supply.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/newspapers.png"
+            alt=""
+          />
+          <img
+            class="additional-services"
+            src="../../../../assets/site/icons/serving.png"
+            alt=""
+          />
+        </span>
+      </div> -->
+    </div>
+
+    <div class="fleft separator">
+      <!-- <div>
+        <h6>Aviocompany</h6>
+        <span>
+          <img src="../../../../assets/site/icons/plane.png" alt="" />
+          ime kompanije
+        </span>
+      </div>
+      <div>
+        <h6>Aviocompany rating</h6>
+        <span>
+          <img src="../../../../assets/site/icons/like.png" alt="" />
+          nesto
+        </span>
+      </div>
+      <div>
+        <h6>Relation</h6>
+        <span>
+          <img src="../../../../assets/site/icons/connected.png" alt="" />
+          From <br />
+          To <br />
+          asda adsada
+        </span>
+      </div> -->
+    </div>
+
+    <!---->
+
+    <div class="fleft">
+      <!-- <div>
+        <h6>Flight prize</h6>
+        <span>
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          price
+        </span>
+      </div> -->
+
+      <button class="btn btn-success fright">
+        Proceed
+      </button>
+    </div>
+  </div>
+</div>

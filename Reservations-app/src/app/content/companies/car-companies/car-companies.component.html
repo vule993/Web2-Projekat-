@@ -114,11 +114,13 @@
         <h6>Category plan</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.carReservation.car.plan.toUpperCase() }}
+          {{ reservation.carReservation.car.category }}
         </span>
       </div>
 
-      <button class="btn btn-success fright">Book IT</button>
+      <a routerLink="/car-reservation/{{ reservation.id }}">
+        <button class="btn btn-success fright">Book IT</button>
+      </a>
     </div>
   </div>
 </div>

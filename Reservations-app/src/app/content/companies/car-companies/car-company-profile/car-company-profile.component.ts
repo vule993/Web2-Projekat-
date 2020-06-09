@@ -3,6 +3,7 @@ import { CarCompany } from "src/app/models/CarCompany.model";
 import { CarsService } from "src/app/services/cars.service";
 import { ActivatedRoute, Params } from "@angular/router";
 import { FormControl, Validators } from "@angular/forms";
+import { Car } from "src/app/models/car.model";
 
 @Component({
   selector: "app-car-company-profile",
@@ -14,6 +15,7 @@ import { FormControl, Validators } from "@angular/forms";
 })
 export class CarCompanyProfileComponent implements OnInit {
   carCompany: CarCompany;
+  availableCars: Car[] = new Array<Car>();
   id: number;
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue: number;
@@ -27,6 +29,13 @@ export class CarCompanyProfileComponent implements OnInit {
       this.id = +params["id"];
 
       this.carCompany = this.carService.getCarCompany(this.id);
+    });
+
+    //take available cars
+    this.carCompany.cars.forEach(element => {
+      if (!element.isReserved) {
+        this.availableCars.push(element);
+      }
     });
   }
 

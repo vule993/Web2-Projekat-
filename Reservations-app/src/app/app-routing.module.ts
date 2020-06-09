@@ -38,6 +38,7 @@ import { CarCompanyProfileComponent } from "./content/companies/car-companies/ca
 import { ReservationComponent } from "./content/reservation/reservation.component";
 import { HeadCarCompaniesComponent } from "./content/admin-panel/head-admin/head-car-companies/head-car-companies.component";
 import { HeadAvioCompaniesComponent } from "./content/admin-panel/head-admin/head-avio-companies/head-avio-companies.component";
+import { CarReservationComponent } from "./content/reservation/car-reservation/car-reservation.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: "reservation/:id",
     component: ReservationComponent
+  },
+  {
+    path: "car-reservation/:id",
+    component: CarReservationComponent
   },
   {
     path: "profile",
