@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { User } from "../models/User.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -14,7 +15,6 @@ export class UsersService {
   allUsers() {
     let allUsers: User[] = [
       new User(
-        1,
         "Vukasin",
         "Radic",
         "vule993@outlook.com",
@@ -25,7 +25,6 @@ export class UsersService {
         "admin"
       ),
       new User(
-        1,
         "Aleksandar",
         "Novakovic",
         "sale.novakovic97@gmail.com",
@@ -36,7 +35,6 @@ export class UsersService {
         "admin"
       ),
       new User(
-        1,
         "Pera",
         "Peric",
         "peki91@gmail.com",
@@ -47,7 +45,6 @@ export class UsersService {
         "plane-admin"
       ),
       new User(
-        1,
         "Novica",
         "Novic",
         "nov21@outlook.com",
@@ -58,7 +55,6 @@ export class UsersService {
         "car-admin"
       ),
       new User(
-        1,
         "Nekodugackoime",
         "Nekojosduzeprezime",
         "a@a.com",
@@ -67,13 +63,17 @@ export class UsersService {
         "Paris",
         "063/555-333",
         "user"
-      ),
+      )
     ];
     return allUsers;
   }
 
   loadAllUsers() {
     return this.allUsers();
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.baseURL + "/User/GetAll");
   }
 
   registerUser(user: FormModel) {
@@ -102,7 +102,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach((element) => {
+    allowedRoles.forEach(element => {
       if (userRole == element) {
         isMatch = true;
         return false;

@@ -15,5 +15,7 @@ namespace ReservationAPI.Models.Interfaces
         Task DeleteCar(long id);
 
         Task UpdateCar(Car car);
+
+        Task<IEnumerable<Car>> GetCarOfCompany(long companyID); 
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ReservationAPI.Models;
+using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Controllers
 {
@@ -22,12 +23,14 @@ namespace ReservationAPI.Controllers
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
+        private ApplicationDbContext _context;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<ApplicationSettings> appSettings)
+        public UserController(UserManager<User> userManager, ApplicationDbContext context, SignInManager<User> signInManager, IOptions<ApplicationSettings> appSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         //POST : /api/User/Register
@@ -35,22 +38,23 @@ namespace ReservationAPI.Controllers
         [Route("Register")]
         public async Task<Object> PostUser(UserModel model)
         {
-            model.Role = "User";
+            model.Status = "User";
             var newUser = new User()
             {
-                 UserName = model.FirstName,
-                 FirstName = model.FirstName,
-                 LastName = model.LastName,
+                 UserName = model.Email,
+                 FirstName = model.Name,
+                 LastName = model.Surname,
                  Email = model.Email,
-                 PhoneNumber = model.Phone,
+                 PhoneNumber = model.Telephone,
                  Street = model.Street,
-                 City = model.City
+                 City = model.City,
+                 Image = model.Image
             };
 
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Role);
+                await _userManager.AddToRoleAsync(newUser, model.Status);
                 return Ok(result);
 
             }catch(Exception ex)
@@ -103,6 +107,27 @@ namespace ReservationAPI.Controllers
         }
 
 
+        //GET: /api/User/GetAll
+        [HttpGet]
+        //[Authorize]
+        //[Authorize(Roles = "Admin")]
+        [Route("GetAll")]
+        public IEnumerable<UserModel> GetAll()
+        {
+            var users = _context.Users.ToList();
+            return users.Select(u => new UserModel()
+            {
+                Name = u.FirstName,
+                Surname = u.LastName,
+                Email = u.Email,
+                Telephone = u.PhoneNumber,
+                Password = u.PasswordHash,
+                Street = u.Street,
+                City = u.City,
+                Status = "User",
+                Image = u.Image
+            }).ToList();
+        }
 
         //GET: /api/User/Profile
         [HttpGet]
@@ -114,18 +139,23 @@ namespace ReservationAPI.Controllers
 
             string userID = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userID);
-
-            return new
+            var role = await _userManager.GetRolesAsync(user);
+            
+            UserModel returnUser = new UserModel()
             {
-                user.FirstName,
-                user.LastName,
-                user.UserName,
-                user.Email,
-                user.Street,
-                user.City,
-                user.PhoneNumber,
-               
+                Name = user.FirstName,
+                Surname = user.LastName,
+                Email = user.Email,
+                Password = user.PasswordHash,
+                City = user.City,
+                Street = user.Street,
+                Status = role.ToString(),
+                Telephone = user.PhoneNumber,
+                Image = user.Image
+
             };
+
+            return returnUser;
 
         }
     }
