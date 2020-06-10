@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "src/app/services/users.service";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { AuthService, GoogleLoginProvider } from "angularx-social-login";
+import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY } from "../../const/constants";
 
 @Component({
   selector: "app-login",
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public OAuth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +35,8 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
         localStorage.setItem("token", res.token); //save token
+        localStorage.setItem("userId", res.email);
+
         this.router.navigate(["profile"]);
       },
       err => {
@@ -45,12 +50,24 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  LoginWithGoogle() {
+    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then(socialusers => {
+      console.log(socialusers);
+
+      this.userService.socialLogin(socialusers).then((res: any) => {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("userId", res.email);
+        this.router.navigate(["profile"]);
+      });
+    });
+  }
+
   initForm() {
-    let username = "";
+    let email = "";
     let password = "";
 
     this.loginForm = new FormGroup({
-      username: new FormControl(username, Validators.required),
+      email: new FormControl(email, Validators.required),
       password: new FormControl(password, Validators.required)
     });
   }

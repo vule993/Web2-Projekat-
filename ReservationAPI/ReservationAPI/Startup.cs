@@ -44,10 +44,10 @@ namespace ReservationAPI
                 );
 
             //
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-            });
+            //services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            //});
 
             // my services
             services.AddScoped<ICarRepository, CarService>();
@@ -114,6 +114,13 @@ namespace ReservationAPI
                 .AllowAnyHeader()
                 .AllowAnyMethod()
             );
+            app.UseCors(options =>
+            {
+                
+                options.WithOrigins("https://accounts.google.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
 
             app.UseAuthentication();
 

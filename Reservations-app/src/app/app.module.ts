@@ -7,6 +7,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { ToastrModule } from "ngx-toastr";
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -64,7 +66,21 @@ import { AirlineReservationComponent } from "./content/reservation/airline-reser
 import { HeadCarCompaniesComponent } from "./content/admin-panel/head-admin/head-car-companies/head-car-companies.component";
 import { HeadAvioCompaniesComponent } from "./content/admin-panel/head-admin/head-avio-companies/head-avio-companies.component";
 import { CarReservationComponent } from "./content/reservation/car-reservation/car-reservation.component";
-import { ProfilePanelComponent } from './content/profile/profile-panel/profile-panel.component';
+import { CLIENT_ID } from "./const/constants";
+
+/* Za social login */
+// Configs
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(CLIENT_ID)
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
+import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-panel.component";
 
 @NgModule({
   declarations: [
@@ -128,7 +144,8 @@ import { ProfilePanelComponent } from './content/profile/profile-panel/profile-p
     FormsModule,
     ReactiveFormsModule,
     SafePipeModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule
   ],
   providers: [
     UsersService,
@@ -136,6 +153,10 @@ import { ProfilePanelComponent } from './content/profile/profile-panel/profile-p
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
     }
   ],
   bootstrap: [AppComponent]

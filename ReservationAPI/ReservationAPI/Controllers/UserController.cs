@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +11,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
+using ReservationAPI.ViewModels;
 
 namespace ReservationAPI.Controllers
 {
@@ -20,6 +26,7 @@ namespace ReservationAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
@@ -39,18 +46,18 @@ namespace ReservationAPI.Controllers
         public async Task<Object> PostUser(UserModel model)
         {
             model.Status = "User";
-            model.Status = "Admin";
+            //model.Status = "Admin";
             var newUser = new User()
             {
-                 UserName = model.Email,
-                 FirstName = model.FirstName,
-                 LastName = model.LastName,
-                 Email = model.Email,
-                 PhoneNumber = model.PhoneNumber,
-                 Street = model.Street,
-                 City = model.City,
-                 Image = model.Image
-                 
+                UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Street = model.Street,
+                City = model.City,
+                Image = model.Image
+
             };
 
             try
@@ -59,7 +66,8 @@ namespace ReservationAPI.Controllers
                 await _userManager.AddToRoleAsync(newUser, model.Status);
                 return Ok(result);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -72,9 +80,9 @@ namespace ReservationAPI.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             //use usemanager to check if we have user with given username
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.Email);
 
-            if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 //check for roles of this user
                 var role = await _userManager.GetRolesAsync(user); //put this role to the claims
@@ -82,8 +90,8 @@ namespace ReservationAPI.Controllers
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new Claim[]{ 
-                        new Claim("UserID", user.Id.ToString()),
+                    Subject = new ClaimsIdentity(new Claim[]{
+                        new Claim("UserID", user.Email),
                         new Claim(options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
 
@@ -100,7 +108,7 @@ namespace ReservationAPI.Controllers
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                return Ok(new { token });
+                return Ok(new { token, user.Email});
             }
             else
             {
@@ -108,6 +116,87 @@ namespace ReservationAPI.Controllers
             }
         }
 
+
+        //social login
+        //POST: api/User/SocialLogin
+        [HttpPost]
+        [Route("SocialLogin")]
+        public async Task<IActionResult> SocialLogin([FromBody] LoginModel loginModel)
+        {
+            var test = _appSettings.JWT_Secret;
+            var validation = await VerifyTokenAsync(loginModel.IdToken);
+
+            if (validation.isVaild)
+            {
+                //get user
+                var socialUser = await _userManager.FindByNameAsync(validation.apiTokenInfo.email);
+
+                //da li ovde dodavati usera ako ne postoji?
+                if (socialUser == null)
+                {
+                    var newUser = new User()
+                    {
+                        Email = socialUser.Email,
+                        FirstName = loginModel.FirstName,
+                        LastName = loginModel.LastName
+
+                    };
+
+                    await _context.Users.AddAsync(newUser);
+                    await _context.SaveChangesAsync();
+                }
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]{
+                        new Claim("UserID", socialUser.Email), //moram ovo napraviti
+                        
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    SigningCredentials = new SigningCredentials(
+                   new SymmetricSecurityKey(
+                           Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
+                           SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+
+                return Ok(new { token });
+            }
+
+            return Ok();
+
+        }
+
+
+        public async Task<(bool isVaild, GoogleApiTokenInfo apiTokenInfo)> VerifyTokenAsync(string providerToken)
+        {
+            var httpClient = new HttpClient();
+            string GoogleApiTokenInfo = $"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={providerToken}";
+            var requestUri = new Uri(string.Format(GoogleApiTokenInfo, providerToken));
+
+            HttpResponseMessage responseMessage;
+
+            try
+            {
+                responseMessage = await httpClient.GetAsync(requestUri);
+            }
+            catch (Exception)
+            {
+                return (false, null);
+            }
+
+            if (responseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                return (false, null);
+            }
+
+            var response = await responseMessage.Content.ReadAsStringAsync();
+            var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
+            return (true, googleApiTokenInfo);
+        }
 
         //GET: /api/User/GetAll
         [HttpGet]
@@ -131,6 +220,59 @@ namespace ReservationAPI.Controllers
             }).ToList();
         }
 
+
+        //GET /api/User/id -> id=email
+        [HttpGet("{id}")]
+        public async Task<object> Get(string email)
+        {
+            UserModel um;
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+                return (new { message = "User does not exist." });
+
+            var role = await _userManager.GetRolesAsync(user);
+            List<UserModel> friends = new List<UserModel>();
+
+            foreach (var friend in user.Friends)
+            {
+
+                um = new UserModel()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email,
+                    Password = friend.PasswordHash,
+                    City = friend.City,
+                    Street = friend.Street,
+                    Status = role.ToString(),
+                    PhoneNumber = friend.PhoneNumber,
+                    Image = friend.Image,
+                    Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
+                };
+
+                friends.Add(um);
+            }
+
+            var userModel = new UserModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.PasswordHash,
+                City = user.City,
+                Street = user.Street,
+                Status = role.FirstOrDefault(),
+                PhoneNumber = user.PhoneNumber,
+                Image = user.Image,
+                Friends = friends
+
+            };
+
+            return Ok(userModel);
+        }
+
+
         //GET: /api/User/Profile
         [HttpGet]
         [Authorize]
@@ -139,14 +281,16 @@ namespace ReservationAPI.Controllers
         {
             //auth user -> need to access UserID from claims...
 
-            string userID = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userID);
+            string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByEmailAsync(userID);  //userID je zapravo email u claimsu...
+     
+            //var user = await _userManager.FindByNameAsync(model.Email);
             var role = await _userManager.GetRolesAsync(user);
 
             List<UserModel> friends = new List<UserModel>();
             UserModel um;
 
-            foreach(var friend in user.Friends)
+            foreach (var friend in user.Friends)
             {
 
                 um = new UserModel()

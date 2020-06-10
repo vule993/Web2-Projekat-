@@ -7,8 +7,8 @@ import { UserModel } from "src/app/models/User.model";
   templateUrl: "./admin-profile.component.html",
   styleUrls: [
     "./admin-profile.component.css",
-    "../../../profile/edit-profile/edit-profile.component.css",
-  ],
+    "../../../profile/edit-profile/edit-profile.component.css"
+  ]
 })
 export class AdminProfileComponent implements OnInit {
   public currentUser = {
@@ -19,14 +19,14 @@ export class AdminProfileComponent implements OnInit {
     street: "",
     city: "",
     phoneNumber: "",
-    password: "",
+    password: ""
   };
 
   constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
-    this.userService
-      .getUserProfile()
-      .subscribe((profile: any) => (this.currentUser = profile));
+    // this.userService
+    //   .getUserProfile()
+    //   .subscribe((profile: any) => (this.currentUser = profile));
   }
 }

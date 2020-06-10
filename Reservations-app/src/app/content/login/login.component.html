@@ -11,9 +11,9 @@
             <div id="username-icon"></div>
             <input
               type="text"
-              formControlName="username"
+              formControlName="email"
               class="form-control"
-              placeholder="Enter Username"
+              placeholder="Enter Email"
             />
           </div>
           <div class="form-group">
@@ -33,6 +33,14 @@
             Login
           </button>
         </form>
+
+        <button
+          (click)="LoginWithGoogle()"
+          style="height: 4.5vw;"
+          class="btn btn-success"
+        >
+          Login With Google
+        </button>
       </div>
 
       <div class="col-12 forgot">

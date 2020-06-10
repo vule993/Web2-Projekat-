@@ -3,11 +3,12 @@ import { UserModel } from "../../models/User.model";
 import { UsersService } from "src/app/services/users.service";
 import { Router } from "@angular/router";
 import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
+import { STORAGE_USER_ID_KEY } from "src/app/const/constants";
 
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"],
+  styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent implements OnInit {
   activeTab;
@@ -23,12 +24,18 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     let fullUrl = window.location.href;
     this.activeTab = fullUrl.split("/")[4];
+    let email = localStorage.getItem("userId");
+    console.log("Ulogovan je: " + email);
     this.userService.getUserProfile().subscribe((user: UserModel) => {
       this.currentUser = <UserModel>user;
-      localStorage.setItem("name", user.firstName);
-      localStorage.setItem("surname", user.lastName);
+      // localStorage.setItem("name", user.firstName);
+      // localStorage.setItem("surname", user.lastName);
       //dodati i ostalo
     });
+
+    // this.userService
+    //   .getLoggedInUser()
+    //   .subscribe((user: UserModel) => (this.currentUser = user));
     //ovde moze da se pogodi metoda getUserProfile() iz userService-a i da se uzmu podaci korisnika
     //ona vraca observable kolekciju, samo ide .subscribe i kupe se podaci...
     //objekat koji ce se vratiti je:

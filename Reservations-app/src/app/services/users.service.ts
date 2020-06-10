@@ -3,9 +3,11 @@ import { UserModel } from "../models/User.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
 import { Observable } from "rxjs";
+import { SocialUser } from "angularx-social-login";
+import { STORAGE_USER_ID_KEY } from "../const/constants";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -63,7 +65,7 @@ export class UsersService {
         "Paris",
         "063/555-333",
         "user"
-      ),
+      )
     ];
     return allUsers;
   }
@@ -86,12 +88,23 @@ export class UsersService {
     return this.httpClient.post(this.baseURL + "/User/Login", formData);
   }
 
+  socialLogin(user: SocialUser) {
+    return this.httpClient
+      .post(this.baseURL + "/User/SocialLogin", user)
+      .toPromise();
+  }
+
   getUserProfile() {
     //need to append jwt token into this request -> this is now done in auth.interceptor
 
     let a = this.httpClient.get<UserModel>(this.baseURL + "/User/Profile");
     return a;
   }
+
+  // getLoggedInUser() {
+  //   const email = localStorage.getItem(STORAGE_USER_ID_KEY);
+  //   return this.httpClient.get<UserModel>(this.baseURL + "/User/Get" + email);
+  // }
 
   //function for managing user roles
   roleMatch(allowedRoles): boolean {
@@ -102,7 +115,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach((element) => {
+    allowedRoles.forEach(element => {
       if (userRole == element) {
         isMatch = true;
         return false;

@@ -141,4 +141,10 @@
       [reservation]="reservation"
     ></app-airline-reservation>
   </div>
+  <div class="space"></div>
+
+  <app-car-reservation
+    *ngIf="reservation.carReservation != null"
+    [reservation]="reservation"
+  ></app-car-reservation>
 </div>
