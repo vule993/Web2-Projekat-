@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { UsersService } from "src/app/services/users.service";
-import { User } from "src/app/models/User.model";
+import { UserModel } from "src/app/models/User.model";
 
 @Component({
   selector: "app-admin-profile",
   templateUrl: "./admin-profile.component.html",
   styleUrls: [
     "./admin-profile.component.css",
-    "../../../profile/edit-profile/edit-profile.component.css"
-  ]
+    "../../../profile/edit-profile/edit-profile.component.css",
+  ],
 })
 export class AdminProfileComponent implements OnInit {
   public currentUser = {
@@ -19,7 +19,7 @@ export class AdminProfileComponent implements OnInit {
     street: "",
     city: "",
     phoneNumber: "",
-    password: ""
+    password: "",
   };
 
   constructor(private userService: UsersService) {}

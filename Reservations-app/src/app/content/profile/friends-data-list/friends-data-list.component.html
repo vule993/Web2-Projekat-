@@ -15,7 +15,7 @@
         <img src="{{ user.image }}" />
       </div>
       <div class="name fleft">
-        {{ user.name + " " + user.surname }}
+        {{ user.firstName + " " + user.lastName }}
       </div>
     </div>
     <div class="fleft">{{ user.status }}</div>
@@ -23,7 +23,7 @@
       {{ user.city }}
     </div>
     <div class="fright">
-      <button class="btn btn-success" (click)="removeFriend(user.id)">
+      <button class="btn btn-success" (click)="removeFriend(user.email)">
         Remove friend
       </button>
     </div>

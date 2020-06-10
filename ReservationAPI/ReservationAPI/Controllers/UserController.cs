@@ -39,6 +39,7 @@ namespace ReservationAPI.Controllers
         public async Task<Object> PostUser(UserModel model)
         {
             model.Status = "User";
+            model.Status = "Admin";
             var newUser = new User()
             {
                  UserName = model.Email,
@@ -49,6 +50,7 @@ namespace ReservationAPI.Controllers
                  Street = model.Street,
                  City = model.City,
                  Image = model.Image
+                 
             };
 
             try
@@ -140,7 +142,31 @@ namespace ReservationAPI.Controllers
             string userID = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userID);
             var role = await _userManager.GetRolesAsync(user);
-            
+
+            List<UserModel> friends = new List<UserModel>();
+            UserModel um;
+
+            foreach(var friend in user.Friends)
+            {
+
+                um = new UserModel()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email,
+                    Password = friend.PasswordHash,
+                    City = friend.City,
+                    Street = friend.Street,
+                    Status = role.ToString(),
+                    PhoneNumber = friend.PhoneNumber,
+                    Image = friend.Image,
+                    Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
+                };
+
+                friends.Add(um);
+
+            }
+
             UserModel returnUser = new UserModel()
             {
                 FirstName = user.FirstName,
@@ -151,8 +177,8 @@ namespace ReservationAPI.Controllers
                 Street = user.Street,
                 Status = role.ToString(),
                 PhoneNumber = user.PhoneNumber,
-                Image = user.Image
-
+                Image = user.Image,
+                Friends = friends
             };
 
             return returnUser;

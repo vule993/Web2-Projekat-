@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { User } from "../models/User.model";
+import { UserModel } from "../models/User.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
 import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -13,8 +13,8 @@ export class UsersService {
   readonly baseURL = "http://localhost:5000/api";
 
   allUsers() {
-    let allUsers: User[] = [
-      new User(
+    let allUsers: UserModel[] = [
+      new UserModel(
         "Vukasin",
         "Radic",
         "vule993@outlook.com",
@@ -24,7 +24,7 @@ export class UsersService {
         "065/523-0691",
         "admin"
       ),
-      new User(
+      new UserModel(
         "Aleksandar",
         "Novakovic",
         "sale.novakovic97@gmail.com",
@@ -34,7 +34,7 @@ export class UsersService {
         "060/631-7215",
         "admin"
       ),
-      new User(
+      new UserModel(
         "Pera",
         "Peric",
         "peki91@gmail.com",
@@ -44,7 +44,7 @@ export class UsersService {
         "065/125-0061",
         "plane-admin"
       ),
-      new User(
+      new UserModel(
         "Novica",
         "Novic",
         "nov21@outlook.com",
@@ -54,7 +54,7 @@ export class UsersService {
         "063/124-456",
         "car-admin"
       ),
-      new User(
+      new UserModel(
         "Nekodugackoime",
         "Nekojosduzeprezime",
         "a@a.com",
@@ -63,7 +63,7 @@ export class UsersService {
         "Paris",
         "063/555-333",
         "user"
-      )
+      ),
     ];
     return allUsers;
   }
@@ -72,8 +72,8 @@ export class UsersService {
     return this.allUsers();
   }
 
-  getAllUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.baseURL + "/User/GetAll");
+  getAllUsers(): Observable<UserModel[]> {
+    return this.httpClient.get<UserModel[]>(this.baseURL + "/User/GetAll");
   }
 
   registerUser(user: FormModel) {
@@ -89,7 +89,7 @@ export class UsersService {
   getUserProfile() {
     //need to append jwt token into this request -> this is now done in auth.interceptor
 
-    let a = this.httpClient.get(this.baseURL + "/User/Profile");
+    let a = this.httpClient.get<UserModel>(this.baseURL + "/User/Profile");
     return a;
   }
 
@@ -102,7 +102,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach(element => {
+    allowedRoles.forEach((element) => {
       if (userRole == element) {
         isMatch = true;
         return false;

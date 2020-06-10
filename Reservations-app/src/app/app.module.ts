@@ -64,6 +64,7 @@ import { AirlineReservationComponent } from "./content/reservation/airline-reser
 import { HeadCarCompaniesComponent } from "./content/admin-panel/head-admin/head-car-companies/head-car-companies.component";
 import { HeadAvioCompaniesComponent } from "./content/admin-panel/head-admin/head-avio-companies/head-avio-companies.component";
 import { CarReservationComponent } from "./content/reservation/car-reservation/car-reservation.component";
+import { ProfilePanelComponent } from './content/profile/profile-panel/profile-panel.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { CarReservationComponent } from "./content/reservation/car-reservation/c
     AirlineReservationComponent,
     HeadCarCompaniesComponent,
     HeadAvioCompaniesComponent,
-    CarReservationComponent
+    CarReservationComponent,
+    ProfilePanelComponent
   ],
   imports: [
     BrowserModule,

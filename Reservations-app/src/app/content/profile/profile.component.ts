@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { User } from "../../models/User.model";
+import { UserModel } from "../../models/User.model";
 import { UsersService } from "src/app/services/users.service";
 import { Router } from "@angular/router";
 import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
@@ -11,27 +11,20 @@ import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
 })
 export class ProfileComponent implements OnInit {
   activeTab;
-  allUsers: User[];
-  public currentUser = {
-    firstName: "",
-    lastName: "",
-  };
+  allUsers: UserModel[];
+  public currentUser: UserModel = null;
   constructor(private userService: UsersService, router: Router) {
     this.allUsers = userService.loadAllUsers();
 
     // pretplacujemo se na dogadjaj ponovnog klika na link profila(posto se ne ucitava
     // kompletna komponenta ova metoda menja this.activeTab na default vrednost)
-    router.events.subscribe((val) => {
-      let fullUrl = window.location.href;
-      this.activeTab = fullUrl.split("/")[4];
-    });
   }
 
   ngOnInit(): void {
     let fullUrl = window.location.href;
     this.activeTab = fullUrl.split("/")[4];
-    this.userService.getUserProfile().subscribe((user: any) => {
-      this.currentUser = user;
+    this.userService.getUserProfile().subscribe((user: UserModel) => {
+      this.currentUser = <UserModel>user;
       localStorage.setItem("name", user.firstName);
       localStorage.setItem("surname", user.lastName);
       //dodati i ostalo
