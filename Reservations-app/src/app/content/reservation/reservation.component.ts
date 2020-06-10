@@ -22,18 +22,6 @@ export class ReservationComponent implements OnInit {
       let id = +this.routes.url.split("/")[2];
       this.reservation = data.find((reservation) => reservation.id == id);
     });
-    $(window).resize(function () {
-      let h = +$("#seat-picker").css("height").split("px")[0];
-
-      $("#friends-selector").css({ height: h + "px" });
-      $(".friends").css({ height: h - 100 + "px" });
-      $("html, body").animate(
-        {
-          scrollTop: $("#proceed").offset().top,
-        },
-        1200
-      );
-    });
   }
   proceed() {
     $("#proceed").slideDown(1200);
