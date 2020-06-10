@@ -31,10 +31,9 @@
   border-left: 0.1vw solid rgba(77, 61, 157, 0.3);
   border-right: 0.1vw solid rgba(77, 61, 157, 0.3);
 }
-.additional-services {
-  margin: 0 1vw;
-}
+
 .result .btn {
-  margin-top: 10.3vw;
+  margin-top: 5vw;
+  letter-spacing: 1px;
   width: 100%;
 }

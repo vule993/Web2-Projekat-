@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { ReservationService } from "src/app/services/reservation.service";
 import { Router } from "@angular/router";
 import { Reservation } from "src/app/models/Reservation.model";
+import { CarReservation } from "src/app/models/CarReservation";
 
 @Component({
   selector: "app-car-reservation",
@@ -9,7 +10,8 @@ import { Reservation } from "src/app/models/Reservation.model";
   styleUrls: ["./car-reservation.component.css"]
 })
 export class CarReservationComponent implements OnInit {
-  reservation: Reservation;
+  @Input() reservation: Reservation;
+  carReservation: Reservation;
 
   constructor(
     private reservationService: ReservationService,
@@ -19,7 +21,7 @@ export class CarReservationComponent implements OnInit {
   ngOnInit(): void {
     this.reservationService.allReservations.subscribe(data => {
       let id = +this.routes.url.split("/")[2];
-      this.reservation = data.find(reservation => reservation.id == id);
+      this.carReservation = data.find(reservation => reservation.id == id);
     });
   }
 }
