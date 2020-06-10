@@ -8,8 +8,11 @@ namespace ReservationAPI.Models
 {
     public class LoginModel
     {
-        public string UserName { get; set; }
+        public string Email { get; set; } //email
         public string Password { get; set; }
+        public string IdToken { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
     public class RefreshCred

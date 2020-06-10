@@ -107,6 +107,13 @@ namespace ReservationAPI
                 .AllowAnyHeader()
                 .AllowAnyMethod()
             );
+            app.UseCors(options =>
+            {
+                
+                options.WithOrigins("https://accounts.google.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
 
             app.UseAuthentication();
 

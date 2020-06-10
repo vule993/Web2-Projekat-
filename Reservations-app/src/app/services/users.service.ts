@@ -3,6 +3,7 @@ import { User } from "../models/User.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
 import { Observable } from "rxjs";
+import { SocialUser } from "angularx-social-login";
 
 @Injectable({
   providedIn: "root"
@@ -84,6 +85,12 @@ export class UsersService {
 
   loginUser(formData) {
     return this.httpClient.post(this.baseURL + "/User/Login", formData);
+  }
+
+  socialLogin(user: SocialUser) {
+    return this.httpClient
+      .post(this.baseURL + "/User/SocialLogin", user)
+      .toPromise();
   }
 
   getUserProfile() {

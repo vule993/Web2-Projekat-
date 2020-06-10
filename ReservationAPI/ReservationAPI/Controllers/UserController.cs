@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +11,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
+using ReservationAPI.ViewModels;
 
 namespace ReservationAPI.Controllers
 {
@@ -20,6 +25,7 @@ namespace ReservationAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
@@ -70,7 +76,7 @@ namespace ReservationAPI.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             //use usemanager to check if we have user with given username
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.Email);
 
             if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -106,6 +112,83 @@ namespace ReservationAPI.Controllers
             }
         }
 
+
+        //social login
+        //POST: api/User/SocialLogin
+        [HttpPost]
+        [Route("SocialLogin")]
+        public async Task<IActionResult> SocialLogin([FromBody]LoginModel loginModel)
+        {
+            var test = _appSettings.JWT_Secret;
+            var validation = await VerifyTokenAsync(loginModel.IdToken);
+
+            if (validation.isVaild)
+            {
+                //get user
+                var socialUser = await _userManager.FindByNameAsync(validation.apiTokenInfo.email);
+                
+                //da li ovde dodavati usera ako ne postoji?
+                if(socialUser == null)
+                {
+                    var newUser = new User()
+                    {
+                        Email = socialUser.Email,
+                        FirstName = loginModel.FirstName,
+                        LastName = loginModel.LastName
+
+                    };
+
+                    await _context.Users.AddAsync(newUser);
+                    await _context.SaveChangesAsync();
+                }
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    SigningCredentials = new SigningCredentials(
+                   new SymmetricSecurityKey(
+                           Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
+                           SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+
+                return Ok(new { token });
+            }
+
+            return Ok();
+           
+        }
+
+
+        public async Task<(bool isVaild, GoogleApiTokenInfo apiTokenInfo)> VerifyTokenAsync(string providerToken)
+        {
+            var httpClient = new HttpClient();
+            string GoogleApiTokenInfo = $"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={providerToken}";
+            var requestUri = new Uri(string.Format(GoogleApiTokenInfo, providerToken));
+
+            HttpResponseMessage responseMessage;
+
+            try
+            {
+                responseMessage = await httpClient.GetAsync(requestUri);
+            }
+            catch (Exception)
+            {
+                return (false, null);
+            }
+
+            if (responseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                return (false, null);
+            }
+
+            var response = await responseMessage.Content.ReadAsStringAsync();
+            var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
+            return (true, googleApiTokenInfo);
+        }
 
         //GET: /api/User/GetAll
         [HttpGet]
