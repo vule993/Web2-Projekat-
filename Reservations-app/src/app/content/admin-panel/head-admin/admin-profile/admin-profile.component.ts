@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { UsersService } from "src/app/services/users.service";
-import { User } from "src/app/models/User.model";
+import { UserModel } from "src/app/models/User.model";
 
 @Component({
   selector: "app-admin-profile",
@@ -25,8 +25,8 @@ export class AdminProfileComponent implements OnInit {
   constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
-    this.userService
-      .getUserProfile()
-      .subscribe((profile: any) => (this.currentUser = profile));
+    // this.userService
+    //   .getUserProfile()
+    //   .subscribe((profile: any) => (this.currentUser = profile));
   }
 }

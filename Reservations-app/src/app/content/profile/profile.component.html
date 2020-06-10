@@ -22,7 +22,13 @@
       <div class="fleft">
         <img src="../../../assets/site/icons/avatar-male-white.png" />
       </div>
-      <div>{{ currentUser.firstName + " " + currentUser.lastName }}</div>
+      <div>
+        {{
+          currentUser != null
+            ? currentUser.firstName + " " + currentUser.lastName
+            : ""
+        }}
+      </div>
     </div>
     <div class="info-item">
       <div class="fleft">
@@ -49,59 +55,7 @@
 
   <!--  -->
   <!--  -->
-
-  <div id="pr-panel" class="fright">
-    <!-- 
-      
-     -->
-    <div class="list-group list-group-horizontal clear">
-      <a
-        routerLink="friends"
-        id="friends-tag"
-        class="list-group-item"
-        [ngClass]="{ active: activeTab === 'friends' }"
-        (click)="setActiveTab('friends')"
-      >
-        <div id="friends"></div>
-        <div>Friends</div>
-      </a>
-      <a
-        routerLink="archive"
-        id="activity-tag"
-        class="list-group-item"
-        [ngClass]="{ active: activeTab === 'archive' }"
-        (click)="setActiveTab('archive')"
-      >
-        <div id="activity"></div>
-        <div>Archive</div>
-      </a>
-      <a
-        routerLink="reservations"
-        id="reservations-tag"
-        class="list-group-item"
-        [ngClass]="{ active: activeTab === 'reservations' }"
-        (click)="setActiveTab('reservations')"
-      >
-        <div id="reservations"></div>
-        <div>Reservations</div>
-      </a>
-      <a
-        routerLink="edit-profile"
-        id="edit-tag"
-        class="list-group-item"
-        [ngClass]="{ active: activeTab === 'edit-profile' }"
-        (click)="setActiveTab('edit-profile')"
-      >
-        <div id="edit"></div>
-        <div>Edit profile</div></a
-      >
-    </div>
-    <!-- 
-
-
-  
- -->
-    <!-- ovde treba load-ovati ugnjezdenu komponentu -->
-    <router-outlet></router-outlet>
+  <div class="fleft">
+    <app-profile-panel></app-profile-panel>
   </div>
 </div>

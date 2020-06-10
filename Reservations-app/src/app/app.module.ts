@@ -80,6 +80,7 @@ let config = new AuthServiceConfig([
 export function provideConfig() {
   return config;
 }
+import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-panel.component";
 
 @NgModule({
   declarations: [
@@ -129,7 +130,8 @@ export function provideConfig() {
     AirlineReservationComponent,
     HeadCarCompaniesComponent,
     HeadAvioCompaniesComponent,
-    CarReservationComponent
+    CarReservationComponent,
+    ProfilePanelComponent
   ],
   imports: [
     BrowserModule,

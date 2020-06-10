@@ -10,6 +10,10 @@ namespace ReservationAPI.Models
 {
     public class User : IdentityUser
     {
+        public User()
+        {
+            Friends = new List<User>();
+        }
         
         [Column(TypeName = "nvarchar(50)")]
         public string FirstName { get; set; }

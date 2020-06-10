@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
         localStorage.setItem("token", res.token); //save token
+        localStorage.setItem("userId", res.email);
+
         this.router.navigate(["profile"]);
       },
       err => {
@@ -54,18 +56,18 @@ export class LoginComponent implements OnInit {
 
       this.userService.socialLogin(socialusers).then((res: any) => {
         localStorage.setItem("token", res.token);
-        localStorage.setItem(STORAGE_USER_ID_KEY, res.email);
+        localStorage.setItem("userId", res.email);
         this.router.navigate(["profile"]);
       });
     });
   }
 
   initForm() {
-    let username = "";
+    let email = "";
     let password = "";
 
     this.loginForm = new FormGroup({
-      username: new FormControl(username, Validators.required),
+      email: new FormControl(email, Validators.required),
       password: new FormControl(password, Validators.required)
     });
   }

@@ -7,6 +7,10 @@ namespace ReservationAPI.Models
 {
     public class UserModel
     {
+        public UserModel()
+        {
+            Friends = new List<UserModel>();
+        }
         //public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

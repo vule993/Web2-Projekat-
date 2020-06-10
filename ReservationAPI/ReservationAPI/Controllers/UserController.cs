@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +26,7 @@ namespace ReservationAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        
+
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
@@ -45,16 +46,18 @@ namespace ReservationAPI.Controllers
         public async Task<Object> PostUser(UserModel model)
         {
             model.Status = "User";
+            //model.Status = "Admin";
             var newUser = new User()
             {
-                 UserName = model.Email,
-                 FirstName = model.FirstName,
-                 LastName = model.LastName,
-                 Email = model.Email,
-                 PhoneNumber = model.PhoneNumber,
-                 Street = model.Street,
-                 City = model.City,
-                 Image = model.Image
+                UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Street = model.Street,
+                City = model.City,
+                Image = model.Image
+
             };
 
             try
@@ -63,7 +66,8 @@ namespace ReservationAPI.Controllers
                 await _userManager.AddToRoleAsync(newUser, model.Status);
                 return Ok(result);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -78,7 +82,7 @@ namespace ReservationAPI.Controllers
             //use usemanager to check if we have user with given username
             var user = await _userManager.FindByNameAsync(model.Email);
 
-            if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 //check for roles of this user
                 var role = await _userManager.GetRolesAsync(user); //put this role to the claims
@@ -86,8 +90,8 @@ namespace ReservationAPI.Controllers
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new Claim[]{ 
-                        new Claim("UserID", user.Id.ToString()),
+                    Subject = new ClaimsIdentity(new Claim[]{
+                        new Claim("UserID", user.Email),
                         new Claim(options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
 
@@ -104,7 +108,7 @@ namespace ReservationAPI.Controllers
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                return Ok(new { token });
+                return Ok(new { token, user.Email});
             }
             else
             {
@@ -117,7 +121,7 @@ namespace ReservationAPI.Controllers
         //POST: api/User/SocialLogin
         [HttpPost]
         [Route("SocialLogin")]
-        public async Task<IActionResult> SocialLogin([FromBody]LoginModel loginModel)
+        public async Task<IActionResult> SocialLogin([FromBody] LoginModel loginModel)
         {
             var test = _appSettings.JWT_Secret;
             var validation = await VerifyTokenAsync(loginModel.IdToken);
@@ -126,9 +130,9 @@ namespace ReservationAPI.Controllers
             {
                 //get user
                 var socialUser = await _userManager.FindByNameAsync(validation.apiTokenInfo.email);
-                
+
                 //da li ovde dodavati usera ako ne postoji?
-                if(socialUser == null)
+                if (socialUser == null)
                 {
                     var newUser = new User()
                     {
@@ -144,6 +148,10 @@ namespace ReservationAPI.Controllers
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
+                    Subject = new ClaimsIdentity(new Claim[]{
+                        new Claim("UserID", socialUser.Email), //moram ovo napraviti
+                        
+                    }),
                     Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(
                    new SymmetricSecurityKey(
@@ -159,7 +167,7 @@ namespace ReservationAPI.Controllers
             }
 
             return Ok();
-           
+
         }
 
 
@@ -212,6 +220,59 @@ namespace ReservationAPI.Controllers
             }).ToList();
         }
 
+
+        //GET /api/User/id -> id=email
+        [HttpGet("{id}")]
+        public async Task<object> Get(string email)
+        {
+            UserModel um;
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+                return (new { message = "User does not exist." });
+
+            var role = await _userManager.GetRolesAsync(user);
+            List<UserModel> friends = new List<UserModel>();
+
+            foreach (var friend in user.Friends)
+            {
+
+                um = new UserModel()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email,
+                    Password = friend.PasswordHash,
+                    City = friend.City,
+                    Street = friend.Street,
+                    Status = role.ToString(),
+                    PhoneNumber = friend.PhoneNumber,
+                    Image = friend.Image,
+                    Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
+                };
+
+                friends.Add(um);
+            }
+
+            var userModel = new UserModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.PasswordHash,
+                City = user.City,
+                Street = user.Street,
+                Status = role.FirstOrDefault(),
+                PhoneNumber = user.PhoneNumber,
+                Image = user.Image,
+                Friends = friends
+
+            };
+
+            return Ok(userModel);
+        }
+
+
         //GET: /api/User/Profile
         [HttpGet]
         [Authorize]
@@ -220,10 +281,36 @@ namespace ReservationAPI.Controllers
         {
             //auth user -> need to access UserID from claims...
 
-            string userID = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userID);
+            string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByEmailAsync(userID);  //userID je zapravo email u claimsu...
+     
+            //var user = await _userManager.FindByNameAsync(model.Email);
             var role = await _userManager.GetRolesAsync(user);
-            
+
+            List<UserModel> friends = new List<UserModel>();
+            UserModel um;
+
+            foreach (var friend in user.Friends)
+            {
+
+                um = new UserModel()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.LastName,
+                    Email = friend.Email,
+                    Password = friend.PasswordHash,
+                    City = friend.City,
+                    Street = friend.Street,
+                    Status = role.ToString(),
+                    PhoneNumber = friend.PhoneNumber,
+                    Image = friend.Image,
+                    Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
+                };
+
+                friends.Add(um);
+
+            }
+
             UserModel returnUser = new UserModel()
             {
                 FirstName = user.FirstName,
@@ -234,8 +321,8 @@ namespace ReservationAPI.Controllers
                 Street = user.Street,
                 Status = role.ToString(),
                 PhoneNumber = user.PhoneNumber,
-                Image = user.Image
-
+                Image = user.Image,
+                Friends = friends
             };
 
             return returnUser;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { User } from "src/app/models/User.model";
+import { UserModel } from "src/app/models/User.model";
 import { UsersService } from "src/app/services/users.service";
 
 @Component({
@@ -8,12 +8,12 @@ import { UsersService } from "src/app/services/users.service";
   styleUrls: ["./friends-data-list.component.css"],
 })
 export class FriendsDataListComponent implements OnInit {
-  allUsers: User[];
+  allUsers: UserModel[];
   constructor(private userService: UsersService) {
     this.allUsers = userService.loadAllUsers();
   }
-  removeFriend(id: number) {
-    alert(id);
+  removeFriend(mail: number) {
+    alert(mail);
   }
   ngOnInit(): void {}
 }

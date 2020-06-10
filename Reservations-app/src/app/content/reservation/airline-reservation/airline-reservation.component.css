@@ -28,6 +28,8 @@ h2 {
 
 .friend {
   padding: 1vw;
+}
+.friend {
   cursor: pointer;
 }
 .friend div {

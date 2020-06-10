@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
@@ -41,6 +42,12 @@ namespace ReservationAPI
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 );
+
+            //
+            //services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            //});
 
             // my services
             services.AddScoped<ICarRepository, CarService>();

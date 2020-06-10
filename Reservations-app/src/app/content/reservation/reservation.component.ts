@@ -57,4 +57,7 @@ export class ReservationComponent implements OnInit {
       1200
     );
   }
+  finish() {
+    //dobavi listu odgovarajucih rent-a-car
+  }
 }

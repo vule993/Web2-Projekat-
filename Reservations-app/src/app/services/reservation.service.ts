@@ -5,7 +5,7 @@ import { Flight } from "../models/Flight.model";
 import { AvioCompany } from "../models/AvioCompany.model";
 import { Destination } from "../models/Destination.model";
 import { CarReservation } from "../models/CarReservation";
-import { User } from "../models/User.model";
+import { UserModel } from "../models/User.model";
 import { Address } from "../models/address.model";
 import { BehaviorSubject } from "rxjs";
 import { CarsService } from "./cars.service";
@@ -13,7 +13,7 @@ import { SeatConfiguration } from "../models/Seat-configuration.model";
 import { S_IFDIR } from "constants";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
@@ -63,14 +63,14 @@ export class ReservationService {
               "Belgrade",
               "Serbia",
               "Neznanog junaka jebem li ga 1/1"
-            )
+            ),
           ],
           "wc,tv,wifi,power supply,newspapers,bar",
           "300",
           "2"
         ),
         [
-          new User(
+          new UserModel(
             "Testoje",
             "Testivojevic",
             "testoje@gmail.com",
@@ -79,7 +79,7 @@ export class ReservationService {
             "Belgreade",
             "065555333",
             "1"
-          )
+          ),
         ]
       ),
       new CarReservation(
@@ -144,14 +144,14 @@ export class ReservationService {
               "Negde tamo",
               "Nedodjija",
               "Neznanog junaka jebem li ga 1/1"
-            )
+            ),
           ],
           "coffee service, wifi, NESTO NOVO...",
           "500",
           "3.4"
         ),
         [
-          //   new User(
+          //   new UserModel(
           //     1,
           //     "Testoje",
           //     "Testivojevic",
@@ -180,7 +180,7 @@ export class ReservationService {
       ),
       false,
       false
-    )
+    ),
   ]);
   allReservations = this._allReservations.asObservable();
   constructor(private carService: CarsService) {}
@@ -201,7 +201,7 @@ export class ReservationService {
   getSpecificReservation(id: number) {
     return this._allReservations
       .getValue()
-      .find(reservation => reservation.id === id);
+      .find((reservation) => reservation.id === id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;

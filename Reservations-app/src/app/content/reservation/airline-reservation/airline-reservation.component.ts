@@ -2,10 +2,11 @@ import { Component, OnInit, Input } from "@angular/core";
 import { Reservation } from "src/app/models/Reservation.model";
 import { SelectedseatsService } from "src/app/services/selectedseats.service";
 import { UsersService } from "src/app/services/users.service";
-import { User } from "src/app/models/User.model";
+import { UserModel } from "src/app/models/User.model";
 import { Seat } from "src/app/models/Seat.model";
 
 declare var $: any;
+
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
@@ -21,7 +22,7 @@ export class AirlineReservationComponent implements OnInit {
     private userService: UsersService
   ) {}
   onFinish() {}
-  onCheck(event, user: User) {
+  onCheck(event, user: UserModel) {
     let element = event.currentTarget.lastElementChild;
     if ($(element).hasClass("uncheck")) {
       if (this.selectedSeatsNo - 1 < 1) {
