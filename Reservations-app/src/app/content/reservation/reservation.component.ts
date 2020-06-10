@@ -26,7 +26,7 @@ export class ReservationComponent implements OnInit {
       let h = +$("#seat-picker").css("height").split("px")[0];
 
       $("#friends-selector").css({ height: h + "px" });
-      $(".friends").css({ height: h - 80 + "px" });
+      $(".friends").css({ height: h - 100 + "px" });
       $("html, body").animate(
         {
           scrollTop: $("#proceed").offset().top,

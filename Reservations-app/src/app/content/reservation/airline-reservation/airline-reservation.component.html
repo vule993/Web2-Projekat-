@@ -10,13 +10,19 @@
     </app-display-seats>
   </div>
   <div id="friends-selector" class="fright">
-    <div id="message">Select {{ selectedSeats.length }} friends</div>
+    <div id="message">
+      Select
+      {{ selectedSeats.length < 1 ? 0 : selectedSeatsNo - 1 }} friends
+    </div>
     <div class="friends">
-      <div *ngFor="let user of users" class="friend overflow-hidden">
-        <span class="fleft">{{ user.FirstName + " " + user.LastName }}</span>
-        <span class="fright">
-          <input type="checkbox" (click)="onCheck(user)" class="checkbox" />
-        </span>
+      <div
+        *ngFor="let user of users"
+        class="friend overflow-hidden"
+        (click)="onCheck($event, user)"
+      >
+        <div class="fleft uncheck">
+          {{ user.FirstName + " " + user.LastName }}
+        </div>
       </div>
     </div>
     <button class="btn btn-success fright">Finish reservation</button>

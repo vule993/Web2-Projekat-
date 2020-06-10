@@ -2,8 +2,8 @@ import { User } from "./User.model";
 
 export class Seat {
   static count: number = 0;
-  taken = false;
-  user: User = null;
+  public taken = false;
+  public user: User = null;
   constructor(
     public seat_no: number = -1,
     public id: number = ++Seat.count,
