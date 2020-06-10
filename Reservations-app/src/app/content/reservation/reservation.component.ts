@@ -31,7 +31,7 @@ export class ReservationComponent implements OnInit {
         .split("px")[0];
 
       $("#friends-selector").css({ height: h + "px" });
-      $(".friends").css({ height: h - 80 + "px" });
+      $(".friends").css({ height: h - 100 + "px" });
       $("html, body").animate(
         {
           scrollTop: $("#proceed").offset().top

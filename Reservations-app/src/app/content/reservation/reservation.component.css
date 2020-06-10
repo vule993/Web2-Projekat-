@@ -2,6 +2,13 @@
   width: 96%;
   margin: 0 auto;
 }
+h2 {
+  width: 100%;
+  margin: 0vw auto;
+  padding: 2vw 0;
+  color: #4d3d9d;
+  text-align: center;
+}
 .result {
   width: 100%;
   color: #4d3d9d;
