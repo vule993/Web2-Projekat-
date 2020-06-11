@@ -56,8 +56,8 @@ namespace ReservationAPI.Controllers
                 PhoneNumber = model.PhoneNumber,
                 Street = model.Street,
                 City = model.City,
-                Image = model.Image
-
+                Image = model.Image,
+                Friends = new List<User>()
             };
 
             try
@@ -202,10 +202,11 @@ namespace ReservationAPI.Controllers
         [HttpGet]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
-        [Route("GetAll")]
+        [Route("getall")]
         public IEnumerable<UserModel> GetAll()
         {
             var users = _context.Users.ToList();
+
             return users.Select(u => new UserModel()
             {
                 FirstName = u.FirstName,
@@ -216,7 +217,8 @@ namespace ReservationAPI.Controllers
                 Street = u.Street,
                 City = u.City,
                 Status = "User",
-                Image = u.Image
+                Image = u.Image,
+                Friends = new List<UserModel>()
             }).ToList();
         }
 
@@ -271,6 +273,52 @@ namespace ReservationAPI.Controllers
 
             return Ok(userModel);
         }
+
+
+        /*
+         OVDE GLEDAJ
+        */
+
+
+        //api/User/Update
+        [HttpPut("{id}")]
+        [Route("Update")]
+        public async Task<object> Update(string id, [FromBody]UserModel userModel)
+        {
+            //var user = await _userManager.FindByNameAsync(model.Email); dobavljanje bilo kog usera
+
+            //dobavljanje logovanog usera
+            //string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByEmailAsync(userModel.Email);
+            user.Email = id;
+
+            if(user != null)
+            {
+                user.FirstName = userModel.FirstName;
+                user.LastName = userModel.LastName;
+                user.Email = userModel.Email;
+                user.PhoneNumber = userModel.PhoneNumber;
+                
+                user.Street = userModel.Street;
+                user.City = userModel.City;
+                
+                user.Image = userModel.Image;
+
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                return Ok(user);
+            }
+
+            return (new { message = "Update error" });
+
+        }
+
+
+
+        /*
+         OVDE GLEDAJ
+        */
+
 
 
         //GET: /api/User/Profile

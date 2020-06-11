@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
-  styleUrls: ["./airline-reservation.component.css"]
+  styleUrls: ["./airline-reservation.component.css"],
 })
 export class AirlineReservationComponent implements OnInit {
   @Input() reservation: Reservation;
@@ -52,11 +52,11 @@ export class AirlineReservationComponent implements OnInit {
       }
     }
     this.selectedSeatsNo = this.selectedSeats.filter(
-      seat => seat.user == null
+      (seat) => seat.user == null
     ).length;
   }
   ngOnInit(): void {
-    this.users = this.userService.allUsers();
+    this.users = this.userService.getAllUsers();
 
     $(window).resize(function () {
       let h = +$("#seat-picker").css("height").split("px")[0];
@@ -72,11 +72,10 @@ export class AirlineReservationComponent implements OnInit {
     });
 
     this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
-    this.selectedSeatService.selectedSeats.subscribe(allSeats => {
       this.selectedSeats = allSeats;
       if (allSeats != null)
         this.selectedSeatsNo = this.selectedSeats.filter(
-          seat => seat.user == null
+          (seat) => seat.user == null
         ).length;
     });
   }
