@@ -41,9 +41,7 @@
           type="text"
           class="form-control"
           placeholder="Street"
-          value="{{
-            currentUser != null ? currentUser.city.split(',')[0] : ''
-          }}"
+          value="{{ currentUser != null ? currentUser.street : '' }}"
         />
       </div>
     </div>
@@ -56,9 +54,7 @@
           type="text"
           class="form-control"
           placeholder="City"
-          value="{{
-            currentUser != null ? currentUser.city.split(',')[1] : ''
-          }}"
+          value="{{ currentUser != null ? currentUser.city : '' }}"
         />
       </div>
       <div class="form-group">
@@ -67,7 +63,7 @@
           id="phone"
           type="text"
           class="form-control"
-          placeholder="Phone"
+          placeholder="Phone number"
           value="{{ currentUser != null ? currentUser.phoneNumber : '' }}"
         />
       </div>

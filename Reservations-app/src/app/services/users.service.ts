@@ -36,7 +36,7 @@ export class UsersService {
   }
 
   updateUser(user: UserModel) {
-    this.httpClient.put(this.baseURL + "/User/Update", user);
+    return this.httpClient.put(this.baseURL + "/User/Update", user);
   }
   getUserProfile() {
     //need to append jwt token into this request -> this is now done in auth.interceptor

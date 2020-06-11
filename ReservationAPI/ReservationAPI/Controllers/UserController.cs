@@ -108,7 +108,7 @@ namespace ReservationAPI.Controllers
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                return Ok(new { token, user.Email});
+                return Ok(new { token, user.Email });
             }
             else
             {
@@ -280,29 +280,34 @@ namespace ReservationAPI.Controllers
         */
 
 
-        //api/User/Update
+        //api/User/Update/id
         [HttpPut("{id}")]
         [Route("Update")]
-        public async Task<object> Update(string id, [FromBody]UserModel userModel)
+        public async Task<object> Update(int id,[FromBody]UserModel userModel)
         {
             //var user = await _userManager.FindByNameAsync(model.Email); dobavljanje bilo kog usera
 
             //dobavljanje logovanog usera
             //string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByEmailAsync(userModel.Email);
-            user.Email = id;
+            
 
             if(user != null)
             {
-                user.FirstName = userModel.FirstName;
-                user.LastName = userModel.LastName;
-                user.Email = userModel.Email;
-                user.PhoneNumber = userModel.PhoneNumber;
-                
-                user.Street = userModel.Street;
-                user.City = userModel.City;
-                
-                user.Image = userModel.Image;
+                if (userModel.FirstName != "")
+                    user.FirstName = userModel.FirstName;
+                if (userModel.LastName != "")
+                    user.LastName = userModel.LastName;
+                if (userModel.Email != "")
+                    user.Email = userModel.Email;
+                if (userModel.PhoneNumber != "")
+                    user.PhoneNumber = userModel.PhoneNumber;
+                if (userModel.Street != "")
+                    user.Street = userModel.Street;
+                if (userModel.City != "")
+                    user.City = userModel.City;
+                if (userModel.Image != "")
+                    user.Image = userModel.Image;
 
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();

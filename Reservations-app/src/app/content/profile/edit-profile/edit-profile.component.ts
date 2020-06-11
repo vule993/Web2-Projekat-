@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserModel } from "src/app/models/User.model";
 import { UsersService } from "src/app/services/users.service";
+import { parseHostBindings } from "@angular/compiler";
 declare var $: any;
 @Component({
   selector: "app-edit-profile",
@@ -21,7 +22,8 @@ export class EditProfileComponent implements OnInit {
     let firstName = $("#name").val();
     let lastName = $("#surname").val();
     let email = $("#mail").val();
-    let city = $("#city").val() + ", " + $("#street").val();
+    let street = $("#street").val();
+    let city = $("#city").val();
     let phoneNumber = $("#phone").val();
     let pass1 = $("#pass1").val();
     let pass2 = $("#pass2").val();
@@ -36,13 +38,16 @@ export class EditProfileComponent implements OnInit {
       alert("You are not logged in!");
     }
 
-    //if (pass1 === this.currentUser.password) {
     this.currentUser.firstName = firstName;
     this.currentUser.lastName = lastName;
     this.currentUser.email = email;
     this.currentUser.city = city;
+    this.currentUser.street = street;
     this.currentUser.phoneNumber = phoneNumber;
-    this._userService.updateUser(this.currentUser);
+
+    this._userService.updateUser(this.currentUser).subscribe((res: any) => {});
+    //this._userService.updateUser(this.currentUser);
+
     // } else {
     //   alert("Incorrect password!");
     //   return;
