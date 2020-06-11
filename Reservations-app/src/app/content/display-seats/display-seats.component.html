@@ -14,7 +14,7 @@
       }"
       (click)="onSeatClick($event)"
       [attr.title]="
-        seat.user != null ? seat.user.FirstName + ' ' + seat.user.LastName : ''
+        seat.user != null ? seat.user.firstName + ' ' + seat.user.lastName : ''
       "
     >
       {{ seat.seat_no }}

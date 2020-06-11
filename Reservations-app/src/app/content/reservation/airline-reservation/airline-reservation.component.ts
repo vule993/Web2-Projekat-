@@ -57,6 +57,21 @@ export class AirlineReservationComponent implements OnInit {
   }
   ngOnInit(): void {
     this.users = this.userService.allUsers();
+
+    $(window).resize(function () {
+      let h = +$("#seat-picker").css("height").split("px")[0];
+
+      $("#friends-selector").css({ height: h + "px" });
+      $(".friends").css({ height: h - 100 + "px" });
+      $("html, body").animate(
+        {
+          scrollTop: $("#proceed").offset().top,
+        },
+        1200
+      );
+    });
+
+    this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
     this.selectedSeatService.selectedSeats.subscribe(allSeats => {
       this.selectedSeats = allSeats;
       if (allSeats != null)
