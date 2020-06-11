@@ -106,6 +106,11 @@ const routes: Routes = [
     ],
   },
   {
+    //ovo ce biti url kada neko zeli da doda nekoga, pa ce se prikazati samo info, tj bez edit menija
+    path: "profile-view",
+    component: ProfileComponent,
+  },
+  {
     path: "admin",
     component: AdminPanelComponent,
     // canActivate: [AuthGuard],

@@ -8,15 +8,20 @@ import { STORAGE_USER_ID_KEY } from "src/app/const/constants";
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"]
+  styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
   activeTab;
   allUsers: UserModel[];
   public currentUser: UserModel = null;
+  viewProfile: boolean; //fleg koji govori da li je neko tu samo da pogleda profil
   constructor(private userService: UsersService, router: Router) {
-    this.allUsers = userService.loadAllUsers();
-
+    //router sluzi da skeniram url svaki put kad se promeni -> tako cu znati da li je
+    //profil samo za gledanje ili je to moj profil
+    router.events.subscribe((val) => {
+      let fullUrl = window.location.href;
+      this.viewProfile = fullUrl.includes("profile-view") ? true : false;
+    });
     // pretplacujemo se na dogadjaj ponovnog klika na link profila(posto se ne ucitava
     // kompletna komponenta ova metoda menja this.activeTab na default vrednost)
   }
@@ -28,9 +33,14 @@ export class ProfileComponent implements OnInit {
     console.log("Ulogovan je: " + email);
     this.userService.getUserProfile().subscribe((user: UserModel) => {
       this.currentUser = <UserModel>user;
-      // localStorage.setItem("name", user.firstName);
-      // localStorage.setItem("surname", user.lastName);
-      //dodati i ostalo
+      localStorage.setItem("firstName", user.firstName);
+      localStorage.setItem("lastName", user.lastName);
+      localStorage.setItem("status", user.status);
+      localStorage.setItem("email", user.email);
+      localStorage.setItem("phoneNumber", user.phoneNumber);
+      localStorage.setItem("city", user.city);
+
+      //preostalo: friends, image
     });
 
     // this.userService

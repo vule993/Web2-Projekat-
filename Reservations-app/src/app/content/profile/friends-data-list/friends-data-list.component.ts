@@ -9,11 +9,14 @@ import { UsersService } from "src/app/services/users.service";
 })
 export class FriendsDataListComponent implements OnInit {
   allUsers: UserModel[];
-  constructor(private userService: UsersService) {
-    this.allUsers = userService.loadAllUsers();
-  }
+  constructor(private userService: UsersService) {}
   removeFriend(mail: number) {
     alert(mail);
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.userService.getAllUsers().subscribe((data) => {
+      this.allUsers = data;
+    });
+  }
 }
