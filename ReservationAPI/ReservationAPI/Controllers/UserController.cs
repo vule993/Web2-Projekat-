@@ -286,7 +286,7 @@ namespace ReservationAPI.Controllers
      
             //var user = await _userManager.FindByNameAsync(model.Email);
             var role = await _userManager.GetRolesAsync(user);
-
+           
             List<UserModel> friends = new List<UserModel>();
             UserModel um;
 
@@ -301,7 +301,7 @@ namespace ReservationAPI.Controllers
                     Password = friend.PasswordHash,
                     City = friend.City,
                     Street = friend.Street,
-                    Status = role.ToString(),
+                    Status = role.FirstOrDefault().ToString(),
                     PhoneNumber = friend.PhoneNumber,
                     Image = friend.Image,
                     Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
@@ -319,7 +319,7 @@ namespace ReservationAPI.Controllers
                 Password = user.PasswordHash,
                 City = user.City,
                 Street = user.Street,
-                Status = role.ToString(),
+                Status = role.FirstOrDefault().ToString(),
                 PhoneNumber = user.PhoneNumber,
                 Image = user.Image,
                 Friends = friends

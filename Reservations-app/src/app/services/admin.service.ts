@@ -23,4 +23,8 @@ export class AdminService {
       admin
     );
   }
+
+  changeAdminDetails(admin: FormModel) {
+    return this.httpClient.put(this.baseURL + "/Admin/ChangeDetails", admin);
+  }
 }

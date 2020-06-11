@@ -1,12 +1,14 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="overflow-hidden">
-    <form action="">
+    <form [formGroup]="adminProfileForm" (ngSubmit)="onSubmit()">
       <div>
         <div class="form-group">
           <div class="username-icon"></div>
           <input
+            id="firstName"
             type="text"
             class="form-control"
+            formControlName="firstName"
             placeholder="First name"
             value="{{ currentUser.firstName }}"
           />
@@ -14,8 +16,10 @@
         <div class="form-group">
           <div class="username-icon"></div>
           <input
+            id="lastName"
             type="text"
             class="form-control"
+            formControlName="lastName"
             placeholder="Last name"
             value="{{ currentUser.lastName }}"
           />
@@ -25,7 +29,9 @@
         <div class="form-group">
           <div class="mail-icon"></div>
           <input
+            id="email"
             type="email"
+            formControlName="email"
             class="form-control"
             placeholder="Email"
             value="{{ currentUser.email }}"
@@ -34,8 +40,10 @@
         <div class="form-group">
           <div class="location-icon"></div>
           <input
+            id="street"
             type="text"
             class="form-control"
+            formControlName="street"
             placeholder="Street"
             value="{{ currentUser.street }}"
           />
@@ -46,8 +54,10 @@
         <div class="form-group">
           <div class="location-icon"></div>
           <input
+            id="city"
             type="text"
             class="form-control"
+            formControlName="city"
             placeholder="City"
             value="{{ currentUser.city }}"
           />
@@ -55,8 +65,10 @@
         <div class="form-group">
           <div class="phone-icon"></div>
           <input
+            id="phone"
             type="text"
             class="form-control"
+            formControlName="phone"
             placeholder="Phone"
             value="{{ currentUser.phoneNumber }}"
           />
@@ -67,7 +79,9 @@
         <div class="form-group">
           <div class="password-icon"></div>
           <input
+            id="password1"
             type="password"
+            formControlName="password1"
             class="form-control"
             id="pass1"
             placeholder="Password"
@@ -76,8 +90,10 @@
         <div class="form-group">
           <div class="password-icon"></div>
           <input
+            id="password2"
             type="password"
             class="form-control pass2"
+            formControlName="password2"
             placeholder="Confirm password"
           />
         </div>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models;
+using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Controllers
 {
@@ -16,11 +17,13 @@ namespace ReservationAPI.Controllers
     {
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AdminController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AdminController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         //POST : /api/Admin/RegisterCarAdmin
@@ -100,6 +103,13 @@ namespace ReservationAPI.Controllers
             return "Car admin details";
         }
 
+        [HttpPut]
+        [Route("ChangeDetails")]
+        public async Task ChangeDetails([FromBody] User admin)
+        {
+            _context.Users.Update(admin);
+            await _context.SaveChangesAsync();
 
+        }
     }
 }

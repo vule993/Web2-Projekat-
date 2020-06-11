@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   activeTab;
   allUsers: UserModel[];
   public currentUser: UserModel = null;
-  constructor(private userService: UsersService, router: Router) {
+  constructor(private userService: UsersService, private router: Router) {
     this.allUsers = userService.loadAllUsers();
 
     // pretplacujemo se na dogadjaj ponovnog klika na link profila(posto se ne ucitava
@@ -28,6 +28,16 @@ export class ProfileComponent implements OnInit {
     console.log("Ulogovan je: " + email);
     this.userService.getUserProfile().subscribe((user: UserModel) => {
       this.currentUser = <UserModel>user;
+
+      if (this.currentUser.status == "Admin") {
+        this.router.navigateByUrl("admin/head-admin/profile");
+      }
+      if (this.currentUser.status == "CarAdmin") {
+        this.router.navigate(["car"]);
+      }
+      if (this.currentUser.status == "AvioAdmin") {
+        this.router.navigate(["avio"]);
+      }
       // localStorage.setItem("name", user.firstName);
       // localStorage.setItem("surname", user.lastName);
       //dodati i ostalo
