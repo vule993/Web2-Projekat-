@@ -7,5 +7,9 @@ namespace ReservationAPI.Models.Shared
 {
     public class Notification
     {
+        public long Id { get; set; }
+        public UserModel UserToNotify { get; set; }
+        public UserModel UserThatNotifies { get; set; }
+        public short Status { get; set; }
     }
 }

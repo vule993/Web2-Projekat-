@@ -158,11 +158,11 @@ export class AirlinesComponent implements OnInit {
       this.sliderData.values = [];
       this.allAvioCompanies.forEach((company) => {
         this.sliderData.values.push({
-          v0: company.getId(),
-          v1: company.getName(), //reserved for card title
-          v2: company.getLikes(),
-          v3: company.getAddress(),
-          v4: company.getDescription(),
+          v0: company.id,
+          v1: company.name, //reserved for card title
+          v2: company.likes,
+          v3: company.address,
+          v4: company.description,
         });
       });
     });

@@ -7,5 +7,10 @@ namespace ReservationAPI.Models.Shared
 {
     public class Company
     {
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public Address Address { get; set; }
+        public string Description { get; set; }
+
     }
 }

@@ -14,10 +14,12 @@
       }"
       (click)="onSeatClick($event)"
       [attr.title]="
-        seat.user != null ? seat.user.firstName + ' ' + seat.user.lastName : ''
+        seat.passenger != null
+          ? seat.passenger.user.firstName + ' ' + seat.passenger.user.lastName
+          : ''
       "
     >
-      {{ seat.seat_no }}
+      {{ seat.seatNo }}
     </div>
   </div>
 </div>

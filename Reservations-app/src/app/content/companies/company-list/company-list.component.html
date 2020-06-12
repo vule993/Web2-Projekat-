@@ -7,7 +7,7 @@
   </ul>
   <ul *ngIf="url.includes('airlines')">
     <li *ngFor="let company of avioCompanies">
-      <a routerLink="{{ url + company.getId() }}">{{ company.name }}</a>
+      <a routerLink="{{ url + company.id }}">{{ company.name }}</a>
     </li>
   </ul>
 </div>

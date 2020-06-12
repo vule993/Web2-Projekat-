@@ -4,6 +4,7 @@ import { SelectedseatsService } from "src/app/services/selectedseats.service";
 import { UsersService } from "src/app/services/users.service";
 import { UserModel } from "src/app/models/User.model";
 import { Seat } from "src/app/models/Seat.model";
+import { Passenger } from "src/app/models/Passenger.model";
 
 declare var $: any;
 
@@ -50,8 +51,8 @@ export class AirlineReservationComponent implements OnInit {
       $(element).addClass("check");
 
       for (let s of this.selectedSeats) {
-        if (s.user == null) {
-          s.user = user;
+        if (s.passenger == null) {
+          s.passenger = new Passenger(user);
           this.selectedSeatsNo--;
           break;
         }
@@ -61,19 +62,20 @@ export class AirlineReservationComponent implements OnInit {
       $(element).removeClass("check");
       $(element).addClass("uncheck");
       for (let s of this.selectedSeats) {
-        if (s.user == user) {
-          s.user = null;
+        if (s.passenger.user == user) {
+          s.passenger = null; //ako je to taj user -> skidam passenger-a
           this.selectedSeatsNo++;
           break;
         }
       }
     }
     this.selectedSeatsNo = this.selectedSeats.filter(
-      (seat) => seat.user == null
+      (seat) => seat.passenger == null
     ).length;
   }
   ngOnInit(): void {
-    this.users = this.userService.getAllUsers();
+    this.userService.getAllUsers().subscribe((users) => (this.users = users));
+    //this.users = this.userService.getAllUsers();
 
     $(window).resize(function () {
       let h = +$("#seat-picker").css("height").split("px")[0];
@@ -92,7 +94,7 @@ export class AirlineReservationComponent implements OnInit {
       this.selectedSeats = allSeats;
       if (allSeats != null)
         this.selectedSeatsNo = this.selectedSeats.filter(
-          (seat) => seat.user == null
+          (seat) => seat.passenger == null
         ).length;
     });
   }

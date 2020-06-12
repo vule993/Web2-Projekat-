@@ -1,5 +1,10 @@
 import { Address } from "./address.model";
 
 export class Company {
-  constructor(name: string, address: Address, description: string) {}
+  constructor(
+    public name: string,
+    public address: Address,
+    public description: string,
+    public id: number
+  ) {}
 }
