@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    //pokupiti podatke sa forme?
-
     this.userService.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
         localStorage.setItem("token", res.token); //save token
@@ -55,7 +53,7 @@ export class LoginComponent implements OnInit {
       console.log(socialusers);
 
       this.userService.socialLogin(socialusers).then((res: any) => {
-        localStorage.setItem("token", res.token);
+        localStorage.setItem("token", res.token); //ne zove se ovako token od google...
         localStorage.setItem("userId", res.email);
         this.router.navigate(["profile"]);
       });

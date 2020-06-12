@@ -49,7 +49,9 @@ namespace ReservationAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Status);
+                await _userManager.AddToRoleAsync(newUser, "CarAdmin"); //proveri role
+                _context.Users.Add(newUser);
+
                 return Ok(result);
 
             }
@@ -77,13 +79,15 @@ namespace ReservationAPI.Controllers
                 PhoneNumber = model.PhoneNumber,
                 Street = model.Street,
                 City = model.City,
-                Image = model.Image
+                Image = model.Image,
+                
             };
 
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Status);
+                await _userManager.AddToRoleAsync(newUser, "AvioAdmin");
+                _context.Users.Add(newUser);
                 return Ok(result);
 
             }
@@ -103,12 +107,33 @@ namespace ReservationAPI.Controllers
             return "Car admin details";
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Route("ChangeDetails")]
-        public async Task ChangeDetails([FromBody] User admin)
+        public async Task<object> ChangeDetails(string id, [FromBody] User admin)
         {
-            _context.Users.Update(admin);
-            await _context.SaveChangesAsync();
+            var a = await _userManager.FindByEmailAsync(admin.Email);
+            a.Email = id;
+
+            if(a != null)
+            {
+                a.FirstName = admin.FirstName;
+                a.LastName = admin.LastName;
+                a.Email = admin.Email;
+                a.City = admin.City;
+                a.Friends = admin.Friends;
+                a.Image = admin.Image;
+                //a.PasswordHash = admin.PasswordHash;
+                a.PhoneNumber = admin.PhoneNumber;
+                a.Street = admin.Street;
+                a.UserName = admin.Email;
+ 
+                _context.Users.Update(a);
+                await _context.SaveChangesAsync();
+
+                return Ok(a);
+            }
+
+            return (new { message = "This user does not exist in database." });
 
         }
     }

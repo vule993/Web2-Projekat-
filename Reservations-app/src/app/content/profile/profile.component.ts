@@ -55,6 +55,7 @@ export class ProfileComponent implements OnInit {
       localStorage.setItem("email", user.email);
       localStorage.setItem("phoneNumber", user.phoneNumber);
       localStorage.setItem("city", user.city);
+      localStorage.setItem("street", user.street);
 
       //preostalo: friends, image
     });
