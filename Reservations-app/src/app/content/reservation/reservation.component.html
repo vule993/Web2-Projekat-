@@ -145,8 +145,8 @@
   <div class="space"></div>
   <div id="finish" class="display-none">
     <app-car-reservation
-      *ngIf="reservation.carReservation != null"
       [reservation]="reservation"
+      [suggestedCars]="suggestedCars"
     ></app-car-reservation>
   </div>
 </div>

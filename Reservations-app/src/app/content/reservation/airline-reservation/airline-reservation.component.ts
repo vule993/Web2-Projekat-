@@ -4,40 +4,66 @@ import { SelectedseatsService } from "src/app/services/selectedseats.service";
 import { UsersService } from "src/app/services/users.service";
 import { UserModel } from "src/app/models/User.model";
 import { Seat } from "src/app/models/Seat.model";
+import { CarsService } from "src/app/services/cars.service";
+import { CarCompany } from "src/app/models/CarCompany.model";
+import { ReservationService } from "src/app/services/reservation.service";
+import { CarReservation } from "src/app/models/CarReservation";
 
 declare var $: any;
 
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
-  styleUrls: ["./airline-reservation.component.css"],
+  styleUrls: ["./airline-reservation.component.css"]
 })
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter();
-  suggestedCars: [];
+  suggestedCars: CarReservation[] = [];
   @Input() reservation: Reservation;
   selectedSeatsNo;
   selectedSeats: Seat[] = [];
+
   users;
   constructor(
     private selectedSeatService: SelectedseatsService,
-    private userService: UsersService
+    private userService: UsersService,
+    private carService: CarsService,
+    private reservationService: ReservationService
   ) {}
-  finish() {
-    //ovde dodajes auta...
 
-    //dobavi listu odgovarajucih rent-a-car
+  finish() {
+    //load specific car reservations based on a airline reservation...
+    let destination = this.reservation.airlineReservation.flight
+      .endingDestination;
+    let startDate = this.reservation.airlineReservation.flight.startDate;
+    let d1 = new Date(startDate);
+    let endDate = this.reservation.airlineReservation.flight.returnDate;
+    let d2 = new Date(endDate);
+
+    this.reservationService.carReservations.forEach(cr => {
+      let carStartDate = new Date(cr.startDate);
+      let carEndDate = new Date(cr.endDate);
+      if (
+        !cr.car.isReserved &&
+        carStartDate <= d1 &&
+        carEndDate >= d2 &&
+        cr.carCompany.city == destination.city
+      ) {
+        this.suggestedCars.push(cr);
+      }
+    });
+
+    //send to parent
     this.event.emit(this.suggestedCars);
 
     //ovo ce kada  se klikne na finish da slajduje do njega i da ga prikaze
     $("#finish").slideDown(1200);
     $("html, body").animate(
       {
-        scrollTop: $("#finish").offset().top,
+        scrollTop: $("#finish").offset().top
       },
       1200
     );
-    // do ovde sam ja dodavao
   }
   onCheck(event, user: UserModel) {
     let element = event.currentTarget.lastElementChild;
@@ -69,30 +95,32 @@ export class AirlineReservationComponent implements OnInit {
       }
     }
     this.selectedSeatsNo = this.selectedSeats.filter(
-      (seat) => seat.user == null
+      seat => seat.user == null
     ).length;
   }
   ngOnInit(): void {
     this.users = this.userService.getAllUsers();
 
-    $(window).resize(function () {
-      let h = +$("#seat-picker").css("height").split("px")[0];
+    $(window).resize(function() {
+      let h = +$("#seat-picker")
+        .css("height")
+        .split("px")[0];
 
       $("#friends-selector").css({ height: h + "px" });
       $(".friends").css({ height: h - 100 + "px" });
       $("html, body").animate(
         {
-          scrollTop: $("#proceed").offset().top,
+          scrollTop: $("#proceed").offset().top
         },
         1200
       );
     });
 
-    this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
+    this.selectedSeatService.selectedSeats.subscribe(allSeats => {
       this.selectedSeats = allSeats;
       if (allSeats != null)
         this.selectedSeatsNo = this.selectedSeats.filter(
-          (seat) => seat.user == null
+          seat => seat.user == null
         ).length;
     });
   }

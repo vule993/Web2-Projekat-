@@ -11,6 +11,7 @@ import { CarReservation } from "src/app/models/CarReservation";
 })
 export class CarReservationComponent implements OnInit {
   @Input() reservation: Reservation;
+  @Input() suggestedCars: CarReservation[];
   carReservation: Reservation;
 
   constructor(
@@ -23,5 +24,13 @@ export class CarReservationComponent implements OnInit {
       let id = +this.routes.url.split("/")[2];
       this.carReservation = data.find(reservation => reservation.id == id);
     });
+  }
+
+  AddCarReservation(id: string) {
+    console.log("id rezervacije: " + id);
+    this.reservation.carReservation = this.reservationService.getSpecificReservation(
+      +id
+    );
+    //ovo je finalna rezervacija sa avio + car rezervacijom
   }
 }

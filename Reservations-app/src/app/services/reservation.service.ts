@@ -87,7 +87,7 @@ export class ReservationService {
         1,
         this.carService.getCar(1),
         this.carService.getCarCompany(1),
-        "02-Jul-2020",
+        "01-Jun-2020",
         "25-Jul-2020",
         this.carService.getPrice(
           this.carService.getCar(2).category,
@@ -184,6 +184,52 @@ export class ReservationService {
     )
   ]);
   allReservations = this._allReservations.asObservable();
+
+  carReservations: CarReservation[] = [
+    new CarReservation(
+      1,
+      this.carService.getCar(1),
+      this.carService.getCarCompany(1),
+      "01-Jun-2020",
+      "25-Jul-2020",
+      this.carService.getPrice(
+        this.carService.getCar(2).category,
+        this.calculateNumOfDays(
+          this.parseDate("02-07-2020"),
+          this.parseDate("25-07-2020")
+        )
+      )
+    ),
+    new CarReservation(
+      2,
+      this.carService.getCar(1),
+      this.carService.getCarCompany(1),
+      "03-Jun-2020",
+      "25-Jul-2020",
+      this.carService.getPrice(
+        this.carService.getCar(2).category,
+        this.calculateNumOfDays(
+          this.parseDate("02-07-2020"),
+          this.parseDate("25-07-2020")
+        )
+      )
+    ),
+    new CarReservation(
+      2,
+      this.carService.getCar(2),
+      this.carService.getCarCompany(2),
+      "05-Aug-2020",
+      "23-Aug-2020",
+      this.carService.getPrice(
+        this.carService.getCar(2).category,
+        this.calculateNumOfDays(
+          this.parseDate("05-08-2020"),
+          this.parseDate("23-08-2020")
+        )
+      )
+    )
+  ];
+
   constructor(private carService: CarsService) {}
 
   loadAllReservations() {
@@ -200,9 +246,7 @@ export class ReservationService {
     });
   }
   getSpecificReservation(id: number) {
-    return this._allReservations
-      .getValue()
-      .find(reservation => reservation.id === id);
+    return this.carReservations.find(c => c.id == id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;
