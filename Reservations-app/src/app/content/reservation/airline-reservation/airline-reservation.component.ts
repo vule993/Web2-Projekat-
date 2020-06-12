@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Reservation } from "src/app/models/Reservation.model";
 import { SelectedseatsService } from "src/app/services/selectedseats.service";
 import { UsersService } from "src/app/services/users.service";
@@ -13,6 +13,8 @@ declare var $: any;
   styleUrls: ["./airline-reservation.component.css"],
 })
 export class AirlineReservationComponent implements OnInit {
+  @Output() event = new EventEmitter();
+  suggestedCars: [];
   @Input() reservation: Reservation;
   selectedSeatsNo;
   selectedSeats: Seat[] = [];
@@ -21,7 +23,22 @@ export class AirlineReservationComponent implements OnInit {
     private selectedSeatService: SelectedseatsService,
     private userService: UsersService
   ) {}
-  onFinish() {}
+  finish() {
+    //ovde dodajes auta...
+
+    //dobavi listu odgovarajucih rent-a-car
+    this.event.emit(this.suggestedCars);
+
+    //ovo ce kada  se klikne na finish da slajduje do njega i da ga prikaze
+    $("#finish").slideDown(1200);
+    $("html, body").animate(
+      {
+        scrollTop: $("#finish").offset().top,
+      },
+      1200
+    );
+    // do ovde sam ja dodavao
+  }
   onCheck(event, user: UserModel) {
     let element = event.currentTarget.lastElementChild;
     if ($(element).hasClass("uncheck")) {

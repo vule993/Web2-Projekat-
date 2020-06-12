@@ -1,3 +1,5 @@
+import { Reservation } from "./Reservation.model";
+
 export class UserModel {
   constructor(
     public firstName: string,
@@ -9,6 +11,7 @@ export class UserModel {
     public street: string,
     public phoneNumber: string,
     public status: string, //1->head admin 2->car-admin 3->avio-admin 4->user
-    public friends: UserModel[] = []
+    public friends: UserModel[] = [],
+    public reservations: Reservation[] = []
   ) {}
 }
