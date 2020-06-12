@@ -8,7 +8,7 @@ declare var $: any;
 @Component({
   selector: "app-reservation",
   templateUrl: "./reservation.component.html",
-  styleUrls: ["./reservation.component.css"],
+  styleUrls: ["./reservation.component.css"]
 })
 export class ReservationComponent implements OnInit {
   reservation: Reservation;
@@ -18,21 +18,23 @@ export class ReservationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.reservationService.allReservations.subscribe((data) => {
+    this.reservationService.allReservations.subscribe(data => {
       let id = +this.routes.url.split("/")[2];
-      this.reservation = data.find((reservation) => reservation.id == id);
+      this.reservation = data.find(reservation => reservation.id == id);
     });
 
     //izbaciti iz this.reservation sve one koji != reservation.airlineReservation.flight.destinations
 
-    $(window).resize(function () {
-      let h = +$("#seat-picker").css("height").split("px")[0];
+    $(window).resize(function() {
+      let h = +$("#seat-picker")
+        .css("height")
+        .split("px")[0];
 
       $("#friends-selector").css({ height: h + "px" });
       $(".friends").css({ height: h - 100 + "px" });
       $("html, body").animate(
         {
-          scrollTop: $("#proceed").offset().top,
+          scrollTop: $("#proceed").offset().top
         },
         1200
       );
@@ -41,14 +43,16 @@ export class ReservationComponent implements OnInit {
   proceed() {
     $("#proceed").slideDown(1200);
 
-    let h = +$("#seat-picker").css("height").split("px")[0];
+    let h = +$("#seat-picker")
+      .css("height")
+      .split("px")[0];
 
     $("#friends-selector").css({ height: h + "px" });
     $(".friends").css({ height: h - 100 + "px" });
 
     $("html, body").animate(
       {
-        scrollTop: $("#proceed").offset().top,
+        scrollTop: $("#proceed").offset().top
       },
       1200
     );

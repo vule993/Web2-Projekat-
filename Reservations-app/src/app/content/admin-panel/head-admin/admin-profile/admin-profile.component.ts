@@ -15,8 +15,14 @@ import { AdminService } from "src/app/services/admin.service";
   ]
 })
 export class AdminProfileComponent implements OnInit {
-  public currentUser: UserModel;
+  //public currentUser: UserModel;
   adminProfileForm: FormGroup;
+  firstName = localStorage.getItem("firstName");
+  lastName = localStorage.getItem("lastName");
+  email = localStorage.getItem("email");
+  street = localStorage.getItem("street");
+  city = localStorage.getItem("city");
+  phoneNumber = localStorage.getItem("phoneNumber");
 
   constructor(
     private adminService: AdminService,
@@ -25,17 +31,13 @@ export class AdminProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService
-      .getUserProfile()
-      .subscribe((profile: UserModel) => (this.currentUser = profile));
-
     this.initForm();
   }
 
   onSubmit() {
     const newUser = new FormModel(
       this.adminProfileForm.value["firstName"],
-      this.adminProfileForm.value["secondName"],
+      this.adminProfileForm.value["lastName"],
       this.adminProfileForm.value["email"],
       this.adminProfileForm.value["password1"],
       this.adminProfileForm.value["city"],

@@ -7,7 +7,7 @@ import { SocialUser } from "angularx-social-login";
 import { STORAGE_USER_ID_KEY } from "../const/constants";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -36,7 +36,7 @@ export class UsersService {
   }
 
   updateUser(user: UserModel) {
-    this.httpClient.put(this.baseURL + "/User/Update", user);
+    return this.httpClient.put(this.baseURL + "/User/Update", user);
   }
   getUserProfile() {
     //need to append jwt token into this request -> this is now done in auth.interceptor
@@ -59,7 +59,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach((element) => {
+    allowedRoles.forEach(element => {
       if (userRole == element) {
         isMatch = true;
         return false;

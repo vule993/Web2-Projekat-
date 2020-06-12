@@ -5,14 +5,14 @@ declare var $: any;
 @Component({
   selector: "app-edit-profile",
   templateUrl: "./edit-profile.component.html",
-  styleUrls: ["./edit-profile.component.css"],
+  styleUrls: ["./edit-profile.component.css"]
 })
 export class EditProfileComponent implements OnInit {
   currentUser: UserModel;
   constructor(private _userService: UsersService) {}
 
   ngOnInit(): void {
-    this._userService.getUserProfile().subscribe((user) => {
+    this._userService.getUserProfile().subscribe(user => {
       this.currentUser = <UserModel>user;
     });
   }
@@ -25,7 +25,8 @@ export class EditProfileComponent implements OnInit {
     let phoneNumber = $("#phone").val();
     let pass1 = $("#pass1").val();
     let pass2 = $("#pass2").val();
-
+    console.log("radii");
+    console.log("mail" + email);
     if (pass1 !== pass2) {
       alert("Passwords must be identical!");
 
@@ -42,7 +43,7 @@ export class EditProfileComponent implements OnInit {
     this.currentUser.email = email;
     this.currentUser.city = city;
     this.currentUser.phoneNumber = phoneNumber;
-    this._userService.updateUser(this.currentUser);
+    this._userService.updateUser(this.currentUser).subscribe((res: any) => {});
     // } else {
     //   alert("Incorrect password!");
     //   return;

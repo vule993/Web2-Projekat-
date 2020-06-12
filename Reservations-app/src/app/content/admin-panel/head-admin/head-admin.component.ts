@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Link } from "src/app/models/Link";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+
+import { UserModel } from "src/app/models/User.model";
+import { UsersService } from "src/app/services/users.service";
 
 @Component({
   selector: "app-head-admin",
