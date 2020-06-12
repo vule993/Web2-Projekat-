@@ -16,6 +16,6 @@ namespace ReservationAPI.Models.Airlines
         public List<Reservation> Flights { get; set; }
         public List<SeatConfiguration> SeatConfigurations { get; set; }
         public long likes { get; set; }
- 
+        public UserModel Admin { get; set; }
     }
 }

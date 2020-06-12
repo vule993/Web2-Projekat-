@@ -205,24 +205,33 @@ namespace ReservationAPI.Controllers
         //[Authorize]
         //[Authorize(Roles = "Admin")]
         [Route("getall")]
-        public IEnumerable<UserModel> GetAll()
+        public async Task<List<UserModel>> GetAll()
         {
             var users = _context.Users.ToList();
-
-            return users.Select(u => new UserModel()
+  
+            List<UserModel> allUsers = new List<UserModel>();
+            UserModel u;
+            foreach(var user in users)
             {
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                PhoneNumber = u.PhoneNumber,
-                Password = u.PasswordHash,
-                Street = u.Street,
-                City = u.City,
-                Status = "User",
-                Image = u.Image,
-                Friends = new List<UserModel>(),
-                Reservations = u.Reservations
-            }).ToList();
+                var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault().ToString();
+                u = new UserModel()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Password = user.PasswordHash,
+                    Street = user.Street,
+                    City = user.City,
+                    Status = role,
+                    Image = user.Image,
+                    Friends = new List<UserModel>(),
+                    Reservations = user.Reservations
+                };
+                allUsers.Add(u);
+            }
+
+            return allUsers;
         }
 
 
