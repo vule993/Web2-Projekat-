@@ -4,6 +4,7 @@ import { SeatConfiguration } from "./Seat-configuration.model";
 import { Flight } from "./Flight.model";
 import { ReservationComponent } from "../content/reservation/reservation.component";
 import { Reservation } from "./Reservation.model";
+import { UserModel } from "./User.model";
 
 export class AvioCompany {
   constructor(
@@ -15,6 +16,7 @@ export class AvioCompany {
     //public discounts: string[],
     public seatConfigurations: SeatConfiguration[],
     public likes: number,
-    public id: number
+    public id: number,
+    public admin: UserModel = null
   ) {}
 }
