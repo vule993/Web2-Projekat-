@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ReservationAPI.Models.Airlines;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,7 @@ namespace ReservationAPI.Models
 
         public string Image { get; set; }
         public List<User> Friends { get; set; }
+        public List<Reservation> Reservations { get; set; }
 
     }
 }

@@ -114,9 +114,9 @@
           {{
             reservation.airlineReservation.flight.endingDestination.airportName
           }}
-          asda adsada
         </span>
       </div>
+      <!-- {{ isFinished ? "true" : "false" }} -->
     </div>
 
     <!---->
@@ -138,12 +138,12 @@
   <div id="space"></div>
   <div id="proceed" class="overflow-hidden display-none">
     <app-airline-reservation
+      (event)="suggestedCars = $event"
       [reservation]="reservation"
     ></app-airline-reservation>
   </div>
   <div class="space"></div>
-
-  <div id="finish">
+  <div id="finish" class="display-none">
     <app-car-reservation
       *ngIf="reservation.carReservation != null"
       [reservation]="reservation"

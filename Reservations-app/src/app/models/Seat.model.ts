@@ -1,14 +1,10 @@
 import { UserModel } from "./User.model";
 
 export class Seat {
-  static count: number = 0;
   public taken = false;
   public user: UserModel = null;
-  constructor(
-    public seat_no: number = -1,
-    public id: number = ++Seat.count,
-    public seatReservationConfirmed: boolean = false
-  ) {}
+  public seatReservationConfirmed: boolean = false;
+  constructor(public seat_no: number = -1) {}
 }
 
 export class Row {

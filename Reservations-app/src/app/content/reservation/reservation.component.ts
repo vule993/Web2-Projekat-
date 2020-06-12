@@ -12,6 +12,8 @@ declare var $: any;
 })
 export class ReservationComponent implements OnInit {
   reservation: Reservation;
+  suggestedCars: [];
+  isFinished: boolean;
   constructor(
     private reservationService: ReservationService,
     private routes: Router
@@ -56,8 +58,5 @@ export class ReservationComponent implements OnInit {
       },
       1200
     );
-  }
-  finish() {
-    //dobavi listu odgovarajucih rent-a-car
   }
 }
