@@ -1,4 +1,5 @@
 import { Car } from "./car.model";
+import { UserModel } from "./User.model";
 
 export class CarCompany {
   constructor(
@@ -9,7 +10,8 @@ export class CarCompany {
     public address: string, //zemlja
     public city: string,
     public thumbnail: string,
-    public cars: Car[]
+    public cars: Car[],
+    public admin: UserModel = null
   ) {}
 
   //helpers:

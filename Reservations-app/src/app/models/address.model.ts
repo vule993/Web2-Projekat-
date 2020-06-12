@@ -1,8 +1,9 @@
 export class Address {
   constructor(
-    private country: string,
-    private city: string,
-    private street: string
+    public country: string,
+    public city: string,
+    public street: string,
+    public id: number = 0
   ) {}
   getFullAddress() {
     return this.street + ", " + this.city + " ," + this.country;

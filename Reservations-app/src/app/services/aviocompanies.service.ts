@@ -15,7 +15,7 @@ export class AviocompaniesService {
       "Air Serbia je jedna od najboljih balkanskih aviokompanija",
       null,
       null,
-      ["10", "5", "11"],
+      //["10", "5", "11"],
       null,
       0,
       1
@@ -26,7 +26,7 @@ export class AviocompaniesService {
       "Srpska provincijska aviokompanija",
       null,
       null,
-      ["10", "5", "11"],
+      //["10", "5", "11"],
       null,
       0,
       2
@@ -37,7 +37,7 @@ export class AviocompaniesService {
       "Air Serbia je jedna od najboljih balkanskih aviokompanija",
       null,
       null,
-      ["10", "5", "11"],
+      //["10", "5", "11"],
       null,
       0,
       3
@@ -48,7 +48,7 @@ export class AviocompaniesService {
       "Srpska provincijska aviokompanija",
       null,
       null,
-      ["10", "5", "11"],
+      //["10", "5", "11"],
       null,
       0,
       4
@@ -59,7 +59,7 @@ export class AviocompaniesService {
       "Air Serbia je jedna od najboljih balkanskih aviokompanija",
       null,
       null,
-      ["10", "5", "11"],
+      //["10", "5", "11"],
       null,
       0,
       11
@@ -70,7 +70,7 @@ export class AviocompaniesService {
       "Srpska provincijska aviokompanija",
       null,
       null,
-      ["10", "5", "11"],
+      //["10", "5", "11"],
       null,
       0,
       5

@@ -13,7 +13,7 @@ import { SeatConfiguration } from "../models/Seat-configuration.model";
 import { S_IFDIR } from "constants";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
@@ -29,7 +29,7 @@ export class ReservationService {
             "Opis neki",
             [],
             [],
-            [],
+            //[],
             [],
             132,
             1
@@ -53,7 +53,7 @@ export class ReservationService {
           "10:00",
           "20:00",
           "2h:30min",
-          "10",
+          10,
           //ovde treba popnuniti seats u zavisnosti od ovih brojeva
           new SeatConfiguration(1, "Boeing 747", 10, 3, 2, 3, 2, 0, []),
           [
@@ -63,25 +63,12 @@ export class ReservationService {
               "Belgrade",
               "Serbia",
               "Neznanog junaka jebem li ga 1/1"
-            )
+            ),
           ],
           "wc,tv,wifi,power supply,newspapers,bar",
           "300",
           "2"
-        ),
-        [
-          new UserModel(
-            "Testoje",
-            "Testivojevic",
-            "testoje@gmail.com",
-            "a",
-            "",
-            "Belgreade",
-            "065555333",
-            "1",
-            ""
-          )
-        ]
+        )
       ),
       new CarReservation(
         1,
@@ -112,7 +99,7 @@ export class ReservationService {
             "Opis neki",
             [],
             [],
-            [],
+            //[],
             [],
             132,
             1
@@ -136,7 +123,7 @@ export class ReservationService {
           "15:00",
           "07:30",
           "0h:30min",
-          "15",
+          15,
           new SeatConfiguration(1, "Concord", 10, 4, 2, 3, 3, 2, []),
           [
             new Destination(
@@ -145,25 +132,12 @@ export class ReservationService {
               "Negde tamo",
               "Nedodjija",
               "Neznanog junaka jebem li ga 1/1"
-            )
+            ),
           ],
           "coffee service, wifi, NESTO NOVO...",
           "500",
           "3.4"
-        ),
-        [
-          //   new UserModel(
-          //     1,
-          //     "Testoje",
-          //     "Testivojevic",
-          //     "testoje@gmail.com",
-          //     "a",
-          //     "",
-          //     "Belgreade",
-          //     "065555333",
-          //     "1"
-          //   ),
-        ]
+        )
       ),
       new CarReservation(
         2,
@@ -181,7 +155,7 @@ export class ReservationService {
       ),
       false,
       false
-    )
+    ),
   ]);
   allReservations = this._allReservations.asObservable();
 

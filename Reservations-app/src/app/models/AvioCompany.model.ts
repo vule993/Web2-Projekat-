@@ -12,24 +12,9 @@ export class AvioCompany {
     public description: string,
     public destinations: Destination[],
     public flights: Reservation[],
-    public discounts: string[],
+    //public discounts: string[],
     public seatConfigurations: SeatConfiguration[],
     public likes: number,
     public id: number
   ) {}
-  getName() {
-    return this.name;
-  }
-  getAddress() {
-    return this.address.getFullAddress();
-  }
-  getDescription() {
-    return this.description;
-  }
-  getLikes() {
-    return this.likes;
-  }
-  getId() {
-    return this.id;
-  }
 }

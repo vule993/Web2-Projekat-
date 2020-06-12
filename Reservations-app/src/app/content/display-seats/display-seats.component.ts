@@ -64,23 +64,26 @@ export class DisplaySeatsComponent implements OnInit {
     this.selectedSeatService.setSelectedSeats([]);
     this.data.currentData.subscribe((data) => this.seatsDataHandler(data));
 
-    this.formValues = [
-      this.currentSeatConfiguration.segmentsHeight,
-      this.currentSeatConfiguration.segmentsNumber,
-      this.currentSeatConfiguration.segmentOneWidth,
-      this.currentSeatConfiguration.segmentTwoWidth,
-      this.currentSeatConfiguration.segmentThreeWidth,
-      this.currentSeatConfiguration.segmentFourWidth,
-    ];
-    this.displayChanges();
+    if (this.currentSeatConfiguration != undefined) {
+      //ako ih samo prikazujem
+      this.formValues = [
+        this.currentSeatConfiguration.segmentsHeight,
+        this.currentSeatConfiguration.segmentsNumber,
+        this.currentSeatConfiguration.segmentOneWidth,
+        this.currentSeatConfiguration.segmentTwoWidth,
+        this.currentSeatConfiguration.segmentThreeWidth,
+        this.currentSeatConfiguration.segmentFourWidth,
+      ];
+      this.displayChanges();
 
-    //2.55 sirina sedista, 1.8 razmak izmedju segmenata
-    let width =
-      (this.getRowWidth() + 1) * 2.55 +
-      (this.currentSeatConfiguration.segmentsNumber - 1) * 1.8;
-    $("#seat-selector").css({
-      width: width + "vw",
-    });
+      //2.55 sirina sedista, 1.8 razmak izmedju segmenata
+      let width =
+        (this.getRowWidth() + 1) * 2.55 +
+        (this.currentSeatConfiguration.segmentsNumber - 1) * 1.8;
+      $("#seat-selector").css({
+        width: width + "vw",
+      });
+    }
   }
   seatsDataHandler = function (data) {
     this.formValues = data;

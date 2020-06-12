@@ -12,7 +12,7 @@ export class SeatConfiguration {
     public segmentTwoWidth: number,
     public segmentThreeWidth: number,
     public segmentFourWidth: number,
-    public seats
+    public seats: Row[]
   ) {
     this.generateSeats();
     SeatConfiguration.count = SeatConfiguration.count + 1;

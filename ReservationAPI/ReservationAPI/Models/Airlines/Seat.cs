@@ -9,8 +9,8 @@ namespace ReservationAPI.Models.Airlines
     {
         public long Id { get; set; }
         public bool Taken { get; set; }
-        public UserModel User { get; set; }
-        public string Country { get; set; }
-        public string Address { get; set; }
+        public Passenger Passenger { get; set; }
+        public bool SeatReservationConfirmed { get; set; }
+        public int SeatNo { get; set; }
     }
 }

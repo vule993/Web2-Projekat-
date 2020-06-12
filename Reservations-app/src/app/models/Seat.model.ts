@@ -1,13 +1,16 @@
 import { UserModel } from "./User.model";
+import { Passenger } from "./Passenger.model";
 
 export class Seat {
+  public id: number;
   public taken = false;
-  public user: UserModel = null;
+  public passenger: Passenger = null;
   public seatReservationConfirmed: boolean = false;
-  constructor(public seat_no: number = -1) {}
+  constructor(public seatNo: number = -1) {}
 }
 
 export class Row {
+  id: number;
   seats: Seat[] = [];
   constructor() {}
 }

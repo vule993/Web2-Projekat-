@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using ReservationAPI.Models;
+using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.ViewModels;
 
@@ -57,7 +58,8 @@ namespace ReservationAPI.Controllers
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
-                Friends = new List<User>()
+                Friends = new List<User>(),
+                Reservations = new List<Reservation>()
             };
 
             try
@@ -218,7 +220,8 @@ namespace ReservationAPI.Controllers
                 City = u.City,
                 Status = "User",
                 Image = u.Image,
-                Friends = new List<UserModel>()
+                Friends = new List<UserModel>(),
+                Reservations = u.Reservations
             }).ToList();
         }
 
@@ -250,7 +253,8 @@ namespace ReservationAPI.Controllers
                     Status = role.ToString(),
                     PhoneNumber = friend.PhoneNumber,
                     Image = friend.Image,
-                    Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
+                    Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
+                    Reservations = friend.Reservations
                 };
 
                 friends.Add(um);
@@ -342,10 +346,11 @@ namespace ReservationAPI.Controllers
            
             List<UserModel> friends = new List<UserModel>();
             UserModel um;
-
+            
+          
             foreach (var friend in user.Friends)
             {
-
+                
                 um = new UserModel()
                 {
                     FirstName = friend.FirstName,
@@ -357,7 +362,8 @@ namespace ReservationAPI.Controllers
                     Status = role.FirstOrDefault().ToString(),
                     PhoneNumber = friend.PhoneNumber,
                     Image = friend.Image,
-                    Friends = new List<UserModel>()         //prijatelji nece moci da vide prijatelje prijatelja
+                    Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
+                    Reservations = friend.Reservations
                 };
 
                 friends.Add(um);
