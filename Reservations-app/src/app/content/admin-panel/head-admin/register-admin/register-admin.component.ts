@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { FormModel } from "src/app/models/formModel";
 import { AdminService } from "src/app/services/admin.service";
+import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { UserModel } from "src/app/models/User.model";
 
 @Component({
   selector: "app-register-admin",
@@ -15,6 +17,17 @@ import { AdminService } from "src/app/services/admin.service";
 export class RegisterAdminComponent implements OnInit {
   registerAdminForm: FormGroup;
   selectedOption: string;
+  avioCompany: AvioCompany = new AvioCompany(
+    "",
+    null,
+    "",
+    [],
+    [],
+    [],
+    0,
+    1,
+    null
+  );
 
   constructor(
     private adminService: AdminService,
@@ -26,18 +39,27 @@ export class RegisterAdminComponent implements OnInit {
   }
 
   onSubmit() {
-    const newUser = new FormModel(
+    const newUser = new UserModel(
       this.registerAdminForm.value["firstName"],
       this.registerAdminForm.value["secondName"],
       this.registerAdminForm.value["email"],
       this.registerAdminForm.value["password1"],
+      "",
       this.registerAdminForm.value["city"],
       this.registerAdminForm.value["street"],
-      this.registerAdminForm.value["phone"]
+      this.registerAdminForm.value["phone"],
+      "",
+      [],
+      []
     );
 
+    let companyName = this.registerAdminForm.value["companyName"];
+
+    this.avioCompany.name = companyName;
+    this.avioCompany.admin = newUser;
+
     switch (this.selectedOption) {
-      case "Car Admin":
+      case "CarAdmin":
         this.adminService.registerCarAdmin(newUser).subscribe(
           (res: any) => {
             if (res.succeeded) {
@@ -63,7 +85,7 @@ export class RegisterAdminComponent implements OnInit {
           }
         );
         break;
-      case "Avio Admin":
+      case "AvioAdmin":
         this.adminService.registerAvioAdmin(newUser).subscribe(
           (res: any) => {
             if (res.succeeded) {
@@ -86,39 +108,14 @@ export class RegisterAdminComponent implements OnInit {
           },
           err => {}
         );
+
+        //create company
+        this.adminService.createAvioCompany(this.avioCompany).subscribe();
+
         break;
       default:
         console.log("registration failed");
     }
-
-    this.adminService.registerCarAdmin(newUser).subscribe(
-      (res: any) => {
-        if (res.succeeded) {
-          this.registerAdminForm.reset();
-          this.toastrService.success(
-            "You are succesfully registered car admin!",
-            "Succesfull Registration"
-          );
-        } else {
-          res.forEach(element => {
-            switch (element.code) {
-              default:
-                this.toastrService.error(
-                  element.description,
-                  "Registration Failed"
-                );
-            }
-          });
-        }
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  onAvioAdminSubmit() {
-    console.log("avio admin submit");
   }
 
   private initCarAdminForm() {
@@ -131,6 +128,7 @@ export class RegisterAdminComponent implements OnInit {
     let pass1 = "";
     let pass2 = "";
     let role = "";
+    let companyName = "";
 
     this.registerAdminForm = new FormGroup({
       firstName: new FormControl(firstName, Validators.required),
@@ -144,7 +142,8 @@ export class RegisterAdminComponent implements OnInit {
       city: new FormControl(city, Validators.required),
       phone: new FormControl(phone, Validators.required),
       password1: new FormControl(pass1, Validators.required),
-      password2: new FormControl(pass2, Validators.required)
+      password2: new FormControl(pass2, Validators.required),
+      companyName: new FormControl(companyName, Validators.required)
     });
   }
 }
