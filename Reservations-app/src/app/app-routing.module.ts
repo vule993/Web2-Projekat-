@@ -39,6 +39,9 @@ import { ReservationComponent } from "./content/reservation/reservation.componen
 import { HeadCarCompaniesComponent } from "./content/admin-panel/head-admin/head-car-companies/head-car-companies.component";
 import { HeadAvioCompaniesComponent } from "./content/admin-panel/head-admin/head-avio-companies/head-avio-companies.component";
 import { CarReservationComponent } from "./content/reservation/car-reservation/car-reservation.component";
+import { CreateCarCompanyComponent } from './content/admin-panel/head-admin/create-car-company/create-car-company.component';
+import { CreateAvioCompanyComponent } from './content/admin-panel/head-admin/create-avio-company/create-avio-company.component';
+
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -126,6 +129,8 @@ const routes: Routes = [
           { path: "users", component: UsersComponent },
           { path: "profile", component: AdminProfileComponent },
           { path: "register-admin", component: RegisterAdminComponent },
+          {path: "create-car-company", component: CreateCarCompanyComponent},
+          {path: "create-avio-company", component: CreateAvioCompanyComponent}
         ],
       },
       {

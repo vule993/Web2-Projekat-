@@ -81,6 +81,9 @@ export function provideConfig() {
   return config;
 }
 import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-panel.component";
+import { CreateCarCompanyComponent } from './content/admin-panel/head-admin/create-car-company/create-car-company.component';
+import { CreateAvioCompanyComponent } from './content/admin-panel/head-admin/create-avio-company/create-avio-company.component';
+
 
 @NgModule({
   declarations: [
@@ -131,7 +134,10 @@ import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-p
     HeadCarCompaniesComponent,
     HeadAvioCompaniesComponent,
     CarReservationComponent,
-    ProfilePanelComponent
+    ProfilePanelComponent,
+    CreateCarCompanyComponent,
+    CreateAvioCompanyComponent,
+    
   ],
   imports: [
     BrowserModule,
