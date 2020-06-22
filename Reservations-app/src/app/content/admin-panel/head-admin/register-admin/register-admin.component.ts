@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { FormModel } from "src/app/models/formModel";
 import { AdminService } from "src/app/services/admin.service";
 import { AvioCompany } from "src/app/models/AvioCompany.model";
 import { UserModel } from "src/app/models/User.model";
@@ -128,7 +127,6 @@ export class RegisterAdminComponent implements OnInit {
     let pass1 = "";
     let pass2 = "";
     let role = "";
-    let companyName = "";
 
     this.registerAdminForm = new FormGroup({
       firstName: new FormControl(firstName, Validators.required),
@@ -142,8 +140,7 @@ export class RegisterAdminComponent implements OnInit {
       city: new FormControl(city, Validators.required),
       phone: new FormControl(phone, Validators.required),
       password1: new FormControl(pass1, Validators.required),
-      password2: new FormControl(pass2, Validators.required),
-      companyName: new FormControl(companyName, Validators.required)
+      password2: new FormControl(pass2, Validators.required)
     });
   }
 }

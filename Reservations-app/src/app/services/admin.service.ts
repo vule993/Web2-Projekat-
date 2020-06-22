@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
 import { UserModel } from "../models/User.model";
 import { AvioCompany } from "../models/AvioCompany.model";
+import { CarCompany } from "../models/CarCompany.model";
 
 @Injectable({
   providedIn: "root"
@@ -29,6 +30,13 @@ export class AdminService {
   createAvioCompany(company: AvioCompany) {
     return this.httpClient.post(
       this.baseURL + "/Admin/CreateAvioCompany",
+      company
+    );
+  }
+
+  createCarCompany(company: CarCompany) {
+    return this.httpClient.post(
+      this.baseURL + "/Admin/CreateCarCompany",
       company
     );
   }

@@ -29,8 +29,6 @@
             />
           </div>
 
-          
-
           <div class="form-group">
             <select
               id="admin"
@@ -39,8 +37,9 @@
               formControlName="admins"
               class="form-control"
             >
-              <option *ngFor="let a of admins" [ngValue]="a">{{a.firstName}}</option>
-            
+              <option *ngFor="let a of admins" [ngValue]="a">{{
+                a.email
+              }}</option>
             </select>
           </div>
 

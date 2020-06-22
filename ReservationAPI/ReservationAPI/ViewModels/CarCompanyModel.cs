@@ -1,4 +1,5 @@
-﻿using ReservationAPI.Models.Rent_a_Car;
+﻿using ReservationAPI.Models;
+using ReservationAPI.Models.Rent_a_Car;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +17,20 @@ namespace ReservationAPI.ViewModels
         public string City { get; set; }
         public string Thumbnail { get; set; }
         public List<Car> Cars { get; set; }
+        public UserModel Admin { get; set; }
 
 
-        public CarCompanyModel(CarCompany carCompany)
-        {
-            Id = carCompany.Id;
-            Name = carCompany.Name;
-            Rating = carCompany.Rating;
-            Description = carCompany.Description;
-            Address = carCompany.Address;
-            City = carCompany.City;
-            Thumbnail = carCompany.Thumbnail;
-            Cars = new List<Car>(carCompany.Cars);
-        }
+        //public CarCompanyModel(CarCompany carCompany)
+        //{
+        //    Id = carCompany.Id;
+        //    Name = carCompany.Name;
+        //    Rating = carCompany.Rating;
+        //    Description = carCompany.Description;
+        //    Address = carCompany.Address;
+        //    City = carCompany.City;
+        //    Thumbnail = carCompany.Thumbnail;
+        //    Cars = new List<Car>(carCompany.Cars);
+        //    Admin = carCompany.Admin;
+        //}
     }
 }
