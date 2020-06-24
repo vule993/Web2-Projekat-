@@ -163,27 +163,43 @@ namespace ReservationAPI.Controllers
                 airlineCompany.Admin = adminModel;
             }
 
+            //mora prvo adresa jer je povezano preko kljuca
+            Address adresa = new Address()
+            {
+                City = airlineCompany.Address.City,
+                Country = airlineCompany.Address.Country,
+                Street = airlineCompany.Address.Street
+            };
+
+
+            _context.Address.Add(adresa);
+        
+
             AirlineCompany newCompany = new AirlineCompany()
             {
                 Admin = airlineCompany.Admin,
                 Name = airlineCompany.Name,
-                Address = new Address() { City = "sadasad", Country = "sadad", Street = "ulicaa" },
-                likes = 3,
-                Description = "opisss",
-                Destinations = null,
-                SeatConfigurations = null,
-                Flights = null
+                Address = adresa,
+                Description = airlineCompany.Description,
+                likes = airlineCompany.likes
 
             };
 
-            _context.AirlineCompanies.Add(newCompany);
-            ///await _context.SaveChangesAsync();
+            _context.AirlineCompany.Add(newCompany);
 
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new DbUpdateConcurrencyException("Greska pri dodavanju avio kompanije", ex);
+            }
 
             return Ok(newCompany);
         }
-    
-        
+
+
         [HttpPost]
         [Route("CreateCarCompany")]
         public async Task<Object> CreateCarCompany([FromBody] CarCompanyModel model)
@@ -224,7 +240,7 @@ namespace ReservationAPI.Controllers
                 _context.CarCompanies.Add(carCompany);
                 await _context.SaveChangesAsync();
             }
-            catch(DbException ex)
+            catch (DbException ex)
             {
                 Console.WriteLine("Error with creating new car company: " + ex.ErrorCode);
             }
