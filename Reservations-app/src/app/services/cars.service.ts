@@ -91,7 +91,7 @@ export class CarsService {
       1,
       "Ime kompanije",
       3.5,
-      "kompanija za rent a car smestena u indiji bla bla bla",
+      "kompanija za rent a car smestena u Londonu bla bla bla",
       "UK",
       "London",
       "https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.rentalcariran.com/wp-content/uploads/2018/10/logo-min-1.png",

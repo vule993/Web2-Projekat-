@@ -1,6 +1,6 @@
 <div>
   <table class="table table-hover">
-    <thead>
+    <thead class="text-center">
       <tr>
         <th scope="col">FirstName</th>
         <th scope="col">SecondName</th>
@@ -9,13 +9,15 @@
         <th scope="col">Phone</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="text-center">
       <tr *ngFor="let user of allUsers">
-        <td>{{ user.firstName }}</td>
+        <td>
+          <b>{{ user.firstName }}</b>
+        </td>
         <td>{{ user.lastName }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.city }}</td>
-        <td>{{ user.phone }}</td>
+        <td>{{ user.phoneNumber }}</td>
 
         <!-- <td>
           <button

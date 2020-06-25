@@ -46,8 +46,8 @@ namespace ReservationAPI.Controllers
         [Route("Register")]
         public async Task<Object> PostUser(UserModel model)
         {
-            model.Status = "User";
             //model.Status = "Admin";
+            model.Status = "User";
             var newUser = new User()
             {
                 UserName = model.Email,
@@ -202,18 +202,19 @@ namespace ReservationAPI.Controllers
 
         //GET: /api/User/GetAll
         [HttpGet]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
+        ////[Authorize]
+        ////[Authorize(Roles = "Admin")]
         [Route("getall")]
         public async Task<List<UserModel>> GetAll()
         {
             var users = _context.Users.ToList();
-  
+
             List<UserModel> allUsers = new List<UserModel>();
             UserModel u;
-            foreach(var user in users)
+            foreach (var user in users)
             {
-                var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault().ToString();
+                var role = await _userManager.GetRolesAsync(user);
+                var status = role.FirstOrDefault().ToString();
                 u = new UserModel()
                 {
                     FirstName = user.FirstName,
@@ -223,7 +224,7 @@ namespace ReservationAPI.Controllers
                     Password = user.PasswordHash,
                     Street = user.Street,
                     City = user.City,
-                    Status = role,
+                    Status = status,
                     Image = user.Image,
                     Friends = new List<UserModel>(),
                     Reservations = user.Reservations
@@ -233,6 +234,7 @@ namespace ReservationAPI.Controllers
 
             return allUsers;
         }
+
 
 
         //GET /api/User/id -> id=email

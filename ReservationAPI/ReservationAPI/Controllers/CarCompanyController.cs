@@ -36,15 +36,15 @@ namespace ReservationAPI.Controllers
 
 
         //GET: /api/CarCompany/3
-        [HttpGet("{id}")]
-        public async Task<CarCompanyModel> GetCompany(int id) //mozda cu dodavati nesto u car model
-        {
-            var company = await _repository.GetCompany(id);
+        //[HttpGet("{id}")]
+        //public async Task<CarCompanyModel> GetCompany(int id) //mozda cu dodavati nesto u car model
+        //{
+        //    var company = await _repository.GetCompany(id);
 
-            var companyModel = new CarCompanyModel(company);
+        //    var companyModel = new CarCompanyModel(company);
 
-            return companyModel;
-        }
+        //    return companyModel;
+        //}
 
         //POST: /api/CarCompany/Add
         [HttpPost]
