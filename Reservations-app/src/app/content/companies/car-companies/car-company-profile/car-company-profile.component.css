@@ -1,9 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
+
 .company-pic {
   width: 200px;
   height: 100px;
 }
-
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
 
 .row,
 .container-fluid {

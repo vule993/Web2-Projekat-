@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using ReservationAPI.Controllers;
 using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
@@ -53,6 +54,10 @@ namespace ReservationAPI
             services.AddScoped<ICarRepository, CarService>();
             services.AddScoped<IRefreshTokenGenerator, RefreshTokenService>();
             services.AddScoped<ICarCompany, CarCompanyService>();
+            
+            
+            //Airlines controllers
+            services.AddScoped<IAirlines, AirlinesService>();
 
             services.AddIdentity<User, IdentityRole>()
                     .AddRoles<IdentityRole>()
