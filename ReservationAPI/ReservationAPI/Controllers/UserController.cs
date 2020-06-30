@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
@@ -31,14 +34,16 @@ namespace ReservationAPI.Controllers
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
+        private IEmailSender _emailSender;
         private ApplicationDbContext _context;
 
-        public UserController(UserManager<User> userManager, ApplicationDbContext context, SignInManager<User> signInManager, IOptions<ApplicationSettings> appSettings)
+        public UserController(UserManager<User> userManager, ApplicationDbContext context, SignInManager<User> signInManager, IEmailSender emailSender, IOptions<ApplicationSettings> appSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
             _context = context;
+            _emailSender = emailSender;
         }
 
         //POST : /api/User/Register
@@ -65,7 +70,23 @@ namespace ReservationAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Status);
+                var roleResult = await _userManager.AddToRoleAsync(newUser, model.Status);
+
+                if (result.Succeeded)
+                {
+                    if (roleResult.Succeeded)
+                    {
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                        await _emailSender.SendEmailAsync(newUser.Email,
+                            "Confirm your email",
+                            $"Please confirm your account by <a href='localhost:4200/login'>clicking here</a>");
+
+                       
+                    }
+                }
+
                 return Ok(result);
 
             }

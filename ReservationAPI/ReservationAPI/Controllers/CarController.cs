@@ -30,24 +30,34 @@ namespace ReservationAPI.Controllers
 
         //POST: api/car
         [HttpPost]
-        public async Task<object> PostCar([FromBody] Car model)
+        public async Task<object> PostCar([FromBody] Car model, long companyId)
         {
-            if (!await _repository.AddCar(model))
+            try
+            {
+                await _repository.AddCar(model.Id, companyId);
+            }
+            catch (Exception)
+            {
                 return BadRequest(new { message = "Failed to add a car." });
+            }
+                
 
             return Ok(model);
         }
 
 
-        // PUT api/Car/5
+        // PUT api/Car/Update/5
         [HttpPut("{id}")]
+        [Route("Update")]
         public async Task Put(int id, [FromBody] Car model)
         {
             await _repository.UpdateCar(model);
         }
 
 
-        //DELETE api/Car/5
+        //DELETE api/Car/Delete/5
+        [HttpDelete("{id}")]
+        [Route("Delete")]
         public async Task Delete(int id)
         {
             await _repository.DeleteCar(id);

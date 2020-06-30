@@ -52,11 +52,6 @@ export class RegisterAdminComponent implements OnInit {
       []
     );
 
-    let companyName = this.registerAdminForm.value["companyName"];
-
-    this.avioCompany.name = companyName;
-    this.avioCompany.admin = newUser;
-
     switch (this.selectedOption) {
       case "CarAdmin":
         this.adminService.registerCarAdmin(newUser).subscribe(
@@ -107,9 +102,6 @@ export class RegisterAdminComponent implements OnInit {
           },
           err => {}
         );
-
-        //create company
-        this.adminService.createAvioCompany(this.avioCompany).subscribe();
 
         break;
       default:

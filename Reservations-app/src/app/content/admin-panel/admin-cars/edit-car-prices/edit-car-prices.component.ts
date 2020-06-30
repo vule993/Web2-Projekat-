@@ -24,4 +24,10 @@ export class EditCarPricesComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  editBasic() {}
+
+  editPlus() {}
+
+  editPro() {}
 }

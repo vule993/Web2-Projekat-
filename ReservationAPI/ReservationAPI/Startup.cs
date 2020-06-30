@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -53,8 +54,16 @@ namespace ReservationAPI
             services.AddScoped<ICarRepository, CarService>();
             services.AddScoped<IRefreshTokenGenerator, RefreshTokenService>();
             services.AddScoped<ICarCompany, CarCompanyService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(
+                    config =>
+                    {
+                        config.SignIn.RequireConfirmedEmail = true;
+                        config.SignIn.RequireConfirmedAccount = true;
+                    }
+                )
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -116,7 +125,7 @@ namespace ReservationAPI
             );
             app.UseCors(options =>
             {
-                
+
                 options.WithOrigins("https://accounts.google.com")
                 .AllowAnyHeader()
                 .AllowAnyMethod();

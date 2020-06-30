@@ -27,24 +27,35 @@ namespace ReservationAPI.Controllers
         //GET: /api/CarCompany/GetAll
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IEnumerable<CarCompanyController>> GetAll()
+        public async Task<IEnumerable<CarCompany>> GetAll()
         {
             var companies = await _repository.GetCompanies();
 
-            return (IEnumerable<CarCompanyController>)companies;
+            return companies;
         }
 
 
         //GET: /api/CarCompany/3
-        //[HttpGet("{id}")]
-        //public async Task<CarCompanyModel> GetCompany(int id) //mozda cu dodavati nesto u car model
-        //{
-        //    var company = await _repository.GetCompany(id);
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCompany(int? id) //mozda cu dodavati nesto u car model
+        {
+            if (id == null)
+                return BadRequest();
 
-        //    var companyModel = new CarCompanyModel(company);
+            try
+            {
+                var company = await _repository.GetCompany(id);
 
-        //    return companyModel;
-        //}
+                if (company == null)
+                    return NotFound();
+
+                return Ok(company);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
         //POST: /api/CarCompany/Add
         [HttpPost]
@@ -52,8 +63,6 @@ namespace ReservationAPI.Controllers
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> AddCompany([FromBody]CarCompany model)
         {
-            //var company = new CarCompanyModel(model);
-
             if (!await _repository.AddCompany(model))
                 return BadRequest(new { message = $"Car company: {model.Name} already exists..." });
 
@@ -61,8 +70,9 @@ namespace ReservationAPI.Controllers
         }
 
 
-        //DELETE: /api/CarCompany/3
+        //DELETE: /api/CarCompany/Delete/3
         [HttpDelete("{id}")]
+        [Route("Delete")]
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> Delete(int id)
         {
@@ -73,8 +83,9 @@ namespace ReservationAPI.Controllers
         }
         
 
-        //PUT: /api/CarCompany/3
+        //PUT: /api/CarCompany/Update/3
         [HttpPut("{id}")]
+        [Route("Update")]
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> Update(int id, [FromBody]CarCompany model)
         {
