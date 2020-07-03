@@ -27,12 +27,12 @@ namespace ReservationAPI.Models.DbRepository
         public DbSet<Car> Car { get; set; }
         //airlines
         public DbSet<AirlineCompany> AirlineCompany { get; set; }
-        public DbSet<AirlineReservation> AirlineReservations { get; set; }
-        public DbSet<Destination> Destinations { get; set; }
-        public DbSet<Flight> Flights { get; set; }
-        public DbSet<Passenger> Passengers { get; set; }
-        public DbSet<Row> Rows { get; set; }
-        public DbSet<Seat> Seats { get; set; }
+        public DbSet<AirlineReservation> AirlineReservation { get; set; }
+        public DbSet<Destination> Destination { get; set; }
+        public DbSet<Flight> Flight { get; set; }
+        public DbSet<Passenger> Passenger { get; set; }
+        public DbSet<Row> Row { get; set; }
+        public DbSet<Seat> Seat { get; set; }
         public DbSet<SeatConfiguration> SeatConfiguration { get; set; }
         ////shared
         public DbSet<Address> Address { get; set; }
