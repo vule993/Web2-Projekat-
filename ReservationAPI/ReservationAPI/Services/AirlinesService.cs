@@ -35,5 +35,25 @@ namespace ReservationAPI.Services
             return true;
             
         }
+
+        public async Task<bool> DeleteDestination(long id)
+        {
+            var destination = (await _context.Destination.ToListAsync()).FirstOrDefault(x=>x.Id == id);
+            _context.Destination.Remove(destination);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<Destination> GetDestination(string id)
+        {
+            var destination = (await _context.Destination.ToListAsync()).FirstOrDefault(d => d.Id.ToString() == id);
+            return destination;
+        }
+
+        public async Task<IEnumerable<Destination>> GetDestinations()
+        {
+            var destinations = await _context.Destination.ToListAsync();
+            return destinations;
+        }
     }
 }

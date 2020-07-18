@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="./assets/css/bootstrap-datepicker.css" />
   </head>
   <body>
+    <div id="loading" class="display-none"></div>
+    <!-- <div id="loading">
+      <img src="./assets/site/icons/loading.gif" />
+    </div> -->
     <app-navigation></app-navigation>
     <app-root></app-root>
 
@@ -38,20 +42,45 @@
     <!-- <script> -->
 
     <script>
+      $(document).ready(function () {
+        var loading = {
+          start: function () {
+            //disable wheel
+            let h = $("body").css("height");
+            $("body").css({ height: 100 + "vh" });
+            //
+            $("#loading").removeClass("display-none");
+            setTimeout(function () {
+              loading.finish(h);
+            }, 500);
+          },
+          finish: function (h) {
+            $("#loading").addClass("display-none");
+            //enable wheel
+            $("body").css("height", "auto");
+            //
+          },
+        };
+
+        $(".btn-success, a, li").click(loading.start);
+        loading.start();
+      });
+      //setTimeout(loading.finish, 5500);
+
       //Facebook login
 
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = function () {
         FB.init({
           appId: "1358128461046548",
           cookie: true,
           xfbml: true,
-          version: "v7.0"
+          version: "v7.0",
         });
 
         FB.AppEvents.logPageView();
       };
 
-      (function(d, s, id) {
+      (function (d, s, id) {
         var js,
           fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {
@@ -64,7 +93,7 @@
       })(document, "script", "facebook-jssdk");
 
       function checkLoginState() {
-        FB.getLoginStatus(function(response) {
+        FB.getLoginStatus(function (response) {
           statusChangeCallback(response);
         });
       }

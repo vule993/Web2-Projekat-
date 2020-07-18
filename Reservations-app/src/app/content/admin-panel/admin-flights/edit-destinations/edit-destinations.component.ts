@@ -15,7 +15,6 @@ export class EditDestinationsComponent implements OnInit {
   public allDestinations;
 
   company: AvioCompany;
-
   airportName = "";
   address = "";
   city = "";
@@ -25,7 +24,7 @@ export class EditDestinationsComponent implements OnInit {
     private _destinationsService: DestinationsService,
     private _airlineCompaniesService: AviocompaniesService
   ) {}
-  insertDestination() {
+  createDestination() {
     let destination: Destination = new Destination(
       0,
       this.airportName,
@@ -34,23 +33,20 @@ export class EditDestinationsComponent implements OnInit {
       this.address
     );
 
-    this.company.destinations.push(destination);
-    this._destinationsService
-      .addDestination(this.company, destination)
-      .subscribe();
+    this.allDestinations.push(destination);
 
-    // this.data.addDestination(
-    //   new Destination(
-    //     0,
-    //     this.airportName,
-    //     this.city,
-    //     this.country,
-    //     this.address
-    //   )
-    // );
+    return this._destinationsService
+      .create(this.company, destination)
+      .subscribe();
   }
-  removeDestination(id: number) {
-    this._destinationsService.removeDestination(id);
+  deleteDestination(id: string) {
+    this.allDestinations.forEach((d, index) => {
+      if (d.id == id) {
+        this.allDestinations.splice(index, 1);
+      }
+    });
+
+    return this._destinationsService.delete(id).subscribe();
   }
 
   ngOnInit(): void {
@@ -64,8 +60,8 @@ export class EditDestinationsComponent implements OnInit {
       }
     });
 
-    this._destinationsService.allDestinations.subscribe(
-      (data) => (this.allDestinations = data)
-    );
+    this._destinationsService.getAll().subscribe((data) => {
+      this.allDestinations = data;
+    });
   }
 }

@@ -146,9 +146,11 @@ export class AirlinesComponent implements OnInit {
   openReservation(id: number) {}
 
   ngOnInit(): void {
-    this.destinationService.allDestinations.subscribe(
-      (destinations) => (this.allDestinations = destinations)
-    );
+    this.destinationService
+      .getAll()
+      .subscribe(
+        (destinations) => (this.allDestinations = destinations as Destination[])
+      );
     this.reservationService.allReservations.subscribe(
       (reservatons) => (this.allReservations = reservatons)
     );

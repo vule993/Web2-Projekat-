@@ -20,6 +20,22 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+#loading {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url("./assets/site/icons/loading.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 10;
+}
+#loading img {
+  position: relative;
+  top: 45vh;
+  left: 45vw;
+}
+
 .fleft {
   float: left;
 }

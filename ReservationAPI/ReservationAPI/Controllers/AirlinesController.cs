@@ -35,5 +35,27 @@ namespace ReservationAPI.Controllers
             }
             return Ok(new { Message = "Destination airport already exists!" });
         }
+
+        [HttpGet]
+        public async Task<List<Destination>> GetAllDestinations()
+        {
+            var destinations = (List<Destination>)await _service.GetDestinations();
+            return destinations;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<Destination> GetOneDestination(string id)
+        {
+            Destination destination = await _service.GetDestination(id);
+            return destination;
+        }
+
+        [HttpDelete]
+        [Route("DeleteDestination/{id}")]
+        public async Task<bool> DeleteDestination(long id)
+        {
+            return await _service.DeleteDestination(id);
+        }
     }
 }
