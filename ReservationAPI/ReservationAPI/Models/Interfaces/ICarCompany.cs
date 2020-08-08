@@ -8,7 +8,7 @@ namespace ReservationAPI.Models.Interfaces
 {
     public interface ICarCompany
     {
-        Task<CarCompany> GetCompany(long id);
+        Task<CarCompany> GetCompany(int? id);
 
         Task<IEnumerable<CarCompany>> GetCompanies();
 
@@ -18,6 +18,6 @@ namespace ReservationAPI.Models.Interfaces
 
         Task UpdateCarCompany(CarCompany carCompany);
 
-        Task AddCar(long carId, long companyId);
+        Task AddCarToCompany(long carId, long carCompanyId);
     }
 }

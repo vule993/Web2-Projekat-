@@ -99,6 +99,28 @@ export class RegisterAdminComponent implements OnInit {
           // },
           // (err) => {}
           ();
+        this.adminService.registerAvioAdmin(newUser).subscribe(
+          (res: any) => {
+            if (res.succeeded) {
+              this.registerAdminForm.reset();
+              this.toastrService.success(
+                "You are succesfully registered avio admin!",
+                "Succesfull Registration"
+              );
+            } else {
+              res.forEach((element) => {
+                switch (element.code) {
+                  default:
+                    this.toastrService.error(
+                      element.description,
+                      "Registration Failed"
+                    );
+                }
+              });
+            }
+          },
+          (err) => {}
+        );
 
         //create company
         //this.adminService.createAvioCompany(this.avioCompany).subscribe();

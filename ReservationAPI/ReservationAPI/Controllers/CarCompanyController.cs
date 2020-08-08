@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
 using ReservationAPI.ViewModels;
+using ReservationAPI.ViewModels.RentACar;
 
 namespace ReservationAPI.Controllers
 {
@@ -27,24 +28,36 @@ namespace ReservationAPI.Controllers
         //GET: /api/CarCompany/GetAll
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IEnumerable<CarCompanyController>> GetAll()
+        public async Task<IEnumerable<CarCompany>> GetAll()
         {
             var companies = await _repository.GetCompanies();
 
-            return (IEnumerable<CarCompanyController>)companies;
+            return companies;
         }
 
 
         //GET: /api/CarCompany/3
-        //[HttpGet("{id}")]
-        //public async Task<CarCompanyModel> GetCompany(int id) //mozda cu dodavati nesto u car model
-        //{
-        //    var company = await _repository.GetCompany(id);
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCompany(int? id) //mozda cu dodavati nesto u car model
+        {
+            if (id == null)
+                return BadRequest();
 
-        //    var companyModel = new CarCompanyModel(company);
+            try
+            {
+                var company = await _repository.GetCompany(id);
 
-        //    return companyModel;
-        //}
+                if (company == null)
+                    return NotFound();
+
+                return Ok(company);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR with getting company. -> {ex.Message}");
+                return BadRequest();
+            }
+        }
 
         //POST: /api/CarCompany/Add
         [HttpPost]
@@ -52,8 +65,6 @@ namespace ReservationAPI.Controllers
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> AddCompany([FromBody]CarCompany model)
         {
-            //var company = new CarCompanyModel(model);
-
             if (!await _repository.AddCompany(model))
                 return BadRequest(new { message = $"Car company: {model.Name} already exists..." });
 
@@ -61,25 +72,59 @@ namespace ReservationAPI.Controllers
         }
 
 
-        //DELETE: /api/CarCompany/3
+        [HttpPost]
+        [Route("AddCarToCompany")]
+        public async Task<object> AddCarToCompany([FromBody] AddCarToCompanyModel model)
+        {
+            try
+            {
+                await _repository.AddCarToCompany(model.CarId, model.CarCompanyId);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"ERROR with adding car to company. -> {e.Message}");
+                return new { Message = e.Message };
+            }
+        }
+
+        //DELETE: /api/CarCompany/Delete/3
         [HttpDelete("{id}")]
+        [Route("Delete")]
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> Delete(int id)
         {
             CarCompany company = await _repository.GetCompany(id);
-            await _repository.DeleteCompany(id);
+            try
+            {
+                await _repository.DeleteCompany(id);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"ERROR with deleting company. -> {ex.Message}");
+            }
+            
 
             return Ok(new { message = "Car company deleted", company = company});
         }
         
 
-        //PUT: /api/CarCompany/3
+        //PUT: /api/CarCompany/Update/3
         [HttpPut("{id}")]
+        [Route("Update")]
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> Update(int id, [FromBody]CarCompany model)
         {
             CarCompany company = await _repository.GetCompany(id);
-            await _repository.UpdateCarCompany(model);
+
+            try
+            {
+                await _repository.UpdateCarCompany(model);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"ERROR with updating a car company. -> {ex.Message}");
+            }
 
             return Ok(new { message = "Car company updated.", company = company });
 

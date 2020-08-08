@@ -18,14 +18,7 @@ namespace ReservationAPI.Services
             _context = context;
         }
 
-        public async Task AddCar(long carId, long companyId)
-        {
-            var company = await _context.FindAsync<CarCompany>(companyId);
-            var car = await _context.FindAsync<Car>(carId);
-
-            company.Cars.Add(car);
-            await _context.SaveChangesAsync();
-        }
+       
 
         public async Task<bool> AddCompany(CarCompany carCompany)
         {
@@ -62,7 +55,7 @@ namespace ReservationAPI.Services
             return await _context.CarCompanies.ToListAsync();
         }
 
-        public async Task<CarCompany> GetCompany(long id)
+        public async Task<CarCompany> GetCompany(int? id)
         {
             return await _context.CarCompanies.Include(c => c.Cars)
                 .Include(c => c.City)
@@ -73,6 +66,15 @@ namespace ReservationAPI.Services
         public async Task UpdateCarCompany(CarCompany carCompany)
         {
             _context.Update(carCompany);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddCarToCompany(long carId, long carCompanyId)
+        {
+            var car = await _context.FindAsync<Car>(carId);
+            var carCompany = await _context.FindAsync<CarCompany>(carCompanyId);
+
+            carCompany.Cars.Add(car);
             await _context.SaveChangesAsync();
         }
     }

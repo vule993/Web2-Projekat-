@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -8,17 +9,18 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using ReservationAPI.Models;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
+using ReservationAPI.Models.Interfaces;
 using ReservationAPI.ViewModels;
 
 namespace ReservationAPI.Controllers
@@ -29,16 +31,16 @@ namespace ReservationAPI.Controllers
     {
 
         private UserManager<User> _userManager;
-        private SignInManager<User> _signInManager;
         private readonly ApplicationSettings _appSettings;
+        private IConfiguration _config;
         private ApplicationDbContext _context;
 
-        public UserController(UserManager<User> userManager, ApplicationDbContext context, SignInManager<User> signInManager, IOptions<ApplicationSettings> appSettings)
+        public UserController(UserManager<User> userManager, ApplicationDbContext context, IMailService emailService, IConfiguration config, IOptions<ApplicationSettings> appSettings)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _appSettings = appSettings.Value;
             _context = context;
+            _config = config;
         }
 
         //POST : /api/User/Register
@@ -65,16 +67,17 @@ namespace ReservationAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                await _userManager.AddToRoleAsync(newUser, model.Status);
+                var roleResult = await _userManager.AddToRoleAsync(newUser, model.Status);
+
                 return Ok(result);
 
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"ERROR in registering new user. -> {ex.Message}");
                 throw ex;
             }
         }
-
 
         //POST : /api/User/Login
         [HttpPost]
@@ -125,7 +128,6 @@ namespace ReservationAPI.Controllers
         [Route("SocialLogin")]
         public async Task<IActionResult> SocialLogin([FromBody] LoginModel loginModel)
         {
-            var test = _appSettings.JWT_Secret;
             var validation = await VerifyTokenAsync(loginModel.IdToken);
 
             if (validation.isVaild)
@@ -133,7 +135,6 @@ namespace ReservationAPI.Controllers
                 //get user
                 var socialUser = await _userManager.FindByNameAsync(validation.apiTokenInfo.email);
 
-                //da li ovde dodavati usera ako ne postoji?
                 if (socialUser == null)
                 {
                     var newUser = new User()
@@ -151,8 +152,8 @@ namespace ReservationAPI.Controllers
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]{
-                        new Claim("UserID", socialUser.Email), //moram ovo napraviti
-                        
+                        new Claim("UserID", socialUser.Email),
+
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(
@@ -290,24 +291,19 @@ namespace ReservationAPI.Controllers
         }
 
 
-        /*
-         OVDE GLEDAJ
-        */
-
-
         //api/User/Update/id
         [HttpPut("{id}")]
         [Route("Update")]
-        public async Task<object> Update(int id,[FromBody]UserModel userModel)
+        public async Task<object> Update(int id, [FromBody] UserModel userModel)
         {
             //var user = await _userManager.FindByNameAsync(model.Email); dobavljanje bilo kog usera
 
             //dobavljanje logovanog usera
             //string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByEmailAsync(userModel.Email);
-            
 
-            if(user != null)
+
+            if (user != null)
             {
                 if (userModel.FirstName != "")
                     user.FirstName = userModel.FirstName;
@@ -324,20 +320,22 @@ namespace ReservationAPI.Controllers
                 if (userModel.Image != "")
                     user.Image = userModel.Image;
 
-                _context.Users.Update(user);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                catch(DbException dex)
+                {
+                    Console.WriteLine($"ERROR with updating user. -> {dex.Message}");
+                }
+                
                 return Ok(user);
             }
 
             return (new { message = "Update error" });
 
         }
-
-
-
-        /*
-         OVDE GLEDAJ
-        */
 
 
 
@@ -351,17 +349,17 @@ namespace ReservationAPI.Controllers
 
             string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByEmailAsync(userID);  //userID je zapravo email u claimsu...
-     
+
             //var user = await _userManager.FindByNameAsync(model.Email);
             var role = await _userManager.GetRolesAsync(user);
-           
+
             List<UserModel> friends = new List<UserModel>();
             UserModel um;
-            
-          
+
+
             foreach (var friend in user.Friends)
             {
-                
+
                 um = new UserModel()
                 {
                     FirstName = friend.FirstName,
@@ -398,5 +396,10 @@ namespace ReservationAPI.Controllers
             return returnUser;
 
         }
+
+
+
+        //***************** HELPERS ******************
+
     }
 }

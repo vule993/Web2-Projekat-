@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace ReservationAPI.Models.Interfaces
 {
-    public interface IRefreshTokenGenerator
+    public interface IMailService
     {
-        string GenerateToken();
+        Task SendEmailAsync(string toEmail, string subject, string content);
     }
 }

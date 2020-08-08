@@ -10,7 +10,7 @@ namespace ReservationAPI.Models.Interfaces
     {
         Task<Car> GetCar(long id);
 
-        Task<bool> AddCar(Car car);
+        Task AddCar(long carId, long companyId);
 
         Task DeleteCar(long id);
 

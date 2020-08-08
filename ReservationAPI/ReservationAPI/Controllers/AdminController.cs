@@ -63,9 +63,10 @@ namespace ReservationAPI.Controllers
                 return Ok(newUser);
 
             }
-            catch (DbUpdateException ex)
+            catch (DbException dex)
             {
-                throw ex;
+                Console.WriteLine($"ERROR with registering car admin. -> {dex.Message}");
+                throw dex;
 
             }
         }
@@ -103,7 +104,7 @@ namespace ReservationAPI.Controllers
                 //return Ok(newUser);
 
             }
-            catch (DbUpdateException ex)
+            catch (DbException dex)
             {
                 Trace.WriteLine(ex);
                 return Conflict(new { Message = "AvioAdmin not created!" });
@@ -121,6 +122,8 @@ namespace ReservationAPI.Controllers
                 Admin = model
 
             };
+                Console.WriteLine($"ERROR with registering avio admin. -> {dex.Message}");
+                throw dex;
 
             try
             {
@@ -213,15 +216,17 @@ namespace ReservationAPI.Controllers
 
             };
 
-            _context.AirlineCompany.Add(newCompany);
+            
 
             try
             {
+                _context.AirlineCompany.Add(newCompany);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbException dex)
             {
-                throw new DbUpdateConcurrencyException("Greska pri dodavanju avio kompanije", ex);
+                Console.WriteLine($"ERROR with adding new airline company. -> {dex.Message}");
+                throw new DbUpdateConcurrencyException("Greska pri dodavanju avio kompanije", dex);
             }
 
             return Ok(newCompany);
@@ -268,9 +273,9 @@ namespace ReservationAPI.Controllers
                 _context.CarCompanies.Add(carCompany);
                 await _context.SaveChangesAsync();
             }
-            catch (DbException ex)
+            catch (DbException dex)
             {
-                Console.WriteLine("Error with creating new car company: " + ex.ErrorCode);
+                Console.WriteLine($"Error with creating new car company. -> {dex.Message}");
             }
 
             return Ok(carCompany);

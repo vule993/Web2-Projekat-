@@ -19,18 +19,13 @@ namespace ReservationAPI.Services
             _context = context;
         }
 
-        public async Task<bool> AddCar(Car car)
+        public async Task AddCar(long carId, long companyId)
         {
-            var c = await _context.Car.FindAsync(car.Id);
+            var company = await _context.FindAsync<CarCompany>(companyId);
+            var car = await _context.FindAsync<Car>(carId);
 
-            if (c != null) 
-                return false;
-
-            await _context.Car.AddAsync(car);
+            company.Cars.Add(car);
             await _context.SaveChangesAsync();
-
-            return true;
-
         }
 
         public async Task DeleteCar(long id)

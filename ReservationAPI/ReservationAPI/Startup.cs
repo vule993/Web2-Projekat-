@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
-using ReservationAPI.Controllers;
 using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
@@ -44,24 +44,22 @@ namespace ReservationAPI
                 options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 );
 
-            //
-            //services.AddControllers().AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-            //});
 
             // my services
             services.AddScoped<ICarRepository, CarService>();
-            services.AddScoped<IRefreshTokenGenerator, RefreshTokenService>();
             services.AddScoped<ICarCompany, CarCompanyService>();
-            
-            
-            //Airlines controllers
-            services.AddScoped<IAirlines, AirlinesService>();
+            services.AddTransient<IMailService, SendEmailService>();
 
-            services.AddIdentity<User, IdentityRole>()
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<User, IdentityRole>(
+                    config =>
+                    {
+                        config.SignIn.RequireConfirmedEmail = true;
+          
+                    }
+            )
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             //customize validations
             services.Configure<IdentityOptions>(options =>
@@ -74,7 +72,6 @@ namespace ReservationAPI
                     options.Password.RequiredUniqueChars = 0;
                     options.User.RequireUniqueEmail = true;
                     options.User.AllowedUserNameCharacters = null;
-
                 }
             );
 
@@ -113,6 +110,7 @@ namespace ReservationAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseCors(builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"])
@@ -121,7 +119,7 @@ namespace ReservationAPI
             );
             app.UseCors(options =>
             {
-                
+
                 options.WithOrigins("https://accounts.google.com")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
