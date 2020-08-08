@@ -28,7 +28,7 @@ export class CompanyListComponent implements OnInit {
         this.url = currentUrl + "/";
       }
     });
-    this.avioCompaniesService.allAvioCompanies.subscribe((data) => {
+    this.avioCompaniesService.getAllCompanies().subscribe((data) => {
       this.avioCompanies = data;
     });
     this.rentACarCompaniesService.allCarCompanies.subscribe((data) => {

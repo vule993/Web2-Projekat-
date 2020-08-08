@@ -51,9 +51,9 @@ export class EditDestinationsComponent implements OnInit {
 
   ngOnInit(): void {
     let adminEmail = localStorage.getItem("email");
-    this._airlineCompaniesService.allAvioCompanies.subscribe((companies) => {
-      if (companies.length > 0) {
-        let company = companies.find(
+    this._airlineCompaniesService.getAllCompanies().subscribe((companies) => {
+      if ((companies as AvioCompany[]).length > 0) {
+        let company = (companies as AvioCompany[]).find(
           (company) => company.admin.email == adminEmail
         );
         this.company = company;

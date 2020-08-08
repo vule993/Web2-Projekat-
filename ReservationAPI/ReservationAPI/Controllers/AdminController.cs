@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -99,14 +100,40 @@ namespace ReservationAPI.Controllers
 
                 await _userManager.AddToRoleAsync(newUser, "AvioAdmin");
                 //await _context.SaveChangesAsync();
-                return Ok(newUser);
+                //return Ok(newUser);
 
             }
             catch (DbUpdateException ex)
             {
-                throw ex;
-
+                Trace.WriteLine(ex);
+                return Conflict(new { Message = "AvioAdmin not created!" });
             }
+
+            var newAvioCompany = new AirlineCompany()
+            {
+                Name = "",
+                Address = null,
+                Description = "",
+                Destinations = new List<Destination>(),
+                Flights = new List<Reservation>(),
+                SeatConfigurations = new List<SeatConfiguration>(),
+                Likes = 0,
+                Admin = model
+
+            };
+
+            try
+            {
+                await _context.AirlineCompany.AddAsync(newAvioCompany);
+                await _context.SaveChangesAsync();
+            }catch(Exception e)
+            {
+                Trace.WriteLine(e);
+                return Conflict(new { Message = "AvioCompany not created!" });
+            }
+
+
+            return Ok(new { Message = "AvioAdmin and AvioProfile created successfully!" });
         }
 
 
@@ -182,7 +209,7 @@ namespace ReservationAPI.Controllers
                 Name = airlineCompany.Name,
                 Address = adresa,
                 Description = airlineCompany.Description,
-                likes = airlineCompany.likes
+                Likes = airlineCompany.Likes
 
             };
 

@@ -49,11 +49,11 @@ export class CompaniesComponent implements OnInit {
     this.allCarCompaniesData.allCarCompanies.subscribe((data) => {
       this.allRentACarCompanies = data;
     });
-    this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
-      this.allAvioCompanies = data;
+    this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {
+      this.allAvioCompanies = data as AvioCompany[];
       //ispravka za refresh stranice
       let id = 1;
-      this.company = data.find((company) => company.id === id);
+      this.company = this.allAvioCompanies.find((company) => company.id === id);
       this.selectedCompanyService.setData(this.company);
     });
 

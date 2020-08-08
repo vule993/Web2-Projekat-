@@ -27,6 +27,6 @@ export class DestinationsService {
     );
   }
   getAll() {
-    return this.httpClient.get(this.baseURL + "/Airlines");
+    return this.httpClient.get(this.baseURL + "/Airlines/Destinations");
   }
 }

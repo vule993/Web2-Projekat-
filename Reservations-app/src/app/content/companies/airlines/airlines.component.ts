@@ -155,8 +155,8 @@ export class AirlinesComponent implements OnInit {
       (reservatons) => (this.allReservations = reservatons)
     );
 
-    this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
-      this.allAvioCompanies = data;
+    this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {
+      this.allAvioCompanies = data as AvioCompany[];
       this.sliderData.values = [];
       this.allAvioCompanies.forEach((company) => {
         this.sliderData.values.push({
