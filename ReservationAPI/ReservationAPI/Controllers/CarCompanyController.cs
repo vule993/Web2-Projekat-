@@ -52,8 +52,9 @@ namespace ReservationAPI.Controllers
 
                 return Ok(company);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"ERROR with getting company. -> {ex.Message}");
                 return BadRequest();
             }
         }
@@ -82,6 +83,7 @@ namespace ReservationAPI.Controllers
             }
             catch(Exception e)
             {
+                Console.WriteLine($"ERROR with adding car to company. -> {e.Message}");
                 return new { Message = e.Message };
             }
         }
@@ -93,7 +95,15 @@ namespace ReservationAPI.Controllers
         public async Task<object> Delete(int id)
         {
             CarCompany company = await _repository.GetCompany(id);
-            await _repository.DeleteCompany(id);
+            try
+            {
+                await _repository.DeleteCompany(id);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"ERROR with deleting company. -> {ex.Message}");
+            }
+            
 
             return Ok(new { message = "Car company deleted", company = company});
         }
@@ -106,7 +116,15 @@ namespace ReservationAPI.Controllers
         public async Task<object> Update(int id, [FromBody]CarCompany model)
         {
             CarCompany company = await _repository.GetCompany(id);
-            await _repository.UpdateCarCompany(model);
+
+            try
+            {
+                await _repository.UpdateCarCompany(model);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"ERROR with updating a car company. -> {ex.Message}");
+            }
 
             return Ok(new { message = "Car company updated.", company = company });
 

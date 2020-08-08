@@ -18,15 +18,9 @@ namespace ReservationAPI.Services
             _config = config;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string content)
+        public Task SendEmailAsync(string toEmail, string subject, string content)
         {
-            var apiKey = _config["SendGridSettings:SendGridAPIKey"];
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("bookit000@gmail.com", "BookIT");
-            var to = new EmailAddress(toEmail);
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, content, content);
-            _ = await client.SendEmailAsync(msg);
-
+            throw new NotImplementedException();
         }
     }
 }

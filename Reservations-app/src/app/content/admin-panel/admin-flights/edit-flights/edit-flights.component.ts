@@ -18,15 +18,25 @@ export class EditFlightsComponent implements OnInit {
   allDiscounts;
   allSeatConfigurations;
   constructor(
-    private data: DestinationsService,
+    private destinationsService: DestinationsService,
     private discountsData: DiscountService,
     private seatConfigurationsData: SeatsConfigService
   ) {}
 
   ngOnInit(): void {
-    this.data.allDestinations.subscribe(
-      (allDestinations) => (this.allDestinations = allDestinations)
-    );
+    this.destinationsService.getAll().subscribe((destinations) => {
+      (destinations as Destination[]).forEach((destination) => {
+        this.allDestinations.push(
+          new Destination(
+            destination.id,
+            destination.airportName,
+            destination.city,
+            destination.country,
+            destination.airportName
+          )
+        );
+      });
+    });
 
     this.discountsData.allDiscounts.subscribe(
       (allDiscounts) => (this.allDiscounts = allDiscounts)

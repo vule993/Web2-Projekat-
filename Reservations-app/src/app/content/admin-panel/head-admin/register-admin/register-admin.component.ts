@@ -49,35 +49,29 @@ export class RegisterAdminComponent implements OnInit {
       this.registerAdminForm.value["phone"],
       "",
       [],
-      []
+      [],
+      0
     );
+
+    //let companyName = this.registerAdminForm.value["companyName"];
+
+    //this.avioCompany.name = companyName;
+    //this.avioCompany.admin = newUser;
 
     switch (this.selectedOption) {
       case "CarAdmin":
-        this.adminService.registerCarAdmin(newUser).subscribe(
-          (res: any) => {
-            if (res.succeeded) {
-              this.registerAdminForm.reset();
-              this.toastrService.success(
-                "You are succesfully registered car admin!",
-                "Succesfull Registration"
-              );
-            } else {
-              res.forEach(element => {
-                switch (element.code) {
-                  default:
-                    this.toastrService.error(
-                      element.description,
-                      "Registration Failed"
-                    );
-                }
-              });
-            }
-          },
+        this.adminService.registerCarAdmin(newUser).subscribe((res: any) => {
+          if (res.succeeded) {
+            this.registerAdminForm.reset();
+            this.toastrService.success(
+              "You are succesfully registered car admin!",
+              "Succesfull Registration"
+            );
+          }
           err => {
             console.log(err);
-          }
-        );
+          };
+        });
         break;
       case "AvioAdmin":
         this.adminService.registerAvioAdmin(newUser).subscribe(
@@ -102,6 +96,9 @@ export class RegisterAdminComponent implements OnInit {
           },
           err => {}
         );
+
+        //create company
+        //this.adminService.createAvioCompany(this.avioCompany).subscribe();
 
         break;
       default:

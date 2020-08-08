@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -8,14 +9,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -37,7 +34,6 @@ namespace ReservationAPI.Controllers
         private readonly ApplicationSettings _appSettings;
         private IConfiguration _config;
         private ApplicationDbContext _context;
-        private IMailService _emailService;
 
         public UserController(UserManager<User> userManager, ApplicationDbContext context, IMailService emailService, IConfiguration config, IOptions<ApplicationSettings> appSettings)
         {
@@ -45,7 +41,6 @@ namespace ReservationAPI.Controllers
             _appSettings = appSettings.Value;
             _context = context;
             _config = config;
-            _emailService = emailService;
         }
 
         //POST : /api/User/Register
@@ -74,47 +69,14 @@ namespace ReservationAPI.Controllers
                 var result = await _userManager.CreateAsync(newUser, model.Password);
                 var roleResult = await _userManager.AddToRoleAsync(newUser, model.Status);
 
-                if (result.Succeeded)
-                {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                    string url = $"{_config["SendGridSettings:AppURL"]}/api/user/confirmemail?userid={newUser.Id}&token={code}";
-
-                    await _emailService.SendEmailAsync(newUser.Email, "Confirm your Email", $"<h1>Please confirm your email</h1>" +
-                        $"<a href='{url}'>by clicking here</a>");
-
-
-                }
-
                 return Ok(result);
 
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"ERROR in registering new user. -> {ex.Message}");
                 throw ex;
             }
-        }
-
-        // api/user/confirmemail?userid=...&token=...
-        [HttpGet]
-        [Route("ConfirmEmail")]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
-        {
-            //validate
-            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
-            {
-                return NotFound();
-            }
-
-            var result = await ConfirmEmailAsync(userId, token);
-            
-            if (result)
-            {
-                return Redirect($"{_config["SendGridSettings:AppURL"]}/confirmemail.html"); //localhost:4200/login
-            }
-
-            return BadRequest(new { Message = "Email not confirmed" });
         }
 
         //POST : /api/User/Login
@@ -125,7 +87,7 @@ namespace ReservationAPI.Controllers
             //use usemanager to check if we have user with given username
             var user = await _userManager.FindByNameAsync(model.Email);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password) && user.EmailConfirmed)
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 //check for roles of this user
                 var role = await _userManager.GetRolesAsync(user); //put this role to the claims
@@ -166,7 +128,6 @@ namespace ReservationAPI.Controllers
         [Route("SocialLogin")]
         public async Task<IActionResult> SocialLogin([FromBody] LoginModel loginModel)
         {
-            var test = _appSettings.JWT_Secret;
             var validation = await VerifyTokenAsync(loginModel.IdToken);
 
             if (validation.isVaild)
@@ -174,7 +135,6 @@ namespace ReservationAPI.Controllers
                 //get user
                 var socialUser = await _userManager.FindByNameAsync(validation.apiTokenInfo.email);
 
-                //da li ovde dodavati usera ako ne postoji?
                 if (socialUser == null)
                 {
                     var newUser = new User()
@@ -360,8 +320,16 @@ namespace ReservationAPI.Controllers
                 if (userModel.Image != "")
                     user.Image = userModel.Image;
 
-                _context.Users.Update(user);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                catch(DbException dex)
+                {
+                    Console.WriteLine($"ERROR with updating user. -> {dex.Message}");
+                }
+                
                 return Ok(user);
             }
 
@@ -433,26 +401,5 @@ namespace ReservationAPI.Controllers
 
         //***************** HELPERS ******************
 
-
-        //Email Confirmation
-        public async Task<bool> ConfirmEmailAsync(string userId, string token)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-                return false;
-
-            var decodedToken = WebEncoders.Base64UrlDecode(token);
-            string normalToken = Encoding.UTF8.GetString(decodedToken);
-
-            var result = await _userManager.ConfirmEmailAsync(user, normalToken);
-
-            if (result.Succeeded)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }
