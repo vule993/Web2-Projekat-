@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
 using ReservationAPI.ViewModels;
+using ReservationAPI.ViewModels.RentACar;
 
 namespace ReservationAPI.Controllers
 {
@@ -69,6 +70,21 @@ namespace ReservationAPI.Controllers
             return Ok(new { message = "Car company created.", company = model});
         }
 
+
+        [HttpPost]
+        [Route("AddCarToCompany")]
+        public async Task<object> AddCarToCompany([FromBody] AddCarToCompanyModel model)
+        {
+            try
+            {
+                await _repository.AddCarToCompany(model.CarId, model.CarCompanyId);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return new { Message = e.Message };
+            }
+        }
 
         //DELETE: /api/CarCompany/Delete/3
         [HttpDelete("{id}")]

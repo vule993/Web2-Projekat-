@@ -44,28 +44,22 @@ namespace ReservationAPI
                 options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"))
                 );
 
-            //
-            //services.AddControllers().AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-            //});
 
             // my services
             services.AddScoped<ICarRepository, CarService>();
-            services.AddScoped<IRefreshTokenGenerator, RefreshTokenService>();
             services.AddScoped<ICarCompany, CarCompanyService>();
-            services.AddScoped<IEmailSender, EmailSender>();
-            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.AddTransient<IMailService, SendEmailService>();
 
             services.AddIdentity<User, IdentityRole>(
                     config =>
                     {
                         config.SignIn.RequireConfirmedEmail = true;
-                        config.SignIn.RequireConfirmedAccount = true;
+          
                     }
-                )
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            )
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             //customize validations
             services.Configure<IdentityOptions>(options =>
@@ -78,7 +72,6 @@ namespace ReservationAPI
                     options.Password.RequiredUniqueChars = 0;
                     options.User.RequireUniqueEmail = true;
                     options.User.AllowedUserNameCharacters = null;
-
                 }
             );
 
@@ -117,6 +110,7 @@ namespace ReservationAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseCors(builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"])

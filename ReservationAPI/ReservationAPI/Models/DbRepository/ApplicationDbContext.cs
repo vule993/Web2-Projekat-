@@ -16,11 +16,7 @@ namespace ReservationAPI.Models.DbRepository
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
-
+        
         //cars
         public DbSet<User> Users { get; set; }
         public DbSet<CarCompany> CarCompanies { get; set; }

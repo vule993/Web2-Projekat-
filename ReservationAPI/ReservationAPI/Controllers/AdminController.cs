@@ -41,6 +41,7 @@ namespace ReservationAPI.Controllers
 
             var newUser = new User()
             {
+                Id = null,
                 UserName = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -49,7 +50,6 @@ namespace ReservationAPI.Controllers
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
-
             };
 
             try
@@ -79,6 +79,7 @@ namespace ReservationAPI.Controllers
 
             var newUser = new User()
             {
+                Id = null,
                 UserName = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,

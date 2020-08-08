@@ -17,5 +17,7 @@ namespace ReservationAPI.Models.Interfaces
         Task<bool> AddCompany(CarCompany carCompany);
 
         Task UpdateCarCompany(CarCompany carCompany);
+
+        Task AddCarToCompany(long carId, long carCompanyId);
     }
 }

@@ -8,7 +8,7 @@ import { STORAGE_USER_ID_KEY } from "src/app/const/constants";
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"]
+  styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
   activeTab;
@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(private userService: UsersService, private router: Router) {
     //router sluzi da skeniram url svaki put kad se promeni -> tako cu znati da li je
     //profil samo za gledanje ili je to moj profil
-    router.events.subscribe(val => {
+    router.events.subscribe((val) => {
       let fullUrl = window.location.href;
       this.viewProfile = fullUrl.includes("profile-view") ? true : false;
     });
@@ -49,6 +49,7 @@ export class ProfileComponent implements OnInit {
       // localStorage.setItem("name", user.firstName);
       // localStorage.setItem("surname", user.lastName);
       //dodati i ostalo
+      localStorage.setItem("id", user.id.toString());
       localStorage.setItem("firstName", user.firstName);
       localStorage.setItem("lastName", user.lastName);
       localStorage.setItem("status", user.status);

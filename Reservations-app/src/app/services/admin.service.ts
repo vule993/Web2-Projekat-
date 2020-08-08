@@ -4,6 +4,7 @@ import { FormModel } from "../models/formModel";
 import { UserModel } from "../models/User.model";
 import { AvioCompany } from "../models/AvioCompany.model";
 import { CarCompany } from "../models/CarCompany.model";
+import { Car } from "../models/car.model";
 
 @Injectable({
   providedIn: "root"
@@ -43,5 +44,14 @@ export class AdminService {
 
   changeAdminDetails(admin: FormModel) {
     return this.httpClient.put(this.baseURL + "/Admin/ChangeDetails", admin);
+  }
+
+  getCarsOfCompany(company: string) {}
+
+  addCarToCompany(carId: number, companyId: number) {
+    return this.httpClient.post<Car>(
+      this.baseURL + "/CarCompany/AddCarToCompany",
+      { carId: carId, companyId: companyId }
+    );
   }
 }
