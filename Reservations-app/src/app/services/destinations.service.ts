@@ -4,7 +4,7 @@ import { Destination } from "../models/Destination.model";
 import { ɵBrowserGetTestability } from "@angular/platform-browser";
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { JsonPipe } from "@angular/common";
-import { AvioCompany } from "../models/AvioCompany.model";
+import { AirlineCompany } from "../models/AirlineCompany.model";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Injectable({
@@ -14,7 +14,7 @@ export class DestinationsService {
   readonly baseURL = "http://localhost:5000/api";
   constructor(private httpClient: HttpClient) {}
 
-  create(company: AvioCompany, newDestination: Destination) {
+  create(company: AirlineCompany, newDestination: Destination) {
     return this.httpClient.post(this.baseURL + "/Airlines/AddDestinations", {
       Company: company,
       Destination: newDestination,

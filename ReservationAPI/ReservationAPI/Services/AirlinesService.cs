@@ -28,6 +28,17 @@ namespace ReservationAPI.Services
             AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id.ToString() == id);
             return profile;
         }
+
+
+        public async Task<IEnumerable<AirlineCompany>> GetAllCompanies()
+        {
+            IEnumerable<AirlineCompany> companies = await _context.AirlineCompany.ToListAsync();
+            return companies;
+        }
+
+
+
+
         public async Task<bool> UpdateProfile(AirlineCompany company)
         {
             AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id == company.Id);
@@ -88,6 +99,8 @@ namespace ReservationAPI.Services
         }
 
         
+
+
         #endregion
 
 

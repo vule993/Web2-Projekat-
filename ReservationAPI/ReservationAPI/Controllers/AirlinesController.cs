@@ -43,6 +43,16 @@ namespace ReservationAPI.Controllers
 
             return NotFound( new { Message = "Profile not found" });
         }
+
+
+        [HttpGet]
+        [Route("GetAllCompanies")]
+        public async Task<object> GetAllCompanies()
+        {
+            return await _service.GetAllCompanies();
+        }
+
+
         [HttpPut]
         [Route("UpdateCompanyInfo")]
         public async Task<bool> UpdateCompanyInfo(AirlineCompany company)

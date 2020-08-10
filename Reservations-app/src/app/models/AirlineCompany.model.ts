@@ -6,7 +6,7 @@ import { ReservationComponent } from "../content/reservation/reservation.compone
 import { Reservation } from "./Reservation.model";
 import { UserModel } from "./User.model";
 
-export class AvioCompany {
+export class AirlineCompany {
   constructor(
     public name: string,
     public address: Address,

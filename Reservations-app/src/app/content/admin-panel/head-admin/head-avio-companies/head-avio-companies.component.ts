@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 
 @Component({
   selector: "app-head-avio-companies",
@@ -8,7 +8,7 @@ import { AvioCompany } from "src/app/models/AvioCompany.model";
   styleUrls: ["./head-avio-companies.component.css"],
 })
 export class HeadAvioCompaniesComponent implements OnInit {
-  allAvioCompanies: AvioCompany[] = [];
+  allAvioCompanies: AirlineCompany[] = [];
 
   sliderData = {
     title: "All companies",
@@ -20,7 +20,7 @@ export class HeadAvioCompaniesComponent implements OnInit {
 
   ngOnInit(): void {
     this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {
-      this.allAvioCompanies = data as AvioCompany[];
+      this.allAvioCompanies = data as AirlineCompany[];
       this.sliderData.values = [];
       this.allAvioCompanies.forEach((company) => {
         this.sliderData.values.push({

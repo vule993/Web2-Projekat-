@@ -1,11 +1,11 @@
 import { Destination } from "./Destination.model";
-import { AvioCompany } from "./AvioCompany.model";
+import { AirlineCompany } from "./AirlineCompany.model";
 import { SeatConfiguration } from "./Seat-configuration.model";
 
 export class Flight {
   constructor(
     public id: number,
-    public company: AvioCompany,
+    public company: AirlineCompany,
     public startingDestination: Destination,
     public endingDestination: Destination,
     public startDate: string,

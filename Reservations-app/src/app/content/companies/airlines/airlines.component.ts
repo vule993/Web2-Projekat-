@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 import { Reservation } from "src/app/models/Reservation.model";
 import { ReservationService } from "src/app/services/reservation.service";
 import { Destination } from "src/app/models/Destination.model";
@@ -15,7 +15,7 @@ declare var $: any;
 export class AirlinesComponent implements OnInit {
   departCalendar: any;
   returnCalendar: any;
-  allAvioCompanies: AvioCompany[] = [];
+  allAvioCompanies: AirlineCompany[] = [];
   allReservations: Reservation[];
   allReservationsToShow: Reservation[];
   allReservationsPreFilter: Reservation[];
@@ -156,7 +156,7 @@ export class AirlinesComponent implements OnInit {
     );
 
     this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {
-      this.allAvioCompanies = data as AvioCompany[];
+      this.allAvioCompanies = data as AirlineCompany[];
       this.sliderData.values = [];
       this.allAvioCompanies.forEach((company) => {
         this.sliderData.values.push({

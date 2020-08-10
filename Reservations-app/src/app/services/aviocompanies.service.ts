@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { AvioCompany } from "../models/AvioCompany.model";
+import { AirlineCompany } from "../models/AirlineCompany.model";
 import { Address } from "../models/address.model";
 import { Destination } from "../models/Destination.model";
 import { UserModel } from "../models/User.model";
@@ -13,7 +13,7 @@ export class AviocompaniesService {
   readonly baseURL = "http://localhost:5000/api/";
   constructor(private httpClient: HttpClient) {}
 
-  addAvioCompany(company: AvioCompany) {}
+  addAvioCompany(company: AirlineCompany) {}
   removeAvioCompany(companyId: number) {}
 
   getCompany(id: string = "1") {

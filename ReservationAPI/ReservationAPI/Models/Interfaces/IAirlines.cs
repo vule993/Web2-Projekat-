@@ -11,6 +11,7 @@ namespace ReservationAPI.Models.Interfaces
         #region CompanyProfile
         Task<bool> UpdateProfile(AirlineCompany company);
         Task<AirlineCompany> GetCompany(string id);
+        Task<IEnumerable<AirlineCompany>> GetAllCompanies();
         #endregion
 
         #region Destinations

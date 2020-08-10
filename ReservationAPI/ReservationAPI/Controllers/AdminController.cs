@@ -104,7 +104,7 @@ namespace ReservationAPI.Controllers
                 //return Ok(newUser);
 
             }
-            catch (DbException dex)
+            catch (DbException ex)
             {
                 Trace.WriteLine(ex);
                 return Conflict(new { Message = "AvioAdmin not created!" });
@@ -122,8 +122,7 @@ namespace ReservationAPI.Controllers
                 Admin = model
 
             };
-                Console.WriteLine($"ERROR with registering avio admin. -> {dex.Message}");
-                throw dex;
+
 
             try
             {

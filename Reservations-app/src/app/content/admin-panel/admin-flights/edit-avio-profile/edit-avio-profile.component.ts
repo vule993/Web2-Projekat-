@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AvioCompany } from "src/app/models/AirlineCompany.model";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { Address } from "src/app/models/address.model";
 import { Destination } from "src/app/models/Destination.model";

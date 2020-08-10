@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { AdminService } from "src/app/services/admin.service";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 import { UserModel } from "src/app/models/User.model";
 
 @Component({
@@ -17,7 +17,7 @@ export class RegisterAdminComponent implements OnInit {
   registerAdminForm: FormGroup;
 
   selectedOption: string;
-  avioCompany: AvioCompany = new AvioCompany(
+  avioCompany: AirlineCompany = new AirlineCompany(
     "",
     null,
     "",
