@@ -52,15 +52,14 @@ export class CreateCarCompanyComponent implements OnInit {
 
     this.adminService.createCarCompany(carCompany).subscribe(
       (res: any) => {
-        if (res.succeeded) {
-          this.createCompanyForm.reset();
-          this.toastrService.success(
-            "You are succesfully created new Car company!",
-            "Succesfull"
-          );
-        }
+        this.createCompanyForm.reset();
+        this.toastrService.success(
+          "You are succesfully created new Car company!",
+          "Succesfull"
+        );
       },
       err => {
+        this.toastrService.success("Error", "Oops, something went wrong :(");
         console.log(err);
       }
     );

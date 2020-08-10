@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
@@ -28,6 +29,8 @@ namespace ReservationAPI.Services
                 
                 if (company != null)
                     return false;
+
+                //var admin = _context.FindAsync<UserModel>(carCompany.Admin).Result;
 
                 await _context.AddAsync(company);
                 await _context.SaveChangesAsync();

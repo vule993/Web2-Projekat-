@@ -43,16 +43,22 @@ export class CarCompaniesComponent implements OnInit {
     //load cars
     this.allCars = this.carService.getCars();
 
-    this.carService.allCarCompanies.subscribe(data => {
-      this.carCompanies = data;
+    this.carService.getCarCompanies().subscribe(data => {
+      this.carCompanies = data as CarCompany[];
       this.sliderData.values = [];
       this.carCompanies.forEach(company => {
+        console.log(
+          company.address +
+            ", " +
+            company.city +
+            "i rating je: " +
+            company.rating
+        );
         this.sliderData.values.push({
-          v0: company.getId(),
-          v1: company.getName(),
-          v2: company.description,
-          v3: company.getAddress(),
-          v4: company.getRating()
+          v0: company.id,
+          v1: company.name,
+          v2: company.address + ", " + company.city,
+          v3: company.rating
         });
       });
     });

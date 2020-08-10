@@ -256,7 +256,7 @@ namespace ReservationAPI.Controllers
             //new company
             CarCompany carCompany = new CarCompany()
             {
-                Admin = model.Admin,
+                Admin = admin.Email,
                 Address = model.Address,
                 Cars = new List<Car>(),
                 City = model.City,

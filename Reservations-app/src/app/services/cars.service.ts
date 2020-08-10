@@ -135,8 +135,8 @@ export class CarsService {
 
   /***** METHODS *****/
 
-  getCarCompanies(): CarCompany[] {
-    return this._allCarCompanies.getValue();
+  getCarCompanies() {
+    return this.httpClient.get(this.baseURL + "/CarCompany/GetAll");
   }
 
   getCarCompany(index: number) {
