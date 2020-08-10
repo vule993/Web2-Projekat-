@@ -5,6 +5,7 @@ import { UserModel } from "../models/User.model";
 import { AirlineCompany } from "../models/AirlineCompany.model";
 import { CarCompany } from "../models/CarCompany.model";
 import { Car } from "../models/car.model";
+import { AirlineCompanyProfileComponent } from "../content/companies/airlines/airline-company-profile/airline-company-profile.component";
 
 @Injectable({
   providedIn: "root"
