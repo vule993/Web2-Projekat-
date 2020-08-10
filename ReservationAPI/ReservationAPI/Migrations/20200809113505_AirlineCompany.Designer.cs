@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200809113505_AirlineCompany")]
+    partial class AirlineCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -568,8 +570,8 @@ namespace ReservationAPI.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Admin")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("AdminId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -587,6 +589,8 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
 
                     b.ToTable("CarCompanies");
                 });
@@ -854,6 +858,13 @@ namespace ReservationAPI.Migrations
                     b.HasOne("ReservationAPI.Models.Rent_a_Car.CarCompany", null)
                         .WithMany("Cars")
                         .HasForeignKey("CarCompanyId");
+                });
+
+            modelBuilder.Entity("ReservationAPI.Models.Rent_a_Car.CarCompany", b =>
+                {
+                    b.HasOne("ReservationAPI.Models.UserModel", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.UserModel", b =>

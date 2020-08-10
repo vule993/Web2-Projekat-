@@ -49,6 +49,7 @@ namespace ReservationAPI
             services.AddScoped<ICarRepository, CarService>();
             services.AddScoped<ICarCompany, CarCompanyService>();
             services.AddTransient<IMailService, SendEmailService>();
+            services.AddScoped<IAirlines, AirlinesService>();
 
             services.AddIdentity<User, IdentityRole>(
                     config =>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using NuGet.Frameworks;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
@@ -19,6 +20,47 @@ namespace ReservationAPI.Services
         {
             _context = context;
         }
+
+        #region CompanyProfile
+
+        public async Task<AirlineCompany> GetCompany(string id)
+        {
+            AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id.ToString() == id);
+            return profile;
+        }
+
+
+        public async Task<IEnumerable<AirlineCompany>> GetAllCompanies()
+        {
+            IEnumerable<AirlineCompany> companies = await _context.AirlineCompany.ToListAsync();
+            return companies;
+        }
+
+
+
+
+        public async Task<bool> UpdateProfile(AirlineCompany company)
+        {
+            AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id == company.Id);
+            
+            profile.Name = company.Name;
+            profile.Address = company.Address;
+            profile.Description = company.Description;
+
+            try
+            {
+                _context.AirlineCompany.Update(profile);
+                return true;
+            }catch(Exception e)
+            {
+                
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region Destinations
         public async Task<bool> CreateDestination(AirlineCompany airlineCompany, Destination destination)
         {
             foreach(var d in _context.Destination)
@@ -55,5 +97,12 @@ namespace ReservationAPI.Services
             var destinations = await _context.Destination.ToListAsync();
             return destinations;
         }
+
+        
+
+
+        #endregion
+
+
     }
 }

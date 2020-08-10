@@ -3,7 +3,7 @@ import { UserModel } from "src/app/models/User.model";
 import { UsersService } from "src/app/services/users.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Address } from "src/app/models/address.model";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 import { AdminService } from "src/app/services/admin.service";
 import { ToastrService } from "ngx-toastr";
 
@@ -12,8 +12,8 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./create-avio-company.component.html",
   styleUrls: [
     "./create-avio-company.component.css",
-    "../../../register/register.component.css"
-  ]
+    "../../../register/register.component.css",
+  ],
 })
 export class CreateAvioCompanyComponent implements OnInit {
   createCompanyForm: FormGroup;
@@ -30,7 +30,7 @@ export class CreateAvioCompanyComponent implements OnInit {
     this.userService
       .getAllUsers()
       .subscribe(
-        users => (this.admins = users.filter(u => u.status == "AvioAdmin"))
+        (users) => (this.admins = users.filter((u) => u.status == "AvioAdmin"))
       );
 
     this.initForm();
@@ -43,7 +43,10 @@ export class CreateAvioCompanyComponent implements OnInit {
       this.createCompanyForm.value["street"]
     );
 
-    const avioCompany = new AvioCompany(
+    //uzimam admina, umesto email-a
+    //let admin = this.admins.filter((a) => a.email == this.selectedValue)[0];
+
+    const avioCompany = new AirlineCompany(
       this.createCompanyForm.value["companyName"],
       address,
       this.createCompanyForm.value["description"],
@@ -51,8 +54,9 @@ export class CreateAvioCompanyComponent implements OnInit {
       [],
       [],
       3,
-      0,
+      null,
       this.selectedValue
+      //admin
     );
 
     this.adminService.createAvioCompany(avioCompany).subscribe(
@@ -65,7 +69,7 @@ export class CreateAvioCompanyComponent implements OnInit {
           );
         }
       },
-      err => {
+      (err) => {
         console.log(err);
       }
     );
@@ -85,7 +89,7 @@ export class CreateAvioCompanyComponent implements OnInit {
       street: new FormControl(street, Validators.required),
       city: new FormControl(city, Validators.required),
       country: new FormControl(country, Validators.required),
-      admins: new FormControl(admins, Validators.required)
+      admins: new FormControl(admins, Validators.required),
     });
   }
 }

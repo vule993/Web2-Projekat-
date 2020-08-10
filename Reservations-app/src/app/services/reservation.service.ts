@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Reservation } from "../models/Reservation.model";
 import { AirlineReservation } from "../models/AirlineReservation";
 import { Flight } from "../models/Flight.model";
-import { AvioCompany } from "../models/AvioCompany.model";
+import { AirlineCompany } from "../models/AirlineCompany.model";
 import { Destination } from "../models/Destination.model";
 import { CarReservation } from "../models/CarReservation";
 import { UserModel } from "../models/User.model";
@@ -23,7 +23,7 @@ export class ReservationService {
         1,
         new Flight(
           1,
-          new AvioCompany(
+          new AirlineCompany(
             "Air Serbia",
             new Address("Serbia", "Belgrade", "Ljubinke Bobic 11/3"),
             "Opis neki",
@@ -93,7 +93,7 @@ export class ReservationService {
         2,
         new Flight(
           2,
-          new AvioCompany(
+          new AirlineCompany(
             "TestAirlines",
             new Address("TTT", "TTT", "Ljubinke Bobic 11/3"),
             "Opis neki",
@@ -201,7 +201,7 @@ export class ReservationService {
           this.parseDate("23-08-2020")
         )
       )
-    )
+    ),
   ];
 
   constructor(private carService: CarsService) {}
@@ -220,7 +220,7 @@ export class ReservationService {
     });
   }
   getSpecificReservation(id: number) {
-    return this.carReservations.find(c => c.id == id);
+    return this.carReservations.find((c) => c.id == id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;

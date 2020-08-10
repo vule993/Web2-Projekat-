@@ -6,7 +6,7 @@ import { Router, NavigationStart, NavigationEnd } from "@angular/router";
 
 import { BehaviorSubject } from "rxjs";
 import { SelectedcompanyService } from "src/app/services/selectedcompany.service";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 import { CarCompany } from "src/app/models/CarCompany.model";
 
 @Component({
@@ -16,7 +16,7 @@ import { CarCompany } from "src/app/models/CarCompany.model";
 })
 export class CompaniesComponent implements OnInit {
   links: Link[] = [];
-  allAvioCompanies: AvioCompany[] = [];
+  allAvioCompanies: AirlineCompany[] = [];
   allRentACarCompanies: CarCompany[] = [];
 
   company;
@@ -49,11 +49,11 @@ export class CompaniesComponent implements OnInit {
     this.CarCompanyService.getCarCompanies().subscribe(data => {
       this.allRentACarCompanies = data as CarCompany[];
     });
-    this.allAirlineCompaniesData.allAvioCompanies.subscribe(data => {
-      this.allAvioCompanies = data;
+    this.allAirlineCompaniesData.getAllCompanies().subscribe(data => {
+      this.allAvioCompanies = data as AirlineCompany[];
       //ispravka za refresh stranice
       let id = 1;
-      this.company = data.find(company => company.id === id);
+      this.company = this.allAvioCompanies.find(company => company.id === id);
       this.selectedCompanyService.setData(this.company);
     });
 

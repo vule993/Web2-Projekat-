@@ -5,16 +5,25 @@
       type="text"
       class="form-control"
       placeholder="Company name"
-      value=""
+      value="{{ company.name }}"
     />
   </div>
   <div class="form-group">
     <div class="username-icon"></div>
-    <input type="text" class="form-control" placeholder="Address" value="" />
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Address"
+      value="{{ company.address.getFullAddress() }}"
+    />
   </div>
 
   <div class="form-group">
-    <textarea class="form-control" placeholder="Promo description"></textarea>
+    <textarea
+      class="form-control"
+      placeholder="Promo description"
+      value="{{ company.description }}"
+    ></textarea>
   </div>
 
   <div class="form-group">

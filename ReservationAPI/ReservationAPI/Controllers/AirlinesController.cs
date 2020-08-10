@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +26,46 @@ namespace ReservationAPI.Controllers
 
         //metode
 
+        #region CompanyProfile
+        [HttpGet]
+        [Route("GetCompany/{id}")]
+        public async Task<object> UpdateCompanyInfo(string id)
+        {
+            try
+            {
+                AirlineCompany company = await _service.GetCompany(id);
+                return company;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+            }
+
+            return NotFound( new { Message = "Profile not found" });
+        }
+
+
+        [HttpGet]
+        [Route("GetAllCompanies")]
+        public async Task<object> GetAllCompanies()
+        {
+            return await _service.GetAllCompanies();
+        }
+
+
+        [HttpPut]
+        [Route("UpdateCompanyInfo")]
+        public async Task<bool> UpdateCompanyInfo(AirlineCompany company)
+        {
+            if(await _service.UpdateProfile(company))
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Destinations
         //Add api/Airlines/AddDestinations
         [HttpPost]
         [Route("AddDestinations")]
@@ -37,6 +79,7 @@ namespace ReservationAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Destinations")]
         public async Task<List<Destination>> GetAllDestinations()
         {
             var destinations = (List<Destination>)await _service.GetDestinations();
@@ -44,7 +87,7 @@ namespace ReservationAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("Destinations/{id}")]
         public async Task<Destination> GetOneDestination(string id)
         {
             Destination destination = await _service.GetDestination(id);
@@ -57,5 +100,6 @@ namespace ReservationAPI.Controllers
         {
             return await _service.DeleteDestination(id);
         }
+        #endregion
     }
 }

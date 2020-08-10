@@ -4,7 +4,7 @@ import { DestinationsService } from "src/app/services/destinations.service";
 import { ThrowStmt } from "@angular/compiler";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { AirlineCompanyProfileComponent } from "src/app/content/companies/airlines/airline-company-profile/airline-company-profile.component";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 
 @Component({
   selector: "app-edit-destinations",
@@ -14,7 +14,7 @@ import { AvioCompany } from "src/app/models/AvioCompany.model";
 export class EditDestinationsComponent implements OnInit {
   public allDestinations;
 
-  company: AvioCompany;
+  company: AirlineCompany;
   airportName = "";
   address = "";
   city = "";
@@ -51,9 +51,9 @@ export class EditDestinationsComponent implements OnInit {
 
   ngOnInit(): void {
     let adminEmail = localStorage.getItem("email");
-    this._airlineCompaniesService.allAvioCompanies.subscribe((companies) => {
-      if (companies.length > 0) {
-        let company = companies.find(
+    this._airlineCompaniesService.getAllCompanies().subscribe((companies) => {
+      if ((companies as AirlineCompany[]).length > 0) {
+        let company = (companies as AirlineCompany[]).find(
           (company) => company.admin.email == adminEmail
         );
         this.company = company;

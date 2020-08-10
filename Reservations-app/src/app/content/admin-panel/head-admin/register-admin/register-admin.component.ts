@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { AdminService } from "src/app/services/admin.service";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 import { UserModel } from "src/app/models/User.model";
 
 @Component({
@@ -10,13 +10,14 @@ import { UserModel } from "src/app/models/User.model";
   templateUrl: "./register-admin.component.html",
   styleUrls: [
     "./register-admin.component.css",
-    "../../../register/register.component.css"
-  ]
+    "../../../register/register.component.css",
+  ],
 })
 export class RegisterAdminComponent implements OnInit {
   registerAdminForm: FormGroup;
+
   selectedOption: string;
-  avioCompany: AvioCompany = new AvioCompany(
+  avioCompany: AirlineCompany = new AirlineCompany(
     "",
     null,
     "",
@@ -68,12 +69,36 @@ export class RegisterAdminComponent implements OnInit {
               "Succesfull Registration"
             );
           }
-          err => {
+          (err) => {
             console.log(err);
           };
         });
         break;
       case "AvioAdmin":
+        this.adminService
+          .registerAvioAdmin(newUser)
+          .subscribe
+          // (res: any) => {
+          //   if (res.succeeded) {
+          //     this.registerAdminForm.reset();
+          //     this.toastrService.success(
+          //       "You are succesfully registered avio admin!",
+          //       "Succesfull Registration"
+          //     );
+          //   } else {
+          //     res.forEach((element) => {
+          //       switch (element.code) {
+          //         default:
+          //           this.toastrService.error(
+          //             element.description,
+          //             "Registration Failed"
+          //           );
+          //       }
+          //     });
+          //   }
+          // },
+          // (err) => {}
+          ();
         this.adminService.registerAvioAdmin(newUser).subscribe(
           (res: any) => {
             if (res.succeeded) {
@@ -83,7 +108,7 @@ export class RegisterAdminComponent implements OnInit {
                 "Succesfull Registration"
               );
             } else {
-              res.forEach(element => {
+              res.forEach((element) => {
                 switch (element.code) {
                   default:
                     this.toastrService.error(
@@ -94,7 +119,7 @@ export class RegisterAdminComponent implements OnInit {
               });
             }
           },
-          err => {}
+          (err) => {}
         );
 
         //create company
@@ -122,14 +147,14 @@ export class RegisterAdminComponent implements OnInit {
       secondName: new FormControl(secondName, Validators.required),
       email: new FormControl(email, [
         Validators.required,
-        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
       ]),
       adminType: new FormControl(role, Validators.required),
       street: new FormControl(street, Validators.required),
       city: new FormControl(city, Validators.required),
       phone: new FormControl(phone, Validators.required),
       password1: new FormControl(pass1, Validators.required),
-      password2: new FormControl(pass2, Validators.required)
+      password2: new FormControl(pass2, Validators.required),
     });
   }
 }

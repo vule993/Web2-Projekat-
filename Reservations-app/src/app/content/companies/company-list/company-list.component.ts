@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Router, NavigationStart } from "@angular/router";
-import { AvioCompany } from "src/app/models/AvioCompany.model";
 import { CarCompanyProfileComponent } from "../car-companies/car-company-profile/car-company-profile.component";
 import { CarCompany } from "src/app/models/CarCompany.model";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
@@ -28,7 +27,7 @@ export class CompanyListComponent implements OnInit {
         this.url = currentUrl + "/";
       }
     });
-    this.avioCompaniesService.allAvioCompanies.subscribe(data => {
+    this.avioCompaniesService.getAllCompanies().subscribe(data => {
       this.avioCompanies = data;
     });
     this.rentACarCompaniesService.getCarCompanies().subscribe(data => {
