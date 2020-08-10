@@ -36,9 +36,9 @@ namespace ReservationAPI.Controllers
         }
 
 
-        //GET: /api/CarCompany/3
+        //GET: /api/CarCompany/caradmin@gmail.com
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCompany(int? id) //mozda cu dodavati nesto u car model
+        public async Task<IActionResult> GetCompany(string id) //id-> email admina cija je kompanija
         {
             if (id == null)
                 return BadRequest();
@@ -91,7 +91,7 @@ namespace ReservationAPI.Controllers
         [HttpDelete("{id}")]
         [Route("Delete")]
         [Authorize(Roles = "CarAdmin")]
-        public async Task<object> Delete(int id)
+        public async Task<object> Delete(string id)
         {
             CarCompany company = await _repository.GetCompany(id);
             try
@@ -112,7 +112,7 @@ namespace ReservationAPI.Controllers
         [HttpPut("{id}")]
         [Route("Update")]
         [Authorize(Roles = "CarAdmin")]
-        public async Task<object> Update(int id, [FromBody]CarCompany model)
+        public async Task<object> Update(string id, [FromBody]CarCompany model)
         {
             CarCompany company = await _repository.GetCompany(id);
 

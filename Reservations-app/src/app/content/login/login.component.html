@@ -34,18 +34,31 @@
           </button>
         </form>
 
-        <button
-          (click)="LoginWithGoogle()"
-          style="height: 4.5vw;"
-          class="btn btn-success"
+        <div
+          class="col s12 m6 offset-m3 center-align"
+          style="background-color: beige; border-radius: 10px; margin-bottom: 2vw;"
         >
-          Login With Google
-        </button>
+          <a
+            class="oauth-container btn darken-4 white black-text"
+            (click)="LoginWithGoogle()"
+            style="text-transform:none"
+          >
+            <div class="left">
+              <img
+                width="20px"
+                style="margin-top:7px; margin-right:8px"
+                alt="Google sign-in"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+              />
+            </div>
+            Login with Google
+          </a>
+        </div>
       </div>
 
-      <div class="col-12 forgot">
+      <!--<div class="col-12 forgot">
         <a href="#">Forgot password?</a>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

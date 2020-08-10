@@ -8,11 +8,11 @@ namespace ReservationAPI.Models.Interfaces
 {
     public interface ICarCompany
     {
-        Task<CarCompany> GetCompany(int? id);
+        Task<CarCompany> GetCompany(string id);
 
         Task<IEnumerable<CarCompany>> GetCompanies();
 
-        Task DeleteCompany(long id);
+        Task DeleteCompany(string id);
 
         Task<bool> AddCompany(CarCompany carCompany);
 

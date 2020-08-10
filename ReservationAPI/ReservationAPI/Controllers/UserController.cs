@@ -45,6 +45,7 @@ namespace ReservationAPI.Controllers
 
         //POST : /api/User/Register
         [HttpPost]
+        [AllowAnonymous]
         [Route("Register")]
         public async Task<Object> PostUser(UserModel model)
         {
@@ -67,6 +68,13 @@ namespace ReservationAPI.Controllers
             try
             {
                 var result = await _userManager.CreateAsync(newUser, model.Password);
+
+                if (result.Succeeded)
+                {
+                    var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                    var confirmationLink = "";
+                }
+
                 var roleResult = await _userManager.AddToRoleAsync(newUser, model.Status);
 
                 return Ok(result);
