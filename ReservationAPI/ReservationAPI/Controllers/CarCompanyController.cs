@@ -62,7 +62,6 @@ namespace ReservationAPI.Controllers
         //POST: /api/CarCompany/Add
         [HttpPost]
         [Route("Add")]
-        [Authorize(Roles = "CarAdmin")]
         public async Task<object> AddCompany([FromBody]CarCompany model)
         {
             if (!await _repository.AddCompany(model))

@@ -24,11 +24,11 @@ export class HeadCarCompaniesComponent implements OnInit {
       this.sliderData.values = [];
       this.carCompanies.forEach(company => {
         this.sliderData.values.push({
-          v0: company.getId(),
-          v1: company.getName(),
+          v0: company.id,
+          v1: company.name,
           v2: company.description,
-          v3: company.getAddress(),
-          v4: company.getRating()
+          v3: company.address,
+          v4: company.rating
         });
       });
     });

@@ -12,7 +12,7 @@ import { CarCompany } from "src/app/models/CarCompany.model";
 @Component({
   selector: "app-companies",
   templateUrl: "./companies.component.html",
-  styleUrls: ["./companies.component.css"],
+  styleUrls: ["./companies.component.css"]
 })
 export class CompaniesComponent implements OnInit {
   links: Link[] = [];
@@ -25,7 +25,7 @@ export class CompaniesComponent implements OnInit {
   //ovde fale sve rent a car kompanije
   constructor(
     private allAirlineCompaniesData: AviocompaniesService,
-    private allCarCompaniesData: CarsService,
+    private CarCompanyService: CarsService,
     private router: Router,
     private selectedCompanyService: SelectedcompanyService
   ) {
@@ -46,18 +46,18 @@ export class CompaniesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allCarCompaniesData.allCarCompanies.subscribe((data) => {
-      this.allRentACarCompanies = data;
+    this.CarCompanyService.getCarCompanies().subscribe(data => {
+      this.allRentACarCompanies = data as CarCompany[];
     });
-    this.allAirlineCompaniesData.allAvioCompanies.subscribe((data) => {
+    this.allAirlineCompaniesData.allAvioCompanies.subscribe(data => {
       this.allAvioCompanies = data;
       //ispravka za refresh stranice
       let id = 1;
-      this.company = data.find((company) => company.id === id);
+      this.company = data.find(company => company.id === id);
       this.selectedCompanyService.setData(this.company);
     });
 
-    this.router.events.subscribe((val) => {
+    this.router.events.subscribe(val => {
       if (val instanceof NavigationStart) {
         this.urlSelector = val.url.split("/")[2];
         this.id = +val.url.split("/")[3];
@@ -65,11 +65,11 @@ export class CompaniesComponent implements OnInit {
         if (this.urlSelector !== "" && !isNaN(this.id)) {
           if (this.urlSelector === "airlines") {
             this.company = this.allAvioCompanies.find(
-              (aviocompany) => aviocompany.id == this.id
+              aviocompany => aviocompany.id == this.id
             );
           } else if (this.urlSelector === "car-companies") {
             this.company = this.allRentACarCompanies.find(
-              (rentACarCompany) => rentACarCompany.id == this.id
+              rentACarCompany => rentACarCompany.id == this.id
             );
           }
           this.selectedCompanyService.setData(this.company);

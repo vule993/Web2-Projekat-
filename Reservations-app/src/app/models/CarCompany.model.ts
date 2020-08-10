@@ -11,24 +11,6 @@ export class CarCompany {
     public city: string,
     public thumbnail: string,
     public cars: Car[],
-    public admin: UserModel = null
+    public admin: string = null
   ) {}
-
-  //helpers:
-
-  getName() {
-    return this.name;
-  }
-  getAddress() {
-    return this.city + " " + this.address;
-  }
-  getDescription() {
-    return this.description;
-  }
-  getRating() {
-    return this.rating;
-  }
-  getId() {
-    return this.id;
-  }
 }
