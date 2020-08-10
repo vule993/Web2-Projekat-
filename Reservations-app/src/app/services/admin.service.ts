@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { FormModel } from "../models/formModel";
 import { UserModel } from "../models/User.model";
-import { AvioCompany } from "../models/AirlineCompany.model";
+import { AirlineCompany } from "../models/AirlineCompany.model";
 import { CarCompany } from "../models/CarCompany.model";
 import { Car } from "../models/car.model";
+import { AirlineCompanyProfileComponent } from "../content/companies/airlines/airline-company-profile/airline-company-profile.component";
 
 @Injectable({
   providedIn: "root",
@@ -28,7 +29,7 @@ export class AdminService {
     );
   }
 
-  createAvioCompany(company: AvioCompany) {
+  createAvioCompany(company: AirlineCompany) {
     return this.httpClient.post(
       this.baseURL + "/Admin/CreateAvioCompany",
       company
