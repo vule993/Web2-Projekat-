@@ -17,7 +17,7 @@ import { ToastrService } from "ngx-toastr";
 })
 export class CreateAvioCompanyComponent implements OnInit {
   createCompanyForm: FormGroup;
-  selectedValue: any;
+  selectedValue: UserModel;
   admins: UserModel[];
 
   constructor(
@@ -55,7 +55,7 @@ export class CreateAvioCompanyComponent implements OnInit {
       [],
       [],
       3,
-      this.selectedValue
+      this.selectedValue.email
       //admin
     );
 

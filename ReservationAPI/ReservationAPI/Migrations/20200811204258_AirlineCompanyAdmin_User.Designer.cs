@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200811204258_AirlineCompanyAdmin_User")]
+    partial class AirlineCompanyAdmin_User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,8 +233,8 @@ namespace ReservationAPI.Migrations
                     b.Property<long?>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("AdminEmail")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -246,6 +248,8 @@ namespace ReservationAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("AdminId");
 
                     b.ToTable("AirlineCompany");
                 });
@@ -749,6 +753,10 @@ namespace ReservationAPI.Migrations
                     b.HasOne("ReservationAPI.Models.Shared.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
+
+                    b.HasOne("ReservationAPI.Models.User", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.AirlineReservation", b =>

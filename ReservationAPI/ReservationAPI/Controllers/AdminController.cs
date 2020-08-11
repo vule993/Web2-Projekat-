@@ -147,22 +147,9 @@ namespace ReservationAPI.Controllers
         [Route("CreateAirlineCompany")]
         public async Task<Object> CreateAirlineCompany([FromBody] AirlineCompany airlineCompany)
         {
-            var admin = await _userManager.FindByEmailAsync(airlineCompany.Admin.Email);
+            
 
-            if (admin == null)
-            {
-                var adminModel = new UserModel()
-                {
-                    FirstName = airlineCompany.Admin.FirstName,
-                    LastName = airlineCompany.Admin.LastName,
-                    Email = airlineCompany.Admin.Email,
-                    City = airlineCompany.Admin.City,
-                    PhoneNumber = airlineCompany.Admin.PhoneNumber,
-                    Street = airlineCompany.Admin.Street,
-                };
-
-                airlineCompany.Admin = adminModel;
-            }
+            
 
             //mora prvo adresa jer je povezano preko kljuca
             Address adresa = new Address()
@@ -186,7 +173,7 @@ namespace ReservationAPI.Controllers
                 Flights = new List<Reservation>(),
                 SeatConfigurations = new List<SeatConfiguration>(),
                 Likes = airlineCompany.Likes,
-                Admin = airlineCompany.Admin
+                AdminEmail = airlineCompany.AdminEmail
 
             };
             

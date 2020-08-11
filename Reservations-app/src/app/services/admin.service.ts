@@ -8,7 +8,7 @@ import { Car } from "../models/car.model";
 import { AirlineCompanyProfileComponent } from "../content/companies/airlines/airline-company-profile/airline-company-profile.component";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AdminService {
   readonly baseURL = "http://localhost:5000/api";

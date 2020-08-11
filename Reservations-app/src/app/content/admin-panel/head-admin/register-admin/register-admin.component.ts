@@ -18,18 +18,6 @@ export class RegisterAdminComponent implements OnInit {
   registerAdminForm: FormGroup;
 
   selectedOption: string;
-  avioCompany: AirlineCompany = new AirlineCompany(
-    null,
-    "Air Serbia",
-    new Address("Serbia", "Belgrade", "Ljubinke Bobic 11/3"),
-    "Opis neki",
-    [],
-    [],
-    //[],
-    [],
-    132,
-    new UserModel("xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx")
-  );
 
   constructor(
     private adminService: AdminService,
@@ -77,30 +65,6 @@ export class RegisterAdminComponent implements OnInit {
         });
         break;
       case "AvioAdmin":
-        this.adminService
-          .registerAvioAdmin(newUser)
-          .subscribe
-          // (res: any) => {
-          //   if (res.succeeded) {
-          //     this.registerAdminForm.reset();
-          //     this.toastrService.success(
-          //       "You are succesfully registered avio admin!",
-          //       "Succesfull Registration"
-          //     );
-          //   } else {
-          //     res.forEach((element) => {
-          //       switch (element.code) {
-          //         default:
-          //           this.toastrService.error(
-          //             element.description,
-          //             "Registration Failed"
-          //           );
-          //       }
-          //     });
-          //   }
-          // },
-          // (err) => {}
-          ();
         this.adminService.registerAvioAdmin(newUser).subscribe(
           (res: any) => {
             if (res.succeeded) {
