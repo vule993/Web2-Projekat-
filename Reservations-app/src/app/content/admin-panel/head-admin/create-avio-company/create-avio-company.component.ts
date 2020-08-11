@@ -47,7 +47,7 @@ export class CreateAvioCompanyComponent implements OnInit {
     //let admin = this.admins.filter((a) => a.email == this.selectedValue)[0];
 
     const avioCompany = new AirlineCompany(
-      null,
+      0,
       this.createCompanyForm.value["companyName"],
       address,
       this.createCompanyForm.value["description"],
@@ -59,20 +59,7 @@ export class CreateAvioCompanyComponent implements OnInit {
       //admin
     );
 
-    this.adminService.createAvioCompany(avioCompany).subscribe(
-      (res: any) => {
-        if (res.succeeded) {
-          this.createCompanyForm.reset();
-          this.toastrService.success(
-            "You are succesfully created new Avio company!",
-            "Succesfull"
-          );
-        }
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.adminService.createAvioCompany(avioCompany).subscribe();
   }
 
   private initForm() {

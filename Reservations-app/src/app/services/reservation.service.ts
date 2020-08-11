@@ -33,17 +33,7 @@ export class ReservationService {
             //[],
             [],
             132,
-            new UserModel(
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx"
-            )
+            ""
           ),
           new Destination(
             1,
@@ -114,17 +104,7 @@ export class ReservationService {
             //[],
             [],
             132,
-            new UserModel(
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx"
-            )
+            ""
           ),
           new Destination(
             2,

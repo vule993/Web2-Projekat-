@@ -148,26 +148,27 @@ namespace ReservationAPI.Controllers
         public async Task<Object> CreateAirlineCompany([FromBody] AirlineCompany airlineCompany)
         {
             
-
-            
-
             //mora prvo adresa jer je povezano preko kljuca
-            Address adresa = new Address()
-            {
-                City = airlineCompany.Address.City,
-                Country = airlineCompany.Address.Country,
-                Street = airlineCompany.Address.Street
-            };
+            //Address adresa = new Address()
+            //{
+            //    City = airlineCompany.Address.City,
+            //    Country = airlineCompany.Address.Country,
+            //    Street = airlineCompany.Address.Street
+            //};
 
 
-            _context.Address.Add(adresa);
+            //_context.Address.Add(adresa);
 
 
 
             AirlineCompany newCompany = new AirlineCompany()
             {
                 Name = airlineCompany.Name,
-                Address = airlineCompany.Address,
+                Address = new Address() { 
+                    City = airlineCompany.Address.City,
+                    Country = airlineCompany.Address.Country,
+                    Street = airlineCompany.Address.Street
+                },
                 Description = airlineCompany.Description,
                 Destinations = new List<Destination>(),
                 Flights = new List<Reservation>(),
