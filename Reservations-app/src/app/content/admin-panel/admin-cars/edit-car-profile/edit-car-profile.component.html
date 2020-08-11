@@ -4,17 +4,25 @@
     <input
       type="text"
       class="form-control"
-      placeholder="Company name"
+      placeholder="{{ carCompany.name }}"
       value=""
     />
   </div>
   <div class="form-group">
     <div class="username-icon"></div>
-    <input type="text" class="form-control" placeholder="Address" value="" />
+    <input
+      type="text"
+      class="form-control"
+      placeholder="{{ carCompany.address }}"
+      value=""
+    />
   </div>
 
   <div class="form-group">
-    <textarea class="form-control" placeholder="Promo description"></textarea>
+    <textarea
+      class="form-control"
+      placeholder="{{ carCompany.description }}"
+    ></textarea>
   </div>
 
   <div class="form-group">

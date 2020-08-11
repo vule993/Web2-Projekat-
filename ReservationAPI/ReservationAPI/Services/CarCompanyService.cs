@@ -45,7 +45,7 @@ namespace ReservationAPI.Services
             
         }
 
-        public async Task DeleteCompany(long id)
+        public async Task DeleteCompany(string id)
         {
             var company = await _context.CarCompanies.FindAsync(id);
 
@@ -58,12 +58,13 @@ namespace ReservationAPI.Services
             return await _context.CarCompanies.ToListAsync();
         }
 
-        public async Task<CarCompany> GetCompany(int? id)
+        public async Task<CarCompany> GetCompany(string id)
         {
-            return await _context.CarCompanies.Include(c => c.Cars)
-                .Include(c => c.City)
-                .Include(c => c.Rating)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            //return await _context.CarCompanies.Include(c => c.Cars)
+            //    .Include(c => c.City)
+            //    .Include(c => c.Rating)
+            //    .FirstOrDefaultAsync(c => c.Id == id);
+            return  await _context.CarCompanies.FirstOrDefaultAsync(x => x.Admin == id);
         }
 
         public async Task UpdateCarCompany(CarCompany carCompany)

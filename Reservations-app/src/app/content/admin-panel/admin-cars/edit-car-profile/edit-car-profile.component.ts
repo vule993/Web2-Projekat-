@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { CarCompany } from "src/app/models/CarCompany.model";
+import { AdminService } from "src/app/services/admin.service";
 
 @Component({
   selector: "app-edit-car-profile",
@@ -9,7 +11,15 @@ import { Component, OnInit } from "@angular/core";
   ]
 })
 export class EditCarProfileComponent implements OnInit {
-  constructor() {}
+  carCompany: CarCompany;
 
-  ngOnInit(): void {}
+  constructor(private adminService: AdminService) {}
+
+  ngOnInit(): void {
+    this.adminService
+      .getAdminCarCompany(localStorage.getItem("userId"))
+      .subscribe(data => {
+        this.carCompany = data as CarCompany;
+      });
+  }
 }
