@@ -19,16 +19,15 @@ export class HeadCarCompaniesComponent implements OnInit {
   constructor(private carService: CarsService) {}
 
   ngOnInit(): void {
-    this.carService.allCarCompanies.subscribe(data => {
-      this.carCompanies = data;
+    this.carService.getCarCompanies().subscribe(data => {
+      this.carCompanies = data as CarCompany[];
       this.sliderData.values = [];
       this.carCompanies.forEach(company => {
         this.sliderData.values.push({
           v0: company.id,
           v1: company.name,
-          v2: company.description,
-          v3: company.address,
-          v4: company.rating
+          v2: company.address + ", " + company.city,
+          v3: company.rating
         });
       });
     });

@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { UsersService } from "src/app/services/users.service";
-import { UserModel } from "src/app/models/User.model";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { FormModel } from "src/app/models/formModel";
@@ -26,7 +24,6 @@ export class AdminProfileComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private userService: UsersService,
     private toastrService: ToastrService
   ) {}
 

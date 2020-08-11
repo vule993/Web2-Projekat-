@@ -11,8 +11,8 @@ import { Address } from "src/app/models/address.model";
   templateUrl: "./register-admin.component.html",
   styleUrls: [
     "./register-admin.component.css",
-    "../../../register/register.component.css",
-  ],
+    "../../../register/register.component.css"
+  ]
 })
 export class RegisterAdminComponent implements OnInit {
   registerAdminForm: FormGroup;
@@ -59,7 +59,7 @@ export class RegisterAdminComponent implements OnInit {
               "Succesfull Registration"
             );
           }
-          (err) => {
+          err => {
             console.log(err);
           };
         });
@@ -74,7 +74,7 @@ export class RegisterAdminComponent implements OnInit {
                 "Succesfull Registration"
               );
             } else {
-              res.forEach((element) => {
+              res.forEach(element => {
                 switch (element.code) {
                   default:
                     this.toastrService.error(
@@ -85,7 +85,7 @@ export class RegisterAdminComponent implements OnInit {
               });
             }
           },
-          (err) => {}
+          err => {}
         );
 
         //create company
@@ -113,14 +113,14 @@ export class RegisterAdminComponent implements OnInit {
       secondName: new FormControl(secondName, Validators.required),
       email: new FormControl(email, [
         Validators.required,
-        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
       ]),
       adminType: new FormControl(role, Validators.required),
       street: new FormControl(street, Validators.required),
       city: new FormControl(city, Validators.required),
       phone: new FormControl(phone, Validators.required),
       password1: new FormControl(pass1, Validators.required),
-      password2: new FormControl(pass2, Validators.required),
+      password2: new FormControl(pass2, Validators.required)
     });
   }
 }

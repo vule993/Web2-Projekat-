@@ -9,6 +9,8 @@ import { Car } from "src/app/models/car.model";
 })
 export class EditCarListComponent implements OnInit {
   carToEdit: Car;
+  newCar: Car;
+
   companyCars: Car[] = [
     {
       id: 1,
@@ -40,11 +42,18 @@ export class EditCarListComponent implements OnInit {
 
   constructor() {
     this.carToEdit = new Car(-1, "", "", 0, 0, 0, 0, "", "", false);
+    this.newCar = new Car(-1, "", "", 0, 0, 0, 0, "", "", false);
   }
 
   ngOnInit(): void {}
 
   /*****Methods*****/
+
+  //ovde ce se pozivati metoda addCarToCompany() iz adminService-a
+
+  AddCarModal() {}
+
+  AddNewCar() {}
 
   editCarModal(car: Car): void {
     this.carToEdit = car;
