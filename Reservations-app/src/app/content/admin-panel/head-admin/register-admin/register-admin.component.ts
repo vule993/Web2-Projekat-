@@ -4,6 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { AdminService } from "src/app/services/admin.service";
 import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 import { UserModel } from "src/app/models/User.model";
+import { Address } from "src/app/models/address.model";
 
 @Component({
   selector: "app-register-admin",
@@ -17,17 +18,6 @@ export class RegisterAdminComponent implements OnInit {
   registerAdminForm: FormGroup;
 
   selectedOption: string;
-  avioCompany: AirlineCompany = new AirlineCompany(
-    "",
-    null,
-    "",
-    [],
-    [],
-    [],
-    0,
-    1,
-    null
-  );
 
   constructor(
     private adminService: AdminService,
