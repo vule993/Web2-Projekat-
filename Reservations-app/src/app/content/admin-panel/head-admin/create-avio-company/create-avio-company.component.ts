@@ -47,6 +47,7 @@ export class CreateAvioCompanyComponent implements OnInit {
     //let admin = this.admins.filter((a) => a.email == this.selectedValue)[0];
 
     const avioCompany = new AirlineCompany(
+      null,
       this.createCompanyForm.value["companyName"],
       address,
       this.createCompanyForm.value["description"],
@@ -54,7 +55,6 @@ export class CreateAvioCompanyComponent implements OnInit {
       [],
       [],
       3,
-      null,
       this.selectedValue
       //admin
     );

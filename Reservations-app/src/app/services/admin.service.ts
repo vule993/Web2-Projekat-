@@ -30,10 +30,12 @@ export class AdminService {
   }
 
   createAvioCompany(company: AirlineCompany) {
-    return this.httpClient.post(
-      this.baseURL + "/Admin/CreateAvioCompany",
+    let returnValue = this.httpClient.post(
+      this.baseURL + "/Admin/CreateAirlineCompany",
       company
     );
+
+    return returnValue;
   }
 
   createCarCompany(company: CarCompany) {

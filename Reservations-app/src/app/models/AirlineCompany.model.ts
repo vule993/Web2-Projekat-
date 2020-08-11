@@ -8,6 +8,7 @@ import { UserModel } from "./User.model";
 
 export class AirlineCompany {
   constructor(
+    public id: number,
     public name: string,
     public address: Address,
     public description: string,
@@ -16,7 +17,6 @@ export class AirlineCompany {
     //public discounts: string[],
     public seatConfigurations: SeatConfiguration[],
     public likes: number,
-    public id: number,
-    public admin: UserModel = null
+    public admin: UserModel
   ) {}
 }

@@ -49,7 +49,7 @@ namespace ReservationAPI.Controllers
         public async Task<Object> PostUser(UserModel model)
         {
             model.Status = "User";
-            //model.Status = "Admin";
+            model.Status = "Admin";
             var newUser = new User()
             {
                 UserName = model.Email,

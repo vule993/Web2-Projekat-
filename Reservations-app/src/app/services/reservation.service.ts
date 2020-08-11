@@ -24,6 +24,7 @@ export class ReservationService {
         new Flight(
           1,
           new AirlineCompany(
+            null,
             "Air Serbia",
             new Address("Serbia", "Belgrade", "Ljubinke Bobic 11/3"),
             "Opis neki",
@@ -32,7 +33,17 @@ export class ReservationService {
             //[],
             [],
             132,
-            1
+            new UserModel(
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx"
+            )
           ),
           new Destination(
             1,
@@ -94,15 +105,26 @@ export class ReservationService {
         new Flight(
           2,
           new AirlineCompany(
-            "TestAirlines",
-            new Address("TTT", "TTT", "Ljubinke Bobic 11/3"),
+            null,
+            "Air Serbia",
+            new Address("Serbia", "Belgrade", "Ljubinke Bobic 11/3"),
             "Opis neki",
             [],
             [],
             //[],
             [],
             132,
-            1
+            new UserModel(
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx",
+              "xxx"
+            )
           ),
           new Destination(
             2,

@@ -77,11 +77,10 @@ namespace ReservationAPI.Controllers
         [Route("RegisterAvioAdmin")]
         public async Task<Object> RegisterAvioAdmin(UserModel model)
         {
+           
             model.Status = "AvioAdmin";
-
             var newUser = new User()
             {
-                Id = null,
                 UserName = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -90,52 +89,24 @@ namespace ReservationAPI.Controllers
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
-
+                Friends = new List<User>(),
+                Reservations = new List<Reservation>()
             };
-
 
             try
             {
-                newUser.Id = Guid.NewGuid().ToString();
                 var result = await _userManager.CreateAsync(newUser, model.Password);
+                var roleResult = await _userManager.AddToRoleAsync(newUser, model.Status);
 
-                await _userManager.AddToRoleAsync(newUser, "AvioAdmin");
-                //await _context.SaveChangesAsync();
-                //return Ok(newUser);
+                return Ok(result);
 
             }
-            catch (DbException ex)
+            catch (DbUpdateException ex)
             {
-                Trace.WriteLine(ex);
-                return Conflict(new { Message = "AvioAdmin not created!" });
+                Console.WriteLine($"ERROR in registering new user. -> {ex.Message}");
+                throw ex;
             }
 
-            var newAvioCompany = new AirlineCompany()
-            {
-                Name = "",
-                Address = null,
-                Description = "",
-                Destinations = new List<Destination>(),
-                Flights = new List<Reservation>(),
-                SeatConfigurations = new List<SeatConfiguration>(),
-                Likes = 0,
-                Admin = model
-
-            };
-
-
-            try
-            {
-                await _context.AirlineCompany.AddAsync(newAvioCompany);
-                await _context.SaveChangesAsync();
-            }catch(Exception e)
-            {
-                Trace.WriteLine(e);
-                return Conflict(new { Message = "AvioCompany not created!" });
-            }
-
-
-            return Ok(new { Message = "AvioAdmin and AvioProfile created successfully!" });
         }
 
 
@@ -173,8 +144,8 @@ namespace ReservationAPI.Controllers
 
 
         [HttpPost]
-        [Route("CreateAvioCompany")]
-        public async Task<Object> CreateAvioCompany([FromBody] AirlineCompany airlineCompany)
+        [Route("CreateAirlineCompany")]
+        public async Task<Object> CreateAirlineCompany([FromBody] AirlineCompany airlineCompany)
         {
             var admin = await _userManager.FindByEmailAsync(airlineCompany.Admin.Email);
 
@@ -203,18 +174,21 @@ namespace ReservationAPI.Controllers
 
 
             _context.Address.Add(adresa);
-        
+
+
 
             AirlineCompany newCompany = new AirlineCompany()
             {
-                Admin = airlineCompany.Admin,
                 Name = airlineCompany.Name,
-                Address = adresa,
+                Address = airlineCompany.Address,
                 Description = airlineCompany.Description,
-                Likes = airlineCompany.Likes
+                Destinations = new List<Destination>(),
+                Flights = new List<Reservation>(),
+                SeatConfigurations = new List<SeatConfiguration>(),
+                Likes = airlineCompany.Likes,
+                Admin = airlineCompany.Admin
 
             };
-
             
 
             try
