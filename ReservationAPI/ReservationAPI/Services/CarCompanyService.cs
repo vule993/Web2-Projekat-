@@ -19,7 +19,15 @@ namespace ReservationAPI.Services
             _context = context;
         }
 
-       
+
+        public async Task<CarCompany> GetCompany(int id)
+        {
+            return await _context.CarCompanies.Include(c => c.Cars)
+                .Include(c => c.City)
+                .Include(c => c.Rating)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
 
         public async Task<bool> AddCompany(CarCompany carCompany)
         {
@@ -58,13 +66,9 @@ namespace ReservationAPI.Services
             return await _context.CarCompanies.ToListAsync();
         }
 
-        public async Task<CarCompany> GetCompany(string id)
+        public async Task<CarCompany> GetCompanyByEmail(string adminEmail)
         {
-            //return await _context.CarCompanies.Include(c => c.Cars)
-            //    .Include(c => c.City)
-            //    .Include(c => c.Rating)
-            //    .FirstOrDefaultAsync(c => c.Id == id);
-            return  await _context.CarCompanies.FirstOrDefaultAsync(x => x.Admin == id);
+            return  await _context.CarCompanies.FirstOrDefaultAsync(x => x.Admin == adminEmail);
         }
 
         public async Task UpdateCarCompany(CarCompany carCompany)

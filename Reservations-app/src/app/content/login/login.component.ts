@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("userId", res.email);
 
         this.router.navigate(["profile"]);
+        this.toastr.success("Succesfully logged in", "Login Success");
       },
       err => {
         if (err.status == 400) {

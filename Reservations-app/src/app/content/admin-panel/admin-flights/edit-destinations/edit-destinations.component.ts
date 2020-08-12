@@ -9,7 +9,7 @@ import { AirlineCompany } from "src/app/models/AirlineCompany.model";
 @Component({
   selector: "app-edit-destinations",
   templateUrl: "./edit-destinations.component.html",
-  styleUrls: ["./edit-destinations.component.css"],
+  styleUrls: ["./edit-destinations.component.css"]
 })
 export class EditDestinationsComponent implements OnInit {
   public allDestinations;
@@ -51,16 +51,16 @@ export class EditDestinationsComponent implements OnInit {
 
   ngOnInit(): void {
     let adminEmail = localStorage.getItem("email");
-    this._airlineCompaniesService.getAllCompanies().subscribe((companies) => {
+    this._airlineCompaniesService.getAllCompanies().subscribe(companies => {
       if ((companies as AirlineCompany[]).length > 0) {
         let company = (companies as AirlineCompany[]).find(
-          (company) => company.admin.email == adminEmail
+          company => company.adminEmail == adminEmail
         );
         this.company = company;
       }
     });
 
-    this._destinationsService.getAll().subscribe((data) => {
+    this._destinationsService.getAll().subscribe(data => {
       this.allDestinations = data;
     });
   }

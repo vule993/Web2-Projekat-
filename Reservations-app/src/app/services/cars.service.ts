@@ -86,48 +86,7 @@ export class CarsService {
     )
   ];
 
-  private _allCarCompanies = new BehaviorSubject<CarCompany[]>([
-    new CarCompany(
-      1,
-      "Ime kompanije",
-      3.5,
-      "kompanija za rent a car smestena u Londonu bla bla bla",
-      "UK",
-      "London",
-      "https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.rentalcariran.com/wp-content/uploads/2018/10/logo-min-1.png",
-      this.cars.slice(0, 4)
-    ),
-    new CarCompany(
-      2,
-      "Ime kompanije 2",
-      4.5,
-      "kompanija za rent a car smestena u beogradu bla bla bla",
-      "Srbija",
-      "Beograd",
-      "https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.rentalcariran.com/wp-content/uploads/2018/10/logo-min-1.png",
-      this.cars.slice(3, 5)
-    ),
-    new CarCompany(
-      3,
-      "Ime kompanije 3",
-      4.8,
-      "kompanija za rent a car smestena u indiji bla bla bla",
-      "India",
-      "Mumbai",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
-      this.cars.slice(1, 5)
-    ),
-    new CarCompany(
-      4,
-      "Ime kompanije 4",
-      4.2,
-      "kompanija za rent a car smestena u indiji bla bla bla",
-      "India",
-      "Mumbai",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6Rzl1IwbXk_9asH2mIJLHU_2eRkkCX2yQELPUvLNlk9ldx_-E&usqp=CAU",
-      this.cars.slice(0, 4).reverse()
-    )
-  ]);
+  private _allCarCompanies = new BehaviorSubject<CarCompany[]>([]);
 
   public allCarCompanies = this._allCarCompanies.asObservable();
 

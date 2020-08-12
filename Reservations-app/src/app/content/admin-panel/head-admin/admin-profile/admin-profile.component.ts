@@ -42,15 +42,21 @@ export class AdminProfileComponent implements OnInit {
       this.adminProfileForm.value["phone"]
     );
 
-    this.adminService.changeAdminDetails(newUser).subscribe((res: any) => {
-      if (res.succeeded) {
+    this.adminService.changeAdminDetails(newUser).subscribe(
+      (res: any) => {
         this.adminProfileForm.reset();
         this.toastrService.success(
           "You are succesfully changed your details!",
           "Details Changed"
         );
+      },
+      err => {
+        this.toastrService.error(
+          "Updating details Error",
+          "Details not changed"
+        );
       }
-    });
+    );
   }
 
   private initForm() {

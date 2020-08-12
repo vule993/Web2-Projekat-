@@ -13,7 +13,7 @@ import { SeatConfiguration } from "../models/Seat-configuration.model";
 import { S_IFDIR } from "constants";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
@@ -33,17 +33,7 @@ export class ReservationService {
             //[],
             [],
             132,
-            new UserModel(
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx"
-            )
+            ""
           ),
           new Destination(
             1,
@@ -74,7 +64,7 @@ export class ReservationService {
               "Belgrade",
               "Serbia",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "wc,tv,wifi,power supply,newspapers,bar",
           "300",
@@ -114,17 +104,7 @@ export class ReservationService {
             //[],
             [],
             132,
-            new UserModel(
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx",
-              "xxx"
-            )
+            ""
           ),
           new Destination(
             2,
@@ -154,7 +134,7 @@ export class ReservationService {
               "Negde tamo",
               "Nedodjija",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "coffee service, wifi, NESTO NOVO...",
           "500",
@@ -177,7 +157,7 @@ export class ReservationService {
       ),
       false,
       false
-    ),
+    )
   ]);
   allReservations = this._allReservations.asObservable();
 
@@ -223,7 +203,7 @@ export class ReservationService {
           this.parseDate("23-08-2020")
         )
       )
-    ),
+    )
   ];
 
   constructor(private carService: CarsService) {}
@@ -242,7 +222,7 @@ export class ReservationService {
     });
   }
   getSpecificReservation(id: number) {
-    return this.carReservations.find((c) => c.id == id);
+    return this.carReservations.find(c => c.id == id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;

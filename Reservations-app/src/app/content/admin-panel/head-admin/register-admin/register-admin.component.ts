@@ -44,53 +44,39 @@ export class RegisterAdminComponent implements OnInit {
       0
     );
 
-    //let companyName = this.registerAdminForm.value["companyName"];
-
-    //this.avioCompany.name = companyName;
-    //this.avioCompany.admin = newUser;
-
     switch (this.selectedOption) {
       case "CarAdmin":
         this.adminService.registerCarAdmin(newUser).subscribe((res: any) => {
-          if (res.succeeded) {
-            this.registerAdminForm.reset();
-            this.toastrService.success(
-              "You are succesfully registered car admin!",
-              "Succesfull Registration"
-            );
-          }
+          this.registerAdminForm.reset();
+          this.toastrService.success(
+            "You are succesfully registered car admin!",
+            "Succesfull Registration"
+          );
+
           err => {
-            console.log(err);
+            this.toastrService.error(
+              "Registration Error",
+              "Oops something went wrong! :("
+            );
           };
         });
         break;
       case "AvioAdmin":
         this.adminService.registerAvioAdmin(newUser).subscribe(
           (res: any) => {
-            if (res.succeeded) {
-              this.registerAdminForm.reset();
-              this.toastrService.success(
-                "You are succesfully registered avio admin!",
-                "Succesfull Registration"
-              );
-            } else {
-              res.forEach(element => {
-                switch (element.code) {
-                  default:
-                    this.toastrService.error(
-                      element.description,
-                      "Registration Failed"
-                    );
-                }
-              });
-            }
+            this.registerAdminForm.reset();
+            this.toastrService.success(
+              "You are succesfully registered avio admin!",
+              "Succesfull Registration"
+            );
           },
-          err => {}
+          err => {
+            this.toastrService.error(
+              "Registration Error",
+              "Oops something went wrong! :("
+            );
+          }
         );
-
-        //create company
-        //this.adminService.createAvioCompany(this.avioCompany).subscribe();
-
         break;
       default:
         console.log("registration failed");

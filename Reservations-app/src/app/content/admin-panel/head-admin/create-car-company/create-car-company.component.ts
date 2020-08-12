@@ -59,7 +59,7 @@ export class CreateCarCompanyComponent implements OnInit {
         );
       },
       err => {
-        this.toastrService.success("Error", "Oops, something went wrong :(");
+        this.toastrService.error("Error", "Oops, something went wrong :(");
         console.log(err);
       }
     );
