@@ -14,9 +14,16 @@ namespace ReservationAPI.Models.DbRepository
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
+            
         }
 
-        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
+
+
         //cars
         public DbSet<User> Users { get; set; }
         public DbSet<CarCompany> CarCompanies { get; set; }

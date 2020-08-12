@@ -20,7 +20,13 @@
               <li *ngFor="let hint of data.hints; let i = index">
                 <b>{{ hint }}:</b>
                 <span *ngIf="hint === 'Address'; else other">
-                  {{ item["v" + (i + 2)].getFullAddress() }}
+                  {{
+                    item["v" + (i + 2)].street +
+                      ", " +
+                      item["v" + (i + 2)].city +
+                      ", " +
+                      item["v" + (i + 2)].country
+                  }}
                 </span>
                 <ng-template #other>
                   {{ item["v" + (i + 2)] }}

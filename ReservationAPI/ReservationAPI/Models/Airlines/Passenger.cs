@@ -8,7 +8,7 @@ namespace ReservationAPI.Models.Airlines
     public class Passenger
     {
         public long Id { get; set; }
-        public UserModel User { get; set; }
+        public virtual UserModel User { get; set; }
         public bool ApprovedAirlineSeat { get; set; }
         public bool ApprovedCarSeat { get; set; }
         
