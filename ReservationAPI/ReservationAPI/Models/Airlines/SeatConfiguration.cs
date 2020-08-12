@@ -15,7 +15,7 @@ namespace ReservationAPI.Models.Airlines
         public short segmentTwoWidth { get; set; }
         public short segmentThreeWidth { get; set; }
         public short segmentFourWidth { get; set; }
-        public List<Row> Seats { get; set; }
+        public virtual List<Row> Seats { get; set; }
 
        
 

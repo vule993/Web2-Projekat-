@@ -5,6 +5,7 @@ import { Reservation } from "src/app/models/Reservation.model";
 import { ReservationService } from "src/app/services/reservation.service";
 import { Destination } from "src/app/models/Destination.model";
 import { DestinationsService } from "src/app/services/destinations.service";
+import { Address } from "src/app/models/address.model";
 
 declare var $: any;
 @Component({
@@ -163,7 +164,7 @@ export class AirlinesComponent implements OnInit {
           v0: company.id,
           v1: company.name, //reserved for card title
           v2: company.likes,
-          v3: company.address,
+          v3: company.address as Address,
           v4: company.description,
         });
       });

@@ -5,7 +5,11 @@ export class Address {
     public street: string,
     public id: number = 0
   ) {}
-  getFullAddress() {
+
+  public getFullAddress() {
+    return this.street + ", " + this.city + " ," + this.country;
+  }
+  public toString() {
     return this.street + ", " + this.city + " ," + this.country;
   }
 }

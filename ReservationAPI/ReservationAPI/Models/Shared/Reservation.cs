@@ -9,8 +9,8 @@ namespace ReservationAPI.Models.Airlines
     public class Reservation
     {
         public long Id { get; set; }
-        public AirlineReservation AirlineReservation { get; set; }
-        public CarReservation CarReservation { get; set; }
+        public virtual AirlineReservation AirlineReservation { get; set; }
+        public virtual CarReservation CarReservation { get; set; }
         public bool Taken { get; set; }
         public bool IsFinished { get; set; }
     }

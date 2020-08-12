@@ -9,7 +9,7 @@ namespace ReservationAPI.Models.Airlines
     {
         public long Id { get; set; }
         public bool Taken { get; set; }
-        public Passenger Passenger { get; set; }
+        public virtual Passenger Passenger { get; set; }
         public bool SeatReservationConfirmed { get; set; }
         public int SeatNo { get; set; }
     }

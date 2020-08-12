@@ -17,7 +17,11 @@
       value="{{
         company == null || company.address == null
           ? ''
-          : company.address.getFullAddress()
+          : company.address.street +
+            ', ' +
+            company.address.city +
+            ', ' +
+            company.address.country
       }}"
     />
   </div>

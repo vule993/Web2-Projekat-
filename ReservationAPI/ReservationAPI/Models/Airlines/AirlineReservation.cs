@@ -8,7 +8,7 @@ namespace ReservationAPI.Models.Airlines
     public class AirlineReservation
     {
         public long Id { get; set; }
-        public Flight Flight { get; set; }
+        public virtual Flight Flight { get; set; }
 
     }
 }
