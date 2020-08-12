@@ -45,7 +45,7 @@ namespace ReservationAPI.Controllers
 
             try
             {
-                var company = await _repository.GetCompany(id);
+                var company = await _repository.GetCompanyByEmail(id);
 
                 if (company == null)
                     return NotFound();
@@ -91,7 +91,7 @@ namespace ReservationAPI.Controllers
         [HttpDelete("{id}")]
         [Route("Delete")]
         [Authorize(Roles = "CarAdmin")]
-        public async Task<object> Delete(string id)
+        public async Task<object> Delete(int id)
         {
             CarCompany company = await _repository.GetCompany(id);
             try
@@ -114,7 +114,7 @@ namespace ReservationAPI.Controllers
         [Authorize(Roles = "CarAdmin")]
         public async Task<object> Update(string id, [FromBody]CarCompany model)
         {
-            CarCompany company = await _repository.GetCompany(id);
+            CarCompany company = await _repository.GetCompanyByEmail(id);
 
             try
             {

@@ -54,7 +54,7 @@ export class EditDestinationsComponent implements OnInit {
     this._airlineCompaniesService.getAllCompanies().subscribe(companies => {
       if ((companies as AirlineCompany[]).length > 0) {
         let company = (companies as AirlineCompany[]).find(
-          company => company.adminEmail == adminEmail
+          (company) => company.adminEmail == adminEmail
         );
         this.company = company;
       }

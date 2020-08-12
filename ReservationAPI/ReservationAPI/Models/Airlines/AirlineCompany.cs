@@ -11,12 +11,19 @@ namespace ReservationAPI.Models.Airlines
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
         public string Description { get; set; }
-        public List<Destination> Destinations { get; set; }
-        public List<Reservation> Flights { get; set; }
-        public List<SeatConfiguration> SeatConfigurations { get; set; }
+        public virtual List<Destination> Destinations { get; set; }
+        public virtual List<Reservation> Flights { get; set; }
+        public virtual List<SeatConfiguration> SeatConfigurations { get; set; }
         public long Likes { get; set; }
         public String AdminEmail { get; set; }
+
+        public AirlineCompany()
+        {
+            Destinations = new List<Destination>();
+            Flights = new List<Reservation>();
+            SeatConfigurations = new List<SeatConfiguration>();
+        }
     }
 }

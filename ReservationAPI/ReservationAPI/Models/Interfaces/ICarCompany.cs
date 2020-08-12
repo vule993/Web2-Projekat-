@@ -14,7 +14,7 @@ namespace ReservationAPI.Models.Interfaces
 
         Task<IEnumerable<CarCompany>> GetCompanies();
 
-        Task DeleteCompany(string id);
+        Task DeleteCompany(int id);
 
         Task<bool> AddCompany(CarCompany carCompany);
 

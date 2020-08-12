@@ -6,8 +6,8 @@
     </div>
 
     <div class="caption text-center overflow-hidden">
-      <h1>{{ currentCompany.name }}</h1>
-      <h3>{{ currentCompany.description }}</h3>
+      <h1>{{ currentCompany == null ? "" : currentCompany.name }}</h1>
+      <h3>{{ currentCompany == null ? "" : currentCompany.description }}</h3>
       <a class="btn btn-outline-light btn-lg">Drive with us</a>
 
       <div

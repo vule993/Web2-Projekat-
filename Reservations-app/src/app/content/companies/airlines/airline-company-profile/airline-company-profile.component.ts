@@ -8,7 +8,7 @@ import { ReservationService } from "src/app/services/reservation.service";
 @Component({
   selector: "app-airline-company-profile",
   templateUrl: "./airline-company-profile.component.html",
-  styleUrls: ["./airline-company-profile.component.css"]
+  styleUrls: ["./airline-company-profile.component.css"],
 })
 export class AirlineCompanyProfileComponent implements OnInit {
   currentCompany;
@@ -25,25 +25,26 @@ export class AirlineCompanyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.reservationsService.allReservations.subscribe(
-      reservations => (this.allReservatons = reservations)
+      (reservations) => (this.allReservatons = reservations)
     );
-    this.router.events.subscribe(val => {
+    this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
         this.currentCompany = this.selectedcompanyService.currentCompany;
       }
     });
     this.selectedcompanyService.currentCompany.subscribe(
-      company => (this.currentCompany = company)
+      (company) => (this.currentCompany = company)
     );
   }
 
   getReservationsWithDiscount(): Reservation[] {
-    return this.allReservatons.filter(
-      reservation =>
+    return this.allReservatons.filter((reservation) => {
+      if (this.currentCompany != null) {
         reservation.airlineReservation.flight.company.name ===
           this.currentCompany.name &&
-        reservation.airlineReservation.flight.discount != 0
-    );
+          reservation.airlineReservation.flight.discount != 0;
+      }
+    });
   }
 
   countStar(star) {
@@ -53,6 +54,7 @@ export class AirlineCompanyProfileComponent implements OnInit {
   }
 
   createURL() {
+    if (this.currentCompany == null) return;
     this.iframeSrc = `https://maps.google.com/maps?q=${this.currentCompany.city}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
     return this.iframeSrc;
   }

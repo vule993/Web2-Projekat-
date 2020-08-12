@@ -12,11 +12,11 @@ import { AirlineCompanyProfileComponent } from "src/app/content/companies/airlin
 })
 export class EditAvioProfileComponent implements OnInit {
   company: AirlineCompany;
-  constructor(private _avioCompanyService: AviocompaniesService) {
+  constructor(private _avioCompanyService: AviocompaniesService) {}
+
+  ngOnInit(): void {
     this._avioCompanyService.getCompany("1").subscribe((company) => {
       this.company = company as AirlineCompany;
     });
   }
-
-  ngOnInit(): void {}
 }

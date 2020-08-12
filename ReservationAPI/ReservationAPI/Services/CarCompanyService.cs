@@ -53,7 +53,7 @@ namespace ReservationAPI.Services
             
         }
 
-        public async Task DeleteCompany(string id)
+        public async Task DeleteCompany(int id)
         {
             var company = await _context.CarCompanies.FindAsync(id);
 
