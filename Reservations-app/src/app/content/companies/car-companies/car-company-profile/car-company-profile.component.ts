@@ -24,11 +24,13 @@ export class CarCompanyProfileComponent implements OnInit {
   constructor(private carService: CarsService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    //fetch id of car component, id is index in the list
+    //fetch id of car company
     this.route.params.subscribe((params: Params) => {
       this.id = +params["id"];
 
-      this.carCompany = this.carService.getCarCompany(this.id);
+      this.carService.fetchCarCompany(this.id).subscribe(data => {
+        this.carCompany = data as CarCompany;
+      });
     });
 
     //take available cars

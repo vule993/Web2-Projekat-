@@ -22,10 +22,12 @@ namespace ReservationAPI.Services
 
         public async Task<CarCompany> GetCompany(int id)
         {
-            return await _context.CarCompanies.Include(c => c.Cars)
-                .Include(c => c.City)
-                .Include(c => c.Rating)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            //return await _context.CarCompanies.Include(c => c.Cars)
+            //    .Include(c => c.City)
+            //    .Include(c => c.Rating)
+            //    .FirstOrDefaultAsync(c => c.Id == id);
+
+            return await _context.CarCompanies.FirstOrDefaultAsync(company => company.Id == id);
         }
 
 

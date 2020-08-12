@@ -35,17 +35,39 @@ namespace ReservationAPI.Controllers
             return companies;
         }
 
-
-        //GET: /api/CarCompany/caradmin@gmail.com
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCompany(string id) //id-> email admina cija je kompanija
+        public async Task<IActionResult> GetCompany(int id)
         {
-            if (id == null)
+            if (id < 0)
                 return BadRequest();
 
             try
             {
-                var company = await _repository.GetCompanyByEmail(id);
+                var company = await _repository.GetCompany(id);
+
+                if (company == null)
+                    return NotFound();
+
+                return Ok(company);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR with getting company. -> {ex.Message}");
+                return BadRequest();
+            }
+        }
+
+
+        //GET: /api/CarCompany/GetCompanyByEmail/caradmin@gmail.com
+        [HttpGet("GetCompanyByEmail/{email}")]
+        public async Task<IActionResult> GetCompanyByEmail(string email) //id-> email admina cija je kompanija
+        {
+            if (email == null)
+                return BadRequest();
+
+            try
+            {
+                var company = await _repository.GetCompanyByEmail(email);
 
                 if (company == null)
                     return NotFound();

@@ -4,6 +4,7 @@ import { CarsService } from "src/app/services/cars.service";
 import { ReservationService } from "src/app/services/reservation.service";
 import { Reservation } from "src/app/models/Reservation.model";
 import { Car } from "src/app/models/car.model";
+import { Address } from "src/app/models/address.model";
 
 declare var $: any;
 @Component({
@@ -22,10 +23,11 @@ export class CarCompaniesComponent implements OnInit {
   allCars: Car[];
   allReservationsToShow: Reservation[];
   allReservationsPreFilter: Reservation[];
+  // address: Address;
 
   sliderData = {
     title: "All companies",
-    hints: ["About", "Address", "Rating"],
+    hints: ["Rating", "Address", "About"],
     values: []
   };
 
@@ -47,18 +49,13 @@ export class CarCompaniesComponent implements OnInit {
       this.carCompanies = data as CarCompany[];
       this.sliderData.values = [];
       this.carCompanies.forEach(company => {
-        console.log(
-          company.address +
-            ", " +
-            company.city +
-            "i rating je: " +
-            company.rating
-        );
+        let address = new Address("", company.city, company.address);
         this.sliderData.values.push({
           v0: company.id,
           v1: company.name,
-          v2: company.address + ", " + company.city,
-          v3: company.rating
+          v2: company.rating,
+          v3: address,
+          v4: company.description
         });
       });
     });

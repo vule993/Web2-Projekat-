@@ -98,6 +98,10 @@ export class CarsService {
     return this.httpClient.get(this.baseURL + "/CarCompany/GetAll");
   }
 
+  fetchCarCompany(id) {
+    return this.httpClient.get(this.baseURL + "/CarCompany/" + id);
+  }
+
   getCarCompany(index: number) {
     return this._allCarCompanies
       .getValue()

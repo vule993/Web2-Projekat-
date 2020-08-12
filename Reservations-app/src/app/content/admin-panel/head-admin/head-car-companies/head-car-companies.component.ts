@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CarsService } from "src/app/services/cars.service";
 import { CarCompany } from "src/app/models/CarCompany.model";
+import { Address } from "src/app/models/address.model";
 
 @Component({
   selector: "app-head-car-companies",
@@ -12,7 +13,7 @@ export class HeadCarCompaniesComponent implements OnInit {
 
   sliderData = {
     title: "All companies",
-    hints: ["About", "Address", "Rating"],
+    hints: ["Rating", "Address", "About"],
     values: []
   };
 
@@ -23,11 +24,13 @@ export class HeadCarCompaniesComponent implements OnInit {
       this.carCompanies = data as CarCompany[];
       this.sliderData.values = [];
       this.carCompanies.forEach(company => {
+        let address = new Address("", company.city, company.address);
         this.sliderData.values.push({
           v0: company.id,
           v1: company.name,
-          v2: company.address + ", " + company.city,
-          v3: company.rating
+          v2: company.rating,
+          v3: address,
+          v4: company.description
         });
       });
     });
