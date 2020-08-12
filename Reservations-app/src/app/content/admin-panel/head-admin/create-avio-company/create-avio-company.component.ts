@@ -12,8 +12,8 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./create-avio-company.component.html",
   styleUrls: [
     "./create-avio-company.component.css",
-    "../../../register/register.component.css",
-  ],
+    "../../../register/register.component.css"
+  ]
 })
 export class CreateAvioCompanyComponent implements OnInit {
   createCompanyForm: FormGroup;
@@ -30,7 +30,7 @@ export class CreateAvioCompanyComponent implements OnInit {
     this.userService
       .getAllUsers()
       .subscribe(
-        (users) => (this.admins = users.filter((u) => u.status == "AvioAdmin"))
+        users => (this.admins = users.filter(u => u.status == "AvioAdmin"))
       );
 
     this.initForm();
@@ -61,15 +61,17 @@ export class CreateAvioCompanyComponent implements OnInit {
 
     this.adminService.createAvioCompany(avioCompany).subscribe(
       (res: any) => {
-        if (res.succeeded) {
-          this.createCompanyForm.reset();
-          this.toastrService.success(
-            "You are succesfully created new Avio company!",
-            "Succesfull"
-          );
-        }
+        this.createCompanyForm.reset();
+        this.toastrService.success(
+          "You are succesfully created new Avio company!",
+          "Succesfull"
+        );
       },
-      (err) => {
+      err => {
+        this.toastrService.error(
+          "Ooops",
+          "Something went wrong while creating new avio company."
+        );
         console.log(err);
       }
     );
@@ -89,7 +91,7 @@ export class CreateAvioCompanyComponent implements OnInit {
       street: new FormControl(street, Validators.required),
       city: new FormControl(city, Validators.required),
       country: new FormControl(country, Validators.required),
-      admins: new FormControl(admins, Validators.required),
+      admins: new FormControl(admins, Validators.required)
     });
   }
 }
