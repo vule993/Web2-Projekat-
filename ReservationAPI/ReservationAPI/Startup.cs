@@ -55,7 +55,7 @@ namespace ReservationAPI
                     config =>
                     {
                         config.SignIn.RequireConfirmedEmail = true;
-          
+                        
                     }
             )
                 .AddRoles<IdentityRole>()

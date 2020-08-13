@@ -9,7 +9,7 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.css"],
+  styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -41,12 +41,12 @@ export class RegisterComponent implements OnInit {
         if (res.succeeded) {
           this.registerForm.reset();
           this.toastrService.success(
-            "You are succesfully registered!",
+            "Please go confirm your email address",
             "Succesfull Registration"
           );
           this.router.navigate(["login"]);
         } else {
-          res.errors.forEach((element) => {
+          res.errors.forEach(element => {
             switch (element.code) {
               case "DuplicateUserName":
                 //
@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
           });
         }
       },
-      (err) => {
+      err => {
         console.log(err);
       }
     );
@@ -86,13 +86,13 @@ export class RegisterComponent implements OnInit {
       secondName: new FormControl(secondName, Validators.required),
       email: new FormControl(email, [
         Validators.required,
-        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+        Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
       ]),
       street: new FormControl(street, Validators.required),
       city: new FormControl(city, Validators.required),
       phone: new FormControl(phone, Validators.required),
       password1: new FormControl(pass1, Validators.required),
-      password2: new FormControl(pass2, Validators.required),
+      password2: new FormControl(pass2, Validators.required)
     });
   }
 }

@@ -12,6 +12,7 @@ import { AdminService } from "src/app/services/admin.service";
 })
 export class EditCarProfileComponent implements OnInit {
   carCompany: CarCompany;
+  dataLoaded: boolean = false;
 
   constructor(private adminService: AdminService) {}
 
@@ -21,5 +22,6 @@ export class EditCarProfileComponent implements OnInit {
       .subscribe(data => {
         this.carCompany = data as CarCompany;
       });
+    this.dataLoaded = true;
   }
 }
