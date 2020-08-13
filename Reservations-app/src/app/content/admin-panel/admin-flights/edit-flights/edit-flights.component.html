@@ -1,43 +1,61 @@
 <div class="wrapper">
-  <div class="form-group">
+  <div class="form-group overflow-hidden">
     <input
       type="text"
       autocomplete="off"
       id="departTime"
-      class="form-control search-field departTime"
+      class="form-control search-field departTime short-input short-margin fleft"
       placeholder="Start date"
     />
-  </div>
-  <div class="form-group">
+
+    <input
+      type="text"
+      autocomplete="off"
+      id="departTime"
+      class="form-control search-field departTime short-input short-margin fleft"
+      placeholder="Start time"
+    />
+
     <input
       type="text"
       autocomplete="off"
       id="returnTime"
-      class="form-control search-field returnTime"
+      class="form-control search-field returnTime short-input short-margin fleft"
       placeholder="Return date"
+    />
+
+    <input
+      type="text"
+      autocomplete="off"
+      id="returnTime"
+      class="form-control search-field returnTime short-input fleft"
+      placeholder="Return time"
     />
   </div>
 
-  <div class="form-group">
+  <div class="form-group overflow-hidden">
     <input
       type="text"
-      class="form-control"
+      class="form-control short-input short-margin fleft"
       placeholder="Flight esimation time"
       value=""
     />
-  </div>
 
-  <div class="form-group">
-    <select class="form-control">
+    <input
+      type="text"
+      class="form-control short-input short-margin fleft"
+      placeholder="Distance"
+      value=""
+    />
+
+    <select class="form-control short-input short-margin fleft">
       <option value="0">Select discount</option>
       <option *ngFor="let discount of allDiscounts" value="{{ discount }}"
         >{{ discount }}%</option
       >
     </select>
-  </div>
 
-  <div class="form-group">
-    <select class="form-control">
+    <select class="form-control short-input fleft">
       <option value="0">Select plane type</option>
       <option
         *ngFor="let seatConfiguration of allSeatConfigurations"
@@ -45,15 +63,6 @@
         >{{ seatConfiguration.name }}</option
       >
     </select>
-  </div>
-
-  <div class="form-group">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Flight esimation time"
-      value=""
-    />
   </div>
 
   <div class="form-group">
@@ -73,5 +82,7 @@
     />
   </div>
 
-  <button class="btn btn-success fright">Save info</button>
+  <button (click)="createFlight()" class="btn btn-success fright">
+    Create Flight
+  </button>
 </div>

@@ -8,15 +8,15 @@ import { UsersService } from "src/app/services/users.service";
   styleUrls: ["./friends-data-list.component.css"],
 })
 export class FriendsDataListComponent implements OnInit {
-  allUsers: UserModel[];
+  friends: UserModel[];
   constructor(private userService: UsersService) {}
   removeFriend(mail: number) {
     alert(mail);
   }
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe((data) => {
-      this.allUsers = data;
+    this.userService.getAllFriends("vule993@outlook.com").subscribe((data) => {
+      this.friends = data;
     });
   }
 }

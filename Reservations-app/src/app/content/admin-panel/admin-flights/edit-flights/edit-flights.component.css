@@ -31,3 +31,10 @@
 .form-group > div > span {
   margin: 0.2vw;
 }
+
+.short-input {
+  width: 18vw;
+}
+.short-margin {
+  margin-right: 1vw;
+}

@@ -7,7 +7,7 @@ import { SocialUser } from "angularx-social-login";
 import { STORAGE_USER_ID_KEY } from "../const/constants";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -45,6 +45,11 @@ export class UsersService {
     return a;
   }
 
+  getAllFriends(email: string) {
+    return this.httpClient.get<UserModel[]>(
+      this.baseURL + "/User/Friends/" + email
+    );
+  }
   // getLoggedInUser() {
   //   const email = localStorage.getItem(STORAGE_USER_ID_KEY);
   //   return this.httpClient.get<UserModel>(this.baseURL + "/User/Get" + email);
@@ -59,7 +64,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach(element => {
+    allowedRoles.forEach((element) => {
       if (userRole == element) {
         isMatch = true;
         return false;

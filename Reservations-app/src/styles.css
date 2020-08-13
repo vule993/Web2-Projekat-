@@ -89,3 +89,10 @@ body {
   opacity: 1;
   margin-top: 80vh;
 }
+
+.short-input {
+  width: 18vw;
+}
+.short-margin {
+  margin-right: 1vw;
+}

@@ -437,6 +437,31 @@ namespace ReservationAPI.Controllers
 
         #endregion
 
+        [HttpGet]
+        [Route("Friends/{email}")]
+        public async Task<object> GetAllFriends(String email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            List<UserModel> friends = new List<UserModel>();
+
+            foreach(var friend in user.Friends)
+            {
+                friends.Add(new UserModel()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.FirstName,
+                    Email = friend.FirstName,
+                    Street = friend.FirstName,
+                    Image = friend.FirstName,
+                    City = friend.FirstName,
+                    PhoneNumber = friend.FirstName,
+                    Status = friend.FirstName
+                });
+            }
+
+            return friends;
+        }
+
         //***************** HELPERS ******************
 
         private Task SendEmail(string email)

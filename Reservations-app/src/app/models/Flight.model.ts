@@ -12,6 +12,7 @@ export class Flight {
     public returnDate: string,
     public startTime: string,
     public endTime: string,
+    public distance: string,
     public estimationTime: string,
     public discount: number, //ovo sam menjao tip iz string -> number
     public planeType: SeatConfiguration,

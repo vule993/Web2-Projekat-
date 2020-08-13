@@ -44,10 +44,9 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(["car"]);
       }
       if (this.currentUser.status == "AvioAdmin") {
-        this.router.navigate(["avio"]);
+        //this.router.navigate(["avio"]);
       }
-      // localStorage.setItem("name", user.firstName);
-      // localStorage.setItem("surname", user.lastName);
+
       //dodati i ostalo
       localStorage.setItem("id", user.id.toString());
       localStorage.setItem("firstName", user.firstName);
@@ -60,24 +59,6 @@ export class ProfileComponent implements OnInit {
 
       //preostalo: friends, image
     });
-
-    // this.userService
-    //   .getLoggedInUser()
-    //   .subscribe((user: UserModel) => (this.currentUser = user));
-    //ovde moze da se pogodi metoda getUserProfile() iz userService-a i da se uzmu podaci korisnika
-    //ona vraca observable kolekciju, samo ide .subscribe i kupe se podaci...
-    //objekat koji ce se vratiti je:
-    /*
-      {
-        user.FirstName,
-        user.LastName,
-        user.UserName,
-        user.Email,
-        user.Street,
-        user.City,
-        user.PhoneNumber,
-      }
-    */
   }
 
   // setuje koji je tab selektovan kako bi dobio drugaciji background

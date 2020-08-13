@@ -21,14 +21,13 @@ namespace ReservationAPI.Services
             _context = context;
         }
 
-        #region CompanyProfile
+        #region COMPANY PROFILE
 
-        public async Task<AirlineCompany> GetCompany(string id)
+        public async Task<AirlineCompany> GetCompany(string email)
         {
-            AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id.ToString() == id);
+            AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.AdminEmail == email);
             return profile;
         }
-
 
         public async Task<IEnumerable<AirlineCompany>> GetAllCompanies()
         {
@@ -36,20 +35,22 @@ namespace ReservationAPI.Services
             return companies;
         }
 
-
-
-
-        public async Task<bool> UpdateProfile(AirlineCompany company)
+        public async Task<bool> UpdateCompanyInfo(AirlineCompany company)
         {
             AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id == company.Id);
             
             profile.Name = company.Name;
-            profile.Address = company.Address;
+
+            profile.Address.City = company.Address.City;
+            profile.Address.Street = company.Address.Street;
+            profile.Address.Country = company.Address.Country;
+
             profile.Description = company.Description;
 
             try
             {
                 _context.AirlineCompany.Update(profile);
+                await _context.SaveChangesAsync();
                 return true;
             }catch(Exception e)
             {
@@ -60,9 +61,26 @@ namespace ReservationAPI.Services
         }
         #endregion
 
-        #region Destinations
+
+        #region DESTINATIONS
+
+        public async Task<Destination> GetDestination(string id)
+        {
+            var destination = (await _context.Destination.ToListAsync()).FirstOrDefault(d => d.Id.ToString() == id);
+            return destination;
+        }
+        
+        public async Task<IEnumerable<Destination>> GetDestinations()
+        {
+            var destinations = await _context.Destination.ToListAsync();
+            return destinations;
+        }
+
         public async Task<bool> CreateDestination(AirlineCompany airlineCompany, Destination destination)
         {
+
+            //LOGIKA NIJE DOBRA, DESTINACIJE SE MOGU PONAVLJATI ZA VISE RAZLICITIH KOMPANIJA AIR SERBIA I MONTENEGRO AIRLINES MOGU IMATI LET DO RIMA NPR.
+
             foreach(var d in _context.Destination)
             {
                 if(d.AirportName == destination.AirportName)
@@ -86,22 +104,35 @@ namespace ReservationAPI.Services
             return true;
         }
 
-        public async Task<Destination> GetDestination(string id)
+        #endregion
+
+
+        #region FLIGHTS
+
+        public async Task<bool> CreateFlight(Flight flight)
         {
-            var destination = (await _context.Destination.ToListAsync()).FirstOrDefault(d => d.Id.ToString() == id);
-            return destination;
+
+            try
+            {
+                _context.Flight.Add(flight);
+                await _context.SaveChangesAsync();
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+
         }
 
-        public async Task<IEnumerable<Destination>> GetDestinations()
+        public Task<bool> DeleteFlight(long id)
         {
-            var destinations = await _context.Destination.ToListAsync();
-            return destinations;
+            throw new NotImplementedException();
         }
-
-        
-
 
         #endregion
+
+
+
 
 
     }

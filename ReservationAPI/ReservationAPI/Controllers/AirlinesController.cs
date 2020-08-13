@@ -24,16 +24,17 @@ namespace ReservationAPI.Controllers
             _service = service;
         }
 
-        //metode
 
-        #region CompanyProfile
+
+        #region COMPANY PROFILE
+
         [HttpGet]
-        [Route("GetCompany/{id}")]
-        public async Task<object> UpdateCompanyInfo(string id)
+        [Route("GetCompany/{email}")]
+        public async Task<object> GetCompany(string email)
         {
             try
             {
-                AirlineCompany company = await _service.GetCompany(id);
+                AirlineCompany company = await _service.GetCompany(email);
                 return company;
             }
             catch (Exception e)
@@ -57,7 +58,7 @@ namespace ReservationAPI.Controllers
         [Route("UpdateCompanyInfo")]
         public async Task<bool> UpdateCompanyInfo(AirlineCompany company)
         {
-            if(await _service.UpdateProfile(company))
+            if(await _service.UpdateCompanyInfo(company))
             {
                 return true;
             }
@@ -65,8 +66,9 @@ namespace ReservationAPI.Controllers
         }
         #endregion
 
-        #region Destinations
-        //Add api/Airlines/AddDestinations
+
+        #region DESTINATIONS
+        
         [HttpPost]
         [Route("AddDestinations")]
         public async Task<object> AddDestination([FromBody]AddDestinationViewModel data)
@@ -99,6 +101,18 @@ namespace ReservationAPI.Controllers
         public async Task<bool> DeleteDestination(long id)
         {
             return await _service.DeleteDestination(id);
+        }
+        #endregion
+
+        #region FLIGHTS
+        [HttpPut]
+        [Route("CreateFlight")]
+        public async Task<object> CreateFlight(Flight flight)
+        {
+            if(await _service.CreateFlight(flight))
+                return Ok("Flight successfully created!");
+
+            return Unauthorized();
         }
         #endregion
     }

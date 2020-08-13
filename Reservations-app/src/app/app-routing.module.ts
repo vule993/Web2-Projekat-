@@ -44,7 +44,7 @@ import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/cre
 import { MailConfirmationComponent } from "./content/mail-confirmation/mail-confirmation.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "", redirectTo: "companies/airlines", pathMatch: "full" },
 
   { path: "home", component: HomeComponent },
   { path: "login", component: LoginComponent },
