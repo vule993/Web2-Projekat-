@@ -50,7 +50,7 @@ namespace ReservationAPI.Controllers
         public async Task<Object> PostUser(UserModel model)
         {
             model.Status = "User";
-            model.Status = "Admin";
+            //model.Status = "Admin";
             var newUser = new User()
             {
                 UserName = model.Email,
@@ -406,6 +406,30 @@ namespace ReservationAPI.Controllers
         }
 
 
+        [HttpGet]
+        [Route("Friends/{email}")]
+        public async Task<object> GetAllFriends(String email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            List<UserModel> friends = new List<UserModel>();
+
+            foreach(var friend in user.Friends)
+            {
+                friends.Add(new UserModel()
+                {
+                    FirstName = friend.FirstName,
+                    LastName = friend.FirstName,
+                    Email = friend.FirstName,
+                    Street = friend.FirstName,
+                    Image = friend.FirstName,
+                    City = friend.FirstName,
+                    PhoneNumber = friend.FirstName,
+                    Status = friend.FirstName
+                });
+            }
+
+            return friends;
+        }
 
         //***************** HELPERS ******************
 

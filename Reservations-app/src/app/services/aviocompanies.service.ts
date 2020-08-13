@@ -13,9 +13,12 @@ export class AviocompaniesService {
   readonly baseURL = "http://localhost:5000/api/";
   constructor(private httpClient: HttpClient) {}
 
-  addAvioCompany(company: AirlineCompany) {}
-  removeAvioCompany(companyId: number) {}
-
+  updateCompany(avioCompany: AirlineCompany) {
+    return this.httpClient.put(
+      this.baseURL + "Airlines/UpdateCompanyInfo",
+      avioCompany
+    );
+  }
   getCompany(id: string = "1") {
     return this.httpClient.get(this.baseURL + "Airlines/GetCompany/" + id);
   }

@@ -2,32 +2,49 @@
   <div class="form-group">
     <div class="username-icon"></div>
     <input
+      id="companyName"
       type="text"
       class="form-control"
       placeholder="Company name"
       value="{{ company == null ? '' : company.name }}"
     />
   </div>
-  <div class="form-group">
-    <div class="username-icon"></div>
+  <div class="form-group overflow-hidden">
     <input
+      id="street"
       type="text"
-      class="form-control"
+      class="form-control short-input short-margin fleft"
+      placeholder="Address"
+      value="{{
+        company == null || company.address == null ? '' : company.address.street
+      }}"
+    />
+
+    <input
+      id="city"
+      type="text"
+      class="form-control short-input short-margin fleft"
+      placeholder="Address"
+      value="{{
+        company == null || company.address == null ? '' : company.address.city
+      }}"
+    />
+    <input
+      id="country"
+      type="text"
+      class="form-control short-input fleft"
       placeholder="Address"
       value="{{
         company == null || company.address == null
           ? ''
-          : company.address.street +
-            ', ' +
-            company.address.city +
-            ', ' +
-            company.address.country
+          : company.address.country
       }}"
     />
   </div>
 
   <div class="form-group">
     <textarea
+      id="description"
       class="form-control"
       placeholder="Promo description"
       value="{{ company == null ? '' : company.description }}"
@@ -35,6 +52,8 @@
   </div>
 
   <div class="form-group">
-    <button class="btn btn-success fright">Save info</button>
+    <button (click)="saveInfo()" class="btn btn-success fright">
+      Save info
+    </button>
   </div>
 </div>

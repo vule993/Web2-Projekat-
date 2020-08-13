@@ -34,22 +34,21 @@
       <div class="fleft">
         <img src="../../../assets/site/icons/mail-white.png" />
       </div>
-      <div>vule993@outlook.com</div>
+      <div>{{ currentUser.email }}</div>
     </div>
     <div class="info-item">
       <div class="fleft">
         <img src="../../../assets/site/icons/location-white.png" />
       </div>
       <div>
-        Ulica pobijenih antisrpskih politicara i obesenih za jaja na Terazijama
-        11. Novi Beograd
+        {{ currentUser.street + ", " + currentUser.city }}
       </div>
     </div>
     <div class="info-item">
       <div class="fleft">
         <img src="../../../assets/site/icons/phone-white.png" />
       </div>
-      <div>065/523-0691</div>
+      <div>{{ currentUser.phoneNumber }}</div>
     </div>
   </div>
 

@@ -43,7 +43,7 @@ import { CreateCarCompanyComponent } from "./content/admin-panel/head-admin/crea
 import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/create-avio-company/create-avio-company.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "", redirectTo: "companies/airlines", pathMatch: "full" },
 
   { path: "home", component: HomeComponent },
   { path: "login", component: LoginComponent },
