@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(["car"]);
       }
       if (this.currentUser.status == "AvioAdmin") {
-        this.router.navigate(["avio"]);
+        //this.router.navigate(["avio"]);
       }
 
       //dodati i ostalo

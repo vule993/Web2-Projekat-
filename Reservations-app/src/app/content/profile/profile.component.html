@@ -34,21 +34,25 @@
       <div class="fleft">
         <img src="../../../assets/site/icons/mail-white.png" />
       </div>
-      <div>{{ currentUser.email }}</div>
+      <div>{{ currentUser != null ? currentUser.email : "" }}</div>
     </div>
     <div class="info-item">
       <div class="fleft">
         <img src="../../../assets/site/icons/location-white.png" />
       </div>
       <div>
-        {{ currentUser.street + ", " + currentUser.city }}
+        {{
+          currentUser != null
+            ? currentUser.street + ", " + currentUser.city
+            : ""
+        }}
       </div>
     </div>
     <div class="info-item">
       <div class="fleft">
         <img src="../../../assets/site/icons/phone-white.png" />
       </div>
-      <div>{{ currentUser.phoneNumber }}</div>
+      <div>{{ currentUser != null ? currentUser.phoneNumber : "" }}</div>
     </div>
   </div>
 
