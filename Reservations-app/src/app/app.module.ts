@@ -83,6 +83,7 @@ export function provideConfig() {
 import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-panel.component";
 import { CreateCarCompanyComponent } from "./content/admin-panel/head-admin/create-car-company/create-car-company.component";
 import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/create-avio-company/create-avio-company.component";
+import { MailConfirmationComponent } from './content/mail-confirmation/mail-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/cre
     CarReservationComponent,
     ProfilePanelComponent,
     CreateCarCompanyComponent,
-    CreateAvioCompanyComponent
+    CreateAvioCompanyComponent,
+    MailConfirmationComponent
   ],
   imports: [
     BrowserModule,

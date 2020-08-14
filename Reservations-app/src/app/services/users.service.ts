@@ -73,4 +73,16 @@ export class UsersService {
 
     return isMatch;
   }
+
+  confirmEmail(email: string) {
+    const options = {
+      headers: new HttpHeaders().append("Content-Type", "application/json")
+    };
+
+    return this.httpClient
+      .post<string>(this.baseURL + "/User/ConfirmEmail", {
+        email
+      })
+      .toPromise();
+  }
 }

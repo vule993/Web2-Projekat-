@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -29,19 +30,21 @@ namespace ReservationAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
         private UserManager<User> _userManager;
         private readonly ApplicationSettings _appSettings;
-        private IConfiguration _config;
         private ApplicationDbContext _context;
+        private IMailService _emailSender;
 
-        public UserController(UserManager<User> userManager, ApplicationDbContext context, IMailService emailService, IConfiguration config, IOptions<ApplicationSettings> appSettings)
+        public UserController(UserManager<User> userManager, ApplicationDbContext context, IConfiguration config, IOptions<ApplicationSettings> appSettings, IMailService emailSender)
         {
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _context = context;
-            _config = config;
+            _emailSender = emailSender;
         }
+
+
+        #region Register and login operations
 
         //POST : /api/User/Register
         [HttpPost]
@@ -72,7 +75,10 @@ namespace ReservationAPI.Controllers
                 if (result.Succeeded)
                 {
                     var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    var confirmationLink = "";
+                    string subject = "Confirm Email";
+                    string body = $"<p>For: {model.Email}</p><a href=\"http://localhost:4200/ConfirmEmail/{model.Email}\">Confirm Email</a>";
+
+                    await SendEmail(newUser.Email);
                 }
 
                 var roleResult = await _userManager.AddToRoleAsync(newUser, model.Status);
@@ -94,6 +100,11 @@ namespace ReservationAPI.Controllers
         {
             //use usemanager to check if we have user with given username
             var user = await _userManager.FindByNameAsync(model.Email);
+
+            if (!user.EmailConfirmed)
+            {
+                return BadRequest(new { Message = "Email is not confirmed!" });
+            }
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -245,6 +256,25 @@ namespace ReservationAPI.Controllers
         }
 
 
+        // api/User/ConfirmEmail
+        [HttpPost]
+        [Route("ConfirmEmail")]
+        public async Task<object> ConfirmEmail(LoginModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+                return BadRequest(new { Message = "Incorrect email." });
+
+            user.EmailConfirmed = true;
+            await _userManager.UpdateAsync(user);
+
+            return Ok();
+        }
+
+        #endregion
+
+        #region Basic Crud operations on User
 
         //GET /api/User/id -> id=email
         [HttpGet("{id}")]
@@ -405,6 +435,7 @@ namespace ReservationAPI.Controllers
 
         }
 
+        #endregion
 
         [HttpGet]
         [Route("Friends/{email}")]
@@ -433,5 +464,12 @@ namespace ReservationAPI.Controllers
 
         //***************** HELPERS ******************
 
+        private Task SendEmail(string email)
+        {
+            string subject = "Please confirm your Email";
+            string body = $"<p>For: {email}</p><a href=\"http://localhost:4200/ConfirmEmail/{email}\">Confirm Email</a>";
+
+            return _emailSender.SendEmailAsync(email, subject, body);
+        }
     }
 }
