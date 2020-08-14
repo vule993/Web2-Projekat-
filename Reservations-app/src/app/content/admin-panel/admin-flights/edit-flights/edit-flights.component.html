@@ -3,7 +3,7 @@
     <input
       type="text"
       autocomplete="off"
-      id="departTime"
+      id="startDate"
       class="form-control search-field departTime short-input short-margin fleft"
       placeholder="Start date"
     />
@@ -11,7 +11,7 @@
     <input
       type="text"
       autocomplete="off"
-      id="departTime"
+      id="startTime"
       class="form-control search-field departTime short-input short-margin fleft"
       placeholder="Start time"
     />
@@ -19,7 +19,7 @@
     <input
       type="text"
       autocomplete="off"
-      id="returnTime"
+      id="returnDate"
       class="form-control search-field returnTime short-input short-margin fleft"
       placeholder="Return date"
     />
@@ -35,6 +35,7 @@
 
   <div class="form-group overflow-hidden">
     <input
+      id="estimationTime"
       type="text"
       class="form-control short-input short-margin fleft"
       placeholder="Flight esimation time"
@@ -42,20 +43,21 @@
     />
 
     <input
+      id="distance"
       type="text"
       class="form-control short-input short-margin fleft"
       placeholder="Distance"
       value=""
     />
 
-    <select class="form-control short-input short-margin fleft">
+    <select id="discount" class="form-control short-input short-margin fleft">
       <option value="0">Select discount</option>
       <option *ngFor="let discount of allDiscounts" value="{{ discount }}"
         >{{ discount }}%</option
       >
     </select>
 
-    <select class="form-control short-input fleft">
+    <select id="planeType" class="form-control short-input fleft">
       <option value="0">Select plane type</option>
       <option
         *ngFor="let seatConfiguration of allSeatConfigurations"
@@ -68,13 +70,16 @@
   <div class="form-group">
     <h6>Check flight destinations:</h6>
     <div *ngFor="let destination of allDestinations" class="fleft checkbox">
-      <span><input type="checkbox" value="{{ destination.id }}" /></span>
+      <span
+        ><input type="checkbox" name="stops" value="{{ destination.id }}"
+      /></span>
       <span>{{ destination.info() }}</span>
     </div>
   </div>
 
   <div class="form-group">
     <input
+      id="price"
       type="text"
       class="form-control"
       placeholder="Flight price"

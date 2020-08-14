@@ -67,6 +67,8 @@ namespace ReservationAPI.Controllers
         #endregion
 
 
+
+
         #region DESTINATIONS
         
         [HttpPost]
@@ -104,6 +106,9 @@ namespace ReservationAPI.Controllers
         }
         #endregion
 
+
+
+
         #region FLIGHTS
         [HttpPut]
         [Route("CreateFlight")]
@@ -115,5 +120,32 @@ namespace ReservationAPI.Controllers
             return Unauthorized();
         }
         #endregion
+
+
+
+        #region SEAT CONFIGURATIONS
+
+        [HttpGet]
+        [Route("GetAllSeatConfigurations")]
+        public async Task<IEnumerable<SeatConfiguration>> GetAllSeatConfigurations()
+        {
+            return await _service.GetAllSeatConfigurations();
+        }
+
+        [HttpGet]
+        [Route("GetSeatConfiguration")]
+        public async Task<object> GetSeatConfiguration(string id)
+        {
+            return await _service.GetSeatConfiguration(id);
+        }
+
+        [HttpPut]
+        [Route("CreateSeatConfiguration")]
+        public async Task<bool> CreateSeatConfiguration(SeatConfiguration seatConfiguration)
+        {
+            return await _service.CreateSeatConfiguration(seatConfiguration);
+        }
+        #endregion
+
     }
 }

@@ -35,20 +35,7 @@ export class ReservationService {
             132,
             ""
           ),
-          new Destination(
-            1,
-            "Nikola Tesla",
-            "Belgrade",
-            "Serbia",
-            "Neznanog junaka jebem li ga 1/1"
-          ),
-          new Destination(
-            2,
-            "Heathrow",
-            "London",
-            "UK",
-            "Some bloody address 1/1"
-          ),
+
           "06-June-2020",
           "09-June-2020",
           "10:00",
@@ -107,20 +94,7 @@ export class ReservationService {
             132,
             ""
           ),
-          new Destination(
-            2,
-            "Heathrow",
-            "London",
-            "UK",
-            "Some bloody address 1/1"
-          ),
-          new Destination(
-            1,
-            "Nikola Tesla",
-            "Belgrade",
-            "Serbia",
-            "Neznanog junaka jebem li ga 1/1"
-          ),
+
           "09-June-2020",
           "12-June-2020",
           "15:00",

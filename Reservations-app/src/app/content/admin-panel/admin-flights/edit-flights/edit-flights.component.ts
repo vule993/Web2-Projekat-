@@ -26,13 +26,14 @@ export class EditFlightsComponent implements OnInit {
 
   //data necessary to create flight
   avioCompany: AirlineCompany;
-  stops: Destination[]; //presedanja
+  flightStops: Destination[] = []; //presedanja
 
   constructor(
     private destinationsService: DestinationsService,
     private discountsData: DiscountService,
-    private seatConfigurationsData: SeatsConfigService,
-    private _avioCompanyService: AviocompaniesService
+    private seatConfigurationsService: SeatsConfigService,
+    private _avioCompanyService: AviocompaniesService,
+    private _flightService: FlightsService
   ) {}
 
   ngOnInit(): void {
@@ -54,17 +55,22 @@ export class EditFlightsComponent implements OnInit {
       (allDiscounts) => (this.allDiscounts = allDiscounts)
     );
 
-    this.allSeatConfigurations = this.seatConfigurationsData.loadAllSeatConfigurations();
+    this.seatConfigurationsService
+      .getAllSeatConfigurations()
+      .subscribe(
+        (allSeatConfigurations) =>
+          (this.allSeatConfigurations = allSeatConfigurations)
+      );
 
     this.departCalendar = $(function () {
-      $("#departTime").datepicker({
+      $("#startDate").datepicker({
         format: "dd-MM-yyyy",
         autoclose: true,
       });
     });
 
     this.returnCalendar = $(function () {
-      $("#returnTime").datepicker({
+      $("#returnDate").datepicker({
         format: "dd-MM-yyyy",
         autoclose: true,
       });
@@ -76,28 +82,42 @@ export class EditFlightsComponent implements OnInit {
   }
 
   createFlight() {
+    let destinationIds = [];
+    $("input:checkbox[name=stops]:checked").each(function () {
+      destinationIds.push($(this).val());
+    });
+
+    for (let i = 0; i < destinationIds.length; i++) {
+      let destination = this.allDestinations.find(
+        (d) => d.id == destinationIds[i]
+      );
+      this.flightStops.push(destination);
+    }
+
     //TREBA NAPRAVITI SEAT CONFIG GET, GET ALL, PUT metode i izvuci ovde trazenu preko servisa
     let planeTypeName = $("#planeType").val();
     //
-    let planeType: SeatConfiguration;
+    let planeType: SeatConfiguration = this.allSeatConfigurations.find(
+      (element) => element.name == planeTypeName
+    );
 
     let flight = new Flight(
       0,
       this.avioCompany,
-      this.stops[0],
-      this.stops[this.stops.length - 1],
       $("#startDate").val(),
       $("#returnDate").val(),
       $("#startTime").val(),
       $("#endTime").val(),
       $("#distance").val(),
       $("#estimationTime").val(),
-      $("#discount").val(),
+      5,
       planeType,
-      this.stops,
-      $("#otherServices").val(),
+      this.flightStops,
+      "",
       $("#price").val(),
-      $("#luggage").val()
+      ""
     );
+
+    this._flightService.createFlight(flight).subscribe();
   }
 }

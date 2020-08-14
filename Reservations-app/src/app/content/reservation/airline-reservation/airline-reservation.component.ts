@@ -15,7 +15,7 @@ declare var $: any;
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
-  styleUrls: ["./airline-reservation.component.css"]
+  styleUrls: ["./airline-reservation.component.css"],
 })
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter();
@@ -34,14 +34,15 @@ export class AirlineReservationComponent implements OnInit {
 
   finish() {
     //load specific car reservations based on a airline reservation...
-    let destination = this.reservation.airlineReservation.flight
-      .endingDestination;
+    let destination = this.reservation.airlineReservation.flight.destinations[
+      this.reservation.airlineReservation.flight.destinations.length - 1
+    ];
     let startDate = this.reservation.airlineReservation.flight.startDate;
     let d1 = new Date(startDate);
     let endDate = this.reservation.airlineReservation.flight.returnDate;
     let d2 = new Date(endDate);
 
-    this.reservationService.carReservations.forEach(cr => {
+    this.reservationService.carReservations.forEach((cr) => {
       let carStartDate = new Date(cr.startDate);
       let carEndDate = new Date(cr.endDate);
       if (
@@ -61,7 +62,7 @@ export class AirlineReservationComponent implements OnInit {
     $("#finish").slideDown(1200);
     $("html, body").animate(
       {
-        scrollTop: $("#finish").offset().top
+        scrollTop: $("#finish").offset().top,
       },
       1200
     );
@@ -96,33 +97,31 @@ export class AirlineReservationComponent implements OnInit {
       }
     }
     this.selectedSeatsNo = this.selectedSeats.filter(
-      seat => seat.passenger == null
+      (seat) => seat.passenger == null
     ).length;
   }
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(users => (this.users = users));
+    this.userService.getAllUsers().subscribe((users) => (this.users = users));
     //this.users = this.userService.getAllUsers();
 
-    $(window).resize(function() {
-      let h = +$("#seat-picker")
-        .css("height")
-        .split("px")[0];
+    $(window).resize(function () {
+      let h = +$("#seat-picker").css("height").split("px")[0];
 
       $("#friends-selector").css({ height: h + "px" });
       $(".friends").css({ height: h - 100 + "px" });
       $("html, body").animate(
         {
-          scrollTop: $("#proceed").offset().top
+          scrollTop: $("#proceed").offset().top,
         },
         1200
       );
     });
 
-    this.selectedSeatService.selectedSeats.subscribe(allSeats => {
+    this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
       this.selectedSeats = allSeats;
       if (allSeats != null)
         this.selectedSeatsNo = this.selectedSeats.filter(
-          seat => seat.passenger == null
+          (seat) => seat.passenger == null
         ).length;
     });
   }

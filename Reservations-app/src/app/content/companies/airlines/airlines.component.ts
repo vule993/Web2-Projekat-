@@ -53,15 +53,16 @@ export class AirlinesComponent implements OnInit {
     if ($("#startingAirport").val() != "") {
       this.allReservationsToShow = this.allReservationsToShow.filter(
         (reservation) =>
-          reservation.airlineReservation.flight.startingDestination
-            .airportName === $("#startingAirport").val()
+          reservation.airlineReservation.flight.destinations[0].airportName ===
+          $("#startingAirport").val()
       );
     }
     if ($("#endingAirport").val() != "") {
       this.allReservationsToShow = this.allReservationsToShow.filter(
         (reservation) =>
-          reservation.airlineReservation.flight.endingDestination
-            .airportName === $("#endingAirport").val()
+          reservation.airlineReservation.flight.destinations[
+            reservation.airlineReservation.flight.destinations.length - 1
+          ].airportName === $("#endingAirport").val()
       );
     }
     this.allReservationsPreFilter = this.allReservationsToShow;
@@ -73,7 +74,7 @@ export class AirlinesComponent implements OnInit {
     if ($("#company").val() != "") {
       this.allReservationsToShow = this.allReservationsToShow.filter(
         (reservation) =>
-          reservation.airlineReservation.flight.company.name ===
+          reservation.airlineReservation.flight.avioCompany.name ===
           $("#company").val()
       );
     }

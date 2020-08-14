@@ -135,5 +135,43 @@ namespace ReservationAPI.Services
 
 
 
+        #region SEAT CONFIGURATIONS
+
+        public async Task<IEnumerable<SeatConfiguration>> GetAllSeatConfigurations()
+        {
+            return await _context.SeatConfiguration.ToListAsync();
+        }
+
+        public async Task<SeatConfiguration> GetSeatConfiguration(string id)
+        {
+            return  (await _context.SeatConfiguration.ToListAsync()).FirstOrDefault(x=>x.Id == Int64.Parse(id));
+        }
+
+        public async Task<bool> CreateSeatConfiguration(SeatConfiguration seatConfiguration)
+        {
+            try
+            {
+                _context.SeatConfiguration.Add(seatConfiguration);
+                await _context.SaveChangesAsync();
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        public Task<bool> DeleteSeatConfiguration(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        
+
+        #endregion
+
+
+
+
+
     }
 }

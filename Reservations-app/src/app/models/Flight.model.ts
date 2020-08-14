@@ -5,9 +5,7 @@ import { SeatConfiguration } from "./Seat-configuration.model";
 export class Flight {
   constructor(
     public id: number,
-    public company: AirlineCompany,
-    public startingDestination: Destination,
-    public endingDestination: Destination,
+    public avioCompany: AirlineCompany,
     public startDate: string,
     public returnDate: string,
     public startTime: string,

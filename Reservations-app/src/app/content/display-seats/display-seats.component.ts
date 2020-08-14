@@ -62,7 +62,11 @@ export class DisplaySeatsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.selectedSeatService.setSelectedSeats([]);
-    this.data.currentData.subscribe((data) => this.seatsDataHandler(data));
+
+    this.data.currentData.subscribe((data) => {
+      this.formValues = data;
+      this.displayChanges();
+    });
 
     if (this.currentSeatConfiguration != undefined) {
       //ako ih samo prikazujem
@@ -85,8 +89,4 @@ export class DisplaySeatsComponent implements OnInit {
       });
     }
   }
-  seatsDataHandler = function (data) {
-    this.formValues = data;
-    this.displayChanges();
-  };
 }

@@ -87,11 +87,11 @@
       <div>
         <h6>Aviocompany</h6>
         <a
-          routerLink="/companies/airlines/{{reservation.airlineReservation.flight.company.id}"
+          routerLink="/companies/airlines/{{reservation.airlineReservation.flight.aviocompany.id}"
         >
           <span>
             <img src="../../../../assets/site/icons/plane.png" alt="" />
-            {{ reservation.airlineReservation.flight.company.name }}
+            {{ reservation.airlineReservation.flight.avioCompany.name }}
           </span>
         </a>
       </div>
@@ -99,7 +99,7 @@
         <h6>Aviocompany rating</h6>
         <span>
           <img src="../../../../assets/site/icons/like.png" alt="" />
-          {{ reservation.airlineReservation.flight.company.likes }}
+          {{ reservation.airlineReservation.flight.avioCompany.likes }}
         </span>
       </div>
       <div>
@@ -107,15 +107,17 @@
         <span>
           <img src="../../../../assets/site/icons/connected.png" alt="" />
           {{
-            reservation.airlineReservation.flight.startingDestination
-              .airportName
+            reservation.airlineReservation.flight.destinations[0].airportName
           }}
           -
           {{
-            reservation.airlineReservation.flight.endingDestination.airportName
+            reservation.airlineReservation.flight.destinations[
+              reservation.airlineReservation.flight.destinations.length - 1
+            ].airportName
           }}
         </span>
       </div>
+
       <!-- {{ isFinished ? "true" : "false" }} -->
     </div>
 

@@ -11,7 +11,7 @@ declare var $: any;
   styleUrls: ["./edit-seats.component.css"],
 })
 export class EditSeatsComponent implements OnInit {
-  allSeatConfigurations: SeatConfiguration[];
+  allSeatConfigurations;
   //OVAJ TREBA DA EMITUJE
   row_no = 0;
   seats_per_row = 0;
@@ -31,7 +31,6 @@ export class EditSeatsComponent implements OnInit {
   rows = [];
 
   constructor(private seatService: SeatsConfigService) {
-    this.allSeatConfigurations = seatService.loadAllSeatConfigurations();
     this.elementNumber = seatService.getSeatConfigurationNumber();
   }
 
@@ -116,21 +115,22 @@ export class EditSeatsComponent implements OnInit {
 
   saveSeatConfiguration() {
     if (this.validate()) {
-      this.seatService.addSeatConfig(
-        new SeatConfiguration(
-          SeatConfiguration.count + 1,
-          this.configurationName,
-          this.formValues[0],
-          this.formValues[1],
-          this.formValues[2],
-          this.formValues[3],
-          this.formValues[4],
-          this.formValues[5],
-          []
-        )
+      let seatConfiguration = new SeatConfiguration(
+        0,
+        this.configurationName,
+        this.formValues[0],
+        this.formValues[1],
+        this.formValues[2],
+        this.formValues[3],
+        this.formValues[4],
+        this.formValues[5],
+        []
       );
-      this.elementNumber = this.seatService.getSeatConfigurationNumber();
-      this.allSeatConfigurations = this.seatService.loadAllSeatConfigurations();
+
+      this.seatService.createSeatConfiguration(seatConfiguration).subscribe();
+      this.allSeatConfigurations.push(seatConfiguration);
+      //this.elementNumber = this.seatService.getSeatConfigurationNumber();
+      //this.allSeatConfigurations = this.seatService.getAllSeatConfigurations();
       $(".message")[0].innerText = "Config saved!";
       $(".alert").removeClass("alert-danger").addClass("alert-success");
     } else {
@@ -198,11 +198,17 @@ export class EditSeatsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.seatService.currentData.subscribe((data) => this.loadData(data));
+    this.seatService
+      .getAllSeatConfigurations()
+      .subscribe((allSeatConfigurations) => {
+        this.allSeatConfigurations = allSeatConfigurations;
+        this.elementNumber = (allSeatConfigurations as SeatConfiguration[]).length;
+      });
+
+    this.seatService.currentData.subscribe((data) => {
+      this.formValues = data;
+      this.elementNumber = this.seatService.getSeatConfigurationNumber();
+      //this.allSeatConfigurations = this.seatService.getAllSeatConfigurations();
+    });
   }
-  loadData = function (data) {
-    this.formValues = data;
-    this.elementNumber = this.data.getSeatConfigurationNumber();
-    this.allSeatConfigurations = this.data.loadAllSeatConfigurations();
-  };
 }

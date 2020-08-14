@@ -40,7 +40,7 @@ export class AirlineCompanyProfileComponent implements OnInit {
   getReservationsWithDiscount(): Reservation[] {
     return this.allReservatons.filter((reservation) => {
       if (this.currentCompany != null) {
-        reservation.airlineReservation.flight.company.name ===
+        reservation.airlineReservation.flight.avioCompany.name ===
           this.currentCompany.name &&
           reservation.airlineReservation.flight.discount != 0;
       }

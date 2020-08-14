@@ -15,16 +15,23 @@ namespace ReservationAPI.Models.Interfaces
         #endregion
 
 
-        #region Destinations
+        #region DESTINATIONS
         Task<bool> CreateDestination(AirlineCompany id, Destination destination);
         Task<IEnumerable<Destination>> GetDestinations();
         Task<Destination> GetDestination(string id);
         Task<bool> DeleteDestination(long id);
         #endregion
 
-        #region Flights
+        #region FLIGHTS
         Task<bool> CreateFlight(Flight flight);
         Task<bool> DeleteFlight(long id);
+        #endregion
+
+        #region SEAT CONFIGURATIONS
+        Task<IEnumerable<SeatConfiguration>> GetAllSeatConfigurations();
+        Task<SeatConfiguration> GetSeatConfiguration(string id);
+        Task<bool> CreateSeatConfiguration(SeatConfiguration seatConfiguraiton);
+        Task<bool> DeleteSeatConfiguration(long id);
         #endregion
     }
 }

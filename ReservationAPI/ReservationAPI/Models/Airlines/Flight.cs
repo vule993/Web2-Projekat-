@@ -8,9 +8,7 @@ namespace ReservationAPI.Models.Airlines
     public class Flight
     {
         public long Id { get; set; }
-        public virtual AirlineCompany AvioCompany { get; set; }
-        public virtual Destination StartingDestination { get; set; }
-        public virtual Destination EndingDestination { get; set; }
+        public virtual AirlineCompany AvioCompany { get; set; } 
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string StartTime { get; set; }
