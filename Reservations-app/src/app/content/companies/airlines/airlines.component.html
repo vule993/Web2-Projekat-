@@ -149,10 +149,10 @@
           <img src="../../../../assets/site/icons/plane.png" alt="" />
           <a
             routerLink="/companies/airlines/{{
-              reservation.airlineReservation.flight.company.id
+              reservation.airlineReservation.flight.avioCompany.id
             }}"
           >
-            {{ reservation.airlineReservation.flight.company.name }}
+            {{ reservation.airlineReservation.flight.avioCompany.name }}
           </a>
         </span>
       </div>
@@ -161,12 +161,13 @@
         <span>
           <img src="../../../../assets/site/icons/connected.png" alt="" />
           {{
-            reservation.airlineReservation.flight.startingDestination
-              .airportName
+            reservation.airlineReservation.flight.destinations[0].airportName
           }}
           -
           {{
-            reservation.airlineReservation.flight.endingDestination.airportName
+            reservation.airlineReservation.flight.destinations[
+              reservation.airlineReservation.flight.destinations.length - 1
+            ].airportName
           }}
         </span>
       </div>
