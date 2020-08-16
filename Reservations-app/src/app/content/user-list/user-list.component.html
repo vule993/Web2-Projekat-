@@ -1,0 +1,51 @@
+<div id="panel-wrapper" class="overflow-hidden">
+  <div id="user-list">
+    <h3>
+      Search for user
+    </h3>
+    <div id="filter">
+      <input
+        class="form-control"
+        id="typed"
+        placeholder="Enter name, surname or email..."
+        (input)="findUser($event.target.value)"
+      />
+      <img src="../../../assets/site/icons/search.png" />
+    </div>
+    <!---->
+    <div class="results overflow-auto">
+      <div
+        *ngFor="let user of filteredUsers; let i = index"
+        class="list-group-item overflow-hidden"
+      >
+        <div class="fleft">
+          <div class="fleft">{{ i + 1 }}.</div>
+          <div class="fleft image">
+            <img src="{{ user.image }}" />
+          </div>
+          <div class="name fleft">
+            {{ user.firstName + " " + user.lastName }}
+          </div>
+        </div>
+        <div class="fleft">{{ user.status }}</div>
+        <div class="fleft">
+          {{ user.city }}
+        </div>
+        <div class="fright">
+          <button
+            *ngIf="isFriend(user.email); else remove"
+            class="btn btn-success"
+            (click)="removeFriend(user.email)"
+          >
+            Remove friend
+          </button>
+          <ng-template #remove>
+            <button (click)="addFriend(user.email)" class="btn btn-success">
+              Add friend
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

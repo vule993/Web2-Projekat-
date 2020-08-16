@@ -1,6 +1,6 @@
 export class Destination {
   constructor(
-    public id,
+    public id: number,
     public airportName: string,
     public city: string,
     public country: string,

@@ -19,6 +19,36 @@ export class UsersService {
     return a;
   }
 
+  updateUser(user: UserModel) {
+    return this.httpClient.put(this.baseURL + "/User/Update", user);
+  }
+  getUserProfile() {
+    //need to append jwt token into this request -> this is now done in auth.interceptor
+
+    let a = this.httpClient.get<UserModel>(this.baseURL + "/User/Profile");
+    return a;
+  }
+
+  getAllFriends(email: string) {
+    return this.httpClient.get<UserModel[]>(
+      this.baseURL + "/User/Friends/" + email
+    );
+  }
+
+  addFriend(userEmail: string, friendEmail: string) {
+    return this.httpClient.put(this.baseURL + "/User/AddFriend", {
+      UsersEmail: userEmail,
+      FriendsEmail: friendEmail,
+    });
+  }
+
+  removeFriend(userEmail: string, friendEmail: string) {
+    return this.httpClient.put(this.baseURL + "/User/RemoveFriend", {
+      UsersEmail: userEmail,
+      FriendsEmail: friendEmail,
+    });
+  }
+
   registerUser(user: FormModel) {
     //this.allUsers().push(user);
 
@@ -35,21 +65,6 @@ export class UsersService {
       .toPromise();
   }
 
-  updateUser(user: UserModel) {
-    return this.httpClient.put(this.baseURL + "/User/Update", user);
-  }
-  getUserProfile() {
-    //need to append jwt token into this request -> this is now done in auth.interceptor
-
-    let a = this.httpClient.get<UserModel>(this.baseURL + "/User/Profile");
-    return a;
-  }
-
-  getAllFriends(email: string) {
-    return this.httpClient.get<UserModel[]>(
-      this.baseURL + "/User/Friends/" + email
-    );
-  }
   // getLoggedInUser() {
   //   const email = localStorage.getItem(STORAGE_USER_ID_KEY);
   //   return this.httpClient.get<UserModel>(this.baseURL + "/User/Get" + email);
@@ -76,12 +91,12 @@ export class UsersService {
 
   confirmEmail(email: string) {
     const options = {
-      headers: new HttpHeaders().append("Content-Type", "application/json")
+      headers: new HttpHeaders().append("Content-Type", "application/json"),
     };
 
     return this.httpClient
       .post<string>(this.baseURL + "/User/ConfirmEmail", {
-        email
+        email,
       })
       .toPromise();
   }

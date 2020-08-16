@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -101,10 +102,20 @@ namespace ReservationAPI.Controllers
             //use usemanager to check if we have user with given username
             var user = await _userManager.FindByNameAsync(model.Email);
 
-            if (!user.EmailConfirmed)
-            {
-                return BadRequest(new { Message = "Email is not confirmed!" });
-            }
+
+
+
+
+
+            //zakomentarisano za potrebe testiranja
+
+
+
+
+            //if (!user.EmailConfirmed)
+            //{
+            //    return BadRequest(new { Message = "Email is not confirmed!" });
+            //}
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -446,20 +457,88 @@ namespace ReservationAPI.Controllers
 
             foreach(var friend in user.Friends)
             {
+                var role = await _userManager.GetRolesAsync(friend);
+
                 friends.Add(new UserModel()
                 {
                     FirstName = friend.FirstName,
-                    LastName = friend.FirstName,
-                    Email = friend.FirstName,
-                    Street = friend.FirstName,
-                    Image = friend.FirstName,
-                    City = friend.FirstName,
-                    PhoneNumber = friend.FirstName,
-                    Status = friend.FirstName
-                });
+                    LastName = friend.LastName,
+                    Email = friend.Email,
+                    Street = friend.Street,
+                    Image = friend.Image,
+                    City = friend.City,
+                    PhoneNumber = friend.PhoneNumber,
+                    Status = role.FirstOrDefault().ToString()
+                }) ;
             }
 
             return friends;
+        }
+
+
+        [HttpPut]
+        [Route("AddFriend")]
+        public async Task<object> AddFriend(AddFriendViewModel newFriends)
+        {
+            var user = await _userManager.FindByEmailAsync(newFriends.UsersEmail);
+            var friend = await _userManager.FindByEmailAsync(newFriends.FriendsEmail);
+
+            try
+            {
+
+                if (!user.Friends.Contains(friend))
+                {
+                    user.Friends.Add(friend);
+                }
+
+                if (!friend.Friends.Contains(user))
+                {
+                    friend.Friends.Add(user);
+                }
+
+
+                await _context.SaveChangesAsync();
+
+                return new { Message = "Friend successfully added!" };
+            }
+            catch(Exception e)
+            {
+                return new { Message = "Friend unsuccessfully added!" };
+            }
+
+        }
+
+
+        [HttpPut]
+        [Route("RemoveFriend")]
+        public async Task<object> RemoveFriend(AddFriendViewModel unFriends)
+        {
+            var user = await _userManager.FindByEmailAsync(unFriends.UsersEmail);
+            var friend = await _userManager.FindByEmailAsync(unFriends.FriendsEmail);
+
+            try
+            {
+
+                if (user.Friends.Contains(friend))
+                {
+                    user.Friends.Remove(friend);
+                }
+
+                if (friend.Friends.Contains(user))
+                {
+                    friend.Friends.Remove(user);
+                }
+
+
+                await _context.SaveChangesAsync();
+
+                return new { Message = "Friend successfully removed!" };
+            }
+            catch (Exception e)
+            {
+                return new { Message = "Friend unsuccessfully removed!" };
+            }
+
         }
 
         //***************** HELPERS ******************

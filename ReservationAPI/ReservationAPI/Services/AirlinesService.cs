@@ -132,9 +132,6 @@ namespace ReservationAPI.Services
         #endregion
 
 
-
-
-
         #region SEAT CONFIGURATIONS
 
         public async Task<IEnumerable<SeatConfiguration>> GetAllSeatConfigurations()
@@ -168,9 +165,6 @@ namespace ReservationAPI.Services
         
 
         #endregion
-
-
-
 
 
     }

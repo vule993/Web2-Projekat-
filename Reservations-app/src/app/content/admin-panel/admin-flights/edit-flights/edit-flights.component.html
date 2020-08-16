@@ -73,7 +73,15 @@
       <span
         ><input type="checkbox" name="stops" value="{{ destination.id }}"
       /></span>
-      <span>{{ destination.info() }}</span>
+      <span>{{
+        destination.airportName +
+          ", " +
+          destination.address +
+          ", " +
+          destination.city +
+          ", " +
+          destination.country
+      }}</span>
     </div>
   </div>
 

@@ -15,8 +15,13 @@ export class FriendsDataListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAllFriends("vule993@outlook.com").subscribe((data) => {
-      this.friends = data;
-    });
+    // this.userService.getAllFriends("vule993@outlook.com").subscribe((data) => {
+    //   this.friends = data;
+    // });
+    this.userService
+      .getAllFriends(localStorage.getItem("email"))
+      .subscribe((data) => {
+        this.friends = data;
+      });
   }
 }

@@ -84,6 +84,7 @@ import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-p
 import { CreateCarCompanyComponent } from "./content/admin-panel/head-admin/create-car-company/create-car-company.component";
 import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/create-avio-company/create-avio-company.component";
 import { MailConfirmationComponent } from './content/mail-confirmation/mail-confirmation.component';
+import { UserListComponent } from './content/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { MailConfirmationComponent } from './content/mail-confirmation/mail-conf
     ProfilePanelComponent,
     CreateCarCompanyComponent,
     CreateAvioCompanyComponent,
-    MailConfirmationComponent
+    MailConfirmationComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

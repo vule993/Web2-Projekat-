@@ -20,7 +20,7 @@ declare var $: any;
 export class EditFlightsComponent implements OnInit {
   departCalendar: any;
   returnCalendar: any;
-  allDestinations: Destination[] = [];
+  allDestinations;
   allDiscounts;
   allSeatConfigurations;
 
@@ -38,17 +38,7 @@ export class EditFlightsComponent implements OnInit {
 
   ngOnInit(): void {
     this.destinationsService.getAll().subscribe((destinations) => {
-      (destinations as Destination[]).forEach((destination) => {
-        this.allDestinations.push(
-          new Destination(
-            destination.id,
-            destination.airportName,
-            destination.city,
-            destination.country,
-            destination.airportName
-          )
-        );
-      });
+      this.allDestinations = destinations;
     });
 
     this.discountsData.allDiscounts.subscribe(
