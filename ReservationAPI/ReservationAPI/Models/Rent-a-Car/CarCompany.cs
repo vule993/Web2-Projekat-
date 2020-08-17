@@ -16,5 +16,10 @@ namespace ReservationAPI.Models.Rent_a_Car
         public string Thumbnail { get; set; }
         public virtual List<Car> Cars { get; set; }
         public string Admin { get; set; } //email car admina
+
+        public CarCompany()
+        {
+            Cars = new List<Car>();
+        }
     }
 }

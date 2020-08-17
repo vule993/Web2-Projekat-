@@ -21,7 +21,8 @@ export class EditCarProfileComponent implements OnInit {
       .getAdminCarCompany(localStorage.getItem("userId"))
       .subscribe(data => {
         this.carCompany = data as CarCompany;
+        this.dataLoaded = true;
+        localStorage.setItem("carCompanyId", this.carCompany.id + "");
       });
-    this.dataLoaded = true;
   }
 }

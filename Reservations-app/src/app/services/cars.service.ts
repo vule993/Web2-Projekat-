@@ -13,7 +13,6 @@ export class CarsService {
 
   private cars: Car[] = [
     new Car(
-      0,
       "brand new ferary",
       "Ferari",
       2020,
@@ -25,7 +24,6 @@ export class CarsService {
       false
     ),
     new Car(
-      1,
       "brand new BMW",
       "BMW",
       2020,
@@ -37,7 +35,6 @@ export class CarsService {
       false
     ),
     new Car(
-      2,
       "super cool Mercedes",
       "Mercedes",
       2019,
@@ -49,7 +46,6 @@ export class CarsService {
       true
     ),
     new Car(
-      3,
       "fast car",
       "BMW i8",
       2019,
@@ -61,7 +57,6 @@ export class CarsService {
       false
     ),
     new Car(
-      4,
       "family car",
       "WW",
       2018,
@@ -73,7 +68,6 @@ export class CarsService {
       false
     ),
     new Car(
-      5,
       "polo",
       "WW",
       2002,
@@ -99,7 +93,7 @@ export class CarsService {
   }
 
   fetchCarCompany(id) {
-    return this.httpClient.get(this.baseURL + "/CarCompany/" + id);
+    return this.httpClient.get(this.baseURL + "/CarCompany" + id);
   }
 
   getCarCompany(index: number) {
@@ -130,10 +124,5 @@ export class CarsService {
       default:
         console.log("wrong input");
     }
-  }
-  //connection to api
-
-  addCar(car: Car) {
-    return this.httpClient.post(this.baseURL + "Car", car);
   }
 }

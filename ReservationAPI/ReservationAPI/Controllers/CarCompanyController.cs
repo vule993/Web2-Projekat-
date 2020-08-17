@@ -99,7 +99,7 @@ namespace ReservationAPI.Controllers
         {
             try
             {
-                await _repository.AddCarToCompany(model.CarId, model.CarCompanyId);
+                await _repository.AddCarToCompany(model.Car.Id, model.CompanyId);
                 return Ok();
             }
             catch(Exception e)

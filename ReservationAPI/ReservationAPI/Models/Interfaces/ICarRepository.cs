@@ -10,12 +10,12 @@ namespace ReservationAPI.Models.Interfaces
     {
         Task<Car> GetCar(long id);
 
-        Task AddCar(long carId, long companyId);
+        Task AddCar(Car car, long companyId);
 
         Task DeleteCar(long id);
 
         Task UpdateCar(Car car);
 
-        Task<IEnumerable<Car>> GetCarOfCompany(long companyID); 
+        Task<IEnumerable<Car>> GetCarsOfCompany(long companyID); 
     }
 }

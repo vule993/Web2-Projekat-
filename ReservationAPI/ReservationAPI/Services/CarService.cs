@@ -19,10 +19,9 @@ namespace ReservationAPI.Services
             _context = context;
         }
 
-        public async Task AddCar(long carId, long companyId)
+        public async Task AddCar(Car car, long companyId)
         {
             var company = await _context.FindAsync<CarCompany>(companyId);
-            var car = await _context.FindAsync<Car>(carId);
 
             company.Cars.Add(car);
             await _context.SaveChangesAsync();
@@ -43,7 +42,7 @@ namespace ReservationAPI.Services
         }
 
         //getCar of some car-company
-        public async Task<IEnumerable<Car>> GetCarOfCompany(long companyID)
+        public async Task<IEnumerable<Car>> GetCarsOfCompany(long companyID)
         {
             var cars = (await _context.CarCompanies.Include(c => c.Cars)
                 .FirstOrDefaultAsync(company => company.Id == companyID)).Cars.ToList();

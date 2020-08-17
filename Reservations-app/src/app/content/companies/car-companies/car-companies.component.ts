@@ -23,6 +23,7 @@ export class CarCompaniesComponent implements OnInit {
   allCars: Car[];
   allReservationsToShow: Reservation[];
   allReservationsPreFilter: Reservation[];
+  resultsLoaded: boolean = false;
   // address: Address;
 
   sliderData = {
@@ -41,6 +42,8 @@ export class CarCompaniesComponent implements OnInit {
     this.reservationService.allReservations.subscribe(
       data => (this.allReservations = data)
     );
+
+    if (this.allReservations.length > 0) this.resultsLoaded = true;
 
     //load cars
     this.allCars = this.carService.getCars();

@@ -44,7 +44,7 @@
     data-toggle="modal"
     data-target="#addCar"
     (click)="AddCarModal()"
-    class="btn btn-info"
+    class="btn btn-info addCarBtn"
   >
     Add New Car
   </button>
@@ -177,7 +177,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCar">Add new car</h5>
+        <h5 class="modal-title text-center" id="addCar">Add new car</h5>
         <button
           type="button"
           class="close"
@@ -189,9 +189,87 @@
       </div>
       <div class="modal-body">
         <div class="tab-content">
-          <form class="form">
-            <!--TODO:create form fields for adding new car-->
-            <p>Dodavanje novog auta</p>
+          <form class="form" [formGroup]="addCarForm" (ngSubmit)="AddNewCar()">
+            <!--Desc, Mark, Year, Seats, Price(per day), Rating, Category, IsReserved = false-->
+            <!--Mark and Desc-->
+            <div>
+              <div class="form-group">
+                <div class="username-icon"></div>
+                <input
+                  id="mark"
+                  type="text"
+                  class="form-control"
+                  formControlName="mark"
+                  placeholder="Mark"
+                  value=""
+                />
+              </div>
+              <div class="form-group">
+                <div class="username-icon"></div>
+                <input
+                  id="description"
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="Description"
+                  value=""
+                />
+              </div>
+            </div>
+            <!--Year and Seats-->
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <div class="mail-icon"></div>
+                <input
+                  id="year"
+                  type="text"
+                  formControlName="year"
+                  class="form-control"
+                  placeholder="Year"
+                  value=""
+                />
+              </div>
+              <div class="form-group col-md-5">
+                <div class="location-icon"></div>
+                <input
+                  id="seats"
+                  type="number"
+                  class="form-control"
+                  formControlName="seats"
+                  placeholder="Number of seats"
+                  value=""
+                />
+              </div>
+
+              <!--Price and category-->
+
+              <div class="form-group col-md-5">
+                <div class="mail-icon"></div>
+                <input
+                  id="price"
+                  type="text"
+                  formControlName="price"
+                  class="form-control"
+                  placeholder="Price per day ($)"
+                  value=""
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <select
+                id="category"
+                [(ngModel)]="selectedOption"
+                name="category"
+                formControlName="category"
+                class="form-control"
+              >
+                <option name="basic" value="Basic">Basic</option>
+                <option name="plus" value="Plus">Plus</option>
+                <option name="pro" value="Pro">Pro</option>
+              </select>
+            </div>
+
+            <!---->
           </form>
         </div>
         <div class="modal-footer">
@@ -199,8 +277,9 @@
             Cancel
           </button>
           <button
-            type="button"
+            type="submit"
             (click)="AddNewCar()"
+            [disabled]="!addCarForm.valid"
             class="btn btn-primary"
             data-dismiss="modal"
           >

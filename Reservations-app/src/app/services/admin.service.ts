@@ -47,13 +47,14 @@ export class AdminService {
     return this.httpClient.put(this.baseURL + "/Admin/ChangeDetails", admin);
   }
 
-  getCarsOfCompany(company: string) {}
-
-  addCarToCompany(carId: number, companyId: number) {
-    return this.httpClient.post<Car>(
-      this.baseURL + "/CarCompany/AddCarToCompany",
-      { carId: carId, companyId: companyId }
+  getCarsOfCompany(companyId: number) {
+    return this.httpClient.get<Car[]>(
+      this.baseURL + "/Car/GetCarsOfCompany/" + companyId
     );
+  }
+
+  addCarToCompany(car: Car, companyId: number) {
+    return this.httpClient.post(this.baseURL + "/Car", { car, companyId });
   }
 
   getAdminCarCompany(admin: string) {

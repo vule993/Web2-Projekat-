@@ -76,8 +76,6 @@ namespace ReservationAPI.Controllers
                 if (result.Succeeded)
                 {
                     var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    string subject = "Confirm Email";
-                    string body = $"<p>For: {model.Email}</p><a href=\"http://localhost:4200/ConfirmEmail/{model.Email}\">Confirm Email</a>";
 
                     await SendEmail(newUser.Email);
                 }

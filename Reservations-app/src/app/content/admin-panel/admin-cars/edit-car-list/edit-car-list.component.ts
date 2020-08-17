@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { CarsService } from "src/app/services/cars.service";
 import { Car } from "src/app/models/car.model";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { CarCompany } from "src/app/models/CarCompany.model";
+import { AdminService } from "src/app/services/admin.service";
 
 @Component({
   selector: "app-edit-car-list",
@@ -10,50 +13,69 @@ import { Car } from "src/app/models/car.model";
 export class EditCarListComponent implements OnInit {
   carToEdit: Car;
   newCar: Car;
+  addCarForm: FormGroup;
+  selectedOption: string;
+  companyId: number = -1;
 
-  companyCars: Car[] = [
-    {
-      id: 1,
-      description:
-        "100kW (136KS), Manuelni 6 brzina, Automatska klima, 4/5 vrata, 5 sedišta",
-      mark: "AUDI A6",
-      year: 2009,
-      seats: 5,
-      price: 8500,
-      rating: 4.2,
-      image: "",
-      category: "basic",
-      isReserved: false
-    },
-    {
-      id: 2,
-      description:
-        "Polovno vozilo Opel Insignia 2018. godište 80.963 km Limuzina Dizel 1598 cm3",
-      mark: "Opel",
-      year: 2018,
-      seats: 5,
-      price: 10000,
-      rating: 4.6,
-      image: "",
-      category: "basic",
-      isReserved: false
-    }
-  ];
+  companyCars: Car[] = [];
 
-  constructor() {
-    this.carToEdit = new Car(-1, "", "", 0, 0, 0, 0, "", "", false);
-    this.newCar = new Car(-1, "", "", 0, 0, 0, 0, "", "", false);
+  constructor(
+    private adminService: AdminService,
+    private toastrService: ToastrService
+  ) {
+    this.carToEdit = new Car("", "", 0, 0, 0, 0, "", "", false);
+    this.newCar = new Car("", "", 0, 0, 0, 0, "", "", false);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initForm();
+
+    this.adminService
+      .getAdminCarCompany(localStorage.getItem("userId"))
+      .subscribe(data => {
+        this.companyId = (data as CarCompany).id;
+      });
+
+    this.loadCars();
+  }
 
   /*****Methods*****/
 
-  //ovde ce se pozivati metoda addCarToCompany() iz adminService-a
+  loadCars() {
+    this.adminService
+      .getCarsOfCompany(+localStorage.getItem("carCompanyId"))
+      .subscribe(data => {
+        this.companyCars = data as Car[];
+      });
+  }
 
   AddCarModal() {}
 
-  AddNewCar() {}
+  AddNewCar() {
+    let car = new Car(
+      this.addCarForm.value["description"],
+      this.addCarForm.value["mark"],
+      +this.addCarForm.value["year"],
+      +this.addCarForm.value["seats"],
+      +this.addCarForm.value["price"],
+      0,
+      "",
+      this.addCarForm.value["category"],
+      false
+    );
+
+    this.companyCars.push(car);
+
+    this.adminService.addCarToCompany(car, this.companyId).subscribe(
+      (res: any) => {
+        this.addCarForm.reset();
+        this.toastrService.success("Successfully added new car", "Car added");
+      },
+      err => {
+        this.toastrService.error("Error while adding a car", "Car not added");
+      }
+    );
+  }
 
   editCarModal(car: Car): void {
     this.carToEdit = car;
@@ -72,5 +94,23 @@ export class EditCarListComponent implements OnInit {
 
   deleteCar() {
     this.companyCars.splice(this.companyCars.indexOf(this.carToEdit));
+  }
+
+  private initForm() {
+    let mark = "";
+    let description = "";
+    let year = "";
+    let seats = "";
+    let price = "";
+    let category = "";
+
+    this.addCarForm = new FormGroup({
+      mark: new FormControl(mark, Validators.required),
+      description: new FormControl(description, Validators.required),
+      year: new FormControl(year, Validators.required),
+      seats: new FormControl(seats, Validators.required),
+      price: new FormControl(price, Validators.required),
+      category: new FormControl(category, Validators.required)
+    });
   }
 }

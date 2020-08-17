@@ -38,7 +38,7 @@
   <select id="company" class="form-control search-field fleft">
     <option value="company">Company</option>
     <option *ngFor="let company of carCompanies" value="{{ company.name }}">
-      {{ company.name }}
+      {{ company.name == null ? "" : company.name }}
     </option>
   </select>
 
@@ -61,7 +61,7 @@
   />
 </div>
 
-<div class="results">
+<div class="results" *ngIf="resultsLoaded">
   <div
     class="result overflow-hidden"
     *ngFor="let reservation of allReservationsToShow"
@@ -84,6 +84,7 @@
         <span>
           <img src="../../../../assets/site/icons/car.png" alt="" />
           {{ reservation.carReservation.carCompany.name }}
+          <!--baca undefined jer sam obrisao zakodirane car kompanije-->
         </span>
 
         <span>
