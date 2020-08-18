@@ -32,41 +32,42 @@ export class AirlineReservationComponent implements OnInit {
     private reservationService: ReservationService
   ) {}
 
-  finish() {
-    //load specific car reservations based on a airline reservation...
-    let destination = this.reservation.airlineReservation.flight.destinations[
-      this.reservation.airlineReservation.flight.destinations.length - 1
-    ];
-    let startDate = this.reservation.airlineReservation.flight.startDate;
-    let d1 = new Date(startDate);
-    let endDate = this.reservation.airlineReservation.flight.returnDate;
-    let d2 = new Date(endDate);
+  // finish() {
+  //   //load specific car reservations based on a airline reservation...
+  //   let destination = this.reservation.airlineReservation.flight.destinations[
+  //     this.reservation.airlineReservation.flight.destinations.length - 1
+  //   ];
+  //   let startDate = this.reservation.airlineReservation.flight.startDate;
+  //   let d1 = new Date(startDate);
+  //   let endDate = this.reservation.airlineReservation.flight.returnDate;
+  //   let d2 = new Date(endDate);
 
-    this.reservationService.carReservations.forEach((cr) => {
-      let carStartDate = new Date(cr.startDate);
-      let carEndDate = new Date(cr.endDate);
-      if (
-        !cr.car.isReserved &&
-        carStartDate <= d1 &&
-        carEndDate >= d2 &&
-        cr.carCompany.city == destination.city
-      ) {
-        this.suggestedCars.push(cr);
-      }
-    });
+  //   this.reservationService.carReservations.forEach((cr) => {
+  //     let carStartDate = new Date(cr.startDate);
+  //     let carEndDate = new Date(cr.endDate);
+  //     if (
+  //       !cr.car.isReserved &&
+  //       carStartDate <= d1 &&
+  //       carEndDate >= d2 &&
+  //       cr.carCompany.city == destination.city
+  //     ) {
+  //       this.suggestedCars.push(cr);
+  //     }
+  //   });
 
-    //send to parent
-    this.event.emit(this.suggestedCars);
+  //   //send to parent
+  //   this.event.emit(this.suggestedCars);
 
-    //ovo ce kada  se klikne na finish da slajduje do njega i da ga prikaze
-    $("#finish").slideDown(1200);
-    $("html, body").animate(
-      {
-        scrollTop: $("#finish").offset().top,
-      },
-      1200
-    );
-  }
+  //   //ovo ce kada  se klikne na finish da slajduje do njega i da ga prikaze
+  //   $("#finish").slideDown(1200);
+  //   $("html, body").animate(
+  //     {
+  //       scrollTop: $("#finish").offset().top,
+  //     },
+  //     1200
+  //   );
+  // }
+
   onCheck(event, user: UserModel) {
     let element = event.currentTarget.lastElementChild;
     if ($(element).hasClass("uncheck")) {

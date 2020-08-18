@@ -29,7 +29,7 @@ namespace ReservationAPI.Controllers
         //}
 
 
-        [HttpGet("GetCarsOfCompany/{id}")]
+        [HttpGet("GetCarsOfCompany/{companyId}")]
         public async Task<IEnumerable<Car>> GetCarsOfCompany(long companyId)
         {
             try

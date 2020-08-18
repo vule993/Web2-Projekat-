@@ -87,7 +87,7 @@
       <div>
         <h6>Aviocompany</h6>
         <a
-          routerLink="/companies/airlines/{{reservation.airlineReservation.flight.aviocompany.id}"
+          routerLink="/companies/airlines/{{reservation.airlineReservation.flight.aviocCmpany.id}"
         >
           <span>
             <img src="../../../../assets/site/icons/plane.png" alt="" />
@@ -145,10 +145,14 @@
     ></app-airline-reservation>
   </div>
   <div class="space"></div>
-  <div id="finish" class="display-none">
-    <app-car-reservation
+
+  <!--
+
+    <div id="finish" class="display-none">
+      <app-car-reservation
       [reservation]="reservation"
       [suggestedCars]="suggestedCars"
-    ></app-car-reservation>
-  </div>
+      ></app-car-reservation>
+    </div>
+  -->
 </div>

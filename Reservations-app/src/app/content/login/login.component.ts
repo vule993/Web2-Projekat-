@@ -9,7 +9,7 @@ import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY } from "../../const/constants";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -35,10 +35,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", res.token); //save token
         localStorage.setItem("userId", res.email);
 
+        //ovde treba da se setuje local storage umesto na profilu
+
         this.router.navigate(["profile"]);
         this.toastr.success("Succesfully logged in", "Login Success");
       },
-      err => {
+      (err) => {
         if (err.status == 400) {
           //bad req
           this.toastr.error(
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit {
   }
 
   LoginWithGoogle() {
-    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then(socialusers => {
+    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then((socialusers) => {
       console.log(socialusers);
 
       this.userService.socialLogin(socialusers).then((res: any) => {
@@ -70,7 +72,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = new FormGroup({
       email: new FormControl(email, Validators.required),
-      password: new FormControl(password, Validators.required)
+      password: new FormControl(password, Validators.required),
     });
   }
 }

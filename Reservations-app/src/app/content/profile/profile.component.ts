@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
         this.router.navigateByUrl("admin/head-admin/profile");
       }
       if (this.currentUser.status == "CarAdmin") {
-        this.router.navigate(["car"]);
+        //this.router.navigate(["car"]);
       }
       if (this.currentUser.status == "AvioAdmin") {
         //this.router.navigate(["avio"]);
