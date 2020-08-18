@@ -5,7 +5,7 @@ import { LineToLineMappedSource } from "webpack-sources";
 @Component({
   selector: "app-edit-car-statistics",
   templateUrl: "./edit-car-statistics.component.html",
-  styleUrls: ["./edit-car-statistics.component.css"],
+  styleUrls: ["./edit-car-statistics.component.css"]
 })
 export class EditCarStatisticsComponent implements OnInit {
   chart = [];
@@ -28,32 +28,33 @@ export class EditCarStatisticsComponent implements OnInit {
           "Sep",
           "Okt",
           "Nov",
-          "Dec",
+          "Dec"
         ],
         datasets: [
           {
+            //TODO: Vuci read data iz baze
             label: "Basic",
             data: [1, 3, 5, 10, 65, 35, 320, 320, 500, 553, 400, 350],
             backgroundColor: "red",
             borderColor: "red",
-            fill: false,
+            fill: false
           },
           {
             label: "Plus",
             data: [1, 3, 5, 10, 65, 35, 320, 320, 500, 553, 400, 350].reverse(),
             backgroundColor: "blue",
             borderColor: "blue",
-            fill: false,
+            fill: false
           },
           {
             label: "Pro",
             data: [320, 450, 300, 220, 120, 200, 100, 50, 200, 220, 176, 200],
             backgroundColor: "purple",
             borderColor: "purple",
-            fill: false,
-          },
-        ],
-      },
+            fill: false
+          }
+        ]
+      }
     });
 
     this.chart[1] = new Chart("canvas2", {
@@ -65,21 +66,21 @@ export class EditCarStatisticsComponent implements OnInit {
             data: [10, 20, 30, 40],
             backgroundColor: ["red", "blue", "green", "gray"],
             borderColor: ["red", "blue", "green", "gray"],
-            fill: true,
-          },
+            fill: true
+          }
         ],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: ["WW", "BMW", "Audi", "Mercedez"],
+        labels: ["WW", "BMW", "Audi", "Mercedez"]
       },
       options: {
         legend: {
           labels: {
             // This more specific font property overrides the global property
-            fontFamily: "Roboto",
-          },
-        },
-      },
+            fontFamily: "Roboto"
+          }
+        }
+      }
     });
   }
 }

@@ -42,11 +42,9 @@ export class EditCarListComponent implements OnInit {
   /*****Methods*****/
 
   loadCars() {
-    this.adminService
-      .getCarsOfCompany(+localStorage.getItem("carCompanyId"))
-      .subscribe(data => {
-        this.companyCars = data as Car[];
-      });
+    this.adminService.getCarsOfCompany(this.companyId).subscribe(data => {
+      this.companyCars = data as Car[];
+    });
   }
 
   AddCarModal() {}

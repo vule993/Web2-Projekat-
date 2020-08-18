@@ -11,3 +11,14 @@ export class CarReservation {
     public price: number
   ) {}
 }
+
+/*
+Ovako ce izgledati CarReservation:
+    ublic id: number,
+    public reservedCarId: number,
+    public startDate: string,
+    public endDate: string,
+    public price: number,
+    public userEmail: string
+
+*/

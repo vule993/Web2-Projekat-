@@ -1,0 +1,4 @@
+.results .list-group-item > div:last-of-type {
+  width: 16vw !important;
+  margin-top: -0.25vw;
+}

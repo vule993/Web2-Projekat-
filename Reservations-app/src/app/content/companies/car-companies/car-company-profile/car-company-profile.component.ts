@@ -20,6 +20,7 @@ export class CarCompanyProfileComponent implements OnInit {
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue: number;
   iframeSrc: string;
+  isLoaded: boolean = false;
 
   constructor(private carService: CarsService, private route: ActivatedRoute) {}
 
@@ -30,14 +31,14 @@ export class CarCompanyProfileComponent implements OnInit {
 
       this.carService.fetchCarCompany(this.id).subscribe(data => {
         this.carCompany = data as CarCompany;
+        //load available cars
+        this.carService.getCarsOfCompany(this.id).subscribe(data => {
+          this.availableCars = (data as Car[]).filter(
+            x => x.isReserved === false
+          );
+        });
+        this.isLoaded = true;
       });
-    });
-
-    //take available cars
-    this.carCompany.cars.forEach(element => {
-      if (!element.isReserved) {
-        this.availableCars.push(element);
-      }
     });
   }
 

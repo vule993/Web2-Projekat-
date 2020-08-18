@@ -4,25 +4,25 @@
     <div class="home-wrap">
       <div class="home-inner"></div>
     </div>
-  </div>
 
-  <div class="caption">
-    <h1>{{ carCompany != null ? carCompany.name : "" }}</h1>
-    <h3>{{ carCompany.description != null ? carCompany.description : "" }}</h3>
-    <a class="btn btn-outline-light btn-lg">Drive with us</a>
+    <div class="caption text-center overflow-hidden" *ngIf="isLoaded">
+      <h1>{{ carCompany == null ? "" : carCompany.name }}</h1>
+      <h3>{{ carCompany == null ? "" : carCompany.description }}</h3>
+      <a class="btn btn-outline-light btn-lg">Drive with us</a>
 
-    <div
-      class="scroll-prompt"
-      scroll-prompt=""
-      ng-show="showPrompt"
-      style="opacity: 1;"
-    >
-      <div class="scroll-prompt-arrow-container">
-        <div class="scroll-prompt-arrow">
-          <div></div>
-        </div>
-        <div class="scroll-prompt-arrow">
-          <div></div>
+      <div
+        class="scroll-prompt"
+        scroll-prompt=""
+        ng-show="showPrompt"
+        style="opacity: 1;"
+      >
+        <div class="scroll-prompt-arrow-container">
+          <div class="scroll-prompt-arrow">
+            <div></div>
+          </div>
+          <div class="scroll-prompt-arrow">
+            <div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@
               </tr>
             </thead>
             <!--Ovde ce ipak da se izlistavaju rezervacije ove kompanije-->
-            <tbody>
+            <tbody *ngIf="isLoaded">
               <tr *ngFor="let car of availableCars">
                 <td>
                   <img
@@ -137,7 +137,7 @@
 <!--Contact Section-->
 <div id="contact" class="offset">
   <div class="jumbotron">
-    <footer>
+    <footer *ngIf="isLoaded">
       <div class="row justify-content-center">
         <div class="col-md-12 text-center">
           <h3 class="heading">Contact Us</h3>
