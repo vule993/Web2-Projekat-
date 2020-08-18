@@ -51,8 +51,9 @@ export class EditCarListComponent implements OnInit {
   /*****Methods*****/
 
   loadCars() {
-    //debugger;
-    //let a = this.companyId;
+    this.adminService.getCarsOfCompany(this.companyId).subscribe((data) => {
+      this.companyCars = data as Car[];
+    });
   }
 
   AddCarModal() {}

@@ -99,7 +99,11 @@
         </div>
       </div>
       <div>
-        <button type="submit" class="btn btn-success overflow-hidden">
+        <button
+          type="submit"
+          class="btn btn-success overflow-hidden"
+          [disabled]="!adminProfileForm.valid"
+        >
           Edit
         </button>
       </div>

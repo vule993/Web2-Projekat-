@@ -93,13 +93,19 @@ export class CarsService {
   }
 
   fetchCarCompany(id) {
-    return this.httpClient.get(this.baseURL + "/CarCompany" + id);
+    return this.httpClient.get(this.baseURL + "/CarCompany/" + id);
   }
 
   getCarCompany(index: number) {
     return this._allCarCompanies
       .getValue()
       .find(carCompany => carCompany.id === index);
+  }
+
+  getCarsOfCompany(companyId: number) {
+    return this.httpClient.get<Car[]>(
+      this.baseURL + "/Car/GetCarsOfCompany/" + companyId
+    );
   }
 
   getCars = () => {
