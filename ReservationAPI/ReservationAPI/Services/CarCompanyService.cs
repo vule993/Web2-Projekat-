@@ -20,7 +20,7 @@ namespace ReservationAPI.Services
         }
 
 
-        public async Task<CarCompany> GetCompany(int id)
+        public async Task<CarCompany> GetCompany(long id)
         {
             //return await _context.CarCompanies.Include(c => c.Cars)
             //    .Include(c => c.City)
@@ -55,7 +55,7 @@ namespace ReservationAPI.Services
             
         }
 
-        public async Task DeleteCompany(int id)
+        public async Task DeleteCompany(long id)
         {
             var company = await _context.CarCompanies.FindAsync(id);
 

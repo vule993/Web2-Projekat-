@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { CarsService } from "src/app/services/cars.service";
 import { CarCompany } from "src/app/models/CarCompany.model";
 import { Address } from "src/app/models/address.model";
+import { ActivatedRoute, Params } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-head-car-companies",
@@ -10,6 +12,7 @@ import { Address } from "src/app/models/address.model";
 })
 export class HeadCarCompaniesComponent implements OnInit {
   carCompanies: CarCompany[];
+  companyId: number;
 
   sliderData = {
     title: "All companies",
@@ -17,7 +20,11 @@ export class HeadCarCompaniesComponent implements OnInit {
     values: []
   };
 
-  constructor(private carService: CarsService) {}
+  constructor(
+    private carService: CarsService,
+    private route: ActivatedRoute,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.carService.getCarCompanies().subscribe(data => {
@@ -34,5 +41,25 @@ export class HeadCarCompaniesComponent implements OnInit {
         });
       });
     });
+  }
+
+  deleteCompanyModal() {}
+
+  deleteCompany() {
+    this.route.params.subscribe((params: Params) => {
+      this.companyId = +params["id"];
+    });
+
+    this.carService.deleteCarCompany(this.companyId).subscribe(
+      res => {
+        this.toastrService.success(
+          "Company is deleted.",
+          "Successfully deleted"
+        );
+      },
+      err => {
+        this.toastrService.error("Error while deleting company.", "Error");
+      }
+    );
   }
 }

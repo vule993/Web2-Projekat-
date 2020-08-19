@@ -57,7 +57,7 @@ const routes: Routes = [
   {
     path: "companies",
     redirectTo: "companies/airlines",
-    pathMatch: "full",
+    pathMatch: "full"
   },
   {
     path: "companies",
@@ -66,29 +66,29 @@ const routes: Routes = [
       { path: "airlines", component: AirlinesComponent },
       { path: "airlines/:id", component: AirlineCompanyProfileComponent },
       { path: "car-companies", component: CarCompaniesComponent },
-      { path: "car-companies/:id", component: CarCompanyProfileComponent },
-    ],
+      { path: "car-companies/:id", component: CarCompanyProfileComponent }
+    ]
   },
   {
     path: "users-list",
-    component: UserListComponent,
+    component: UserListComponent
   },
   {
     path: "flight/:id",
-    component: ReservationComponent,
+    component: ReservationComponent
   },
   {
     path: "avio-reservation/:id",
-    component: ReservationComponent,
+    component: ReservationComponent
   },
   {
     path: "car-reservation/:id",
-    component: CarReservationComponent,
+    component: CarReservationComponent
   },
   {
     path: "profile",
     redirectTo: "profile/friends",
-    pathMatch: "full",
+    pathMatch: "full"
     // canActivate: [AuthGuard]
   },
   {
@@ -98,26 +98,26 @@ const routes: Routes = [
     children: [
       {
         path: "friends",
-        component: FriendsDataListComponent,
+        component: FriendsDataListComponent
       },
       {
         path: "archive",
-        component: ArchiveDataListComponent,
+        component: ArchiveDataListComponent
       },
       {
         path: "reservations",
-        component: ReservationsDataListComponent,
+        component: ReservationsDataListComponent
       },
       {
         path: "edit-profile",
-        component: EditProfileComponent,
-      },
-    ],
+        component: EditProfileComponent
+      }
+    ]
   },
   {
     //ovo ce biti url kada neko zeli da doda nekoga, pa ce se prikazati samo info, tj bez edit menija
     path: "profile-view",
-    component: ProfileComponent,
+    component: ProfileComponent
   },
   {
     path: "admin",
@@ -131,6 +131,7 @@ const routes: Routes = [
         // data: { permittedRoles: ["Admin"] },
         children: [
           { path: "car-companies", component: HeadCarCompaniesComponent },
+          { path: "car-companies/:id", component: HeadCarCompaniesComponent },
           { path: "avio-companies", component: HeadAvioCompaniesComponent },
           { path: "users", component: UsersComponent },
           { path: "profile", component: AdminProfileComponent },
@@ -138,9 +139,9 @@ const routes: Routes = [
           { path: "create-car-company", component: CreateCarCompanyComponent },
           {
             path: "create-avio-company",
-            component: CreateAvioCompanyComponent,
-          },
-        ],
+            component: CreateAvioCompanyComponent
+          }
+        ]
       },
       {
         path: "avio",
@@ -154,8 +155,8 @@ const routes: Routes = [
           { path: "flights", component: EditFlightsComponent },
           { path: "discount", component: EditDiscountComponent },
           { path: "seat-config", component: EditSeatsComponent },
-          { path: "business-report", component: EditBusinessReportComponent },
-        ],
+          { path: "business-report", component: EditBusinessReportComponent }
+        ]
       },
       {
         path: "car",
@@ -167,15 +168,15 @@ const routes: Routes = [
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent },
-        ],
-      },
-    ],
-  },
+          { path: "statistics", component: EditCarStatisticsComponent }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

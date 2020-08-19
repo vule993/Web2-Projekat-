@@ -110,10 +110,9 @@ namespace ReservationAPI.Controllers
         }
 
         //DELETE: /api/CarCompany/Delete/3
-        [HttpDelete("{id}")]
-        [Route("Delete")]
-        [Authorize(Roles = "CarAdmin")]
-        public async Task<object> Delete(int id)
+        [HttpDelete("Delete/{id}")]
+        //[Authorize(Roles = "CarAdmin")]
+        public async Task<object> Delete(long id)
         {
             CarCompany company = await _repository.GetCompany(id);
             try

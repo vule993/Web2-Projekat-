@@ -102,6 +102,10 @@ export class CarsService {
       .find(carCompany => carCompany.id === index);
   }
 
+  deleteCarCompany(id: number) {
+    return this.httpClient.delete(this.baseURL + "/CarCompany/Delete/" + id);
+  }
+
   getCarsOfCompany(companyId: number) {
     return this.httpClient.get<Car[]>(
       this.baseURL + "/Car/GetCarsOfCompany/" + companyId
