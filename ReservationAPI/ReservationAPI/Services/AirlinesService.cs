@@ -60,6 +60,14 @@ namespace ReservationAPI.Services
 
             return false;
         }
+
+        public async Task DeleteCompany(long id)
+        {
+            var company = await _context.AirlineCompany.FindAsync(id);
+
+            _context.AirlineCompany.Remove(company);
+            await _context.SaveChangesAsync();
+        }
         #endregion
 
 

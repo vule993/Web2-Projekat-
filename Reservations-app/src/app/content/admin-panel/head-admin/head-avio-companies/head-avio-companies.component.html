@@ -1,3 +1,51 @@
-<app-slider [data]="sliderData"></app-slider>
+<app-slider
+  [data]="sliderData"
+  (click)="deleteCompanyModal()"
+  data-toggle="modal"
+  data-target="#deleteCompany"
+></app-slider>
 
-<!--TODO: Modal za brisanje selektovane kompanije-->
+<div
+  class="modal fade"
+  id="deleteCompany"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteCompany"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="deleteCompany">
+          Delete Company?
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <h3>Are you sure you want to delete this company?</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="deleteCompany()"
+            class="btn btn-danger"
+            data-dismiss="modal"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

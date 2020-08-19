@@ -64,13 +64,33 @@ namespace ReservationAPI.Controllers
             }
             return false;
         }
+
+
+        //DELETE: /api/Airlines/Delete/3
+        [HttpDelete("Delete/{id}")]
+        //[Authorize(Roles = "AvioAdmin")]
+        public async Task<object> Delete(long id)
+        {
+            AirlineCompany company = await _service.GetCompany(id.ToString());
+            try
+            {
+                await _service.DeleteCompany(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR with deleting company. -> {ex.Message}");
+            }
+
+
+            return Ok(new { message = "Avio company deleted", company = company });
+        }
         #endregion
 
 
 
 
         #region DESTINATIONS
-        
+
         [HttpPost]
         [Route("AddDestinations")]
         public async Task<object> AddDestination([FromBody]AddDestinationViewModel data)

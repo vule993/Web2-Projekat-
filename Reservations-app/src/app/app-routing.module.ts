@@ -133,6 +133,7 @@ const routes: Routes = [
           { path: "car-companies", component: HeadCarCompaniesComponent },
           { path: "car-companies/:id", component: HeadCarCompaniesComponent },
           { path: "avio-companies", component: HeadAvioCompaniesComponent },
+          { path: "avio-companies/:id", component: HeadAvioCompaniesComponent },
           { path: "users", component: UsersComponent },
           { path: "profile", component: AdminProfileComponent },
           { path: "register-admin", component: RegisterAdminComponent },

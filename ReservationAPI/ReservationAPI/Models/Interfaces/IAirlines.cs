@@ -12,6 +12,7 @@ namespace ReservationAPI.Models.Interfaces
         Task<bool> UpdateCompanyInfo(AirlineCompany company);
         Task<AirlineCompany> GetCompany(string id);
         Task<IEnumerable<AirlineCompany>> GetAllCompanies();
+        Task DeleteCompany(long id);
         #endregion
 
 

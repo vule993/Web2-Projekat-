@@ -7,7 +7,7 @@ import { UserModel } from "../models/User.model";
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class AviocompaniesService {
   readonly baseURL = "http://localhost:5000/api/";
@@ -24,5 +24,9 @@ export class AviocompaniesService {
   }
   getAllCompanies() {
     return this.httpClient.get(this.baseURL + "Airlines/GetAllCompanies");
+  }
+
+  deleteAvioCompany(id: number) {
+    return this.httpClient.delete(this.baseURL + "Airlines/Delete/" + id);
   }
 }
