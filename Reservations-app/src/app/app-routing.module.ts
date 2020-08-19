@@ -74,7 +74,7 @@ const routes: Routes = [
     component: UserListComponent,
   },
   {
-    path: "reservation/:id",
+    path: "flight/:id",
     component: ReservationComponent,
   },
   {

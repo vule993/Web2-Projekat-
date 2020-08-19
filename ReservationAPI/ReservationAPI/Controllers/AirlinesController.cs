@@ -110,6 +110,11 @@ namespace ReservationAPI.Controllers
 
 
         #region FLIGHTS
+
+        [HttpGet]
+        [Route("GetAllFlights")]
+        public async Task<object> GetAllFlights() => await _service.GetAllFlights();
+
         [HttpPut]
         [Route("CreateFlight")]
         public async Task<object> CreateFlight(Flight flight)
@@ -119,6 +124,8 @@ namespace ReservationAPI.Controllers
 
             return Unauthorized();
         }
+
+        
         #endregion
 
 

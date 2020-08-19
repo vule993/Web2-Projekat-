@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using NuGet.Frameworks;
 using ReservationAPI.Models.Airlines;
@@ -109,18 +110,59 @@ namespace ReservationAPI.Services
 
         #region FLIGHTS
 
-        public async Task<bool> CreateFlight(Flight flight)
+        public async Task<IEnumerable<Flight>> GetAllFlights()
         {
-
             try
             {
-                _context.Flight.Add(flight);
+                return await _context.Flight.ToListAsync();
+            }catch(Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> CreateFlight(Flight flight)
+        {
+            try
+            {
+
+                var company = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id == flight.AvioCompany.Id);
+                var seatConfig = (await _context.SeatConfiguration.ToListAsync()).FirstOrDefault(x => x.Id == flight.PlaneType.Id);
+                List<Destination> destinations = new List<Destination>();
+
+                for(var i = 0; i<flight.Destinations.Count; i++)
+                {
+                    destinations.Add((await _context.Destination.ToListAsync()).FirstOrDefault(x => x.Id == flight.Destinations[i].Id));
+                }
+
+                var f = new Flight()
+                {
+                    AvioCompany = company,
+                    StartDate = flight.StartDate,
+                    ArrivingDate = flight.ArrivingDate,
+                    StartTime = flight.StartTime,
+                    ArrivingTime = flight.ArrivingTime,
+                    EstimationTime = flight.EstimationTime,
+                    Distance = flight.Distance,
+                    Discount = flight.Discount,
+                    PlaneType = seatConfig,
+                    Destinations = destinations,
+                    OtherServices = flight.OtherServices,
+                    Price = flight.Price,
+                    Luggage = flight.Luggage,
+      
+                };
+
+
+                _context.Flight.Add(f);
                 await _context.SaveChangesAsync();
+                
                 return true;
             }catch(Exception e)
             {
                 return false;
             }
+            
 
         }
 
@@ -161,8 +203,6 @@ namespace ReservationAPI.Services
         {
             throw new NotImplementedException();
         }
-
-        
 
         #endregion
 

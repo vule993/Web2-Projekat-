@@ -60,7 +60,7 @@ export class EditFlightsComponent implements OnInit {
     });
 
     this.returnCalendar = $(function () {
-      $("#returnDate").datepicker({
+      $("#arrivingDate").datepicker({
         format: "dd-MM-yyyy",
         autoclose: true,
       });
@@ -95,9 +95,9 @@ export class EditFlightsComponent implements OnInit {
       0,
       this.avioCompany,
       $("#startDate").val(),
-      $("#returnDate").val(),
+      $("#arrivingDate").val(),
       $("#startTime").val(),
-      $("#endTime").val(),
+      $("#arrivingTime").val(),
       $("#distance").val(),
       $("#estimationTime").val(),
       5,
@@ -107,7 +107,7 @@ export class EditFlightsComponent implements OnInit {
       $("#price").val(),
       ""
     );
-
+    debugger;
     this._flightService.createFlight(flight).subscribe();
   }
 }

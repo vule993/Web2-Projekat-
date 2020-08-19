@@ -2,11 +2,7 @@
   <h2 class="fleft">Choose your seats!</h2>
 
   <div id="seat-picker" class="fleft overflow-hidden">
-    <app-display-seats
-      [currentSeatConfiguration]="
-        reservation.airlineReservation.flight.planeType
-      "
-    >
+    <app-display-seats [currentSeatConfiguration]="flight.planeType">
     </app-display-seats>
   </div>
   <div id="friends-selector" class="fright">
@@ -25,7 +21,9 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-success fright" (click)="finish()">
+
+    <!-- fali metoda (onclick)="finish()" -->
+    <button class="btn btn-success fright">
       Finish reservation
     </button>
   </div>

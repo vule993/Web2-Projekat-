@@ -13,6 +13,10 @@ export class FlightsService {
     return this._httpClient.put(this.baseURL + "CreateFlight", flight);
   }
 
+  getAllFlights() {
+    return this._httpClient.get(this.baseURL + "GetAllFlights");
+  }
+
   deleteFlight(id: number) {
     this._httpClient.delete(this.baseURL + "DeleteFlight/" + id);
   }

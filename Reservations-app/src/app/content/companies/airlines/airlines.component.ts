@@ -6,6 +6,8 @@ import { ReservationService } from "src/app/services/reservation.service";
 import { Destination } from "src/app/models/Destination.model";
 import { DestinationsService } from "src/app/services/destinations.service";
 import { Address } from "src/app/models/address.model";
+import { Flight } from "src/app/models/Flight.model";
+import { FlightsService } from "src/app/services/flights.service";
 
 declare var $: any;
 @Component({
@@ -17,9 +19,12 @@ export class AirlinesComponent implements OnInit {
   departCalendar: any;
   returnCalendar: any;
   allAvioCompanies: AirlineCompany[] = [];
-  allReservations: Reservation[];
-  allReservationsToShow: Reservation[];
-  allReservationsPreFilter: Reservation[];
+  //
+  allFlightsToShow: Flight[];
+
+  allFlights: Flight[];
+  allReservationsPreFilter: Flight[];
+  //
   allDestinations: Destination[];
 
   sliderData = {
@@ -30,67 +35,60 @@ export class AirlinesComponent implements OnInit {
 
   constructor(
     private allAirlineCompaniesData: AviocompaniesService,
+    private _flightsService: FlightsService,
     private reservationService: ReservationService,
     private destinationService: DestinationsService
   ) {}
 
-  searchReservations() {
-    this.allReservationsToShow = this.allReservations;
+  searchFlights() {
+    this.allFlightsToShow = this.allFlights;
     if ($("#departDate").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) =>
-          new Date(reservation.airlineReservation.flight.startDate) >=
-          new Date($("#departDate").val())
+      this.allFlightsToShow = this.allFlightsToShow.filter(
+        (flight) =>
+          new Date(flight.startDate) >= new Date($("#departDate").val())
       );
     }
     if ($("#returnDate").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) =>
-          new Date(reservation.airlineReservation.flight.returnDate) >=
-          new Date($("#returnDate").val())
+      this.allFlightsToShow = this.allFlightsToShow.filter(
+        (flight) =>
+          new Date(flight.arrivingDate) >= new Date($("#returnDate").val())
       );
     }
     if ($("#startingAirport").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) =>
-          reservation.airlineReservation.flight.destinations[0].airportName ===
-          $("#startingAirport").val()
+      this.allFlightsToShow = this.allFlightsToShow.filter(
+        (flight) =>
+          flight.destinations[0].airportName === $("#startingAirport").val()
       );
     }
     if ($("#endingAirport").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) =>
-          reservation.airlineReservation.flight.destinations[
-            reservation.airlineReservation.flight.destinations.length - 1
-          ].airportName === $("#endingAirport").val()
+      this.allFlightsToShow = this.allFlightsToShow.filter(
+        (flight) =>
+          flight.destinations[flight.destinations.length - 1].airportName ===
+          $("#endingAirport").val()
       );
     }
-    this.allReservationsPreFilter = this.allReservationsToShow;
+    this.allReservationsPreFilter = this.allFlightsToShow;
   }
 
-  filterReservations() {
-    this.allReservationsToShow = this.allReservationsPreFilter;
+  filterFlights() {
+    this.allFlightsToShow = this.allReservationsPreFilter;
 
     if ($("#company").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) =>
-          reservation.airlineReservation.flight.avioCompany.name ===
-          $("#company").val()
+      this.allFlightsToShow = this.allFlightsToShow.filter(
+        (flight) => flight.avioCompany.name === $("#company").val()
       );
     }
 
     if ($("#price").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) => {
-          let price = reservation.airlineReservation.flight.price;
-          let lowerPrice = $("#price").val().split("-")[0];
-          let upperPrice = $("#price").val().split("-")[1];
-          if (price >= lowerPrice && price <= upperPrice) {
-            return true;
-          }
-          return false;
+      this.allFlightsToShow = this.allFlightsToShow.filter((flight) => {
+        let price = flight.price;
+        let lowerPrice = $("#price").val().split("-")[0];
+        let upperPrice = $("#price").val().split("-")[1];
+        if (price >= lowerPrice && price <= upperPrice) {
+          return true;
         }
-      );
+        return false;
+      });
     }
 
     if ($("#flightDuration").val() != "") {
@@ -121,20 +119,18 @@ export class AirlinesComponent implements OnInit {
       //
       let durationDate = new Date();
       //
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        (reservation) => {
-          let duration = reservation.airlineReservation.flight.estimationTime;
-          let durationHr = +duration.split(pattern2)[0];
-          let durationMin = +duration.split(pattern2)[1];
+      this.allFlightsToShow = this.allFlightsToShow.filter((flight) => {
+        let duration = flight.estimationTime;
+        let durationHr = +duration.split(pattern2)[0];
+        let durationMin = +duration.split(pattern2)[1];
 
-          durationDate.setHours(durationHr);
-          durationDate.setMinutes(durationMin);
-          if (lowerDate <= durationDate && durationDate <= higherDate) {
-            return true;
-          }
-          return false;
+        durationDate.setHours(durationHr);
+        durationDate.setMinutes(durationMin);
+        if (lowerDate <= durationDate && durationDate <= higherDate) {
+          return true;
         }
-      );
+        return false;
+      });
     }
   }
 
@@ -145,7 +141,7 @@ export class AirlinesComponent implements OnInit {
     $(".filter").fadeOut(300);
   }
 
-  openReservation(id: number) {}
+  openFlight(id: number) {}
 
   ngOnInit(): void {
     this.destinationService
@@ -153,9 +149,11 @@ export class AirlinesComponent implements OnInit {
       .subscribe(
         (destinations) => (this.allDestinations = destinations as Destination[])
       );
-    this.reservationService.allReservations.subscribe(
-      (reservatons) => (this.allReservations = reservatons)
-    );
+
+    this._flightsService.getAllFlights().subscribe((flights) => {
+      this.allFlights = flights as Flight[];
+      debugger;
+    });
 
     this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {
       this.allAvioCompanies = data as AirlineCompany[];

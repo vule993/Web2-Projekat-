@@ -9,6 +9,8 @@ import { CarCompany } from "src/app/models/CarCompany.model";
 import { ReservationService } from "src/app/services/reservation.service";
 import { CarReservation } from "src/app/models/CarReservation";
 import { Passenger } from "src/app/models/Passenger.model";
+import { FlightsService } from "src/app/services/flights.service";
+import { Flight } from "src/app/models/Flight.model";
 
 declare var $: any;
 
@@ -20,7 +22,7 @@ declare var $: any;
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter();
   suggestedCars: CarReservation[] = [];
-  @Input() reservation: Reservation;
+  @Input() flight: Flight;
   selectedSeatsNo;
   selectedSeats: Seat[] = [];
 
@@ -31,6 +33,10 @@ export class AirlineReservationComponent implements OnInit {
     private carService: CarsService,
     private reservationService: ReservationService
   ) {}
+
+  /*
+  OBRATITI PAZNJU NA FINISH METODU, UMESTO RESERVATION JE FLIGHT
+  */
 
   // finish() {
   //   //load specific car reservations based on a airline reservation...
@@ -102,7 +108,9 @@ export class AirlineReservationComponent implements OnInit {
     ).length;
   }
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe((users) => (this.users = users));
+    this.userService
+      .getAllFriends(localStorage.getItem("email"))
+      .subscribe((users) => (this.users = users));
     //this.users = this.userService.getAllUsers();
 
     $(window).resize(function () {

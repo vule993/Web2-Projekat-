@@ -7,9 +7,9 @@ export class Flight {
     public id: number,
     public avioCompany: AirlineCompany,
     public startDate: string,
-    public returnDate: string,
+    public arrivingDate: string,
     public startTime: string,
-    public endTime: string,
+    public arrivingTime: string,
     public distance: string,
     public estimationTime: string,
     public discount: number, //ovo sam menjao tip iz string -> number

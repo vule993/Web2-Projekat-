@@ -23,6 +23,7 @@ namespace ReservationAPI.Models.Interfaces
         #endregion
 
         #region FLIGHTS
+        Task<IEnumerable<Flight>> GetAllFlights();
         Task<bool> CreateFlight(Flight flight);
         Task<bool> DeleteFlight(long id);
         #endregion

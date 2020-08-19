@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200819001233_FlightUpdate")]
+    partial class FlightUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,9 +313,6 @@ namespace ReservationAPI.Migrations
                     b.Property<string>("ArrivingDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ArrivingTime")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long?>("AvioCompanyId")
                         .HasColumnType("bigint");
 
@@ -323,10 +322,10 @@ namespace ReservationAPI.Migrations
                     b.Property<string>("Distance")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EstimationTime")
+                    b.Property<string>("EndTime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Luggage")
+                    b.Property<string>("EstimationTime")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OtherServices")
@@ -342,6 +341,9 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StartTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("luggage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

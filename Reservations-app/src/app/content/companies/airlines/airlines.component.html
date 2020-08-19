@@ -32,7 +32,7 @@
     class="form-control search-field returnTime fleft"
     placeholder="Returning date"
   />
-  <button (click)="searchReservations()" class="btn btn-success fleft">
+  <button (click)="searchFlights()" class="btn btn-success fleft">
     Search
   </button>
 
@@ -72,7 +72,7 @@
     <option value="10h:00min-15h:00min">10h:00min-15h:00min</option>
     <option value="15h:00min-23h:59min">15h:00min+</option>
   </select>
-  <button (click)="filterReservations()" class="btn btn-success fleft">
+  <button (click)="filterFlights()" class="btn btn-success fleft">
     Filter
   </button>
 
@@ -84,33 +84,30 @@
 </div>
 
 <div class="results">
-  <div
-    *ngFor="let reservation of allReservationsToShow"
-    class="result overflow-hidden"
-  >
+  <div *ngFor="let flight of allFlightsToShow" class="result overflow-hidden">
     <div class="fleft">
       <div>
         <h6>Flight termin</h6>
         <span>
           <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ reservation.airlineReservation.flight.startDate }}
+          {{ flight.startDate }}
         </span>
 
         <span>
           <img src="../../../../assets/site/icons/clock.png" alt="" />
-          {{ reservation.airlineReservation.flight.startTime }}
+          {{ flight.startTime }}
         </span>
       </div>
       <div>
         <h6>Return termin</h6>
         <span>
           <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ reservation.airlineReservation.flight.returnDate }}
+          {{ flight.arrivingDate }}
         </span>
 
         <span>
           <img src="../../../../assets/site/icons/clock.png" alt="" />
-          {{ reservation.airlineReservation.flight.endTime }}
+          {{ flight.arrivingTime }}
         </span>
       </div>
     </div>
@@ -123,21 +120,21 @@
             src="../../../../assets/site/icons/connecting-flights.png"
             alt=""
           />
-          {{ reservation.airlineReservation.flight.destinations.length }}
+          {{ flight.destinations.length }}
         </span>
       </div>
       <div>
         <h6>Flight duration</h6>
         <span>
           <img src="../../../../assets/site/icons/flight-duration.png" alt="" />
-          {{ reservation.airlineReservation.flight.estimationTime }}
+          {{ flight.estimationTime }}
         </span>
       </div>
       <div>
         <h6>Flight prize</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.airlineReservation.flight.price }}$
+          {{ flight.price }}$
         </span>
       </div>
     </div>
@@ -147,12 +144,8 @@
         <h6>Aviocompany</h6>
         <span>
           <img src="../../../../assets/site/icons/plane.png" alt="" />
-          <a
-            routerLink="/companies/airlines/{{
-              reservation.airlineReservation.flight.avioCompany.id
-            }}"
-          >
-            {{ reservation.airlineReservation.flight.avioCompany.name }}
+          <a routerLink="/companies/airlines/{{ flight.avioCompany.id }}">
+            {{ flight.avioCompany.name }}
           </a>
         </span>
       </div>
@@ -160,18 +153,12 @@
         <h6>Relation</h6>
         <span>
           <img src="../../../../assets/site/icons/connected.png" alt="" />
-          {{
-            reservation.airlineReservation.flight.destinations[0].airportName
-          }}
+          {{ flight.destinations[0].airportName }}
           -
-          {{
-            reservation.airlineReservation.flight.destinations[
-              reservation.airlineReservation.flight.destinations.length - 1
-            ].airportName
-          }}
+          {{ flight.destinations[flight.destinations.length - 1].airportName }}
         </span>
       </div>
-      <a routerLink="/reservation/{{ reservation.id }}"
+      <a routerLink="/flight/{{ flight.id }}"
         ><button class="btn btn-success fright">
           Book IT
         </button>
