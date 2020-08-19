@@ -8,6 +8,7 @@ export class Car {
     public rating: number,
     public image: string,
     public category: string,
-    public isReserved: boolean
+    public isReserved: boolean,
+    public id?: number
   ) {}
 }

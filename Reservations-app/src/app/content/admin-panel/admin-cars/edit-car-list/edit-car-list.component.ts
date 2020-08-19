@@ -8,7 +8,7 @@ import { AdminService } from "src/app/services/admin.service";
 @Component({
   selector: "app-edit-car-list",
   templateUrl: "./edit-car-list.component.html",
-  styleUrls: ["./edit-car-list.component.css"],
+  styleUrls: ["./edit-car-list.component.css"]
 })
 export class EditCarListComponent implements OnInit {
   carToEdit: Car;
@@ -30,31 +30,18 @@ export class EditCarListComponent implements OnInit {
   ngOnInit(): void {
     this.adminService
       .getAdminCarCompany(localStorage.getItem("userId"))
-      .subscribe((data) => {
-        debugger;
+      .subscribe(data => {
         this.companyId = (data as CarCompany).id;
 
-        //test
-        this.adminService
-          .getCarsOfCompany(this.companyId)
-          //.getCarsOfCompany(+localStorage.getItem("carCompanyId"))
-          .subscribe((data) => {
-            debugger;
-            this.companyCars = data as Car[];
-          });
+        this.adminService.getCarsOfCompany(this.companyId).subscribe(data => {
+          this.companyCars = data as Car[];
+        });
       });
 
     this.initForm();
-    //this.loadCars();
   }
 
   /*****Methods*****/
-
-  loadCars() {
-    this.adminService.getCarsOfCompany(this.companyId).subscribe((data) => {
-      this.companyCars = data as Car[];
-    });
-  }
 
   AddCarModal() {}
 
@@ -78,7 +65,7 @@ export class EditCarListComponent implements OnInit {
         this.addCarForm.reset();
         this.toastrService.success("Successfully added new car", "Car added");
       },
-      (err) => {
+      err => {
         this.toastrService.error("Error while adding a car", "Car not added");
       }
     );
@@ -117,7 +104,7 @@ export class EditCarListComponent implements OnInit {
       year: new FormControl(year, Validators.required),
       seats: new FormControl(seats, Validators.required),
       price: new FormControl(price, Validators.required),
-      category: new FormControl(category, Validators.required),
+      category: new FormControl(category, Validators.required)
     });
   }
 }

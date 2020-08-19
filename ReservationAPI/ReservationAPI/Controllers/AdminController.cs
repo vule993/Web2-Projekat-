@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Models;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
+using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
 using ReservationAPI.Models.Shared;
 using ReservationAPI.ViewModels;
@@ -23,14 +26,14 @@ namespace ReservationAPI.Controllers
     public class AdminController : ControllerBase
     {
         private UserManager<User> _userManager;
-        private SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _context;
+        private ICarCompany _carCompanyRepository;
 
-        public AdminController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationDbContext context)
+        public AdminController(UserManager<User> userManager, ApplicationDbContext context, ICarCompany carCompanyRepo)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _context = context;
+            _carCompanyRepository = carCompanyRepo;
         }
 
         //POST : /api/Admin/RegisterCarAdmin
@@ -77,7 +80,7 @@ namespace ReservationAPI.Controllers
         [Route("RegisterAvioAdmin")]
         public async Task<Object> RegisterAvioAdmin(UserModel model)
         {
-           
+
             model.Status = "AvioAdmin";
             var newUser = new User()
             {
@@ -159,7 +162,7 @@ namespace ReservationAPI.Controllers
 
             AirlineCompany newCompany = new AirlineCompany()
             {
-                
+
                 Name = airlineCompany.Name,
                 Address = address,
                 Description = airlineCompany.Description,
@@ -170,7 +173,7 @@ namespace ReservationAPI.Controllers
                 AdminEmail = airlineCompany.AdminEmail
 
             };
-            
+
 
             try
             {
@@ -233,6 +236,52 @@ namespace ReservationAPI.Controllers
             }
 
             return Ok(carCompany);
+        }
+
+
+        [HttpGet("DeleteUser/{userEmail}")]
+        public async Task<object> DeleteUser(string userEmail)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            
+            if (user == null)
+                return NotFound();
+
+            try
+            {
+                var role = await _userManager.GetRolesAsync(user);
+                _context.Users.Remove(user);
+                
+
+                if(role.FirstOrDefault() == "CarAdmin")
+                {
+                    //izbrisi njegove kompanije i auta
+                    var company = await _carCompanyRepository.GetCompanyByEmail(userEmail);
+
+                    if(company.Cars.Count > 0)
+                    {
+                        foreach (Car car in company.Cars)
+                            company.Cars.Remove(car);
+                    }
+
+                    _context.CarCompanies.Remove(company);
+                }
+
+                if(role.FirstOrDefault() == "AvioAdmin")
+                {
+                    //izbrisi njegove kompanije
+
+                }
+
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error while deleting a user. [{e.Message}]");
+                return BadRequest();
+            }
+            
         }
 
     }
