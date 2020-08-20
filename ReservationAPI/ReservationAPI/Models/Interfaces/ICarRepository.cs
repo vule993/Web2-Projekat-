@@ -1,4 +1,5 @@
 ﻿using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels.RentACar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,6 @@ namespace ReservationAPI.Models.Interfaces
 
         Task<IEnumerable<Car>> GetCarsOfCompany(long companyID);
 
-        Task MakeReservation(CarReservation reservation);
+        Task MakeReservation(CarReservationModel reservation);
     }
 }

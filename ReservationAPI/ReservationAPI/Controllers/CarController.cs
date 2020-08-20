@@ -82,7 +82,7 @@ namespace ReservationAPI.Controllers
 
         [HttpPost]
         [Route("MakeReservation")]
-        public async Task<object> MakeReservation(CarReservation carReservationModel)
+        public async Task<object> MakeReservation(CarReservationModel carReservationModel)
         {
             try
             {

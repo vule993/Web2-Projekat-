@@ -64,6 +64,7 @@ export class ReservationService {
         this.carService.getCarCompany(1),
         "01-Jun-2020",
         "25-Jul-2020",
+        1,
         this.carService.getPrice(
           this.carService.getCar(2).category,
           this.calculateNumOfDays(
@@ -123,6 +124,7 @@ export class ReservationService {
         this.carService.getCarCompany(2),
         "05-Aug-2020",
         "23-Aug-2020",
+        2,
         this.carService.getPrice(
           this.carService.getCar(2).category,
           this.calculateNumOfDays(
@@ -145,6 +147,7 @@ export class ReservationService {
       this.carService.getCarCompany(1),
       "01-Jun-2020",
       "25-Jul-2020",
+      2,
       this.carService.getPrice(
         this.carService.getCar(2).category,
         this.calculateNumOfDays(
@@ -160,6 +163,7 @@ export class ReservationService {
       this.carService.getCarCompany(1),
       "03-Jun-2020",
       "25-Jul-2020",
+      1,
       this.carService.getPrice(
         this.carService.getCar(2).category,
         this.calculateNumOfDays(
@@ -175,6 +179,7 @@ export class ReservationService {
       this.carService.getCarCompany(2),
       "05-Aug-2020",
       "23-Aug-2020",
+      2,
       this.carService.getPrice(
         this.carService.getCar(2).category,
         this.calculateNumOfDays(

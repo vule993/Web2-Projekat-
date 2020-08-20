@@ -5,14 +5,12 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { Car } from "src/app/models/car.model";
 import { CarReservation } from "src/app/models/CarReservation";
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-car-company-profile",
   templateUrl: "./car-company-profile.component.html",
-  styleUrls: [
-    "./car-company-profile.component.css"
-  ]
+  styleUrls: ["./car-company-profile.component.css"]
 })
 export class CarCompanyProfileComponent implements OnInit {
   carCompany: CarCompany;
@@ -25,7 +23,11 @@ export class CarCompanyProfileComponent implements OnInit {
   selectedCar: Car;
   quickReservationForm: FormGroup;
 
-  constructor(private carService: CarsService, private route: ActivatedRoute, private toastrService: ToastrService) {}
+  constructor(
+    private carService: CarsService,
+    private route: ActivatedRoute,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     //fetch id of car company
@@ -52,7 +54,6 @@ export class CarCompanyProfileComponent implements OnInit {
   }
 
   MakeQuickReservation() {
-    //TODO: price * razlika dana izmedju endDate i startDate-a
     let startDate = this.quickReservationForm.value["startDate"];
     let endDate = this.quickReservationForm.value["endDate"];
     let reservation = new CarReservation(
@@ -60,18 +61,25 @@ export class CarCompanyProfileComponent implements OnInit {
       this.carCompany,
       startDate,
       endDate,
-      this.selectedCar.price,
+      this.selectedCar.id,
+      this.selectedCar.price * this.calcuatePrice(endDate, startDate),
       localStorage.getItem("userId")
     );
 
     this.carService.makeReservation(reservation).subscribe(
-      (res) => {
-        this.toastrService.success("You made a quick reservation!", "Car rented");
+      res => {
+        this.toastrService.success(
+          "You made a quick reservation!",
+          "Car rented"
+        );
       },
       err => {
-        this.toastrService.error("Error while making a quick reservation", "Error");
+        this.toastrService.error(
+          "Error while making a quick reservation",
+          "Error"
+        );
       }
-    )
+    );
   }
 
   countStar(star) {
@@ -93,5 +101,15 @@ export class CarCompanyProfileComponent implements OnInit {
       startDate: new FormControl(startDate, Validators.required),
       endDate: new FormControl(endDate, Validators.required)
     });
+  }
+
+  //help function for calculating fullPrice
+  calcuatePrice(date1: Date, date2: Date) {
+    let oneDay = 1000 * 60 * 60 * 24;
+    let difference = Math.abs(
+      new Date(date1).getTime() - new Date(date2).getTime()
+    );
+
+    return Math.round(difference / oneDay);
   }
 }

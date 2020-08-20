@@ -2,6 +2,7 @@
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels.RentACar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,22 +51,22 @@ namespace ReservationAPI.Services
             return cars;
         }
 
-        public async Task MakeReservation(CarReservation reservation)
+        public async Task MakeReservation(CarReservationModel reservation)
         {
+            Car car = await GetCar(reservation.CarId);
+            car.IsReserved = true;
+
             var carReservation = new CarReservation()
             {
-                Car = reservation.Car,
-                CarId = reservation.CarId,
+                Car = car,
                 EndDate = reservation.EndDate,
-                StartDate = reservation.StartDate,
                 FullPrice = reservation.FullPrice,
+                StartDate = reservation.StartDate,     
                 UserEmail = reservation.UserEmail
             };
 
-            carReservation.Car.IsReserved = true;
-
             //update this car in db
-            _context.Car.Update(carReservation.Car);
+            _context.Car.Update(car);
 
             //write in reservations
             _context.CarReservations.Add(carReservation);

@@ -7,7 +7,8 @@ export class CarReservation {
     public carCompany: CarCompany,
     public startDate: string,
     public endDate: string,
-    public price: number,
+    public carId: number,
+    public fullPrice: number,
     public userEmail?: string,
     public id?: number
   ) {}
