@@ -4,6 +4,7 @@ import { Car } from "../models/car.model";
 
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
+import { CarReservation } from '../models/CarReservation';
 
 @Injectable({
   providedIn: "root"
@@ -112,6 +113,10 @@ export class CarsService {
     );
   }
 
+  makeReservation(carReservation: CarReservation){
+    return this.httpClient.post(this.baseURL + "/Car/MakeReservation", carReservation);
+  }
+
   getCars = () => {
     return this.cars;
   };
@@ -135,4 +140,6 @@ export class CarsService {
         console.log("wrong input");
     }
   }
+
+
 }

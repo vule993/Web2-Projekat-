@@ -50,6 +50,29 @@ namespace ReservationAPI.Services
             return cars;
         }
 
+        public async Task MakeReservation(CarReservation reservation)
+        {
+            var carReservation = new CarReservation()
+            {
+                Car = reservation.Car,
+                CarId = reservation.CarId,
+                EndDate = reservation.EndDate,
+                StartDate = reservation.StartDate,
+                FullPrice = reservation.FullPrice,
+                UserEmail = reservation.UserEmail
+            };
+
+            carReservation.Car.IsReserved = true;
+
+            //update this car in db
+            _context.Car.Update(carReservation.Car);
+
+            //write in reservations
+            _context.CarReservations.Add(carReservation);
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateCar(Car car)
         {
            // _context.Update(car);

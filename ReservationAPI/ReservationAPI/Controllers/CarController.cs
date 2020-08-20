@@ -80,5 +80,22 @@ namespace ReservationAPI.Controllers
         }
 
 
+        [HttpPost]
+        [Route("MakeReservation")]
+        public async Task<object> MakeReservation(CarReservation carReservationModel)
+        {
+            try
+            {
+                await _repository.MakeReservation(carReservationModel);
+                
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error while making car reservation. [{e.Message}]");
+                return BadRequest(new { message = "Failed to make car reservation." });
+            }
+
+            return Ok();
+        }
     }
 }

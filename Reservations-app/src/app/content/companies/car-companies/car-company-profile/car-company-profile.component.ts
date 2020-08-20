@@ -5,13 +5,13 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { Car } from "src/app/models/car.model";
 import { CarReservation } from "src/app/models/CarReservation";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-car-company-profile",
   templateUrl: "./car-company-profile.component.html",
   styleUrls: [
     "./car-company-profile.component.css"
-    // "../../profile/profile.component.css",
   ]
 })
 export class CarCompanyProfileComponent implements OnInit {
@@ -25,7 +25,7 @@ export class CarCompanyProfileComponent implements OnInit {
   selectedCar: Car;
   quickReservationForm: FormGroup;
 
-  constructor(private carService: CarsService, private route: ActivatedRoute) {}
+  constructor(private carService: CarsService, private route: ActivatedRoute, private toastrService: ToastrService) {}
 
   ngOnInit(): void {
     //fetch id of car company
@@ -64,7 +64,14 @@ export class CarCompanyProfileComponent implements OnInit {
       localStorage.getItem("userId")
     );
 
-    //TODO: proslediti na back
+    this.carService.makeReservation(reservation).subscribe(
+      (res) => {
+        this.toastrService.success("You made a quick reservation!", "Car rented");
+      },
+      err => {
+        this.toastrService.error("Error while making a quick reservation", "Error");
+      }
+    )
   }
 
   countStar(star) {

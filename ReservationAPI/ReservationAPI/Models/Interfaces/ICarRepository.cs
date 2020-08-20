@@ -16,6 +16,8 @@ namespace ReservationAPI.Models.Interfaces
 
         Task UpdateCar(Car car);
 
-        Task<IEnumerable<Car>> GetCarsOfCompany(long companyID); 
+        Task<IEnumerable<Car>> GetCarsOfCompany(long companyID);
+
+        Task MakeReservation(CarReservation reservation);
     }
 }

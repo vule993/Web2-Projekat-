@@ -28,6 +28,7 @@ namespace ReservationAPI.Models.DbRepository
         public DbSet<User> Users { get; set; }
         public DbSet<CarCompany> CarCompanies { get; set; }
         public DbSet<Car> Car { get; set; }
+        public DbSet<CarReservation> CarReservations { get; set; }
         //airlines
         public DbSet<AirlineCompany> AirlineCompany { get; set; }
         public DbSet<AirlineReservation> AirlineReservation { get; set; }
