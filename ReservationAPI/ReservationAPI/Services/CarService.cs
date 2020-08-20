@@ -76,7 +76,6 @@ namespace ReservationAPI.Services
 
         public async Task UpdateCar(Car car)
         {
-           // _context.Update(car);
             _context.Car.Update(car);
             await _context.SaveChangesAsync();
         }

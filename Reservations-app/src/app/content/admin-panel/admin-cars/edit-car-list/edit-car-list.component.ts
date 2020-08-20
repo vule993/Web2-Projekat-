@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { CarCompany } from "src/app/models/CarCompany.model";
 import { AdminService } from "src/app/services/admin.service";
+import { CarsService } from "src/app/services/cars.service";
 
 @Component({
   selector: "app-edit-car-list",
@@ -21,7 +22,8 @@ export class EditCarListComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private carService: CarsService
   ) {
     this.carToEdit = new Car("", "", 0, 0, 0, 0, "", "", false);
     this.newCar = new Car("", "", 0, 0, 0, 0, "", "", false);
@@ -76,18 +78,50 @@ export class EditCarListComponent implements OnInit {
   }
 
   updateCar() {
-    let mark = (<HTMLInputElement>document.getElementById("mark")).value;
-    let description = (<HTMLInputElement>document.getElementById("desc")).value;
-    let year = (<HTMLInputElement>document.getElementById("year")).value;
+    this.carToEdit.mark = (<HTMLInputElement>(
+      document.getElementById("mark")
+    )).value;
+    this.carToEdit.description = (<HTMLInputElement>(
+      document.getElementById("desc")
+    )).value;
+    this.carToEdit.year = +(<HTMLInputElement>document.getElementById("year"))
+      .value;
+    this.carToEdit.price = +(<HTMLInputElement>document.getElementById("price"))
+      .value;
+    this.carToEdit.category = (<HTMLInputElement>(
+      document.getElementById("category")
+    )).value;
 
-    let index = this.companyCars.indexOf(this.carToEdit);
-    this.companyCars[index].mark = mark;
-    this.companyCars[index].description = description;
-    this.companyCars[index].year = +year;
+    this.carService.updateCar(this.carToEdit).subscribe(
+      res => {
+        this.toastrService.success(
+          "You updated a car.",
+          "Car succesfully updated"
+        );
+      },
+      err => {
+        this.toastrService.error(
+          "Error while updating a car",
+          "Car not updated"
+        );
+      }
+    );
   }
 
-  deleteCar() {
-    this.companyCars.splice(this.companyCars.indexOf(this.carToEdit));
+  deleteCar(id: number) {
+    //TODO: Uvesti da ne moze da obrise auto koji je trenutno rezervisan
+    this.carService.deleteCar(id).subscribe(
+      res => {
+        this.toastrService.success("You deleted this car.", "Car deleted");
+      },
+      err => {
+        this.toastrService.error(
+          "Error while deleting a car.",
+          "Car not deleted"
+        );
+      }
+    );
+    //this.companyCars.splice(this.companyCars.indexOf(this.carToEdit));
   }
 
   private initForm() {

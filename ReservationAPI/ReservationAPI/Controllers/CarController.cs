@@ -65,18 +65,31 @@ namespace ReservationAPI.Controllers
         // PUT api/Car/Update/5
         [HttpPut("{id}")]
         [Route("Update")]
-        public async Task Put(int id, [FromBody] Car model)
+        public async Task Put([FromBody] Car model)
         {
-            await _repository.UpdateCar(model);
+            try
+            {
+                await _repository.UpdateCar(model);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error while updating a car. [{e.Message}]");
+            }
         }
 
 
         //DELETE api/Car/Delete/5
-        [HttpDelete("{id}")]
-        [Route("Delete")]
+        [HttpDelete("Delete/{id}")]
         public async Task Delete(int id)
         {
-            await _repository.DeleteCar(id);
+            try
+            {
+                await _repository.DeleteCar(id);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error while deleting a car. [{e.Message}]");
+            }
         }
 
 

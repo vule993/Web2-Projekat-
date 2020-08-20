@@ -4,7 +4,7 @@ import { Car } from "../models/car.model";
 
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
-import { CarReservation } from '../models/CarReservation';
+import { CarReservation } from "../models/CarReservation";
 
 @Injectable({
   providedIn: "root"
@@ -113,8 +113,19 @@ export class CarsService {
     );
   }
 
-  makeReservation(carReservation: CarReservation){
-    return this.httpClient.post(this.baseURL + "/Car/MakeReservation", carReservation);
+  makeReservation(carReservation: CarReservation) {
+    return this.httpClient.post(
+      this.baseURL + "/Car/MakeReservation",
+      carReservation
+    );
+  }
+
+  updateCar(car: Car) {
+    return this.httpClient.put(this.baseURL + "/Car/Update", car);
+  }
+
+  deleteCar(id: number) {
+    return this.httpClient.delete(this.baseURL + "/Car/Delete/" + id);
   }
 
   getCars = () => {
@@ -140,6 +151,4 @@ export class CarsService {
         console.log("wrong input");
     }
   }
-
-
 }

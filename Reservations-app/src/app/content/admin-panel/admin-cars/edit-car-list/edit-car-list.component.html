@@ -32,7 +32,7 @@
           </button>
         </td>
         <td>
-          <button type="button" (click)="deleteCar()" class="btn btn-danger">
+          <button type="button" (click)="deleteCar(car.id)" class="btn btn-danger">
             Delete
           </button>
         </td>
@@ -95,6 +95,7 @@
                   class="form-control"
                   id="mark"
                   placeholder="Enter new car type"
+                  value=""
                 />
               </div>
             </div>
@@ -118,6 +119,7 @@
                   class="form-control"
                   id="desc"
                   placeholder="Enter new car description"
+                  value=""
                 />
               </div>
             </div>
@@ -141,6 +143,55 @@
                   class="form-control"
                   id="year"
                   placeholder="Enter year"
+                  value=""
+                />
+              </div>
+            </div>
+
+            <!--price-->
+            <div class="form-group row">
+              <label
+                for="price"
+                class="col-md-4 col-form-label badge text-uppercase"
+                >Price per day:</label
+              >
+              <div class="col-md-8">
+                {{ carToEdit.price }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="price"
+                  placeholder="Enter new price"
+                  value=""
+                />
+              </div>
+            </div>
+
+            <!--category-->
+            <div class="form-group row">
+              <label
+                for="category"
+                class="col-md-4 col-form-label badge text-uppercase"
+                >Category:</label
+              >
+              <div class="col-md-8">
+                {{ carToEdit.category }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="category"
+                  placeholder="Change category"
+                  value=""
                 />
               </div>
             </div>
