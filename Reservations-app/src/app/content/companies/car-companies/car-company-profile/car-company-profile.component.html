@@ -98,7 +98,7 @@
             </thead>
             <!--Ovde ce ipak da se izlistavaju rezervacije ove kompanije-->
             <tbody *ngIf="isLoaded">
-              <tr *ngFor="let car of availableCars">
+              <tr *ngFor="let car of availableCars; let i = index">
                 <td>
                   <img
                     src="{{ car.image }}"
@@ -114,8 +114,12 @@
                 <td>{{ car.seats }}</td>
                 <td>{{ car.price }}$</td>
                 <td>
-                  <button class="btn btn-success">
-                    <!--Ovde da izadje modal za brzu rezervaciju-->
+                  <button
+                    class="btn btn-success"
+                    (click)="QuickReservationModal(car)"
+                    data-toggle="modal"
+                    data-target="#quickReservation"
+                  >
                     Book Me
                   </button>
                 </td>
@@ -186,4 +190,78 @@
   </div>
 </div>
 
-<!--TODO:Modal za brzu rezervaciju vozila kompanije-->
+<div
+  class="modal fade"
+  id="quickReservation"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="quickReservation"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="quickReservation">
+          Make a Quick Car Reservation
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <!--Start date, end date-->
+          <form
+            class="form"
+            [formGroup]="quickReservationForm"
+            (ngSubmit)="MakeQuickReservation()"
+          >
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="mail-icon"></div>
+                <input
+                  id="startDate"
+                  type="date"
+                  formControlName="startDate"
+                  class="form-control"
+                  placeholder="Start date"
+                  value=""
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <div class="location-icon"></div>
+                <input
+                  id="endDate"
+                  type="date"
+                  class="form-control"
+                  formControlName="endDate"
+                  placeholder="End date"
+                  value=""
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="MakeQuickReservation()"
+            class="btn btn-info"
+            data-dismiss="modal"
+            [disabled]="!quickReservationForm.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

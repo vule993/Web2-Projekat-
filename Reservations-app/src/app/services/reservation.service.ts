@@ -13,7 +13,7 @@ import { SeatConfiguration } from "../models/Seat-configuration.model";
 import { S_IFDIR } from "constants";
 
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
@@ -52,7 +52,7 @@ export class ReservationService {
               "Belgrade",
               "Serbia",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "wc,tv,wifi,power supply,newspapers,bar",
           "300",
@@ -60,7 +60,6 @@ export class ReservationService {
         )
       ),
       new CarReservation(
-        1,
         this.carService.getCar(1),
         this.carService.getCarCompany(1),
         "01-Jun-2020",
@@ -71,7 +70,9 @@ export class ReservationService {
             this.parseDate("02-07-2020"),
             this.parseDate("25-07-2020")
           )
-        )
+        ),
+        "",
+        1
       ),
       false,
       false
@@ -110,7 +111,7 @@ export class ReservationService {
               "Negde tamo",
               "Nedodjija",
               "Neznanog junaka jebem li ga 1/1"
-            ),
+            )
           ],
           "coffee service, wifi, NESTO NOVO...",
           "500",
@@ -118,7 +119,6 @@ export class ReservationService {
         )
       ),
       new CarReservation(
-        2,
         this.carService.getCar(2),
         this.carService.getCarCompany(2),
         "05-Aug-2020",
@@ -129,17 +129,18 @@ export class ReservationService {
             this.parseDate("05-08-2020"),
             this.parseDate("23-08-2020")
           )
-        )
+        ),
+        "",
+        2
       ),
       false,
       false
-    ),
+    )
   ]);
   allReservations = this._allReservations.asObservable();
 
   carReservations: CarReservation[] = [
     new CarReservation(
-      1,
       this.carService.getCar(1),
       this.carService.getCarCompany(1),
       "01-Jun-2020",
@@ -150,10 +151,11 @@ export class ReservationService {
           this.parseDate("02-07-2020"),
           this.parseDate("25-07-2020")
         )
-      )
+      ),
+      "",
+      1
     ),
     new CarReservation(
-      2,
       this.carService.getCar(1),
       this.carService.getCarCompany(1),
       "03-Jun-2020",
@@ -164,10 +166,11 @@ export class ReservationService {
           this.parseDate("02-07-2020"),
           this.parseDate("25-07-2020")
         )
-      )
+      ),
+      "",
+      2
     ),
     new CarReservation(
-      2,
       this.carService.getCar(2),
       this.carService.getCarCompany(2),
       "05-Aug-2020",
@@ -178,8 +181,10 @@ export class ReservationService {
           this.parseDate("05-08-2020"),
           this.parseDate("23-08-2020")
         )
-      )
-    ),
+      ),
+      "",
+      2
+    )
   ];
 
   constructor(private carService: CarsService) {}
@@ -198,7 +203,7 @@ export class ReservationService {
     });
   }
   getSpecificReservation(id: number) {
-    return this.carReservations.find((c) => c.id == id);
+    return this.carReservations.find(c => c.id == id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;
