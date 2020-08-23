@@ -4,6 +4,8 @@ import { PlaneService } from "src/app/models/PlaneService.model";
 import { PlaneServicesService } from "src/app/services/plane-services.service";
 import { environment } from "src/environments/environment";
 
+declare var $: any;
+
 @Component({
   selector: "app-edit-other-services",
   templateUrl: "./edit-other-services.component.html",
