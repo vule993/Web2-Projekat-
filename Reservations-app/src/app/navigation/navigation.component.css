@@ -1,5 +1,7 @@
+#border {
+  padding: 1vw 0;
+}
 #header {
-  height: 7vw;
   width: 100%;
   position: fixed;
   top: 0;
@@ -17,8 +19,8 @@ nav {
   opacity: 0.9;
 }
 #nav-icon {
-  width: 3.2vw;
-  height: 3.2vw;
+  width: 4.2vw;
+  height: 4.2vw;
   background-image: url("../../assets/site/menu.png");
   background-size: cover;
 }
@@ -28,11 +30,11 @@ nav {
   height: 4vw;
 }
 #navigation li {
-  height: 3.2vw;
+  height: 4.2vw;
 }
 #navigation li img {
-  height: 1.2vw;
-  margin-top: 0.9vw;
+  height: 2vw;
+  margin-top: 1.1vw;
   margin-left: 1vw;
 }
 #notifications {
@@ -110,19 +112,19 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   display: block;
-  padding: 0.8vw;
+  padding: 1.3vw 0.8vw;
   font-size: 1.1vw;
   font-family: "Roboto", sans-serif;
   color: #fff;
 }
 nav ul li a:hover {
   /* background-color: rgba(0, 0, 0, 0.4); */
-  padding-top: 0.7vw;
+  padding-top: 1.4vw;
   border-radius: 10px;
 }
 .box {
-  height: 3.2vw;
-  width: 3.2vw;
+  height: 4.2vw;
+  width: 4.2vw;
 }
 
 .transform {
@@ -135,7 +137,7 @@ nav ul li a:hover {
 
 .transform-active {
   background-color: rgba(67, 48, 154, 1);
-  height: 3.2vw;
+  height: 4.2vw;
   width: 96%;
 }
 .display-none {

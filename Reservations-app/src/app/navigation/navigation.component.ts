@@ -78,7 +78,6 @@ export class NavigationComponent implements OnInit {
 
   profilePictureDecide() {
     let stored = localStorage.getItem("image");
-    debugger;
 
     if (stored != "null" && stored != "" && stored != undefined) {
       return (
