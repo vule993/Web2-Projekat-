@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -210,6 +211,47 @@ namespace ReservationAPI.Services
         public Task<bool> DeleteSeatConfiguration(long id)
         {
             throw new NotImplementedException();
+        }
+        #endregion
+
+        #region OTHER SERVICES
+
+
+        public async Task<IEnumerable<PlaneService>> GetAllServices()
+        {
+            return await _context.PlaneService.ToListAsync();
+        }
+
+        public async Task<bool> CreateService(PlaneService planeService)
+        {
+            try
+            {
+                await _context.PlaneService.AddAsync(new PlaneService() { Name = planeService.Name, 
+                Icon = planeService.Icon});
+                await _context.SaveChangesAsync();
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteService(long id)
+        {
+            try
+            {
+                var service = (await _context.PlaneService.ToListAsync()).FirstOrDefault(x => x.Id == id);
+                if(service != null)
+                {
+                    _context.PlaneService.Remove(service);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }catch(Exception e)
+            {
+                return false;
+            }
         }
 
         #endregion

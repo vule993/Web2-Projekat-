@@ -1,22 +1,89 @@
 <div class="profile">
   <div id="info" class="fleft">
+    <!-- atributi diva ispod-->
+    <!-- 
+      data-toggle="modal"
+      data-target="#uploadPhoto"
+     -->
     <div
       id="pr-picture"
+      data-toggle="modal"
+      data-target="#uploadPhoto"
       (mouseenter)="onProfilePictureHover()"
       (mouseleave)="onProfilePictureLeave()"
     >
-      <div
-        id="photo-icon"
-        class="transparent"
-        (click)="onProfilePictureClick()"
-      ></div>
+      <div id="photo-icon" class="transparent"></div>
     </div>
-    <hr />
 
-    <div class="btn btn-success overflow-hidden">
-      <img src="../../../assets/site/icons/plus.png" class="fleft" />
-      <div class="fleft">Add friend</div>
+    <!--  -->
+
+    <div
+      class="modal fade"
+      id="uploadPhoto"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="uploadPhoto"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">
+              Pick some photo
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="tab-content">
+              <!--  -->
+              <div id="form" class="overflow-hidden">
+                <button (click)="file.click()" class="btn btn-success fleft">
+                  Browse
+                </button>
+                <input
+                  id="upload"
+                  #file
+                  (change)="UploadFile(file.files)"
+                  class="form-control"
+                  type="file"
+                />
+                <div class="fleft" id="preview"></div>
+              </div>
+              <!--  -->
+            </div>
+
+            <div class="modal-footer overflow-hidden">
+              <button
+                type="button"
+                class="btn btn-danger fleft"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                (click)="UploadPhoto()"
+                type="submit"
+                class="btn btn-success fright"
+                data-dismiss="modal"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!--  -->
+
+    <hr />
 
     <div class="info-item">
       <div class="fleft">

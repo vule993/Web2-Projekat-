@@ -174,5 +174,30 @@ namespace ReservationAPI.Controllers
         }
         #endregion
 
+
+
+        #region OTHER SERVICES
+
+        [HttpGet]
+        [Route("GetAllServices")]
+        public async Task<IEnumerable<PlaneService>> GetAllServices()
+        {
+            return await _service.GetAllServices();
+        }
+
+        [HttpPut]
+        [Route("CreateService")]
+        public async Task<bool> CreateService(PlaneService planeService)
+        {
+            return await _service.CreateService(planeService);
+        }
+
+        [HttpDelete]
+        [Route("DeleteService/{id}")]
+        public async Task<bool> DeleteService(long id)
+        {
+            return await _service.DeleteService(id);
+        }
+        #endregion
     }
 }

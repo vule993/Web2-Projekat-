@@ -1,0 +1,60 @@
+<div class="wrapper">
+  <!-- <fieldset class="form-group">
+    <a href="javascript:void(0)" onclick="$('#pro-image').click()"
+      >Dodaj fotografije apartmana</a
+    >
+    <input
+      type="file"
+      id="pro-image"
+      name="pro-image"
+      style="display: none;"
+      class="form-control"
+      multiple
+    />
+  </fieldset>
+  <div class="preview-images-zone">
+    <div class="preview-image preview-show-1"></div>
+  </div> -->
+  <div id="form" class="overflow-hidden">
+    <button (click)="file.click()" class="btn btn-success fleft">
+      Add icon
+    </button>
+    <input
+      id="upload"
+      #file
+      (change)="uploadFile(file.files)"
+      class="form-control"
+      type="file"
+    />
+    <div class="fleft" id="preview"></div>
+
+    <input
+      id="serviceName"
+      class="fleft form-control"
+      type="text"
+      placeholder="Service name"
+    />
+
+    <button (click)="CreateService()" class="btn btn-success fleft">
+      Add service
+    </button>
+  </div>
+
+  <div class="overflow-hidden">
+    <div *ngFor="let service of services" class="item">
+      <img
+        class="fleft"
+        (click)="DeleteService(service.id)"
+        src="{{ serverAddress }}/Resources/Site/{{ service.icon }}"
+        alt=""
+      />
+      <span class="fleft">{{ service.name }}</span>
+      <img
+        class="fright"
+        (click)="DeleteService(service.id)"
+        src="../../../../../assets/site/icons/cancel.png"
+        alt=""
+      />
+    </div>
+  </div>
+</div>

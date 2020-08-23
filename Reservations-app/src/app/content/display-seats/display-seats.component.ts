@@ -20,7 +20,9 @@ export class DisplaySeatsComponent implements OnInit {
   constructor(
     private data: SeatsConfigService,
     private selectedSeatService: SelectedseatsService
-  ) {}
+  ) {
+    let i = this.currentSeatConfiguration;
+  }
 
   getRowWidth() {
     return (

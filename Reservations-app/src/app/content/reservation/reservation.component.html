@@ -6,24 +6,24 @@
         <h6>Flight termin</h6>
         <span>
           <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ flight.startDate }}
+          {{ flight?.startDate }}
         </span>
 
         <span>
           <img src="../../../../assets/site/icons/clock.png" alt="" />
-          {{ flight.startTime }}
+          {{ flight?.startTime }}
         </span>
       </div>
       <div>
         <h6>Return termin</h6>
         <span>
           <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ flight.arrivingDate }}
+          {{ flight?.arrivingDate }}
         </span>
 
         <span>
           <img src="../../../../assets/site/icons/clock.png" alt="" />
-          {{ flight.arrivingTime }}
+          {{ flight?.arrivingTime }}
         </span>
       </div>
     </div>
@@ -36,21 +36,21 @@
             src="../../../../assets/site/icons/connecting-flights.png"
             alt=""
           />
-          {{ flight.destinations.length }}
+          {{ flight?.destinations.length }}
         </span>
       </div>
       <div>
         <h6>Flight duration</h6>
         <span>
           <img src="../../../../assets/site/icons/flight-duration.png" alt="" />
-          {{ flight.estimationTime }}
+          {{ flight?.estimationTime }}
         </span>
       </div>
       <div>
         <h6>Luggage (kg)</h6>
         <span>
           <img src="../../../../assets/site/icons/suitcase.png" alt="" />
-          {{ flight.luggage }}
+          {{ flight?.luggage }}
         </span>
       </div>
     </div>
@@ -62,17 +62,17 @@
         <h6>Airplane type</h6>
         <span>
           <img src="../../../../assets/site/icons/propeller.png" alt="" />
-          {{ flight.planeType.name }}
+          {{ flight?.planeType.name }}
         </span>
       </div>
       <div>
         <h6>Additional services</h6>
         <span>
           <img
-            *ngFor="let service of flight.otherServices.split(',')"
+            *ngFor="let service of listOfServices"
             class="additional-services"
-            src="../../../../assets/site/icons/{{ service }}.png"
-            title="{{ service }}"
+            src="{{ serverAddress }}/Resources/Site/{{ service }}"
+            title="{{ service.split('.')[0] }}"
             alt=""
           />
         </span>
@@ -82,10 +82,10 @@
     <div class="fleft separator">
       <div>
         <h6>Aviocompany</h6>
-        <a routerLink="/companies/airlines/{{flight.aviocCmpany.id}">
+        <a routerLink="/companies/airlines/{{flight?.aviocCmpany.id}">
           <span>
             <img src="../../../../assets/site/icons/plane.png" alt="" />
-            {{ flight.avioCompany.name }}
+            {{ flight?.avioCompany.name }}
           </span>
         </a>
       </div>
@@ -93,16 +93,18 @@
         <h6>Aviocompany rating</h6>
         <span>
           <img src="../../../../assets/site/icons/like.png" alt="" />
-          {{ flight.avioCompany.likes }}
+          {{ flight?.avioCompany.likes }}
         </span>
       </div>
       <div>
         <h6>Relation</h6>
         <span>
           <img src="../../../../assets/site/icons/connected.png" alt="" />
-          {{ flight.destinations[0].airportName }}
+          {{ (flight?.destinations)[0]?.airportName }}
           -
-          {{ flight.destinations[flight.destinations.length - 1].airportName }}
+          {{
+            (flight?.destinations)[flight?.destinations.length - 1]?.airportName
+          }}
         </span>
       </div>
 
@@ -116,7 +118,7 @@
         <h6>Flight prize</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ flight.price }}$
+          {{ flight?.price }}$
         </span>
       </div>
 
@@ -126,7 +128,7 @@
     </div>
   </div>
   <div id="space"></div>
-  <div id="proceed" class="overflow-hidden display-none">
+  <div *ngIf="loaded" id="proceed" class="overflow-hidden display-none">
     <app-airline-reservation
       (event)="suggestedCars = $event"
       [flight]="flight"

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UsersService } from "src/app/services/users.service";
 import { UserModel } from "src/app/models/User.model";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-user-list",
@@ -11,6 +12,9 @@ export class UserListComponent implements OnInit {
   allUsers;
   filteredUsers;
   currentUSersFriends: UserModel[];
+
+  serverAddress = environment.serverAddress;
+
   constructor(private _userService: UsersService) {}
 
   //filter

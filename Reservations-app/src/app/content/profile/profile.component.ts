@@ -1,9 +1,13 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { UserModel } from "../../models/User.model";
 import { UsersService } from "src/app/services/users.service";
 import { Router } from "@angular/router";
-import { stripSummaryForJitNameSuffix } from "@angular/compiler/src/aot/util";
-import { STORAGE_USER_ID_KEY } from "src/app/const/constants";
+
+import { environment } from "src/environments/environment";
+import { HttpClient, HttpEventType } from "@angular/common/http";
+import { DomSanitizer } from "@angular/platform-browser";
+
+declare var $: any;
 
 @Component({
   selector: "app-profile",
@@ -14,11 +18,27 @@ export class ProfileComponent implements OnInit {
   activeTab;
   allUsers: UserModel[];
   public currentUser: UserModel = null;
-  // constructor(private userService: UsersService, private router: Router) {
-  //   this.allUsers = userService.loadAllUsers();
+
+  baseUrl = environment.serverAddress + "/api/Upload/UploadFile";
+  serverAddress = environment.serverAddress;
+
+  fileToUpload;
+  reader = new FileReader();
+
+  progress: number;
+  message: string;
+
+  profilePicture;
+
+  @Output() onUploadFinished = new EventEmitter();
 
   viewProfile: boolean; //fleg koji govori da li je neko tu samo da pogleda profil
-  constructor(private userService: UsersService, private router: Router) {
+  constructor(
+    private userService: UsersService,
+    private router: Router,
+    private _http: HttpClient,
+    private _sanitizer: DomSanitizer
+  ) {
     //router sluzi da skeniram url svaki put kad se promeni -> tako cu znati da li je
     //profil samo za gledanje ili je to moj profil
     router.events.subscribe((val) => {
@@ -37,6 +57,15 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe((user: UserModel) => {
       this.currentUser = <UserModel>user;
 
+      //ovo videti
+      this.profilePicture =
+        environment.serverAddress +
+        "/Resources/Users/" +
+        this.currentUser.image;
+      $("#pr-picture").css({
+        "background-image": "url(" + this.profilePicture + ")",
+      });
+
       if (this.currentUser.status == "Admin") {
         this.router.navigateByUrl("admin/head-admin/profile");
       }
@@ -46,7 +75,7 @@ export class ProfileComponent implements OnInit {
       if (this.currentUser.status == "AvioAdmin") {
         //this.router.navigate(["avio"]);
       }
-
+      debugger;
       //dodati i ostalo
       localStorage.setItem("id", user.id.toString());
       localStorage.setItem("firstName", user.firstName);
@@ -56,8 +85,9 @@ export class ProfileComponent implements OnInit {
       localStorage.setItem("phoneNumber", user.phoneNumber);
       localStorage.setItem("city", user.city);
       localStorage.setItem("street", user.street);
+      localStorage.setItem("image", user.image);
 
-      //preostalo: friends, image
+      //preostalo: friends
     });
   }
 
@@ -89,7 +119,50 @@ export class ProfileComponent implements OnInit {
     }, 50);
   }
 
-  onProfilePictureClick() {
-    alert("Change picturre dialog...");
+  // dole radi sliku
+
+  UploadFile(files) {
+    if (files.length === 0) return;
+
+    this.fileToUpload = <File>files[0];
+
+    this.reader.onloadend = () => {
+      $("#preview").css({
+        "background-image": "url(" + this.reader.result + ")",
+      });
+    };
+
+    this.reader.readAsDataURL(this.fileToUpload);
+  }
+
+  UploadPhoto() {
+    let formData = new FormData();
+
+    if (this.fileToUpload == null) {
+      alert("Choose a icon...");
+      return;
+    }
+
+    formData.append("file", this.fileToUpload, this.fileToUpload.name);
+    formData.append("email", localStorage.getItem("email"));
+    formData.append("type", "profilePicture");
+    formData.append("name", "");
+
+    this._http
+      .post(this.baseUrl, formData, {
+        reportProgress: true,
+        observe: "events",
+      })
+      .subscribe((event) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        } else if (event.type === HttpEventType.Response) {
+          this.message = "Upload success!";
+          this.onUploadFinished.emit(event.body);
+          $("#pr-picture").css({
+            "background-image": "url(" + this.reader.result + ")",
+          });
+        }
+      });
   }
 }
