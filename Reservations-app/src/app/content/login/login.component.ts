@@ -5,11 +5,12 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { AuthService, GoogleLoginProvider } from "angularx-social-login";
 import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY } from "../../const/constants";
+import { UserModel } from "src/app/models/User.model";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -35,12 +36,19 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", res.token); //save token
         localStorage.setItem("userId", res.email);
 
-        //ovde treba da se setuje local storage umesto na profilu
+        if (this.userService.roleMatch(["Admin"])) {
+          this.router.navigateByUrl("admin/head-admin/profile");
+        } else if (this.userService.roleMatch(["CarAdmin"])) {
+          this.router.navigateByUrl("admin/car/edit-company");
+        } else if (this.userService.roleMatch(["AvioAdmin"])) {
+          this.router.navigateByUrl("admin/avio/edit-profile");
+        } else {
+          this.router.navigate(["profile"]);
+        }
 
-        this.router.navigate(["profile"]);
         this.toastr.success("Succesfully logged in", "Login Success");
       },
-      (err) => {
+      err => {
         if (err.status == 400) {
           //bad req
           this.toastr.error(
@@ -55,7 +63,7 @@ export class LoginComponent implements OnInit {
   }
 
   LoginWithGoogle() {
-    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then((socialusers) => {
+    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then(socialusers => {
       console.log(socialusers);
 
       this.userService.socialLogin(socialusers).then((res: any) => {
@@ -72,7 +80,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = new FormGroup({
       email: new FormControl(email, Validators.required),
-      password: new FormControl(password, Validators.required),
+      password: new FormControl(password, Validators.required)
     });
   }
 }

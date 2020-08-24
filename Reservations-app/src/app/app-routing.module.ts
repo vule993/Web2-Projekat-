@@ -2,9 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from "./content/login/login.component";
 import { RegisterComponent } from "./content/register/register.component";
-import { ContentComponent } from "./content/content.component";
 import { ProfileComponent } from "./content/profile/profile.component";
-import { OffersComponent } from "./content/offers/offers.component";
 import { AdminPanelComponent } from "./content/admin-panel/admin-panel.component";
 import { ArchiveDataListComponent } from "./content/profile/archive-data-list/archive-data-list.component";
 import { EditProfileComponent } from "./content/profile/edit-profile/edit-profile.component";
@@ -25,7 +23,6 @@ import { EditCarPricesComponent } from "./content/admin-panel/admin-cars/edit-ca
 import { EditCarStatisticsComponent } from "./content/admin-panel/admin-cars/edit-car-statistics/edit-car-statistics.component";
 
 import { EditBusinessReportComponent } from "./content/admin-panel/admin-flights/edit-business-report/edit-business-report.component";
-import { SideNavComponent } from "./content/side-nav/side-nav.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { HeadAdminComponent } from "./content/admin-panel/head-admin/head-admin.component";
 import { CarCompaniesComponent } from "./content/companies/car-companies/car-companies.component";
@@ -52,13 +49,16 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
-  { path: "flights", component: OffersComponent },
-  { path: "admin-panel", component: AdminPanelComponent },
+  {
+    path: "admin-panel",
+    component: AdminPanelComponent,
+    canActivate: [AuthGuard]
+  },
   // ovo je samo za redirect, airlines je default komponenta za stranicu companies
   {
     path: "companies",
     redirectTo: "companies/airlines",
-    pathMatch: "full",
+    pathMatch: "full"
   },
   {
     path: "companies",
@@ -67,69 +67,77 @@ const routes: Routes = [
       { path: "airlines", component: AirlinesComponent },
       { path: "airlines/:id", component: AirlineCompanyProfileComponent },
       { path: "car-companies", component: CarCompaniesComponent },
-      { path: "car-companies/:id", component: CarCompanyProfileComponent },
-    ],
+      { path: "car-companies/:id", component: CarCompanyProfileComponent }
+    ]
   },
   {
     path: "users-list",
     component: UserListComponent,
+    canActivate: [AuthGuard],
+    data: { permittedRoles: ["User"] }
   },
   {
     path: "flight/:id",
-    component: ReservationComponent,
+    component: ReservationComponent
   },
   {
     path: "avio-reservation/:id",
     component: ReservationComponent,
+    canActivate: [AuthGuard],
+    data: { permittedRoles: ["User"] }
   },
   {
     path: "car-reservation/:id",
     component: CarReservationComponent,
+    canActivate: [AuthGuard],
+    data: { permittedRoles: ["User"] }
   },
   {
     path: "profile",
     redirectTo: "profile/friends",
     pathMatch: "full",
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { permittedRoles: ["User"] }
   },
   {
     path: "profile",
     component: ProfileComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
+    data: { permittedRoles: ["User"] },
     children: [
       {
         path: "friends",
-        component: FriendsDataListComponent,
+        component: FriendsDataListComponent
       },
       {
         path: "archive",
-        component: ArchiveDataListComponent,
+        component: ArchiveDataListComponent
       },
       {
         path: "reservations",
-        component: ReservationsDataListComponent,
+        component: ReservationsDataListComponent
       },
       {
         path: "edit-profile",
-        component: EditProfileComponent,
-      },
-    ],
+        component: EditProfileComponent
+      }
+    ]
   },
   {
     //ovo ce biti url kada neko zeli da doda nekoga, pa ce se prikazati samo info, tj bez edit menija
     path: "profile-view",
-    component: ProfileComponent,
+    component: ProfileComponent
   },
   {
     path: "admin",
     component: AdminPanelComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: "head-admin",
         component: HeadAdminComponent,
-        // canActivate: [AuthGuard],
-        // data: { permittedRoles: ["Admin"] },
+        canActivate: [AuthGuard],
+        data: { permittedRoles: ["Admin"] },
         children: [
           { path: "car-companies", component: HeadCarCompaniesComponent },
           { path: "car-companies/:id", component: HeadCarCompaniesComponent },
@@ -141,14 +149,14 @@ const routes: Routes = [
           { path: "create-car-company", component: CreateCarCompanyComponent },
           {
             path: "create-avio-company",
-            component: CreateAvioCompanyComponent,
-          },
-        ],
+            component: CreateAvioCompanyComponent
+          }
+        ]
       },
       {
         path: "avio",
         component: AdminFlightsComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         data: { permittedRoles: ["AvioAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
@@ -158,28 +166,28 @@ const routes: Routes = [
           { path: "discount", component: EditDiscountComponent },
           { path: "seat-config", component: EditSeatsComponent },
           { path: "other-services", component: EditOtherServicesComponent },
-          { path: "business-report", component: EditBusinessReportComponent },
-        ],
+          { path: "business-report", component: EditBusinessReportComponent }
+        ]
       },
       {
         path: "car",
         component: AdminCarsComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         data: { permittedRoles: ["CarAdmin"] },
         children: [
           // { path: "", component: SideNavComponent, outlet: "side-nav" },
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent },
-        ],
-      },
-    ],
-  },
+          { path: "statistics", component: EditCarStatisticsComponent }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
