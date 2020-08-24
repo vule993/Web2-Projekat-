@@ -84,3 +84,30 @@
   width: 70vw;
   padding: 1.4vw 2vw;
 }
+
+/* modal upload photo */
+#preview {
+  margin: 0 auto;
+  width: 18vw;
+  height: 18vw;
+  background-repeat: no-repeat;
+  background-size: 18vw;
+  background-image: url("../../../assets/site/icons/avatar-male.png");
+}
+
+.modal-footer {
+  overflow: hidden;
+  flex-wrap: nowrap;
+  margin: 2vw 0;
+  padding: 2vw 0;
+}
+.modal-body button {
+  margin: 0 !important;
+  margin-left: 2vw !important;
+}
+#form {
+  margin-bottom: 2vw;
+}
+#form > input[type="file"] {
+  display: none;
+}

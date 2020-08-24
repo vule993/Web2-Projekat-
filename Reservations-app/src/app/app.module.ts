@@ -85,6 +85,7 @@ import { CreateCarCompanyComponent } from "./content/admin-panel/head-admin/crea
 import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/create-avio-company/create-avio-company.component";
 import { MailConfirmationComponent } from './content/mail-confirmation/mail-confirmation.component';
 import { UserListComponent } from './content/user-list/user-list.component';
+import { EditOtherServicesComponent } from './content/admin-panel/admin-flights/edit-other-services/edit-other-services.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import { UserListComponent } from './content/user-list/user-list.component';
     CreateCarCompanyComponent,
     CreateAvioCompanyComponent,
     MailConfirmationComponent,
-    UserListComponent
+    UserListComponent,
+    EditOtherServicesComponent
   ],
   imports: [
     BrowserModule,

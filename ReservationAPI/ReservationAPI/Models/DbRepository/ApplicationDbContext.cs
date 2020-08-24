@@ -38,6 +38,7 @@ namespace ReservationAPI.Models.DbRepository
         public DbSet<Row> Row { get; set; }
         public DbSet<Seat> Seat { get; set; }
         public DbSet<SeatConfiguration> SeatConfiguration { get; set; }
+        public DbSet<PlaneService> PlaneService { get; set; }
         ////shared
         public DbSet<Address> Address { get; set; }
         ////public DbSet<Company> Companies { get; set; }       //ne znam da l je ovo potrebno

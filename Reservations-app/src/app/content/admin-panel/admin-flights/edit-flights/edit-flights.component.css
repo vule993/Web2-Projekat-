@@ -28,6 +28,14 @@
   color: #fff;
   border-radius: 0.5vw;
 }
+.form-group > .checkbox-services {
+  background-color: #fff;
+  color: #43309a;
+}
+.form-group > .checkbox-services img {
+  width: 2.8vw;
+  height: 2.8vw;
+}
 .form-group > div > span {
   margin: 0.2vw;
 }

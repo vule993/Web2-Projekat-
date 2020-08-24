@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace ReservationAPI.Models.Interfaces
@@ -14,7 +15,6 @@ namespace ReservationAPI.Models.Interfaces
         Task<IEnumerable<AirlineCompany>> GetAllCompanies();
         Task DeleteCompany(long id);
         #endregion
-
 
         #region DESTINATIONS
         Task<bool> CreateDestination(AirlineCompany id, Destination destination);
@@ -34,6 +34,12 @@ namespace ReservationAPI.Models.Interfaces
         Task<SeatConfiguration> GetSeatConfiguration(string id);
         Task<bool> CreateSeatConfiguration(SeatConfiguration seatConfiguraiton);
         Task<bool> DeleteSeatConfiguration(long id);
+        #endregion
+
+        #region OTHER SERVICES
+        Task<IEnumerable<PlaneService>> GetAllServices();
+        Task<bool> CreateService(PlaneService planeService);
+        Task<bool> DeleteService(long id);
         #endregion
     }
 }

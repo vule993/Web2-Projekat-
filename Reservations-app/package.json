@@ -22,7 +22,7 @@
     "@types/jquery": "^3.3.34",
     "angular-6-social-login": "^1.1.1",
     "angularx-social-login": "^2.3.1",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.2",
     "chart.js": "^2.9.3",
     "jquery": "^3.4.1",
     "ng-chartjs": "^0.1.9",

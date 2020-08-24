@@ -4,6 +4,7 @@ import { Reservation } from "src/app/models/Reservation.model";
 import { Router } from "@angular/router";
 import { Flight } from "src/app/models/Flight.model";
 import { FlightsService } from "src/app/services/flights.service";
+import { environment } from "src/environments/environment";
 
 declare var $: any;
 
@@ -16,17 +17,22 @@ export class ReservationComponent implements OnInit {
   flight: Flight;
   suggestedCars: [];
   isFinished: boolean;
-  constructor(
-    private _flightsService: FlightsService,
-    private routes: Router
-  ) {}
+  loaded: boolean = false;
+  listOfServices: string[] = [];
+  serverAddress = environment.serverAddress;
 
-  ngOnInit(): void {
+  constructor(private _flightsService: FlightsService, private routes: Router) {
     this._flightsService.getAllFlights().subscribe((data) => {
       let id = +this.routes.url.split("/")[2];
       this.flight = (data as Flight[]).find((flight) => flight.id == id);
-    });
 
+      this.listOfServices = this.flight.otherServices.split(",");
+
+      this.loaded = true;
+    });
+  }
+
+  ngOnInit(): void {
     //izbaciti iz this.reservation sve one koji != reservation.airlineReservation.flight.destinations
 
     $(window).resize(function () {

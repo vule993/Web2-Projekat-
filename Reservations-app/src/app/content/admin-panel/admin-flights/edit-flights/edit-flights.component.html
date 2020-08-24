@@ -67,7 +67,7 @@
     </select>
   </div>
 
-  <div class="form-group">
+  <div class="form-group overflow-hidden">
     <h6>Check flight destinations:</h6>
     <div *ngFor="let destination of allDestinations" class="fleft checkbox">
       <span
@@ -82,6 +82,23 @@
           ", " +
           destination.country
       }}</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <h6>Check additional services:</h6>
+    <div
+      *ngFor="let service of allServices"
+      class="fleft checkbox checkbox-services"
+    >
+      <span
+        ><input type="checkbox" name="services" value="{{ service.id }}"
+      /></span>
+      <span
+        ><img src="{{ serverAddress }}/Resources/Site/{{ service.icon }}" />{{
+          service.name
+        }}</span
+      >
     </div>
   </div>
 

@@ -43,6 +43,13 @@ export class AdminFlightsComponent implements OnInit {
     );
     this.links.push(
       new Link(
+        "../../assets/site/icons/services-white.png",
+        "OTHER SERVICES",
+        "other-services"
+      )
+    );
+    this.links.push(
+      new Link(
         "../../assets/site/icons/statistics-white.png",
         "BUSINESS REPORT",
         "business-report"

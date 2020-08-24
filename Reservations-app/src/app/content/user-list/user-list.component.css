@@ -58,6 +58,9 @@
   width: 8vw;
   margin-top: -0.25vw;
 }
+.results .num {
+  width: 3vw;
+}
 
 .image {
   margin-top: -0.15vw;

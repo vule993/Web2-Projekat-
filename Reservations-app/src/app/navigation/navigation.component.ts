@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 declare var $: any;
 
@@ -11,6 +12,10 @@ declare var $: any;
 export class NavigationComponent implements OnInit {
   open = true;
   notificationsOpen = false;
+
+  serverAddress = environment.serverAddress;
+  profilePicture;
+
   constructor(private router: Router) {}
 
   onNotificationClick() {
@@ -69,5 +74,16 @@ export class NavigationComponent implements OnInit {
     // localStorage.removeItem("token");
     localStorage.clear();
     this.router.navigate(["login"]);
+  }
+
+  profilePictureDecide() {
+    let stored = localStorage.getItem("image");
+
+    if (stored != "null" && stored != "" && stored != undefined) {
+      return (
+        this.serverAddress + "/Resources/Users/" + localStorage.getItem("image")
+      );
+    }
+    return "../../assets/face.png";
   }
 }

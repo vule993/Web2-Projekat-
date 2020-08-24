@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200823001610_PlaneServiceAdded")]
+    partial class PlaneServiceAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -374,24 +376,6 @@ namespace ReservationAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Passenger");
-                });
-
-            modelBuilder.Entity("ReservationAPI.Models.Airlines.PlaneService", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PlaneService");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Reservation", b =>

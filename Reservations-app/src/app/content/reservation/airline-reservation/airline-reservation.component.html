@@ -2,13 +2,13 @@
   <h2 class="fleft">Choose your seats!</h2>
 
   <div id="seat-picker" class="fleft overflow-hidden">
-    <app-display-seats [currentSeatConfiguration]="flight.planeType">
+    <app-display-seats [currentSeatConfiguration]="flight?.planeType">
     </app-display-seats>
   </div>
   <div id="friends-selector" class="fright">
     <div id="message">
       Select
-      {{ selectedSeats.length < 1 ? 0 : selectedSeatsNo - 1 }} friends
+      {{ selectedSeats?.length < 1 ? 0 : selectedSeatsNo - 1 }} friends
     </div>
     <div class="friends">
       <div
@@ -17,13 +17,13 @@
         (click)="onCheck($event, user)"
       >
         <div class="fleft uncheck">
-          {{ user.firstName + " " + user.lastName }}
+          {{ user?.firstName + " " + user?.lastName }}
         </div>
       </div>
     </div>
 
-    <!-- fali metoda (onclick)="finish()" -->
-    <button class="btn btn-success fright">
+    <!-- fali metoda (click)="finish()" -->
+    <button class="btn btn-success fright" (click)="finish()">
       Finish reservation
     </button>
   </div>

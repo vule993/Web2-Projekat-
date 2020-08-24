@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { AirlineCompany } from "src/app/models/AirlineCompany.model";
-import { Reservation } from "src/app/models/Reservation.model";
-import { ReservationService } from "src/app/services/reservation.service";
 import { Destination } from "src/app/models/Destination.model";
 import { DestinationsService } from "src/app/services/destinations.service";
 import { Address } from "src/app/models/address.model";
@@ -36,11 +34,11 @@ export class AirlinesComponent implements OnInit {
   constructor(
     private allAirlineCompaniesData: AviocompaniesService,
     private _flightsService: FlightsService,
-    private reservationService: ReservationService,
     private destinationService: DestinationsService
   ) {}
 
   searchFlights() {
+    debugger;
     this.allFlightsToShow = this.allFlights;
     if ($("#departDate").val() != "") {
       this.allFlightsToShow = this.allFlightsToShow.filter(

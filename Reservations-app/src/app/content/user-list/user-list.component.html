@@ -19,9 +19,17 @@
         class="list-group-item overflow-hidden"
       >
         <div class="fleft">
-          <div class="fleft">{{ i + 1 }}.</div>
+          <div class="num fleft">{{ i + 1 }}.</div>
           <div class="fleft image">
-            <img src="{{ user.image }}" />
+            <img
+              src="{{
+                user?.image != null &&
+                user?.image != undefined &&
+                user?.image != ''
+                  ? serverAddress + '/Resources/Users/' + user?.image
+                  : '../../../assets/site/icons/avatar-male.png'
+              }}   "
+            />
           </div>
           <div class="name fleft">
             {{ user.firstName + " " + user.lastName }}
