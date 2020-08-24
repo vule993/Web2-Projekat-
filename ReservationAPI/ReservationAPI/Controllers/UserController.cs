@@ -34,14 +34,14 @@ namespace ReservationAPI.Controllers
         private UserManager<User> _userManager;
         private readonly ApplicationSettings _appSettings;
         private ApplicationDbContext _context;
-        private IMailService _emailSender;
+        private IUserRepository _userService;
 
-        public UserController(UserManager<User> userManager, ApplicationDbContext context, IConfiguration config, IOptions<ApplicationSettings> appSettings, IMailService emailSender)
+        public UserController(IUserRepository userRepository, UserManager<User> userManager, ApplicationDbContext context, IConfiguration config, IOptions<ApplicationSettings> appSettings)
         {
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _context = context;
-            _emailSender = emailSender;
+            _userService = userRepository;
         }
 
 
@@ -229,40 +229,7 @@ namespace ReservationAPI.Controllers
             return (true, googleApiTokenInfo);
         }
 
-        //GET: /api/User/GetAll
-        [HttpGet]
-        ////[Authorize]
-        ////[Authorize(Roles = "Admin")]
-        [Route("getall")]
-        public async Task<List<UserModel>> GetAll()
-        {
-            var users = _context.Users.ToList();
-
-            List<UserModel> allUsers = new List<UserModel>();
-            UserModel u;
-            foreach (var user in users)
-            {
-                var role = await _userManager.GetRolesAsync(user);
-                var status = role.FirstOrDefault().ToString();
-                u = new UserModel()
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    Password = user.PasswordHash,
-                    Street = user.Street,
-                    City = user.City,
-                    Status = status,
-                    Image = user.Image,
-                    Friends = new List<UserModel>(),
-                    Reservations = user.Reservations
-                };
-                allUsers.Add(u);
-            }
-
-            return allUsers;
-        }
+        
 
 
         // api/User/ConfirmEmail
@@ -270,121 +237,27 @@ namespace ReservationAPI.Controllers
         [Route("ConfirmEmail")]
         public async Task<object> ConfirmEmail(LoginModel model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-
-            if (user == null)
-                return BadRequest(new { Message = "Incorrect email." });
-
-            user.EmailConfirmed = true;
-            await _userManager.UpdateAsync(user);
-
-            return Ok();
-        }
-
-        #endregion
-
-        #region Basic Crud operations on User
-
-        //GET /api/User/id -> id=email
-        [HttpGet("{id}")]
-        public async Task<object> Get(string email)
-        {
-            UserModel um;
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            if (user == null)
-                return (new { message = "User does not exist." });
-
-            var role = await _userManager.GetRolesAsync(user);
-            List<UserModel> friends = new List<UserModel>();
-
-            foreach (var friend in user.Friends)
+            try
             {
-
-                um = new UserModel()
+                if (await _userService.ConfirmEmail(model))
                 {
-                    FirstName = friend.FirstName,
-                    LastName = friend.LastName,
-                    Email = friend.Email,
-                    Password = friend.PasswordHash,
-                    City = friend.City,
-                    Street = friend.Street,
-                    Status = role.ToString(),
-                    PhoneNumber = friend.PhoneNumber,
-                    Image = friend.Image,
-                    Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
-                    Reservations = friend.Reservations
-                };
-
-                friends.Add(um);
-            }
-
-            var userModel = new UserModel()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.PasswordHash,
-                City = user.City,
-                Street = user.Street,
-                Status = role.FirstOrDefault(),
-                PhoneNumber = user.PhoneNumber,
-                Image = user.Image,
-                Friends = friends
-
-            };
-
-            return Ok(userModel);
-        }
-
-
-        //api/User/Update/id
-        [HttpPut("{id}")]
-        [Route("Update")]
-        public async Task<object> Update(int id, [FromBody] UserModel userModel)
-        {
-            //var user = await _userManager.FindByNameAsync(model.Email); dobavljanje bilo kog usera
-
-            //dobavljanje logovanog usera
-            //string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByEmailAsync(userModel.Email);
-
-
-            if (user != null)
-            {
-                if (userModel.FirstName != "")
-                    user.FirstName = userModel.FirstName;
-                if (userModel.LastName != "")
-                    user.LastName = userModel.LastName;
-                if (userModel.Email != "")
-                    user.Email = userModel.Email;
-                if (userModel.PhoneNumber != "")
-                    user.PhoneNumber = userModel.PhoneNumber;
-                if (userModel.Street != "")
-                    user.Street = userModel.Street;
-                if (userModel.City != "")
-                    user.City = userModel.City;
-                if (userModel.Image != "")
-                    user.Image = userModel.Image;
-
-                try
-                {
-                    _context.Users.Update(user);
-                    await _context.SaveChangesAsync();
+                    return Ok();
                 }
-                catch(DbException dex)
+                else
                 {
-                    Console.WriteLine($"ERROR with updating user. -> {dex.Message}");
+                    return BadRequest(new { Message = "Error while confirming email." });
                 }
-                
-                return Ok(user);
             }
-
-            return (new { message = "Update error" });
-
+            catch(Exception e)
+            {
+                return BadRequest(new { Message = $"Error while confirming email. [{e.Message}]" });
+            }
         }
 
-
+        private Task SendEmail(string email)
+        {
+            return _userService.SendEmail(email);
+        }
 
         //GET: /api/User/Profile
         [HttpGet]
@@ -446,31 +319,73 @@ namespace ReservationAPI.Controllers
 
         #endregion
 
+
+        #region Basic Crud operations on User
+
+        //GET /api/User/id -> id=email
+        [HttpGet("{id}")]
+        public async Task<object> Get(string email)
+        {
+            try
+            {
+                return await _userService.Get(email);
+            }
+            catch(Exception e)
+            {
+                return new { Message = $"ERROR [{e.Message}]" };
+            }
+        }
+
+
+        //GET: /api/User/GetAll
+        [HttpGet]
+        ////[Authorize]
+        ////[Authorize(Roles = "Admin")]
+        [Route("getall")]
+        public async Task<List<UserModel>> GetAll()
+        {
+            try
+            {
+                return await _userService.GetAll();
+            }
+            catch (Exception e)
+            {
+                return new List<UserModel>();
+            }
+        }
+
+        //api/User/Update/id
+        [HttpPut("{id}")]
+        [Route("Update")]
+        public async Task<object> Update(int id, [FromBody] UserModel userModel)
+        {
+            try
+            {
+                return await _userService.Update(id, userModel);
+            }
+            catch(Exception e)
+            {
+                return new { Message = $"ERROR while updating user. [{e.Message}]" };
+            }
+
+        }
+
+
+        #endregion
+
+
         [HttpGet]
         [Route("Friends/{email}")]
         public async Task<object> GetAllFriends(String email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            List<UserModel> friends = new List<UserModel>();
-
-            foreach(var friend in user.Friends)
+            try
             {
-                var role = await _userManager.GetRolesAsync(friend);
-
-                friends.Add(new UserModel()
-                {
-                    FirstName = friend.FirstName,
-                    LastName = friend.LastName,
-                    Email = friend.Email,
-                    Street = friend.Street,
-                    Image = friend.Image,
-                    City = friend.City,
-                    PhoneNumber = friend.PhoneNumber,
-                    Status = role.FirstOrDefault().ToString()
-                }) ;
+                return await _userService.GetAllFriends(email);
             }
-
-            return friends;
+            catch(Exception e)
+            {
+                return new {Message = $"ERROR: [{e.Message}]"};
+            }
         }
 
 
@@ -478,30 +393,13 @@ namespace ReservationAPI.Controllers
         [Route("AddFriend")]
         public async Task<object> AddFriend(AddFriendViewModel newFriends)
         {
-            var user = await _userManager.FindByEmailAsync(newFriends.UsersEmail);
-            var friend = await _userManager.FindByEmailAsync(newFriends.FriendsEmail);
-
             try
             {
-
-                if (!user.Friends.Contains(friend))
-                {
-                    user.Friends.Add(friend);
-                }
-
-                if (!friend.Friends.Contains(user))
-                {
-                    friend.Friends.Add(user);
-                }
-
-
-                await _context.SaveChangesAsync();
-
-                return new { Message = "Friend successfully added!" };
+                return await _userService.AddFriend(newFriends);
             }
             catch(Exception e)
             {
-                return new { Message = "Friend unsuccessfully added!" };
+                return BadRequest(new { Message = $"Error while adding new friend. [{e.Message}]" });
             }
 
         }
@@ -511,42 +409,18 @@ namespace ReservationAPI.Controllers
         [Route("RemoveFriend")]
         public async Task<object> RemoveFriend(AddFriendViewModel unFriends)
         {
-            var user = await _userManager.FindByEmailAsync(unFriends.UsersEmail);
-            var friend = await _userManager.FindByEmailAsync(unFriends.FriendsEmail);
-
             try
             {
-
-                if (user.Friends.Contains(friend))
-                {
-                    user.Friends.Remove(friend);
-                }
-
-                if (friend.Friends.Contains(user))
-                {
-                    friend.Friends.Remove(user);
-                }
-
-
-                await _context.SaveChangesAsync();
-
-                return new { Message = "Friend successfully removed!" };
+                return await _userService.RemoveFriend(unFriends);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                return new { Message = "Friend unsuccessfully removed!" };
+                return new { Message = $"Friend unsuccessfully removed! [{e.Message}]" };
             }
-
         }
 
         //***************** HELPERS ******************
 
-        private Task SendEmail(string email)
-        {
-            string subject = "Please confirm your Email";
-            string body = $"<p>For: {email}</p><a href=\"http://localhost:4200/ConfirmEmail/{email}\">Confirm Email</a>";
-
-            return _emailSender.SendEmailAsync(email, subject, body);
-        }
+        
     }
 }
