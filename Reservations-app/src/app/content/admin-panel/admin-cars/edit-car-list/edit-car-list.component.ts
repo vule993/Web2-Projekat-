@@ -17,6 +17,7 @@ export class EditCarListComponent implements OnInit {
   addCarForm: FormGroup;
   selectedOption: string;
   companyId: number = -1;
+  openModal: boolean = true;
 
   companyCars: Car[] = [];
 
@@ -74,7 +75,16 @@ export class EditCarListComponent implements OnInit {
   }
 
   editCarModal(car: Car): void {
-    this.carToEdit = car;
+    if (!car.isReserved) {
+      this.carToEdit = car;
+      this.openModal = true;
+    } else {
+      this.toastrService.warning(
+        "This car is currently reserved, you can't edit now.",
+        "Edit warning"
+      );
+      this.openModal = false;
+    }
   }
 
   updateCar() {
@@ -108,19 +118,26 @@ export class EditCarListComponent implements OnInit {
     );
   }
 
-  deleteCar(id: number) {
-    //TODO: Uvesti da ne moze da obrise auto koji je trenutno rezervisan
-    this.carService.deleteCar(id).subscribe(
-      res => {
-        this.toastrService.success("You deleted this car.", "Car deleted");
-      },
-      err => {
-        this.toastrService.error(
-          "Error while deleting a car.",
-          "Car not deleted"
-        );
-      }
-    );
+  deleteCar(car: Car) {
+    if (!car.isReserved) {
+      this.carService.deleteCar(car.id).subscribe(
+        res => {
+          this.toastrService.success("You deleted this car.", "Car deleted");
+        },
+        err => {
+          this.toastrService.error(
+            "Error while deleting a car.",
+            "Car not deleted"
+          );
+        }
+      );
+    } else {
+      this.toastrService.warning(
+        "This car is currently reserved, you can't delete now.",
+        "Delete warning"
+      );
+    }
+
     //this.companyCars.splice(this.companyCars.indexOf(this.carToEdit));
   }
 

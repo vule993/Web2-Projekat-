@@ -21,13 +21,27 @@ namespace ReservationAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/Car/id
-        //[HttpGet("{id}")]
-        //public async Task<Car> GetCar(long id)
-        //{
-        //    return await _repository.GetCar(id);
-        //}
+        //GET: api/Car/id
+        [HttpGet("{id}")]
+        public async Task<Car> GetCar(long id)
+        {
+            return await _repository.GetCar(id);
+        }
 
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IEnumerable<Car>> GetCars()
+        {
+            try
+            {
+                return await _repository.GetCars();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error while geting cars... [{e.Message}]");
+                return null;
+            }
+        }
 
         [HttpGet("GetCarsOfCompany/{companyId}")]
         public async Task<IEnumerable<Car>> GetCarsOfCompany(long companyId)

@@ -15,7 +15,7 @@ export class HeadCarCompaniesComponent implements OnInit {
   companyId: number;
 
   sliderData = {
-    title: "All companies",
+    title: "Delete company",
     hints: ["Rating", "Address", "About"],
     values: []
   };

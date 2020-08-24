@@ -5,6 +5,8 @@ import { ReservationService } from "src/app/services/reservation.service";
 import { Reservation } from "src/app/models/Reservation.model";
 import { Car } from "src/app/models/car.model";
 import { Address } from "src/app/models/address.model";
+import { CarReservation } from "src/app/models/CarReservation";
+import { CarOffer } from "src/app/models/carOffer.model";
 
 declare var $: any;
 @Component({
@@ -20,11 +22,9 @@ export class CarCompaniesComponent implements OnInit {
   startCalendar: any;
   endCalendar: any;
   allReservations: Reservation[];
-  allCars: Car[];
-  allReservationsToShow: Reservation[];
-  allReservationsPreFilter: Reservation[];
+  allCarsToShow: Car[];
+  allCarsPreFilter: Car[];
   resultsLoaded: boolean = false;
-  // address: Address;
 
   sliderData = {
     title: "All companies",
@@ -46,8 +46,12 @@ export class CarCompaniesComponent implements OnInit {
     if (this.allReservations.length > 0) this.resultsLoaded = true;
 
     //load cars
-    this.allCars = this.carService.getCars();
+    this.carService.fetchCars().subscribe(data => {
+      this.allCarsToShow = data as Car[];
+      this.allCarsPreFilter = data as Car[];
+    });
 
+    //load car companies
     this.carService.getCarCompanies().subscribe(data => {
       this.carCompanies = data as CarCompany[];
       this.sliderData.values = [];
@@ -78,7 +82,9 @@ export class CarCompaniesComponent implements OnInit {
     });
   }
 
-  searchReservations() {
+  getCompanyId(carId: number) {}
+
+  /* searchReservations() {
     this.allReservationsToShow = this.allReservations;
     console.log(this.allReservationsToShow.length);
 
@@ -107,31 +113,23 @@ export class CarCompaniesComponent implements OnInit {
     console.log(this.allReservationsToShow);
 
     this.allReservationsPreFilter = this.allReservationsToShow;
-  }
+  } */
 
   //filter
   filterReservations() {
-    this.allReservationsToShow = this.allReservationsPreFilter;
+    this.allCarsToShow = this.allCarsPreFilter;
 
-    if ($("#company").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        reservation =>
-          reservation.carReservation.carCompany.name === $("#company").val()
+    if ($("#category").val() != "") {
+      let category = $("#category").val();
+      this.allCarsToShow = this.allCarsToShow.filter(
+        car => car.category.toLowerCase() == category
       );
     }
-
-    if ($("#category").val != "") {
+    /* if ($("#category").val != "") {
       this.allReservationsToShow = this.allReservationsToShow.filter(
         reservation =>
           reservation.carReservation.car.category === $("#category").val()
       );
-    }
-  }
-
-  openFilter() {
-    $(".filter").fadeIn(300);
-  }
-  closeFilter() {
-    $(".filter").fadeOut(300);
+    } */
   }
 }

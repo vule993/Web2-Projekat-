@@ -42,6 +42,11 @@ namespace ReservationAPI.Services
             return await _context.Car.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Car>> GetCars()
+        {
+            return await _context.Car.ToListAsync();
+        }
+
         //getCar of some car-company
         public async Task<IEnumerable<Car>> GetCarsOfCompany(long companyID)
         {

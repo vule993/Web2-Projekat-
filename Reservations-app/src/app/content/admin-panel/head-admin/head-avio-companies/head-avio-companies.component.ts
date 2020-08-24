@@ -14,7 +14,7 @@ export class HeadAvioCompaniesComponent implements OnInit {
   companyId: number;
 
   sliderData = {
-    title: "All companies",
+    title: "Delete company",
     hints: ["Likes", "Address", "Description"],
     values: []
   };

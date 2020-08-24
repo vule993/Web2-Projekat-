@@ -1,40 +1,7 @@
 <app-slider [data]="sliderData"></app-slider>
 
-<div class="search overflow-hidden">
-  <select id="cars" class="form-control search-field fleft">
-    <option value="">Choose car</option>
-    <option *ngFor="let car of allCars" value="{{ car.mark }}">
-      {{ car.mark }}
-    </option>
-  </select>
-
-  <input
-    type="text"
-    autocomplete="off"
-    id="startDate"
-    class="form-control search-field departTime fleft"
-    placeholder="Starting date"
-  />
-  <input
-    type="text"
-    autocomplete="off"
-    id="endDate"
-    class="form-control search-field departTime fleft"
-    placeholder="Ending date"
-  />
-
-  <button (click)="searchReservations()" class="btn btn-success fleft">
-    Search
-  </button>
-
-  <img
-    class="fright"
-    (click)="openFilter()"
-    src="../../../../assets/site/icons/filter-white.png"
-  />
-</div>
 <!-- display-none-->
-<div class="filter display-none overflow-hidden">
+<div class="filter overflow-hidden">
   <select id="company" class="form-control search-field fleft">
     <option value="company">Company</option>
     <option *ngFor="let company of carCompanies" value="{{ company.name }}">
@@ -54,72 +21,61 @@
   </button>
 
   <!-- (click)="closeFilter()" -->
-  <img
-    class="fright"
-    (click)="closeFilter()"
-    src="../../../../assets/site/icons/close-white.png"
-  />
+  <img class="fright" src="../../../../assets/site/icons/filter-white.png" />
 </div>
 
 <div class="results" *ngIf="resultsLoaded">
-  <div
-    class="result overflow-hidden"
-    *ngFor="let reservation of allReservationsToShow"
-  >
+  <div class="result overflow-hidden" *ngFor="let car of allCarsToShow">
     <div class="fleft">
       <div>
-        <h6>Drive termin</h6>
+        <h6>Mark</h6>
         <span>
-          <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ reservation.carReservation.startDate }}
-        </span>
-
-        <span>
-          <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ reservation.carReservation.endDate }}
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ car.mark }}
         </span>
       </div>
       <div>
-        <h6>Company</h6>
+        <h6>Description</h6>
         <span>
-          <img src="../../../../assets/site/icons/car.png" alt="" />
-          {{ reservation.carReservation.carCompany.name }}
-          <!--baca undefined jer sam obrisao zakodirane car kompanije-->
-        </span>
-
-        <span>
-          <img src="../../../../assets/site/icons/location.png" alt="" />
-          {{ reservation.carReservation.carCompany.address }}
+          <img src="../../../../assets/site/icons/description.png" alt="" />
+          {{ car.description }}
         </span>
       </div>
     </div>
 
     <div class="fleft separator">
       <div>
-        <h6>Choosed car</h6>
+        <h6>Category plan</h6>
         <span>
-          <img src="../../../../assets/site/icons/car.png" alt="" />
-          {{ reservation.carReservation.car.mark }}
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ car.category }}
         </span>
       </div>
       <div>
-        <h6>Prise</h6>
+        <h6>Prise (per day)</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.carReservation.price }}$
+          {{ car.price }}$
         </span>
       </div>
     </div>
     <div class="fleft">
       <div>
-        <h6>Category plan</h6>
+        <h6>Number of seats</h6>
         <span>
-          <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.carReservation.car.category }}
+          <img src="../../../../assets/site/icons/seat.png" alt="" />
+          {{ car.seats }}
+        </span>
+      </div>
+      <div>
+        <h6>Year</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ car.year }}
         </span>
       </div>
 
-      <a routerLink="/reservation/{{ reservation.id }}">
+      <a routerLink="/reservation/{{ car.id }}">
         <button class="btn btn-success fright">Book IT</button>
       </a>
     </div>

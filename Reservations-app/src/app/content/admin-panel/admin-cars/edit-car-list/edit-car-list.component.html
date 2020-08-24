@@ -32,7 +32,7 @@
           </button>
         </td>
         <td>
-          <button type="button" (click)="deleteCar(car.id)" class="btn btn-danger">
+          <button type="button" (click)="deleteCar(car)" class="btn btn-danger">
             Delete
           </button>
         </td>
@@ -53,6 +53,7 @@
 <!--Edit car modal-->
 
 <div
+  *ngIf="openModal"
   class="modal fade"
   id="carEdit"
   tabindex="-1"

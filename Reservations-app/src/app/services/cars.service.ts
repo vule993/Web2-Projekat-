@@ -120,6 +120,14 @@ export class CarsService {
     );
   }
 
+  fetchCar(id: number) {
+    return this.httpClient.get<Car>(this.baseURL + "/Car/" + id);
+  }
+
+  fetchCars() {
+    return this.httpClient.get(this.baseURL + "/Car/GetAll");
+  }
+
   updateCar(car: Car) {
     return this.httpClient.put(this.baseURL + "/Car/Update", car);
   }
