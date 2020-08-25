@@ -12,6 +12,8 @@ namespace ReservationAPI.Models.Interfaces
 
         Task<CarCompany> GetCompanyByEmail(string adminEmail);
 
+        Task<CarCompany> GetCompanyByCarId(long carId);
+
         Task<IEnumerable<CarCompany>> GetCompanies();
 
         Task DeleteCompany(long id);

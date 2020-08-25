@@ -30,6 +30,13 @@ namespace ReservationAPI.Services
             return await _context.CarCompanies.FirstOrDefaultAsync(company => company.Id == id);
         }
 
+        public async Task<CarCompany> GetCompanyByCarId(long carId)
+        {
+            var c =  await _context.CarCompanies.FirstOrDefaultAsync(
+                company => company.Cars.Where(car => car.Id == carId).Any());
+
+            return c;
+        }
 
         public async Task<bool> AddCompany(CarCompany carCompany)
         {

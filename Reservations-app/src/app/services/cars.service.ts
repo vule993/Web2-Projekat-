@@ -3,7 +3,8 @@ import { CarCompany } from "../models/CarCompany.model";
 import { Car } from "../models/car.model";
 
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { CarReservation } from "../models/CarReservation";
 
 @Injectable({
@@ -11,6 +12,7 @@ import { CarReservation } from "../models/CarReservation";
 })
 export class CarsService {
   readonly baseURL = "http://localhost:5000/api";
+  carCompany: CarCompany;
 
   private cars: Car[] = [
     new Car(
@@ -95,6 +97,20 @@ export class CarsService {
 
   fetchCarCompany(id) {
     return this.httpClient.get(this.baseURL + "/CarCompany/" + id);
+  }
+
+  fetchCarCompanyByCarId(id: number): Observable<any> {
+    /* this.httpClient
+      .get(this.baseURL + "/CarCompany/CarId/" + id)
+      .subscribe(data => (this.carCompany = data as CarCompany));
+
+    
+    return this.carCompany; */
+    return this.httpClient.get(this.baseURL + "/CarCompany/CarId/" + id).pipe(
+      map(result => {
+        return result;
+      })
+    );
   }
 
   getCarCompany(index: number) {
