@@ -16,7 +16,7 @@ namespace ReservationAPI.Models.Airlines
         public String EstimationTime { get; set; }
         public String Distance { get; set; }
         public short Discount { get; set; }
-        public virtual SeatConfiguration PlaneType { get; set; }
+        public virtual SeatConfiguration SeatConfiguration { get; set; }
         public virtual List<Destination> Destinations { get; set; }
         public string OtherServices { get; set; }
         public string Price { get; set; }

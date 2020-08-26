@@ -88,19 +88,18 @@ namespace ReservationAPI.Controllers
 
 
 
-
         #region DESTINATIONS
 
-        [HttpPost]
-        [Route("AddDestinations")]
-        public async Task<object> AddDestination([FromBody]AddDestinationViewModel data)
-        {
-            if(await _service.CreateDestination(data.Company, data.Destination))
-            {
-                return Ok(new {Message = "Successfully created destination!"});
-            }
-            return Ok(new { Message = "Destination airport already exists!" });
-        }
+        //[HttpPost]
+        //[Route("AddDestinations")]
+        //public async Task<object> AddDestination([FromBody]AddDestinationViewModel data)
+        //{
+        //    if(await _service.CreateDestination(data.Company, data.Destination))
+        //    {
+        //        return Ok(new {Message = "Successfully created destination!"});
+        //    }
+        //    return Ok(new { Message = "Destination airport already exists!" });
+        //}
 
         [HttpGet]
         [Route("Destinations")]
@@ -118,14 +117,52 @@ namespace ReservationAPI.Controllers
             return destination;
         }
 
-        [HttpDelete]
-        [Route("DeleteDestination/{id}")]
-        public async Task<bool> DeleteDestination(long id)
-        {
-            return await _service.DeleteDestination(id);
-        }
-        #endregion
+        //[HttpDelete]
+        //[Route("DeleteDestination/{id}")]
+        //public async Task<bool> DeleteDestination(long id)
+        //{
+        //    return await _service.DeleteDestination(id);
+        //}
 
+
+        //Available Destinations
+
+        [HttpPost]
+        [Route("AddAvailableDestination")]
+        public async Task<object> AddAvailableDestination([FromBody] AddDestinationViewModel data)
+        {
+            if (await _service.CreateAvailableDestination(data.Company, data.Destination))
+            {
+                return Ok(new { Message = "Successfully created destination!" });
+            }
+            return Ok(new { Message = "Destination airport already exists!" });
+        }
+
+        [HttpGet]
+        [Route("AvailableDestinations")]
+        public async Task<List<AvailableDestination>> GetAllAvailableDestinations()
+        {
+            var destinations = (List<AvailableDestination>)await _service.GetAvailableDestinations();
+            return destinations;
+        }
+
+        [HttpGet]
+        [Route("AvailableDestinations/{id}")]
+        public async Task<AvailableDestination> GetOneAvailableDestination(string id)
+        {
+            AvailableDestination destination = await _service.GetAvailableDestination(id);
+            return destination;
+        }
+
+        [HttpDelete]
+        [Route("DeleteAvailableDestination/{id}")]
+        public async Task<bool> DeleteAvailableDestination(long id)
+        {
+            return await _service.DeleteAvailableDestination(id);
+        }
+
+
+        #endregion
 
 
 
@@ -176,6 +213,32 @@ namespace ReservationAPI.Controllers
 
 
 
+        #region PLANE TYPES
+
+        [HttpGet]
+        [Route("GetAllPlaneTypes")]
+        public async Task<IEnumerable<PlaneType>> GetAllPlaneTypes()
+        {
+            return await _service.GetAllPlaneTypes();
+        }
+
+        [HttpGet]
+        [Route("GetPlaneType/{id}")]
+        public async Task<PlaneType> GetPlaneType(string id)
+        {
+            return await _service.GetPlaneType(id);
+        }
+
+        [HttpPut]
+        [Route("CreatePlaneType")]
+        public async Task<bool> CreatePlaneType(PlaneType planeType)
+        {
+            return await _service.CreatePlaneType(planeType);
+        }
+        #endregion
+
+
+
         #region OTHER SERVICES
 
         [HttpGet]
@@ -197,6 +260,29 @@ namespace ReservationAPI.Controllers
         public async Task<bool> DeleteService(long id)
         {
             return await _service.DeleteService(id);
+        }
+
+        //Available services
+
+        [HttpGet]
+        [Route("GetAllAvailableServices")]
+        public async Task<IEnumerable<AvailableService>> GetAllAvailableServices()
+        {
+            return await _service.GetAllAvailableServices();
+        }
+
+        [HttpPut]
+        [Route("CreateAvailableService")]
+        public async Task<bool> CreateAvailableService(AvailableService availableService)
+        {
+            return await _service.CreateAvailableService(availableService);
+        }
+
+        [HttpDelete]
+        [Route("DeleteAvailableService/{id}")]
+        public async Task<bool> DeleteAvailableService(long id)
+        {
+            return await _service.DeleteAvailableService(id);
         }
         #endregion
     }

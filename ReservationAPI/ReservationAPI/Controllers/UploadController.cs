@@ -77,7 +77,7 @@ namespace ReservationAPI.Controllers
                         folderName = Path.Combine("Resources", "Site");
                         pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                         //pozivam servis za dodavanje servisa
-                        await _airlineService.CreateService(new PlaneService() { Icon = fileName, Name = name });
+                        await _airlineService.CreateAvailableService(new AvailableService() { Icon = fileName, Name = name, Status = true });
                     }
 
                     //smestam sliku na lokaciju

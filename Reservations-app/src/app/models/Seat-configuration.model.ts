@@ -1,37 +1,38 @@
 import { Seat, Row } from "./Seat.model";
+import { PlaneType } from "./PlaneType.model";
 
 export class SeatConfiguration {
   public static count: number = 0;
 
-  constructor(
-    public id: number = 0,
-    public name: string,
-    public segmentsHeight: number,
-    public segmentsNumber: number,
-    public segmentOneWidth: number,
-    public segmentTwoWidth: number,
-    public segmentThreeWidth: number,
-    public segmentFourWidth: number,
-    public seats: Row[]
-  ) {
+  public seats: Row[];
+  constructor(public id: number = 0, public planeType: PlaneType) {
     this.generateSeats();
     SeatConfiguration.count = SeatConfiguration.count + 1;
   }
+
   generateSeats() {
     this.seats = [];
-    for (let i = 0; i < this.segmentsHeight; i++) {
+    for (let i = 0; i < this.planeType.segmentsHeight; i++) {
       this.seats[i] = new Row();
       for (let j = 0; j < this.getRowWidth(); j++) {
-        this.seats[i].seats[j] = new Seat(i * this.getRowWidth() + j + 1);
+        //OVO JE IZMENJENO PRI PROMENI MODELA
+        this.seats[i].seats[j] = new Seat(
+          0,
+          false,
+          "FREE",
+          null,
+          i * this.getRowWidth() + j + 1
+        );
       }
     }
   }
+
   getRowWidth() {
     return (
-      this.segmentOneWidth +
-      this.segmentTwoWidth +
-      this.segmentThreeWidth +
-      this.segmentFourWidth
+      this.planeType.segmentOneWidth +
+      this.planeType.segmentTwoWidth +
+      this.planeType.segmentThreeWidth +
+      this.planeType.segmentFourWidth
     );
   }
 }

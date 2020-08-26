@@ -9,6 +9,6 @@ namespace ReservationAPI.ViewModels
     public class AddDestinationViewModel
     {
         public AirlineCompany Company { get; set; }
-        public Destination Destination { get; set; }
+        public AvailableDestination Destination { get; set; }
     }
 }

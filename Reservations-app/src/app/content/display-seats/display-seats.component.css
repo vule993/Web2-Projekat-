@@ -6,7 +6,8 @@
   display: flex;
   margin: 0.5vw 0;
 }
-.row div {
+.row div,
+.seat {
   display: flex;
   width: 2.55vw;
   height: 2.55vw;
@@ -20,13 +21,36 @@
 .row div:hover {
   cursor: pointer;
 }
+
 .free-seat {
   color: wheat;
   background-color: #43309a;
 }
 .taken-seat {
   color: #fff;
+  background-color: #ff820c;
+}
+.quick-seat {
+  color: wheat;
+  background-color: #309a3e;
+}
+.confirmed-seat {
+  color: #fff;
   background-color: #f61112;
+}
+
+#legend h4 {
+  color: #43309a;
+  margin-top: 0.2vw;
+}
+#legend > div {
+  width: 14vw;
+  margin-top: 0.1vw;
+}
+#legend .text {
+  font-weight: bold;
+  color: #43309a;
+  padding: 0.4vw 0;
 }
 .path-margin {
   margin-right: 1.8vw;

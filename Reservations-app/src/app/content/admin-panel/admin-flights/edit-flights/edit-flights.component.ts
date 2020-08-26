@@ -13,6 +13,12 @@ import { PlaneServicesService } from "src/app/services/plane-services.service";
 import { PlaneService } from "src/app/models/PlaneService.model";
 import { environment } from "src/environments/environment";
 import { debounceTime } from "rxjs/operators";
+import { PlaneTypeService } from "src/app/services/plane-type.service";
+import { PlaneType } from "src/app/models/PlaneType.model";
+import { Seat, Row } from "src/app/models/Seat.model";
+import { SelectedseatsService } from "src/app/services/selectedseats.service";
+import { AvailableService } from "src/app/models/AvailableServices.model";
+import { AvailableDestination } from "src/app/models/AvailableDestination.model";
 
 declare var $: any;
 
@@ -26,41 +32,58 @@ export class EditFlightsComponent implements OnInit {
   returnCalendar: any;
   allDestinations;
   allDiscounts;
-  allSeatConfigurations;
-  allServices: PlaneService[];
+
+  allPlaneTypes;
+  allServices: AvailableService[];
+  selectedSeats: Seat[];
+
+  currentSeatConfiguration: SeatConfiguration;
+  checkedDestinations: Destination[] = [];
+
   serverAddress = environment.serverAddress;
   //data necessary to create flight
   avioCompany: AirlineCompany;
-  flightStops: Destination[] = []; //cekirana presedanja
+
   servicesToAdd: string = ""; //cekirani servisi
   constructor(
     private destinationsService: DestinationsService,
     private discountsData: DiscountService,
-    private seatConfigurationsService: SeatsConfigService,
+    private planeTypeService: PlaneTypeService,
     private _avioCompanyService: AviocompaniesService,
     private _flightService: FlightsService,
-    private _planeServicesService: PlaneServicesService
+    private _planeServicesService: PlaneServicesService,
+    private _selectedSeatsService: SelectedseatsService
   ) {}
 
   ngOnInit(): void {
-    this._planeServicesService
-      .getAllServices()
-      .subscribe((services) => (this.allServices = services as PlaneService[]));
+    this._selectedSeatsService.selectedSeats.subscribe(
+      (selectedSeats) => (this.selectedSeats = selectedSeats as Seat[])
+    );
 
-    this.destinationsService.getAll().subscribe((destinations) => {
-      this.allDestinations = destinations;
-    });
+    this._planeServicesService
+      .getAllAvailableServices()
+      .subscribe(
+        (services) =>
+          (this.allServices = (services as AvailableService[]).filter(
+            (s) => s.status
+          ))
+      );
+
+    this.destinationsService
+      .getAllAvailableDestinations()
+      .subscribe((destinations) => {
+        this.allDestinations = (destinations as AvailableDestination[]).filter(
+          (d) => d.status
+        );
+      });
 
     this.discountsData.allDiscounts.subscribe(
       (allDiscounts) => (this.allDiscounts = allDiscounts)
     );
 
-    this.seatConfigurationsService
-      .getAllSeatConfigurations()
-      .subscribe(
-        (allSeatConfigurations) =>
-          (this.allSeatConfigurations = allSeatConfigurations)
-      );
+    this.planeTypeService
+      .getAllPlaneTypes()
+      .subscribe((allPlaneTypes) => (this.allPlaneTypes = allPlaneTypes));
 
     this.departCalendar = $(function () {
       $("#startDate").datepicker({
@@ -81,20 +104,59 @@ export class EditFlightsComponent implements OnInit {
       .subscribe((company: AirlineCompany) => (this.avioCompany = company));
   }
 
-  createFlight() {
-    let destinationIds = [];
-    $("input:checkbox[name=stops]:checked").each(function () {
-      destinationIds.push($(this).val());
+  /*Regulisanje redosleda destinacija*/
+  destinationClick(destination: Destination) {
+    this.checkedDestinations.forEach((d, index) => {
+      if (d.id == destination.id) {
+        this.checkedDestinations.splice(index, 1);
+
+        return;
+      }
     });
 
-    for (let i = 0; i < destinationIds.length; i++) {
-      let destination = this.allDestinations.find(
-        (d) => d.id == destinationIds[i]
-      );
-      this.flightStops.push(destination);
+    this.checkedDestinations.push(destination);
+  }
+
+  /*
+  OVDE GLEDAJ
+  */
+  planeTypeSelected() {
+    let key = $("#planeType").val();
+
+    if (key == "*") {
+      $("#seatConfigPreview").slideUp(1500);
+      return;
     }
 
-    //
+    this.planeTypeService.getPlaneType(key).subscribe((planeType) => {
+      //kada se ucita trazeni planeType
+      let pt: PlaneType = planeType as PlaneType;
+
+      // kreiramo konfiguraciju leta koju cemo dodati u objekat flight i snimiti u bauzu
+      this.currentSeatConfiguration = new SeatConfiguration(
+        0,
+        planeType as PlaneType
+      );
+
+      $("#seatConfigPreview").slideDown(750);
+    });
+  }
+
+  /*
+  OVDE GLEDAJ
+  */
+
+  createFlight() {
+    //pripremamo destinacije jer su izlistane available
+    let destinations: Destination[] = [];
+
+    this.checkedDestinations.forEach((d) => {
+      destinations.push(
+        new Destination(0, d.airportName, d.city, d.country, d.address)
+      );
+    });
+
+    //pripremamo servise
     let servicesIds = [];
     $("input:checkbox[name=services]:checked").each(function () {
       servicesIds.push($(this).val());
@@ -110,15 +172,32 @@ export class EditFlightsComponent implements OnInit {
       }
     }
 
-    //TREBA NAPRAVITI SEAT CONFIG GET, GET ALL, PUT metode i izvuci ovde trazenu preko servisa
-    let planeTypeName = $("#planeType").val();
-    //
-    let planeType: SeatConfiguration = this.allSeatConfigurations.find(
-      (element) => element.name == planeTypeName
-    );
+    //pripremamo sedista za brzu rezervaciju
+    //s - selected seats
+    //r - row
+    //a - all seats
+    for (let s = 0; s < this.selectedSeats.length; s++) {
+      for (let r = 0; r < this.currentSeatConfiguration.seats.length; r++) {
+        for (
+          let a = 0;
+          a < this.currentSeatConfiguration.seats[r].seats.length;
+          a++
+        ) {
+          console.log(r + " - " + a);
+
+          if (
+            this.selectedSeats[s].seatNo ==
+            this.currentSeatConfiguration.seats[r].seats[a].seatNo
+          ) {
+            this.currentSeatConfiguration.seats[r].seats[
+              a
+            ].forFastReservation = true;
+          }
+        }
+      }
+    }
 
     let disc = +$("#discount").val();
-    debugger;
 
     let flight = new Flight(
       0,
@@ -130,13 +209,13 @@ export class EditFlightsComponent implements OnInit {
       $("#distance").val(),
       $("#estimationTime").val(),
       disc,
-      planeType,
-      this.flightStops,
+      this.currentSeatConfiguration,
+      destinations,
       this.servicesToAdd,
       $("#price").val(),
       ""
     );
-    debugger;
+
     this._flightService.createFlight(flight).subscribe();
   }
 }

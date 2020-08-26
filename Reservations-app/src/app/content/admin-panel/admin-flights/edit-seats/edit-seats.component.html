@@ -115,7 +115,7 @@
 
     <button
       class="btn btn-success fright display-none"
-      (click)="saveSeatConfiguration()"
+      (click)="savePlaneType()"
     >
       Save info
     </button>
@@ -142,31 +142,31 @@
       <div class="nosac">
         <div class="klizac">
           <a
-            *ngFor="let seatConfiguration of allSeatConfigurations"
+            *ngFor="let planeType of allPlaneTypes"
             class="fleft overflow-hidden"
           >
             <div class="slider-card">
-              <h3>{{ seatConfiguration.name }}</h3>
+              <h3>{{ planeType.name }}</h3>
               <ul>
                 <li>
                   <b>height :</b>
-                  {{ seatConfiguration.segmentsHeight }}
+                  {{ planeType.segmentsHeight }}
                 </li>
                 <li>
                   <b>segment one width :</b>
-                  {{ seatConfiguration.segmentOneWidth }}
+                  {{ planeType.segmentOneWidth }}
                 </li>
                 <li>
                   <b>segment two width :</b>
-                  {{ seatConfiguration.segmentTwoWidth }}
+                  {{ planeType.segmentTwoWidth }}
                 </li>
                 <li>
                   <b>segment three width:</b>
-                  {{ seatConfiguration.segmentThreeWidth }}
+                  {{ planeType.segmentThreeWidth }}
                 </li>
                 <li>
                   <b>segment four width :</b>
-                  {{ seatConfiguration.segmentFourWidth }}
+                  {{ planeType.segmentFourWidth }}
                 </li>
               </ul>
             </div></a

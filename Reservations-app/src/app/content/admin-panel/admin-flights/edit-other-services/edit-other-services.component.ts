@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { HttpClient, HttpEventType } from "@angular/common/http";
-import { PlaneService } from "src/app/models/PlaneService.model";
 import { PlaneServicesService } from "src/app/services/plane-services.service";
 import { environment } from "src/environments/environment";
+
+import { AvailableService } from "src/app/models/AvailableServices.model";
 
 declare var $: any;
 
@@ -14,7 +15,10 @@ declare var $: any;
 export class EditOtherServicesComponent implements OnInit {
   baseURL = "http://localhost:5000/api/Upload/UploadFile";
   message: string;
-  services: PlaneService[];
+
+  services: AvailableService[] = [];
+  servicesToShow: AvailableService[] = [];
+
   fileToUpload;
   serverAddress: string = environment.serverAddress;
   progress: number;
@@ -41,13 +45,13 @@ export class EditOtherServicesComponent implements OnInit {
   };
 
   DeleteService(id: number) {
-    this.services.forEach((service, index) => {
+    this.servicesToShow.forEach((service, index) => {
       if (service.id == id) {
-        this.services.splice(index, 1);
+        this.servicesToShow.splice(index, 1);
       }
     });
 
-    this._planeServicesService.deleteService(id).subscribe();
+    this._planeServicesService.deleteAvailableService(id).subscribe();
   }
 
   CreateService() {
@@ -85,16 +89,20 @@ export class EditOtherServicesComponent implements OnInit {
           this.message = "Upload success!";
           this.onUploadFinished.emit(event.body);
           this._planeServicesService
-            .getAllServices()
-            .subscribe(
-              (services) => (this.services = services as PlaneService[])
-            );
+            .getAllAvailableServices()
+            .subscribe((services) => {
+              this.services = services as AvailableService[];
+              this.servicesToShow = this.services.filter((s) => s.status);
+            });
         }
       });
   }
   ngOnInit(): void {
     this._planeServicesService
-      .getAllServices()
-      .subscribe((services) => (this.services = services as PlaneService[]));
+      .getAllAvailableServices()
+      .subscribe((services) => {
+        this.services = services as AvailableService[];
+        this.servicesToShow = this.services.filter((x) => x.status);
+      });
   }
 }

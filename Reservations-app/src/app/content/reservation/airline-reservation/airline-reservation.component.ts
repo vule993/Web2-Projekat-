@@ -86,7 +86,13 @@ export class AirlineReservationComponent implements OnInit {
 
       for (let s of this.selectedSeats) {
         if (s.passenger == null) {
-          s.passenger = new Passenger(user);
+          s.passenger = new Passenger(
+            0,
+            user.email,
+            user.firstName,
+            user.lastName,
+            "passportNumber"
+          );
           this.selectedSeatsNo--;
           break;
         }
@@ -96,7 +102,8 @@ export class AirlineReservationComponent implements OnInit {
       $(element).removeClass("check");
       $(element).addClass("uncheck");
       for (let s of this.selectedSeats) {
-        if (s.passenger.user == user) {
+        //ovo promenjeno nakon update-a
+        if (s.passenger.userEmail == user.email) {
           s.passenger = null; //ako je to taj user -> skidam passenger-a
           this.selectedSeatsNo++;
           break;
@@ -113,19 +120,21 @@ export class AirlineReservationComponent implements OnInit {
       .subscribe((users) => (this.users = users));
     //this.users = this.userService.getAllUsers();
 
-    $(window).resize(function () {
-      let h = +$("#seat-picker").css("height").split("px")[0];
+    $(window)
+      .resize(function () {
+        let h = +$("#seat-picker").css("height").split("px")[0];
 
-      $("#friends-selector").css({ height: h + "px" });
-      $(".friends").css({ height: h - 100 + "px" });
-      $("html, body").animate(
-        {
-          scrollTop: $("#proceed").offset().top,
-        },
-        1200
-      );
-    });
-
+        $("#friends-selector").css({ height: h + "px" });
+        $(".friends").css({ height: h - 100 + "px" });
+        $("html, body").animate(
+          {
+            scrollTop: $("#proceed").offset().top,
+          },
+          1200
+        );
+      })
+      .delay(50);
+    debugger;
     this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
       this.selectedSeats = allSeats;
       if (allSeats != null)

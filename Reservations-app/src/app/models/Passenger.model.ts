@@ -2,9 +2,10 @@ import { UserModel } from "./User.model";
 
 export class Passenger {
   constructor(
-    public user: UserModel,
-    public id: number = 0,
-    public approvedAirlineSeat: boolean = false,
-    public approvedCarSeat: boolean = false
+    public id: number,
+    public userEmail: string,
+    public firstName: string,
+    public lastName: string,
+    public passportNumber: string
   ) {}
 }

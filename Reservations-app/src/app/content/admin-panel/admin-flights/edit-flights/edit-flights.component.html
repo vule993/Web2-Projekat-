@@ -21,7 +21,7 @@
       autocomplete="off"
       id="arrivingDate"
       class="form-control search-field returnTime short-input short-margin fleft"
-      placeholder="Return date"
+      placeholder="Arriving date"
     />
 
     <input
@@ -29,7 +29,7 @@
       autocomplete="off"
       id="arrivingTime"
       class="form-control search-field returnTime short-input fleft"
-      placeholder="Return time"
+      placeholder="Arriving time"
     />
   </div>
 
@@ -57,21 +57,36 @@
       >
     </select>
 
-    <select id="planeType" class="form-control short-input fleft">
-      <option value="0">Select plane type</option>
+    <select
+      (change)="planeTypeSelected()"
+      id="planeType"
+      class="form-control short-input fleft"
+    >
+      <option value="*">Select plane type</option>
       <option
-        *ngFor="let seatConfiguration of allSeatConfigurations"
-        value="{{ seatConfiguration.name }}"
-        >{{ seatConfiguration.name }}</option
+        *ngFor="let planeType of allPlaneTypes"
+        value="{{ planeType.id }}"
+        >{{ planeType.name }}</option
       >
     </select>
+  </div>
+
+  <div id="seatConfigPreview" class="form-group overflow-hidden">
+    <h6>Check seats for quick reservations:</h6>
+    <!-- ZASTO NECE DA SE SKOTRLJAAA :( -->
+    <app-display-seats [currentSeatConfig]="currentSeatConfiguration">
+    </app-display-seats>
   </div>
 
   <div class="form-group overflow-hidden">
     <h6>Check flight destinations:</h6>
     <div *ngFor="let destination of allDestinations" class="fleft checkbox">
       <span
-        ><input type="checkbox" name="stops" value="{{ destination.id }}"
+        ><input
+          type="checkbox"
+          (click)="destinationClick(destination)"
+          name="stops"
+          value="{{ destination.id }}"
       /></span>
       <span>{{
         destination.airportName +

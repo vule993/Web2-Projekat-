@@ -257,14 +257,76 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("DeadlineForCanceling")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("FlightId")
                         .HasColumnType("bigint");
+
+                    b.Property<long?>("PassengerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RowNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlightId");
 
+                    b.HasIndex("PassengerId");
+
                     b.ToTable("AirlineReservation");
+                });
+
+            modelBuilder.Entity("ReservationAPI.Models.Airlines.AvailableDestination", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AirportName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AvailableDestination");
+                });
+
+            modelBuilder.Entity("ReservationAPI.Models.Airlines.AvailableService", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AvailableService");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Destination", b =>
@@ -332,11 +394,11 @@ namespace ReservationAPI.Migrations
                     b.Property<string>("OtherServices")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("PlaneTypeId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Price")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SeatConfigurationId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("StartDate")
                         .HasColumnType("nvarchar(max)");
@@ -348,7 +410,7 @@ namespace ReservationAPI.Migrations
 
                     b.HasIndex("AvioCompanyId");
 
-                    b.HasIndex("PlaneTypeId");
+                    b.HasIndex("SeatConfigurationId");
 
                     b.ToTable("Flight");
                 });
@@ -360,18 +422,19 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("ApprovedAirlineSeat")
-                        .HasColumnType("bit");
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("ApprovedCarSeat")
-                        .HasColumnType("bit");
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("PassportNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Passenger");
                 });
@@ -392,6 +455,39 @@ namespace ReservationAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PlaneService");
+                });
+
+            modelBuilder.Entity("ReservationAPI.Models.Airlines.PlaneType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<short>("SegmentsHeight")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("segmentFourWidth")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("segmentOneWidth")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("segmentThreeWidth")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("segmentTwoWidth")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("segmentsNumber")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlaneType");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Reservation", b =>
@@ -419,9 +515,6 @@ namespace ReservationAPI.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("UserModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AirlineCompanyId");
@@ -432,8 +525,6 @@ namespace ReservationAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserModelId");
-
                     b.ToTable("Reservation");
                 });
 
@@ -443,6 +534,9 @@ namespace ReservationAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RowNo")
+                        .HasColumnType("int");
 
                     b.Property<long?>("SeatConfigurationId")
                         .HasColumnType("bigint");
@@ -461,6 +555,9 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("ForFastReservation")
+                        .HasColumnType("bit");
+
                     b.Property<long?>("PassengerId")
                         .HasColumnType("bigint");
 
@@ -470,11 +567,8 @@ namespace ReservationAPI.Migrations
                     b.Property<int>("SeatNo")
                         .HasColumnType("int");
 
-                    b.Property<bool>("SeatReservationConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Taken")
-                        .HasColumnType("bit");
+                    b.Property<string>("SeatStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -495,30 +589,14 @@ namespace ReservationAPI.Migrations
                     b.Property<long?>("AirlineCompanyId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<short>("SegmentsHeight")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("segmentFourWidth")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("segmentOneWidth")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("segmentThreeWidth")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("segmentTwoWidth")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("segmentsNumber")
-                        .HasColumnType("smallint");
+                    b.Property<long?>("PlaneTypeId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AirlineCompanyId");
+
+                    b.HasIndex("PlaneTypeId");
 
                     b.ToTable("SeatConfiguration");
                 });
@@ -650,50 +728,6 @@ namespace ReservationAPI.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("ReservationAPI.Models.UserModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserModelId");
-
-                    b.ToTable("UserModel");
-                });
-
             modelBuilder.Entity("ReservationAPI.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -784,6 +818,10 @@ namespace ReservationAPI.Migrations
                     b.HasOne("ReservationAPI.Models.Airlines.Flight", "Flight")
                         .WithMany()
                         .HasForeignKey("FlightId");
+
+                    b.HasOne("ReservationAPI.Models.Airlines.Passenger", "Passenger")
+                        .WithMany()
+                        .HasForeignKey("PassengerId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Destination", b =>
@@ -803,16 +841,9 @@ namespace ReservationAPI.Migrations
                         .WithMany()
                         .HasForeignKey("AvioCompanyId");
 
-                    b.HasOne("ReservationAPI.Models.Airlines.SeatConfiguration", "PlaneType")
+                    b.HasOne("ReservationAPI.Models.Airlines.SeatConfiguration", "SeatConfiguration")
                         .WithMany()
-                        .HasForeignKey("PlaneTypeId");
-                });
-
-            modelBuilder.Entity("ReservationAPI.Models.Airlines.Passenger", b =>
-                {
-                    b.HasOne("ReservationAPI.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("SeatConfigurationId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Reservation", b =>
@@ -832,10 +863,6 @@ namespace ReservationAPI.Migrations
                     b.HasOne("ReservationAPI.Models.User", null)
                         .WithMany("Reservations")
                         .HasForeignKey("UserId");
-
-                    b.HasOne("ReservationAPI.Models.UserModel", null)
-                        .WithMany("Reservations")
-                        .HasForeignKey("UserModelId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Row", b =>
@@ -861,6 +888,10 @@ namespace ReservationAPI.Migrations
                     b.HasOne("ReservationAPI.Models.Airlines.AirlineCompany", null)
                         .WithMany("SeatConfigurations")
                         .HasForeignKey("AirlineCompanyId");
+
+                    b.HasOne("ReservationAPI.Models.Airlines.PlaneType", "PlaneType")
+                        .WithMany()
+                        .HasForeignKey("PlaneTypeId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Rent_a_Car.Car", b =>
@@ -877,13 +908,6 @@ namespace ReservationAPI.Migrations
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ReservationAPI.Models.UserModel", b =>
-                {
-                    b.HasOne("ReservationAPI.Models.UserModel", null)
-                        .WithMany("Friends")
-                        .HasForeignKey("UserModelId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.User", b =>

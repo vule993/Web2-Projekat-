@@ -2,17 +2,16 @@
   <div class="row" *ngFor="let row of seats; let raw_index = index">
     <div
       *ngFor="let seat of row.seats; let seat_index = index"
-      class="seat free-seat no-select"
+      class="seat no-select"
       [ngClass]="{
         'path-margin':
           seat_index === formValues[2] - 1 ||
           seat_index === formValues[2] + formValues[3] - 1 ||
           seat_index === formValues[2] + formValues[3] + formValues[4] - 1 ||
           seat_index ===
-            formValues[2] + formValues[3] + formValues[4] + formValues[5] - 1,
-        'taken-seat': seat.taken
+            formValues[2] + formValues[3] + formValues[4] + formValues[5] - 1
       }"
-      (click)="onSeatClick($event)"
+      (click)="onSeatClick(seat.seatNo)"
       [attr.title]="
         seat.passenger != null
           ? seat.passenger.user.firstName + ' ' + seat.passenger.user.lastName
@@ -20,6 +19,27 @@
       "
     >
       {{ seat.seatNo }}
+    </div>
+  </div>
+
+  <div id="legend">
+    <h4>Legend:</h4>
+    <hr />
+    <div class="overflow-hidden">
+      <div class="fleft seat free-seat">F</div>
+      <div class="fright text">Free</div>
+    </div>
+    <div class="overflow-hidden">
+      <div class="fleft seat quick-seat">Q</div>
+      <div class="fright text">Quick reservation</div>
+    </div>
+    <div class="overflow-hidden">
+      <div class="fleft seat taken-seat">T</div>
+      <div class="fright text">Taken</div>
+    </div>
+    <div class="overflow-hidden">
+      <div class="fleft seat confirmed-seat">C</div>
+      <div class="fright text">Confirmed</div>
     </div>
   </div>
 </div>

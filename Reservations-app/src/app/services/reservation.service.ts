@@ -13,52 +13,13 @@ import { SeatConfiguration } from "../models/Seat-configuration.model";
 import { S_IFDIR } from "constants";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ReservationService {
   private _allReservations = new BehaviorSubject<Reservation[]>([
     new Reservation(
       1,
-      new AirlineReservation(
-        1,
-        new Flight(
-          1,
-          new AirlineCompany(
-            null,
-            "Air Serbia",
-            new Address("Serbia", "Belgrade", "Ljubinke Bobic 11/3"),
-            "Opis neki",
-            [],
-            [],
-            //[],
-            [],
-            132,
-            ""
-          ),
-
-          "06-June-2020",
-          "09-June-2020",
-          "10:00",
-          "20:00",
-          "305km",
-          "2h:30min",
-          10,
-          //ovde treba popnuniti seats u zavisnosti od ovih brojeva
-          new SeatConfiguration(1, "Boeing 747", 10, 3, 2, 3, 2, 0, []),
-          [
-            new Destination(
-              1,
-              "Nikola Tesla",
-              "Belgrade",
-              "Serbia",
-              "Neznanog junaka jebem li ga 1/1"
-            )
-          ],
-          "wc,tv,wifi,power supply,newspapers,bar",
-          "300",
-          "2"
-        )
-      ),
+      null,
       new CarReservation(
         this.carService.getCar(1),
         this.carService.getCarCompany(1),
@@ -80,45 +41,7 @@ export class ReservationService {
     ),
     new Reservation(
       2,
-      new AirlineReservation(
-        2,
-        new Flight(
-          2,
-          new AirlineCompany(
-            null,
-            "Air Serbia",
-            new Address("Serbia", "Belgrade", "Ljubinke Bobic 11/3"),
-            "Opis neki",
-            [],
-            [],
-            //[],
-            [],
-            132,
-            ""
-          ),
-
-          "09-June-2020",
-          "12-June-2020",
-          "15:00",
-          "07:30",
-          "808km",
-          "0h:30min",
-          15,
-          new SeatConfiguration(1, "Concord", 10, 4, 2, 3, 3, 2, []),
-          [
-            new Destination(
-              1,
-              "Neki aerodrom",
-              "Negde tamo",
-              "Nedodjija",
-              "Neznanog junaka jebem li ga 1/1"
-            )
-          ],
-          "coffee service, wifi, NESTO NOVO...",
-          "500",
-          "3.4"
-        )
-      ),
+      null,
       new CarReservation(
         this.carService.getCar(2),
         this.carService.getCarCompany(2),
@@ -137,7 +60,7 @@ export class ReservationService {
       ),
       false,
       false
-    )
+    ),
   ]);
   allReservations = this._allReservations.asObservable();
 
@@ -189,7 +112,7 @@ export class ReservationService {
       ),
       "",
       2
-    )
+    ),
   ];
 
   constructor(private carService: CarsService) {}
@@ -208,7 +131,7 @@ export class ReservationService {
     });
   }
   getSpecificReservation(id: number) {
-    return this.carReservations.find(c => c.id == id);
+    return this.carReservations.find((c) => c.id == id);
   }
   getNumberOfReservations() {
     return this._allReservations.getValue().length;

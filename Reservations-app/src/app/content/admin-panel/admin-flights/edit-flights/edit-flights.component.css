@@ -40,6 +40,10 @@
   margin: 0.2vw;
 }
 
+#seatConfigPreview {
+  display: none;
+}
+
 .short-input {
   width: 18vw;
 }

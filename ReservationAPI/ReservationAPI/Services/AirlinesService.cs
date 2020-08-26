@@ -114,6 +114,54 @@ namespace ReservationAPI.Services
             return true;
         }
 
+
+        //AvailableDestinations
+        public async Task<AvailableDestination> GetAvailableDestination(string id)
+        {
+            var destination = (await _context.AvailableDestination.ToListAsync()).FirstOrDefault(d => d.Id.ToString() == id);
+            return destination;
+        }
+
+        public async Task<IEnumerable<AvailableDestination>> GetAvailableDestinations()
+        {
+            var destinations = await _context.AvailableDestination.ToListAsync();
+            return destinations;
+        }
+
+        public async Task<bool> CreateAvailableDestination(AirlineCompany airlineCompany, AvailableDestination destination)
+        {
+
+            foreach (var d in _context.AvailableDestination)
+            {
+                if (d.AirportName == destination.AirportName && d.Status==true)
+                {
+                    return false;
+                }
+            }
+
+            await _context.AvailableDestination.AddAsync(destination);
+            await _context.SaveChangesAsync();
+
+            return true;
+
+        }
+
+        public async Task<bool> DeleteAvailableDestination(long id)
+        {
+            try
+            {
+                var destination = (await _context.AvailableDestination.ToListAsync()).FirstOrDefault(x => x.Id == id);
+                destination.Status = false;
+                await _context.SaveChangesAsync();
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+
+
         #endregion
 
 
@@ -135,14 +183,63 @@ namespace ReservationAPI.Services
             try
             {
 
-                var company = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id == flight.AvioCompany.Id);
-                var seatConfig = (await _context.SeatConfiguration.ToListAsync()).FirstOrDefault(x => x.Id == flight.PlaneType.Id);
-                List<Destination> destinations = new List<Destination>();
+                AirlineCompany company = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id == flight.AvioCompany.Id);
 
-                for(var i = 0; i<flight.Destinations.Count; i++)
+                PlaneType planeType = (await _context.PlaneType.ToListAsync()).FirstOrDefault(x => x.Id == flight.SeatConfiguration.PlaneType.Id);
+                
+
+                List<Destination> destinations = new List<Destination>();   //ovo cemo dodati kao polje, to popunjavamo
+                Destination destination;
+                foreach(var d in flight.Destinations)
                 {
-                    destinations.Add((await _context.Destination.ToListAsync()).FirstOrDefault(x => x.Id == flight.Destinations[i].Id));
+                    destination = new Destination()
+                    {
+                        Address = d.Address,
+                        City = d.City,
+                        AirportName = d.AirportName
+                    };
+
+                    await _context.Destination.AddAsync(destination);
+                    destinations.Add(destination);
                 }
+
+                List<Row> allRows = new List<Row>();
+                Row r;
+                //List<Seat> seatsInRow = new List<Seat>();
+                Seat s;
+                for (var rowIndex = 0; rowIndex < flight.SeatConfiguration.Seats.Count; rowIndex++)
+                {
+                    r = new Row()
+                    {
+                        RowNo = rowIndex,
+                        Seats = new List<Seat>()
+                    };
+                    foreach (var seat in flight.SeatConfiguration.Seats[rowIndex].Seats)
+                    {
+                        s = new Seat()
+                        {
+                            ForFastReservation = seat.ForFastReservation,
+                            Passenger = seat.Passenger,
+                            SeatNo = seat.SeatNo,
+                            SeatStatus = seat.SeatStatus,
+                        };
+
+                        await _context.Seat.AddAsync(seat);
+                    }
+
+                    await _context.Row.AddAsync(r);
+                    allRows.Add(r);
+                }
+                //cuvam sve prethodne promene
+                //await _context.SaveChangesAsync();
+
+
+                SeatConfiguration seatConfiguration = new SeatConfiguration()
+                {
+                    PlaneType = planeType,
+                    Seats = allRows
+
+                };
 
                 var f = new Flight()
                 {
@@ -154,7 +251,7 @@ namespace ReservationAPI.Services
                     EstimationTime = flight.EstimationTime,
                     Distance = flight.Distance,
                     Discount = flight.Discount,
-                    PlaneType = seatConfig,
+                    SeatConfiguration = seatConfiguration,
                     Destinations = destinations,
                     OtherServices = flight.OtherServices,
                     Price = flight.Price,
@@ -214,6 +311,42 @@ namespace ReservationAPI.Services
         }
         #endregion
 
+
+        #region PLANE TYPES
+
+        public async Task<IEnumerable<PlaneType>> GetAllPlaneTypes()
+        {
+            return await _context.PlaneType.ToListAsync();
+        }
+
+        public async Task<PlaneType> GetPlaneType(string id)
+        {
+            return (await _context.PlaneType.ToListAsync()).FirstOrDefault(x => x.Id == Int64.Parse(id));
+        }
+
+        public async Task<bool> CreatePlaneType(PlaneType planeType)
+        {
+            try
+            {
+                _context.PlaneType.Add(planeType);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public Task<bool> DeletePlaneType(long id)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+
+
+
         #region OTHER SERVICES
 
 
@@ -249,6 +382,51 @@ namespace ReservationAPI.Services
                 }
                 return false;
             }catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        //Available services
+
+        public async Task<IEnumerable<AvailableService>> GetAllAvailableServices()
+        {
+            return await _context.AvailableService.ToListAsync();
+        }
+
+        public async Task<bool> CreateAvailableService(AvailableService availableService)
+        {
+            try
+            {
+                await _context.AvailableService.AddAsync(new AvailableService()
+                {
+                    Name = availableService.Name,
+                    Icon = availableService.Icon,
+                    Status = availableService.Status
+                });
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteAvailableService(long id)
+        {
+            try
+            {
+                var service = (await _context.AvailableService.ToListAsync()).FirstOrDefault(x => x.Id == id);
+                if (service != null)
+                {
+                    service.Status = false;
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
             {
                 return false;
             }

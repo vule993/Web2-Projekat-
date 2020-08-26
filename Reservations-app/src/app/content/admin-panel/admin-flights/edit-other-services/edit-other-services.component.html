@@ -41,7 +41,7 @@
   </div>
 
   <div class="overflow-hidden">
-    <div *ngFor="let service of services" class="item">
+    <div *ngFor="let service of servicesToShow" class="item">
       <img
         class="fleft"
         (click)="DeleteService(service.id)"

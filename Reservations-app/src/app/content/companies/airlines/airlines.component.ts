@@ -38,7 +38,6 @@ export class AirlinesComponent implements OnInit {
   ) {}
 
   searchFlights() {
-    debugger;
     this.allFlightsToShow = this.allFlights;
     if ($("#departDate").val() != "") {
       this.allFlightsToShow = this.allFlightsToShow.filter(
@@ -149,8 +148,8 @@ export class AirlinesComponent implements OnInit {
       );
 
     this._flightsService.getAllFlights().subscribe((flights) => {
-      this.allFlights = flights as Flight[];
       debugger;
+      this.allFlights = flights as Flight[];
     });
 
     this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {

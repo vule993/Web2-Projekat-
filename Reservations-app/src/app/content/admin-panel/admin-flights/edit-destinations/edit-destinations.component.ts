@@ -5,14 +5,16 @@ import { ThrowStmt } from "@angular/compiler";
 import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 import { AirlineCompanyProfileComponent } from "src/app/content/companies/airlines/airline-company-profile/airline-company-profile.component";
 import { AirlineCompany } from "src/app/models/AirlineCompany.model";
+import { AvailableDestination } from "src/app/models/AvailableDestination.model";
 
 @Component({
   selector: "app-edit-destinations",
   templateUrl: "./edit-destinations.component.html",
-  styleUrls: ["./edit-destinations.component.css"]
+  styleUrls: ["./edit-destinations.component.css"],
 })
 export class EditDestinationsComponent implements OnInit {
-  public allDestinations;
+  public allDestinations: AvailableDestination[] = [];
+  public destinationsToShow: AvailableDestination[] = [];
 
   company: AirlineCompany;
   airportName = "";
@@ -24,34 +26,41 @@ export class EditDestinationsComponent implements OnInit {
     private _destinationsService: DestinationsService,
     private _airlineCompaniesService: AviocompaniesService
   ) {}
+
   createDestination() {
-    let destination: Destination = new Destination(
+    let destination: AvailableDestination = new AvailableDestination(
       0,
       this.airportName,
       this.city,
       this.country,
       this.address
     );
+    this.destinationsToShow.push(destination);
 
-    this.allDestinations.push(destination);
-
-    return this._destinationsService
-      .create(this.company, destination)
-      .subscribe();
+    this._destinationsService
+      .createAvailableDestination(this.company, destination)
+      .subscribe((x) => {
+        this._destinationsService
+          .getAllAvailableDestinations()
+          .subscribe(
+            (destinations) =>
+              (this.allDestinations = destinations as AvailableDestination[])
+          );
+      });
   }
   deleteDestination(id: string) {
-    this.allDestinations.forEach((d, index) => {
-      if (d.id == id) {
-        this.allDestinations.splice(index, 1);
+    this.destinationsToShow.forEach((d, index) => {
+      if (d.id == +id) {
+        this.destinationsToShow.splice(index, 1);
       }
     });
 
-    return this._destinationsService.delete(id).subscribe();
+    return this._destinationsService.deleteAvailableDestination(id).subscribe();
   }
 
   ngOnInit(): void {
     let adminEmail = localStorage.getItem("email");
-    this._airlineCompaniesService.getAllCompanies().subscribe(companies => {
+    this._airlineCompaniesService.getAllCompanies().subscribe((companies) => {
       if ((companies as AirlineCompany[]).length > 0) {
         let company = (companies as AirlineCompany[]).find(
           (company) => company.adminEmail == adminEmail
@@ -60,8 +69,11 @@ export class EditDestinationsComponent implements OnInit {
       }
     });
 
-    this._destinationsService.getAll().subscribe(data => {
-      this.allDestinations = data;
-    });
+    this._destinationsService
+      .getAllAvailableDestinations()
+      .subscribe((data) => {
+        this.allDestinations = data as AvailableDestination[];
+        this.destinationsToShow = this.allDestinations.filter((d) => d.status);
+      });
   }
 }

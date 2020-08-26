@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Seat, Row } from "src/app/models/Seat.model";
 import { SeatsConfigService } from "src/app/services/seats-config.service";
 import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
+import { PlaneType } from "src/app/models/PlaneType.model";
+import { PlaneTypeService } from "src/app/services/plane-type.service";
 
 declare var $: any;
 
@@ -11,7 +13,7 @@ declare var $: any;
   styleUrls: ["./edit-seats.component.css"],
 })
 export class EditSeatsComponent implements OnInit {
-  allSeatConfigurations;
+  allPlaneTypes;
   //OVAJ TREBA DA EMITUJE
   row_no = 0;
   seats_per_row = 0;
@@ -30,8 +32,10 @@ export class EditSeatsComponent implements OnInit {
   formValues: [number, number, number, number, number, number];
   rows = [];
 
-  constructor(private seatService: SeatsConfigService) {
-    this.elementNumber = seatService.getSeatConfigurationNumber();
+  planeType = new PlaneType(0, "", 10, 4, 2, 3, 3, 2);
+
+  constructor(private planeTypeService: PlaneTypeService) {
+    this.elementNumber = planeTypeService.getPlaneTypeSeatsNumber();
   }
 
   configName(value, next) {
@@ -52,7 +56,7 @@ export class EditSeatsComponent implements OnInit {
   displayNext(element, next) {
     let value = parseInt(element.target.value);
     this.rows = [];
-
+    debugger;
     if (!isNaN(value)) {
       //setujem novu vrednost
       this.formValues[next - 1] = value;
@@ -86,7 +90,8 @@ export class EditSeatsComponent implements OnInit {
       this.hideSelects(next, this.fieldsNo);
       this.unsetFormValues(next - 1, this.fieldsNo);
     }
-    this.seatService.changeData(this.formValues);
+
+    this.planeTypeService.changeData(this.formValues);
     //iscrtam prikaz sedista
     //this.displayChanges();
   }
@@ -113,9 +118,9 @@ export class EditSeatsComponent implements OnInit {
     }
   }
 
-  saveSeatConfiguration() {
+  savePlaneType() {
     if (this.validate()) {
-      let seatConfiguration = new SeatConfiguration(
+      let planeType = new PlaneType(
         0,
         this.configurationName,
         this.formValues[0],
@@ -123,12 +128,11 @@ export class EditSeatsComponent implements OnInit {
         this.formValues[2],
         this.formValues[3],
         this.formValues[4],
-        this.formValues[5],
-        []
+        this.formValues[5]
       );
 
-      this.seatService.createSeatConfiguration(seatConfiguration).subscribe();
-      this.allSeatConfigurations.push(seatConfiguration);
+      this.planeTypeService.createPlaneType(planeType).subscribe();
+      this.allPlaneTypes.push(planeType);
       //this.elementNumber = this.seatService.getSeatConfigurationNumber();
       //this.allSeatConfigurations = this.seatService.getAllSeatConfigurations();
       $(".message")[0].innerText = "Config saved!";
@@ -198,16 +202,14 @@ export class EditSeatsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.seatService
-      .getAllSeatConfigurations()
-      .subscribe((allSeatConfigurations) => {
-        this.allSeatConfigurations = allSeatConfigurations;
-        this.elementNumber = (allSeatConfigurations as SeatConfiguration[]).length;
-      });
+    this.planeTypeService.getAllPlaneTypes().subscribe((allPlaneTypes) => {
+      this.allPlaneTypes = allPlaneTypes;
+      this.elementNumber = (allPlaneTypes as PlaneType[]).length;
+    });
 
-    this.seatService.currentData.subscribe((data) => {
+    this.planeTypeService.currentData.subscribe((data) => {
       this.formValues = data;
-      this.elementNumber = this.seatService.getSeatConfigurationNumber();
+      this.elementNumber = this.planeTypeService.getPlaneTypeSeatsNumber();
       //this.allSeatConfigurations = this.seatService.getAllSeatConfigurations();
     });
   }

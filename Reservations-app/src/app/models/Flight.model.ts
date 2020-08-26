@@ -13,7 +13,7 @@ export class Flight {
     public distance: string,
     public estimationTime: string,
     public discount: number, //ovo sam menjao tip iz string -> number
-    public planeType: SeatConfiguration,
+    public seatConfiguration: SeatConfiguration,
     public destinations: Destination[],
     public otherServices: string,
     public price: string,

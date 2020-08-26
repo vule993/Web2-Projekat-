@@ -58,10 +58,15 @@ export class ProfileComponent implements OnInit {
       this.currentUser = <UserModel>user;
 
       //ovo videti
-      this.profilePicture =
-        environment.serverAddress +
-        "/Resources/Users/" +
-        this.currentUser.image;
+      if (this.currentUser.image != undefined && this.currentUser.image != "") {
+        this.profilePicture =
+          environment.serverAddress +
+          "/Resources/Users/" +
+          this.currentUser.image;
+      } else {
+        this.profilePicture = "../../assets/face.png";
+      }
+
       $("#pr-picture").css({
         "background-image": "url(" + this.profilePicture + ")",
       });
@@ -75,7 +80,7 @@ export class ProfileComponent implements OnInit {
       if (this.currentUser.status == "AvioAdmin") {
         //this.router.navigate(["avio"]);
       }
-      debugger;
+
       //dodati i ostalo
       localStorage.setItem("id", user.id.toString());
       localStorage.setItem("firstName", user.firstName);

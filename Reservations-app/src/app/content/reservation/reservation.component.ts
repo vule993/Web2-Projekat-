@@ -24,6 +24,9 @@ export class ReservationComponent implements OnInit {
   constructor(private _flightsService: FlightsService, private routes: Router) {
     this._flightsService.getAllFlights().subscribe((data) => {
       let id = +this.routes.url.split("/")[2];
+
+      debugger;
+
       this.flight = (data as Flight[]).find((flight) => flight.id == id);
 
       this.listOfServices = this.flight.otherServices.split(",");
@@ -35,18 +38,20 @@ export class ReservationComponent implements OnInit {
   ngOnInit(): void {
     //izbaciti iz this.reservation sve one koji != reservation.airlineReservation.flight.destinations
 
-    $(window).resize(function () {
-      let h = +$("#seat-picker").css("height").split("px")[0];
+    $(window)
+      .resize(function () {
+        let h = +$("#seat-picker").css("height").split("px")[0];
 
-      $("#friends-selector").css({ height: h + "px" });
-      $(".friends").css({ height: h - 100 + "px" });
-      $("html, body").animate(
-        {
-          scrollTop: $("#proceed").offset().top,
-        },
-        1200
-      );
-    });
+        $("#friends-selector").css({ height: h + "px" });
+        $(".friends").css({ height: h - 100 + "px" });
+        $("html, body").animate(
+          {
+            scrollTop: $("#proceed").offset().top,
+          },
+          1200
+        );
+      })
+      .delay(100);
   }
   proceed() {
     $("#proceed").slideDown(1200);
