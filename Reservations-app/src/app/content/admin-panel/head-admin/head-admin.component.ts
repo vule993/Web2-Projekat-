@@ -18,20 +18,16 @@ export class HeadAdminComponent implements OnInit {
 
   constructor() {
     this.links.push(
+      new Link("../../../../assets/face.png", "MY DETAILS", "profile"),
       new Link(
-        "../../assets/site/icons/car-white.png",
-        "MY DETAILS",
-        "profile"
-      ),
-      new Link(
-        "../../assets/site/icons/car-white.png",
+        "../../../../assets/site/icons/plane-white.png",
         "AVIO COMPANIES",
         "avio-companies"
       ),
-      new Link("../../assets/site/icons/car-white.png", "USERS", "users"),
+      new Link("../../../../assets/site/icons/all-users.png", "USERS", "users"),
 
       new Link(
-        "../../assets/site/icons/home-white.png",
+        "../../../../assets/site/icons/car-white.png",
         "CAR COMPANIES",
         "car-companies"
       ),

@@ -81,6 +81,22 @@ namespace ReservationAPI.Controllers
             }
         }
 
+
+        //GET:  /api/CarCompany/CarId/3
+        [HttpGet("CarId/{carId}")]
+        public async Task<IActionResult> GetCompanyByEmail(long carId)
+        {
+            try
+            {
+                return Ok(await _repository.GetCompanyByCarId(carId));
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"ERROR with getting company. -> {ex.Message}");
+                return BadRequest();
+            }
+        }
+
         //POST: /api/CarCompany/Add
         [HttpPost]
         [Route("Add")]

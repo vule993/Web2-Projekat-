@@ -50,6 +50,7 @@ namespace ReservationAPI
 
 
             // my services
+            services.AddScoped<IUserRepository, UserService>();
             services.AddScoped<ICarRepository, CarService>();
             services.AddScoped<ICarCompany, CarCompanyService>();
             services.AddTransient<IMailService, SendEmailService>();

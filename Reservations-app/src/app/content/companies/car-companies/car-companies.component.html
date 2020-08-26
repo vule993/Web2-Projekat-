@@ -1,40 +1,7 @@
 <app-slider [data]="sliderData"></app-slider>
 
-<div class="search overflow-hidden">
-  <select id="cars" class="form-control search-field fleft">
-    <option value="">Choose car</option>
-    <option *ngFor="let car of allCars" value="{{ car.mark }}">
-      {{ car.mark }}
-    </option>
-  </select>
-
-  <input
-    type="text"
-    autocomplete="off"
-    id="startDate"
-    class="form-control search-field departTime fleft"
-    placeholder="Starting date"
-  />
-  <input
-    type="text"
-    autocomplete="off"
-    id="endDate"
-    class="form-control search-field departTime fleft"
-    placeholder="Ending date"
-  />
-
-  <button (click)="searchReservations()" class="btn btn-success fleft">
-    Search
-  </button>
-
-  <img
-    class="fright"
-    (click)="openFilter()"
-    src="../../../../assets/site/icons/filter-white.png"
-  />
-</div>
 <!-- display-none-->
-<div class="filter display-none overflow-hidden">
+<div class="filter overflow-hidden">
   <select id="company" class="form-control search-field fleft">
     <option value="company">Company</option>
     <option *ngFor="let company of carCompanies" value="{{ company.name }}">
@@ -49,79 +16,179 @@
     <option value="pro">Pro</option>
   </select>
 
+  <select
+    id="carMark"
+    class="form-control search-field fleft col-md-2 col-sm-2"
+  >
+    <option value="mark">Choose car</option>
+    <option *ngFor="let offer of carOffers" value="{{ offer.car.mark }}">{{
+      offer.car.mark
+    }}</option>
+  </select>
+
+  <input
+    id="seats"
+    type="number"
+    placeholder="Seats"
+    class="form-control search-field fleft col-md-1 col-sm-2"
+  />
+
   <button (click)="filterReservations()" class="btn btn-success fleft">
     Filter
   </button>
+  <button (click)="removeFilters()" class="btn btn-danger fright">
+    Remove Filters
+  </button>
 
   <!-- (click)="closeFilter()" -->
-  <img
-    class="fright"
-    (click)="closeFilter()"
-    src="../../../../assets/site/icons/close-white.png"
-  />
+  <!-- <img class="fright" src="../../../../assets/site/icons/filter-white.png" /> -->
 </div>
 
-<div class="results" *ngIf="resultsLoaded">
-  <div
-    class="result overflow-hidden"
-    *ngFor="let reservation of allReservationsToShow"
-  >
+<div class="results">
+  <div class="result overflow-hidden" *ngFor="let offer of carOffers">
     <div class="fleft">
       <div>
-        <h6>Drive termin</h6>
+        <h6>Mark</h6>
         <span>
-          <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ reservation.carReservation.startDate }}
-        </span>
-
-        <span>
-          <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ reservation.carReservation.endDate }}
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ offer.car.mark }}
         </span>
       </div>
       <div>
+        <h6>Description</h6>
+        <span>
+          <img src="../../../../assets/site/icons/description.png" alt="" />
+          {{ offer.description }}
+        </span>
         <h6>Company</h6>
         <span>
-          <img src="../../../../assets/site/icons/car.png" alt="" />
-          {{ reservation.carReservation.carCompany.name }}
-          <!--baca undefined jer sam obrisao zakodirane car kompanije-->
-        </span>
-
-        <span>
-          <img src="../../../../assets/site/icons/location.png" alt="" />
-          {{ reservation.carReservation.carCompany.address }}
+          {{ offer.carCompany.name }}
         </span>
       </div>
     </div>
 
     <div class="fleft separator">
       <div>
-        <h6>Choosed car</h6>
+        <h6>Category plan</h6>
         <span>
-          <img src="../../../../assets/site/icons/car.png" alt="" />
-          {{ reservation.carReservation.car.mark }}
+          <img src="../../../../assets/site/icons/discount.png" alt="" />
+          {{ offer.car.category }}
         </span>
       </div>
       <div>
-        <h6>Prise</h6>
+        <h6>Prise (per day)</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.carReservation.price }}$
+          {{ offer.car.price }}$
         </span>
       </div>
     </div>
     <div class="fleft">
       <div>
-        <h6>Category plan</h6>
+        <h6>Number of seats</h6>
         <span>
-          <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ reservation.carReservation.car.category }}
+          <img src="../../../../assets/site/icons/seat.png" alt="" />
+          {{ offer.car.seats }}
+        </span>
+      </div>
+      <div>
+        <h6>Year</h6>
+        <span>
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ offer.car.year }}
         </span>
       </div>
 
-      <a routerLink="/reservation/{{ reservation.id }}">
+      <!-- <a routerLink="/reservation/{{ offer.car.id }}">
         <button class="btn btn-success fright">Book IT</button>
-      </a>
+      </a> -->
+      <button
+        class="btn btn-success fright"
+        (click)="CarReservationModal(offer)"
+        data-toggle="modal"
+        data-target="#carReservation"
+      >
+        Book IT
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--Modal za car rezervaciju-->
+<div
+  class="modal fade"
+  id="carReservation"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="carReservation"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="carReservation">
+          Make Car Reservation
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <!--Start date, end date-->
+          <form
+            class="form"
+            [formGroup]="CarReservationForm"
+            (ngSubmit)="MakeCarReservation()"
+          >
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <div class="mail-icon"></div>
+                <input
+                  id="startDate"
+                  type="date"
+                  formControlName="startDate"
+                  class="form-control"
+                  placeholder="Start date"
+                  value=""
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <div class="location-icon"></div>
+                <input
+                  id="endDate"
+                  type="date"
+                  class="form-control"
+                  formControlName="endDate"
+                  placeholder="End date"
+                  value=""
+                />
+              </div>
+            </div>
+          </form>
+
+          <!--Ovde prikazati sve ostalo o rezervaciji: fullPrice...-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="MakeCarReservation()"
+            class="btn btn-info"
+            data-dismiss="modal"
+            [disabled]="!CarReservationForm.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

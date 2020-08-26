@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { CarCompany } from "src/app/models/CarCompany.model";
 import { CarsService } from "src/app/services/cars.service";
-import { ReservationService } from "src/app/services/reservation.service";
-import { Reservation } from "src/app/models/Reservation.model";
 import { Car } from "src/app/models/car.model";
 import { Address } from "src/app/models/address.model";
+import { CarOffer } from "src/app/models/carOffer.model";
+import { ToastrService } from "ngx-toastr";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { CarReservation } from "src/app/models/CarReservation";
 
 declare var $: any;
 @Component({
@@ -17,14 +19,14 @@ declare var $: any;
 })
 export class CarCompaniesComponent implements OnInit {
   carCompanies: CarCompany[];
-  startCalendar: any;
-  endCalendar: any;
-  allReservations: Reservation[];
-  allCars: Car[];
-  allReservationsToShow: Reservation[];
-  allReservationsPreFilter: Reservation[];
-  resultsLoaded: boolean = false;
-  // address: Address;
+  carCompany: CarCompany;
+
+  allCarsToShow: Car[];
+  carOffers: CarOffer[] = [];
+  carOffersPreFilter: CarOffer[] = [];
+  selectedOffer: CarOffer;
+  //resultsLoaded: boolean = false;
+  CarReservationForm: FormGroup;
 
   sliderData = {
     title: "All companies",
@@ -34,20 +36,28 @@ export class CarCompaniesComponent implements OnInit {
 
   constructor(
     private carService: CarsService,
-    private reservationService: ReservationService
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
-    //load reservations
-    this.reservationService.allReservations.subscribe(
-      data => (this.allReservations = data)
-    );
-
-    if (this.allReservations.length > 0) this.resultsLoaded = true;
-
     //load cars
-    this.allCars = this.carService.getCars();
+    this.carService.fetchCars().subscribe(data => {
+      this.allCarsToShow = (data as Car[]).filter(c => !c.isReserved);
 
+      this.allCarsToShow.forEach(c => {
+        this.carService.fetchCarCompanyByCarId(c.id).subscribe(company => {
+          this.carCompany = company as CarCompany;
+
+          let carOffer = new CarOffer(c.description, c, this.carCompany, c.id);
+          this.carOffers.push(carOffer);
+          this.carOffersPreFilter.push(carOffer);
+          //this.resultsLoaded = true;
+          console.log(this.carOffers);
+        });
+      });
+    });
+
+    //load car companies
     this.carService.getCarCompanies().subscribe(data => {
       this.carCompanies = data as CarCompany[];
       this.sliderData.values = [];
@@ -63,22 +73,10 @@ export class CarCompaniesComponent implements OnInit {
       });
     });
 
-    this.startCalendar = $(function() {
-      $("#startDate").datepicker({
-        // format: "yyyy-mm-dd",
-        format: "dd-MM-yyyy",
-        autoclose: true
-      });
-    });
-    this.endCalendar = $(function() {
-      $("#endDate").datepicker({
-        format: "dd-MM-yyyy",
-        autoclose: true
-      });
-    });
+    this.initForm();
   }
 
-  searchReservations() {
+  /* searchReservations() {
     this.allReservationsToShow = this.allReservations;
     console.log(this.allReservationsToShow.length);
 
@@ -107,31 +105,115 @@ export class CarCompaniesComponent implements OnInit {
     console.log(this.allReservationsToShow);
 
     this.allReservationsPreFilter = this.allReservationsToShow;
-  }
+  } */
 
   //filter
   filterReservations() {
-    this.allReservationsToShow = this.allReservationsPreFilter;
+    //this.allCarsToShow = this.allCarsPreFilter;
+    this.carOffers = this.carOffersPreFilter;
+    let category = $("#category")
+      .val()
+      .toLowerCase();
+    let companyName = $("#company")
+      .val()
+      .toLowerCase();
+    let numOfSeats = $("#seats")
+      .val()
+      .toLowerCase();
+    let carMark = $("#carMark")
+      .val()
+      .toLowerCase();
 
-    if ($("#company").val() != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        reservation =>
-          reservation.carReservation.carCompany.name === $("#company").val()
+    //category
+    if (category !== "category") {
+      this.carOffers = this.carOffers.filter(
+        offer => offer.car.category.toLowerCase() === category
       );
     }
 
-    if ($("#category").val != "") {
-      this.allReservationsToShow = this.allReservationsToShow.filter(
-        reservation =>
-          reservation.carReservation.car.category === $("#category").val()
+    //company name
+    if (companyName !== "company") {
+      this.carOffers = this.carOffers.filter(
+        offer => offer.carCompany.name.toLowerCase() === companyName
+      );
+    }
+
+    //car Mark
+    if (carMark !== "mark") {
+      this.carOffers = this.carOffers.filter(
+        offer => offer.car.mark.toLocaleLowerCase() === carMark
+      );
+    }
+
+    //seats
+    if (numOfSeats !== "") {
+      let numberOfSeats = +numOfSeats;
+
+      if (numberOfSeats <= 1) {
+        this.toastrService.warning(
+          "Sorry, number of seats can't be less than 2!",
+          "Number of seats"
+        );
+      }
+
+      this.carOffers = this.carOffers.filter(
+        offer => offer.car.seats === numberOfSeats
       );
     }
   }
 
-  openFilter() {
-    $(".filter").fadeIn(300);
+  removeFilters() {
+    this.carOffers = this.carOffersPreFilter;
+    $("#category").val("category");
+    $("#company").val("company");
+    $("#seats").val("");
+    $("#carMark").val("mark");
   }
-  closeFilter() {
-    $(".filter").fadeOut(300);
+
+  /*Car Reservation */
+  CarReservationModal = (offer: CarOffer) => (this.selectedOffer = offer);
+
+  MakeCarReservation() {
+    let startDate = this.CarReservationForm.value["startDate"];
+    let endDate = this.CarReservationForm.value["endDate"];
+    let reservation = new CarReservation(
+      this.selectedOffer.car,
+      this.selectedOffer.carCompany,
+      startDate,
+      endDate,
+      this.selectedOffer.car.id,
+      this.selectedOffer.car.price * this.calcuatePrice(endDate, startDate),
+      localStorage.getItem("userId")
+    );
+
+    this.carService.makeReservation(reservation).subscribe(
+      res => {
+        this.toastrService.success("You made a car reservation!", "Car rented");
+        this.carOffers.splice(this.carOffers.indexOf(this.selectedOffer)); //proveriti ovo jos
+      },
+      err => {
+        this.toastrService.error("Error while making a reservation", "Error");
+      }
+    );
+  }
+
+  //help function for calculating fullPrice
+  calcuatePrice(date1: Date, date2: Date) {
+    let oneDay = 1000 * 60 * 60 * 24;
+    let difference = Math.abs(
+      new Date(date1).getTime() - new Date(date2).getTime()
+    );
+
+    return Math.round(difference / oneDay);
+  }
+
+  initForm() {
+    let startDate = null;
+    let endDate = null;
+
+    this.CarReservationForm = new FormGroup({
+      startDate: new FormControl(startDate, Validators.required),
+      endDate: new FormControl(endDate, Validators.required)
+    });
   }
 }
