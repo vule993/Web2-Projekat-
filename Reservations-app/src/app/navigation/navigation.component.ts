@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
+import { UsersService } from "../services/users.service";
 
 declare var $: any;
 
 @Component({
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
-  styleUrls: ["./navigation.component.css"],
+  styleUrls: ["./navigation.component.css"]
 })
 export class NavigationComponent implements OnInit {
   open = true;
@@ -16,16 +17,16 @@ export class NavigationComponent implements OnInit {
   serverAddress = environment.serverAddress;
   profilePicture;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UsersService) {}
 
   onNotificationClick() {
     if (this.notificationsOpen) {
-      $(document).ready(function () {
-        $("#notifications-list").fadeIn("slow", function () {});
+      $(document).ready(function() {
+        $("#notifications-list").fadeIn("slow", function() {});
       });
     } else {
-      $(document).ready(function () {
-        $("#notifications-list").fadeOut("slow", function () {});
+      $(document).ready(function() {
+        $("#notifications-list").fadeOut("slow", function() {});
       });
     }
 
@@ -63,6 +64,30 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  chechIfAdmin() {
+    if (this.userService.roleMatch(["Admin"])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkIfCarAdmin() {
+    if (this.userService.roleMatch(["CarAdmin"])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkIfAvioAdmin() {
+    if (this.userService.roleMatch(["AvioAdmin"])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   checkIfLoggedIn() {
     if (localStorage.getItem("token") != null) {

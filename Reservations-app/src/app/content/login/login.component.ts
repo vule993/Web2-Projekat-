@@ -34,7 +34,15 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
         localStorage.setItem("token", res.token); //save token
-        localStorage.setItem("userId", res.email);
+        localStorage.setItem("userId", res.user.email);
+        localStorage.setItem("id", res.user.id.toString());
+        localStorage.setItem("firstName", res.user.firstName);
+        localStorage.setItem("lastName", res.user.lastName);
+        localStorage.setItem("email", res.user.email);
+        localStorage.setItem("phoneNumber", res.user.phoneNumber);
+        localStorage.setItem("city", res.user.city);
+        localStorage.setItem("street", res.user.street);
+        localStorage.setItem("image", res.user.image);
 
         if (this.userService.roleMatch(["Admin"])) {
           this.router.navigateByUrl("admin/head-admin/profile");
@@ -68,7 +76,7 @@ export class LoginComponent implements OnInit {
 
       this.userService.socialLogin(socialusers).then((res: any) => {
         localStorage.setItem("token", res.token); //ne zove se ovako token od google...
-        localStorage.setItem("userId", res.email);
+        localStorage.setItem("userId", res.socialUser.email);
         this.router.navigate(["profile"]);
       });
     });

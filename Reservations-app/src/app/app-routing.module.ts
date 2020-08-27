@@ -96,8 +96,8 @@ const routes: Routes = [
     path: "profile",
     redirectTo: "profile/friends",
     pathMatch: "full",
-    canActivate: [AuthGuard],
-    data: { permittedRoles: ["User"] }
+    canActivate: [AuthGuard]
+    /*data: { permittedRoles: ["User"] }*/
   },
   {
     path: "profile",

@@ -141,7 +141,7 @@ namespace ReservationAPI.Controllers
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                return Ok(new { token, user.Email });
+                return Ok(new { token, user });
             }
             else
             {
@@ -194,7 +194,7 @@ namespace ReservationAPI.Controllers
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                return Ok(new { token });
+                return Ok(new { token, socialUser });
             }
 
             return Ok();

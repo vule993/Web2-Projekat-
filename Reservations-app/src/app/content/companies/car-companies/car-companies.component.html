@@ -123,7 +123,7 @@
   aria-labelledby="carReservation"
   aria-hidden="true"
 >
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="carReservation">
@@ -173,19 +173,90 @@
           </form>
 
           <!--Ovde prikazati sve ostalo o rezervaciji: fullPrice...-->
+          <hr />
+          <div>
+            <h5 class="text-center">Your reservation:</h5>
+            <br />
+            <div class="parent">
+              <div class="child">
+                <label>Car: </label>
+                <pre>{{ selectedOffer?.car.mark }}</pre>
+              </div>
+              <div class="child">
+                <label>Company: </label>
+                <pre>{{ selectedOffer?.carCompany.name }}</pre>
+              </div>
+              <div class="child">
+                <label>Seats: </label>
+                <pre>{{ selectedOffer?.car.seats }}</pre>
+              </div>
+              <div class="child">
+                <label>Price per day: </label>
+                <pre>{{ selectedOffer?.car.price }}$</pre>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary">
+          <button type="button" data-dismiss="modal" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="CheckOut()"
+            class="btn btn-info"
+            data-toggle="modal"
+            data-target="#confirmModal"
+            [disabled]="!CarReservationForm.valid"
+          >
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Confirm modal-->
+<div
+  class="modal fade"
+  id="confirmModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="confirmModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="confirmModal">
+          Confirm Reservation
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          <h6 class="text-center">Full Price: {{ fullPrice }}$</h6>
+          <p class="text-center">Please confirm your reservation.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn-secondary">
             Cancel
           </button>
           <button
             type="submit"
             (click)="MakeCarReservation()"
-            class="btn btn-info"
+            class="btn btn-success"
             data-dismiss="modal"
-            [disabled]="!CarReservationForm.valid"
           >
-            Submit
+            Confirm
           </button>
         </div>
       </div>

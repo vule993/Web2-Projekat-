@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"],
+  styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent implements OnInit {
   activeTab;
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
   ) {
     //router sluzi da skeniram url svaki put kad se promeni -> tako cu znati da li je
     //profil samo za gledanje ili je to moj profil
-    router.events.subscribe((val) => {
+    router.events.subscribe(val => {
       let fullUrl = window.location.href;
       this.viewProfile = fullUrl.includes("profile-view") ? true : false;
     });
@@ -68,29 +68,8 @@ export class ProfileComponent implements OnInit {
       }
 
       $("#pr-picture").css({
-        "background-image": "url(" + this.profilePicture + ")",
+        "background-image": "url(" + this.profilePicture + ")"
       });
-
-      if (this.currentUser.status == "Admin") {
-        this.router.navigateByUrl("admin/head-admin/profile");
-      }
-      if (this.currentUser.status == "CarAdmin") {
-        //this.router.navigate(["car"]);
-      }
-      if (this.currentUser.status == "AvioAdmin") {
-        //this.router.navigate(["avio"]);
-      }
-
-      //dodati i ostalo
-      localStorage.setItem("id", user.id.toString());
-      localStorage.setItem("firstName", user.firstName);
-      localStorage.setItem("lastName", user.lastName);
-      localStorage.setItem("status", user.status);
-      localStorage.setItem("email", user.email);
-      localStorage.setItem("phoneNumber", user.phoneNumber);
-      localStorage.setItem("city", user.city);
-      localStorage.setItem("street", user.street);
-      localStorage.setItem("image", user.image);
 
       //preostalo: friends
     });
@@ -133,7 +112,7 @@ export class ProfileComponent implements OnInit {
 
     this.reader.onloadend = () => {
       $("#preview").css({
-        "background-image": "url(" + this.reader.result + ")",
+        "background-image": "url(" + this.reader.result + ")"
       });
     };
 
@@ -156,16 +135,16 @@ export class ProfileComponent implements OnInit {
     this._http
       .post(this.baseUrl, formData, {
         reportProgress: true,
-        observe: "events",
+        observe: "events"
       })
-      .subscribe((event) => {
+      .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round((100 * event.loaded) / event.total);
         } else if (event.type === HttpEventType.Response) {
           this.message = "Upload success!";
           this.onUploadFinished.emit(event.body);
           $("#pr-picture").css({
-            "background-image": "url(" + this.reader.result + ")",
+            "background-image": "url(" + this.reader.result + ")"
           });
         }
       });

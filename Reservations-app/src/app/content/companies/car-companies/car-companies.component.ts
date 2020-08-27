@@ -7,6 +7,7 @@ import { CarOffer } from "src/app/models/carOffer.model";
 import { ToastrService } from "ngx-toastr";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CarReservation } from "src/app/models/CarReservation";
+import { Router } from "@angular/router";
 
 declare var $: any;
 @Component({
@@ -27,6 +28,7 @@ export class CarCompaniesComponent implements OnInit {
   selectedOffer: CarOffer;
   //resultsLoaded: boolean = false;
   CarReservationForm: FormGroup;
+  fullPrice: number;
 
   sliderData = {
     title: "All companies",
@@ -36,6 +38,7 @@ export class CarCompaniesComponent implements OnInit {
 
   constructor(
     private carService: CarsService,
+    private router: Router,
     private toastrService: ToastrService
   ) {}
 
@@ -173,16 +176,25 @@ export class CarCompaniesComponent implements OnInit {
   /*Car Reservation */
   CarReservationModal = (offer: CarOffer) => (this.selectedOffer = offer);
 
+  CheckOut() {
+    let startDate = this.CarReservationForm.value["startDate"];
+    let endDate = this.CarReservationForm.value["endDate"];
+
+    this.fullPrice =
+      this.selectedOffer.car.price * this.calcuatePrice(endDate, startDate);
+  }
+
   MakeCarReservation() {
     let startDate = this.CarReservationForm.value["startDate"];
     let endDate = this.CarReservationForm.value["endDate"];
+
     let reservation = new CarReservation(
       this.selectedOffer.car,
       this.selectedOffer.carCompany,
       startDate,
       endDate,
       this.selectedOffer.car.id,
-      this.selectedOffer.car.price * this.calcuatePrice(endDate, startDate),
+      this.fullPrice,
       localStorage.getItem("userId")
     );
 
@@ -190,6 +202,8 @@ export class CarCompaniesComponent implements OnInit {
       res => {
         this.toastrService.success("You made a car reservation!", "Car rented");
         this.carOffers.splice(this.carOffers.indexOf(this.selectedOffer)); //proveriti ovo jos
+        //redirectovati na companies?
+        //this.router.navigate(["companies"]);
       },
       err => {
         this.toastrService.error("Error while making a reservation", "Error");

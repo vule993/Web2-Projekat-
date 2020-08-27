@@ -9,7 +9,7 @@
               <img src="../../assets/site/icons/home-white.png" class="fleft" />
               <a routerLink="home" class="fleft">Home</a>
             </li>
-            <li class="border-separators">
+            <li class="border-separators" *ngIf="checkIfLoggedIn()">
               <img src="../../assets/site/icons/all-users.png" class="fleft" />
               <a routerLink="users-list" class="fleft">Users list</a>
             </li>
@@ -29,23 +29,23 @@
 
         <div class="fright">
           <ul>
-            <li>
+            <li *ngIf="checkIfLoggedIn() && chechIfAdmin()">
               <img src="../../assets/face.png" class="fleft" />
               <a routerLink="admin/head-admin/profile" class="fleft"
                 >Administrator</a
               >
             </li>
-            <li>
+            <li *ngIf="checkIfLoggedIn() && checkIfAvioAdmin()">
               <img src="../../assets/face.png" class="fleft" />
               <a routerLink="admin/avio/edit-profile" class="fleft"
                 >Admin avio</a
               >
             </li>
-            <li>
+            <li *ngIf="checkIfLoggedIn() && checkIfCarAdmin()">
               <img src="../../assets/face.png" class="fleft" alt="car-admin" />
               <a routerLink="admin/car/edit-company" class="fleft">Admin Car</a>
             </li>
-            <li>
+            <li *ngIf="checkIfLoggedIn()">
               <img src="{{ profilePictureDecide() }}" class="fleft" />
 
               <a routerLink="profile" class="fleft">Profile</a>
