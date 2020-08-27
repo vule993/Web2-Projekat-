@@ -12,6 +12,7 @@ import { Passenger } from "src/app/models/Passenger.model";
 import { FlightsService } from "src/app/services/flights.service";
 import { Flight } from "src/app/models/Flight.model";
 import { environment } from "src/environments/environment";
+import { AirlineReservation } from "src/app/models/AirlineReservation";
 
 declare var $: any;
 
@@ -27,7 +28,8 @@ export class AirlineReservationComponent implements OnInit {
   selectedSeatsNo;
   selectedSeats: Seat[] = [];
   users;
-
+  //da znam da l da odma saljem rez il da cekam rent a car
+  takeRentACar = false;
   constructor(
     private selectedSeatService: SelectedseatsService,
     private userService: UsersService,
@@ -38,11 +40,36 @@ export class AirlineReservationComponent implements OnInit {
   /*
   OBRATITI PAZNJU NA FINISH METODU, UMESTO RESERVATION JE FLIGHT
   */
-
-  finish() {
+  proceedToRentACar() {
+    this.takeRentACar = !this.takeRentACar;
+  }
+  finishAirlineReservation() {
     debugger;
     let i = this.flight;
 
+    if (this.takeRentACar) {
+      //prikazi rc
+    } else {
+      let reservation;
+      this.selectedSeats.forEach((seat) => {
+        //za svkaog coveka na sedistu pravim rezervaciju
+        reservation = new Reservation(
+          0,
+          new AirlineReservation(
+            0,
+            this.flight,
+            new Passenger(0, "", "", "", "", true),
+            "rok za otkaz",
+            0,
+            0,
+            "datum potvrde za statistiku"
+          ),
+          null,
+          false,
+          false
+        );
+      });
+    }
     //   //load specific car reservations based on a airline reservation...
     //   let destination = this.reservation.airlineReservation.flight.destinations[
     //     this.reservation.airlineReservation.flight.destinations.length - 1
@@ -81,6 +108,7 @@ export class AirlineReservationComponent implements OnInit {
       if (this.selectedSeatsNo - 1 < 1) {
         return;
       }
+
       //dodajem coveka na sediste
       $(element).removeClass("uncheck");
       $(element).addClass("check");
@@ -92,7 +120,8 @@ export class AirlineReservationComponent implements OnInit {
             user.email,
             user.firstName,
             user.lastName,
-            "passportNumber"
+            "passportNumber",
+            true
           );
           this.selectedSeatsNo--;
           break;
@@ -117,7 +146,7 @@ export class AirlineReservationComponent implements OnInit {
   }
   ngOnInit(): void {
     this.userService
-      .getAllFriends(localStorage.getItem("email"))
+      .getAllFriends(localStorage.getItem("userId"))
       .subscribe((users) => (this.users = users));
     //this.users = this.userService.getAllUsers();
 

@@ -10,6 +10,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
+import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 
 @Component({
   selector: "app-airline-company-profile",
@@ -34,32 +35,23 @@ export class AirlineCompanyProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private selectedcompanyService: SelectedcompanyService,
+    private _airlineCompanyService: AviocompaniesService,
     private router: Router,
     private reservationsService: ReservationService,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    //google maps
-
-    //
-
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationStart) {
-        this.currentCompany = (this.selectedcompanyService
-          .currentCompany as any) as AirlineCompany;
-        this.center = {
-          lat: +this.currentCompany?.address.lat,
-          lng: +this.currentCompany?.address.lon,
-        };
-      }
-    });
-    this.selectedcompanyService.currentCompany.subscribe((company) => {
-      this.currentCompany = company;
-      // this.center = {
-      //   lat: +this.currentCompany?.address.lat,
-      //   lng: +this.currentCompany?.address.lon,
-      // };
+    let urlParts = window.location.href.split("/");
+    let id = urlParts[urlParts.length - 1];
+    debugger;
+    this._airlineCompanyService.getCompanyById(id).subscribe((company) => {
+      debugger;
+      this.currentCompany = company as AirlineCompany;
+      this.center = {
+        lat: this.currentCompany.address.lat,
+        lng: this.currentCompany.address.lon,
+      };
     });
   }
 

@@ -57,3 +57,10 @@ h2 {
 #friends-selector button {
   margin-top: 0.5vw;
 }
+#rent-a-car {
+  padding: 1.3vw;
+  color: #4d3d9d;
+}
+#rent-a-car > label {
+  margin-right: 0.2vw;
+}

@@ -12,7 +12,7 @@
   <li *ngFor="let user of friends" class="list-group-item overflow-hidden">
     <div class="fleft">
       <div class="fleft image">
-        <img src="{{ user.image }}" />
+        <img src="{{ checkPhoto(user) }}" />
       </div>
       <div class="name fleft">
         {{ user.firstName + " " + user.lastName }}

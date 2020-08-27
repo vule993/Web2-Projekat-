@@ -25,6 +25,11 @@ namespace ReservationAPI.Services
 
         #region COMPANY PROFILE
 
+        public async Task<AirlineCompany> GetCompanyById(string id)
+        {
+            AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.Id.ToString() == id);
+            return profile;
+        }
         public async Task<AirlineCompany> GetCompany(string email)
         {
             AirlineCompany profile = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(x => x.AdminEmail == email);

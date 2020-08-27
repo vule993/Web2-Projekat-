@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { UserModel } from "src/app/models/User.model";
 import { UsersService } from "src/app/services/users.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-friends-data-list",
@@ -20,7 +21,13 @@ export class FriendsDataListComponent implements OnInit {
 
     this.friends.splice(index, 1);
   }
-
+  checkPhoto(user: UserModel) {
+    if (user.image != undefined && user.image != "") {
+      return environment.serverAddress + "/Resources/Users/" + user.image;
+    } else {
+      return "../../assets/face.png";
+    }
+  }
   ngOnInit(): void {
     // this.userService.getAllFriends("vule993@outlook.com").subscribe((data) => {
     //   this.friends = data;
