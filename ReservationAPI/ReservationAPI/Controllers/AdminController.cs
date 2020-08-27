@@ -208,6 +208,7 @@ namespace ReservationAPI.Controllers
                     City = model.Admin.City,
                     PhoneNumber = model.Admin.PhoneNumber,
                     Street = model.Admin.Street,
+                   
                 };
 
                 model.Admin = adminModel;
@@ -223,7 +224,9 @@ namespace ReservationAPI.Controllers
                 Description = model.Description,
                 Name = model.Name,
                 Rating = 0,
-                Thumbnail = ""
+                Thumbnail = "",
+                Lat = model.Lat,
+                Lon = model.Lon
             };
 
 

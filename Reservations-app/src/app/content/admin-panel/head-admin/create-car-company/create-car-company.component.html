@@ -67,6 +67,22 @@
             </div>
           </div>
 
+          <!--Google mapa-->
+          <google-map
+            id="map"
+            [zoom]="zoom"
+            [center]="center"
+            height="11vw"
+            (mapClick)="placeMarker($event)"
+          >
+            <map-marker *ngIf="locationChosen" [position]="center"></map-marker>
+            <!-- <agm-marker
+              *ngIf="locationChosen"
+              [latitude]="lat"
+              [longitude]="lon"
+            ></agm-marker> -->
+          </google-map>
+
           <button
             type="submit"
             [disabled]="!createCompanyForm.valid"

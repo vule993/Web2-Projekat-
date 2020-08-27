@@ -21,6 +21,13 @@ export class CreateCarCompanyComponent implements OnInit {
   admins: UserModel[];
   cars: Car[] = [];
 
+  center: google.maps.LatLngLiteral = {
+    lat: 51.678418,
+    lng: 7.809007
+  };
+  zoom = 2;
+  locationChosen = false;
+
   constructor(
     private userService: UsersService,
     private adminService: AdminService,
@@ -47,7 +54,9 @@ export class CreateCarCompanyComponent implements OnInit {
       this.createCompanyForm.value["city"],
       "",
       this.cars,
-      this.selectedValue //admin
+      this.selectedValue, //admin,
+      this.center.lat,
+      this.center.lng
     );
 
     this.adminService.createCarCompany(carCompany).subscribe(
@@ -79,5 +88,14 @@ export class CreateCarCompanyComponent implements OnInit {
       city: new FormControl(city, Validators.required),
       admins: new FormControl(admins, Validators.required)
     });
+  }
+
+  placeMarker(event) {
+    this.center = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng()
+    };
+
+    this.locationChosen = true;
   }
 }

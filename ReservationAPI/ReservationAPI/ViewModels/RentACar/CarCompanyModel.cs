@@ -18,6 +18,8 @@ namespace ReservationAPI.ViewModels
         public string Thumbnail { get; set; }
         public List<Car> Cars { get; set; }
         public UserModel Admin { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
 
 
         //public CarCompanyModel(CarCompany carCompany)
