@@ -14,9 +14,6 @@ declare var $: any;
 })
 export class EditSeatsComponent implements OnInit {
   allPlaneTypes;
-  //OVAJ TREBA DA EMITUJE
-  row_no = 0;
-  seats_per_row = 0;
 
   animation_length = 750;
   d = 17; //sirina jednog elementa unutar slajdera
@@ -30,9 +27,8 @@ export class EditSeatsComponent implements OnInit {
   configurationName: string;
   displayForm = [false, false, false, false, false, false];
   formValues: [number, number, number, number, number, number];
-  rows = [];
 
-  planeType = new PlaneType(0, "", 10, 4, 2, 3, 3, 2);
+  seatConfiguration: SeatConfiguration;
 
   constructor(private planeTypeService: PlaneTypeService) {
     this.elementNumber = planeTypeService.getPlaneTypeSeatsNumber();
@@ -43,11 +39,26 @@ export class EditSeatsComponent implements OnInit {
       this.displayForm[next] = true;
       this.configurationName = value.target.value;
     } else {
-      this.rows = [];
       for (let i = next; i < this.fieldsNo; i++) {
         this.displayForm[i] = false;
       }
     }
+  }
+
+  setValues() {
+    this.seatConfiguration = new SeatConfiguration(
+      0,
+      new PlaneType(
+        0,
+        this.configurationName,
+        this.formValues[0],
+        this.formValues[1],
+        this.formValues[2],
+        this.formValues[3],
+        this.formValues[4],
+        this.formValues[5]
+      )
+    );
   }
   /*
   kada se promeni segments number potrebno je ucitati 
@@ -55,8 +66,7 @@ export class EditSeatsComponent implements OnInit {
   */
   displayNext(element, next) {
     let value = parseInt(element.target.value);
-    this.rows = [];
-    debugger;
+
     if (!isNaN(value)) {
       //setujem novu vrednost
       this.formValues[next - 1] = value;
@@ -91,9 +101,7 @@ export class EditSeatsComponent implements OnInit {
       this.unsetFormValues(next - 1, this.fieldsNo);
     }
 
-    this.planeTypeService.changeData(this.formValues);
-    //iscrtam prikaz sedista
-    //this.displayChanges();
+    this.setValues();
   }
 
   getRowWidth() {

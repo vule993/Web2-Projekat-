@@ -12,6 +12,7 @@ namespace ReservationAPI.Models.Airlines
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PassportNumber { get; set; }
-        
+        public bool IsRegistrated { get; set; }
+
     }
 }

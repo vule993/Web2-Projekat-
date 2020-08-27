@@ -4,6 +4,13 @@ import { ActivatedRoute, Router, NavigationStart } from "@angular/router";
 import { Flight } from "src/app/models/Flight.model";
 import { Reservation } from "src/app/models/Reservation.model";
 import { ReservationService } from "src/app/services/reservation.service";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
+
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+
+import { HttpClient } from "@angular/common/http";
+import { AviocompaniesService } from "src/app/services/aviocompanies.service";
 
 @Component({
   selector: "app-airline-company-profile",
@@ -11,51 +18,48 @@ import { ReservationService } from "src/app/services/reservation.service";
   styleUrls: ["./airline-company-profile.component.css"],
 })
 export class AirlineCompanyProfileComponent implements OnInit {
-  currentCompany;
-  allReservatons: Reservation[];
+  //google maps
+
+  //
+  currentCompany: AirlineCompany;
+
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue; //for stars
-  iframeSrc = "";
+
+  center: google.maps.LatLngLiteral = {
+    lat: 51.678418,
+    lng: 7.809007,
+  };
+  zoom = 2;
+
   constructor(
     private route: ActivatedRoute,
     private selectedcompanyService: SelectedcompanyService,
+    private _airlineCompanyService: AviocompaniesService,
     private router: Router,
-    private reservationsService: ReservationService
+    private reservationsService: ReservationService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.reservationsService.allReservations.subscribe(
-      (reservations) => (this.allReservatons = reservations)
-    );
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationStart) {
-        this.currentCompany = this.selectedcompanyService.currentCompany;
-      }
+    let urlParts = window.location.href.split("/");
+    let id = urlParts[urlParts.length - 1];
+    debugger;
+    this._airlineCompanyService.getCompanyById(id).subscribe((company) => {
+      debugger;
+      this.currentCompany = company as AirlineCompany;
+      this.center = {
+        lat: this.currentCompany.address.lat,
+        lng: this.currentCompany.address.lon,
+      };
     });
-    this.selectedcompanyService.currentCompany.subscribe(
-      (company) => (this.currentCompany = company)
-    );
   }
 
-  getReservationsWithDiscount(): Reservation[] {
-    return this.allReservatons.filter((reservation) => {
-      if (this.currentCompany != null) {
-        reservation.airlineReservation.flight.avioCompany.name ===
-          this.currentCompany.name &&
-          reservation.airlineReservation.flight.discount != 0;
-      }
-    });
-  }
+  getReservationsWithDiscount() {}
 
   countStar(star) {
-    this.selectedValue = star;
-    console.log("Value of star", star);
-    this.currentCompany.rating = star; //nece ovako moci
-  }
-
-  createURL() {
-    if (this.currentCompany == null) return;
-    this.iframeSrc = `https://maps.google.com/maps?q=${this.currentCompany.city}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
-    return this.iframeSrc;
+    // this.selectedValue = star;
+    // console.log("Value of star", star);
+    // this.currentCompany.rating = star; //nece ovako moci
   }
 }

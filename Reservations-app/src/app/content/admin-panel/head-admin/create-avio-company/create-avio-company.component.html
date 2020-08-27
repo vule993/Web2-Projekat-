@@ -5,7 +5,7 @@
           <img src="../../assets/face.png" alt="profile" />
         </div> -->
       <br />
-      <br />
+
       <div class="col-12 form-input">
         <form [formGroup]="createCompanyForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
@@ -76,6 +76,21 @@
               />
             </div>
           </div>
+
+          <google-map
+            id="map"
+            [zoom]="zoom"
+            [center]="center"
+            height="11vw"
+            (mapClick)="placeMarker($event)"
+          >
+            <map-marker *ngIf="locationChosen" [position]="center"></map-marker>
+            <!-- <agm-marker
+              *ngIf="locationChosen"
+              [latitude]="lat"
+              [longitude]="lon"
+            ></agm-marker> -->
+          </google-map>
 
           <button
             type="submit"

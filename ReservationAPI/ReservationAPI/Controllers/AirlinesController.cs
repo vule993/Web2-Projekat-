@@ -28,6 +28,25 @@ namespace ReservationAPI.Controllers
 
         #region COMPANY PROFILE
 
+        
+        [HttpGet]
+        [Route("GetCompanyById/{id}")]
+        public async Task<object> GetCompanyById(string id)
+        {
+            try
+            {
+                AirlineCompany company = await _service.GetCompanyById(id);
+                return company;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+            }
+
+            return NotFound(new { Message = "Profile not found" });
+        }
+
+
         [HttpGet]
         [Route("GetCompany/{email}")]
         public async Task<object> GetCompany(string email)

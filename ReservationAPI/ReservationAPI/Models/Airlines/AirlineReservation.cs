@@ -11,6 +11,7 @@ namespace ReservationAPI.Models.Airlines
         public virtual Flight Flight { get; set; }
         public virtual Passenger Passenger { get; set; }
         public string DeadlineForCanceling { get; set; }    // popuniti na frontu kako bi se lakse odradilo odjavljivanje leta 3h pre poletanja
+        public string ConfirmDate { get; set; }             // datum potvrdjivanja leta kako bi se u statistici obradili podaci
         public int SeatNumber { get; set; }
         public int RowNumber { get; set; }
 

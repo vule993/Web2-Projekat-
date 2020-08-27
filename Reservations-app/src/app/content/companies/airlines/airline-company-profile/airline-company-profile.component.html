@@ -167,8 +167,8 @@
 
               <!-- <p>Address: {{ carCompany.address }}, {{ carCompany.city }}</p> -->
               <hr />
-              <div class="card map-card" style="height: 20vw;">
-                <!--Google map-->
+              <!--Google map-->
+              <!-- <div class="card map-card" style="height: 20vw;">
                 <div
                   id="map-container-google-1"
                   class="z-depth-1-half map-container"
@@ -182,7 +182,16 @@
                     allowfullscreen
                   ></iframe>
                 </div>
-              </div>
+              </div> -->
+              <google-map
+                [zoom]="zoom"
+                [center]="center"
+                width="100%"
+                height="30vw"
+              >
+                <map-marker [position]="center"></map-marker>
+              </google-map>
+
               <!--Rating -> ovo ce morati biti forma? -->
               <br />
               <h3 class="heading">Please Rate Us</h3>

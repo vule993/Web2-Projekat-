@@ -146,6 +146,11 @@ namespace ReservationAPI.Services
             var user = await _userManager.FindByEmailAsync(email);
             List<UserModel> friends = new List<UserModel>();
 
+            if(user == null)
+            {
+                return null;
+            }
+
             foreach (var friend in user.Friends)
             {
                 var role = await _userManager.GetRolesAsync(friend);

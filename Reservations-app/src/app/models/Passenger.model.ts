@@ -6,6 +6,7 @@ export class Passenger {
     public userEmail: string,
     public firstName: string,
     public lastName: string,
-    public passportNumber: string
+    public passportNumber: string,
+    public isRegistrated: boolean
   ) {}
 }

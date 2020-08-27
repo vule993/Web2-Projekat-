@@ -7,7 +7,7 @@ import { CarReservation } from "src/app/models/CarReservation";
 @Component({
   selector: "app-car-reservation",
   templateUrl: "./car-reservation.component.html",
-  styleUrls: ["./car-reservation.component.css"]
+  styleUrls: ["./car-reservation.component.css"],
 })
 export class CarReservationComponent implements OnInit {
   @Input() reservation: Reservation;
@@ -19,18 +19,19 @@ export class CarReservationComponent implements OnInit {
     private routes: Router
   ) {}
 
+  /*KADA JE REZERVACIJA NA PROFILU PROMENJENA U FLIGHT*/
   ngOnInit(): void {
-    this.reservationService.allReservations.subscribe(data => {
-      let id = +this.routes.url.split("/")[2];
-      this.carReservation = data.find(reservation => reservation.id == id);
-    });
+    // this.reservationService.allReservations.subscribe((data) => {
+    //   let id = +this.routes.url.split("/")[2];
+    //   this.carReservation = data.find((reservation) => reservation.id == id);
+    // });
   }
 
   AddCarReservation(id: string) {
-    console.log("id rezervacije: " + id);
-    this.reservation.carReservation = this.reservationService.getSpecificReservation(
-      +id
-    );
+    // console.log("id rezervacije: " + id);
+    // this.reservation.carReservation = this.reservationService.getSpecificReservation(
+    //   +id
+    // );
     //ovo je finalna rezervacija sa avio + car rezervacijom
   }
 }

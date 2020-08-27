@@ -11,6 +11,8 @@ namespace ReservationAPI.Models.Shared
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
 
     }
 }

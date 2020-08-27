@@ -57,7 +57,7 @@ export class UserListComponent implements OnInit {
 
   removeFriend(friendsEmail: string) {
     this._userService
-      .removeFriend(localStorage.getItem("email"), friendsEmail)
+      .removeFriend(localStorage.getItem("userId"), friendsEmail)
       .subscribe();
 
     let id = this.currentUSersFriends
@@ -76,14 +76,14 @@ export class UserListComponent implements OnInit {
         .map(function (x) {
           return x.email;
         })
-        .indexOf(localStorage.getItem("email"));
+        .indexOf(localStorage.getItem("userId"));
       users.splice(id, 1);
       //setujem potrebne promenljive
       this.allUsers = users;
       this.filteredUsers = users;
     });
     this._userService
-      .getAllFriends(localStorage.getItem("email"))
+      .getAllFriends(localStorage.getItem("userId"))
       .subscribe((friends) => (this.currentUSersFriends = friends));
   }
 }

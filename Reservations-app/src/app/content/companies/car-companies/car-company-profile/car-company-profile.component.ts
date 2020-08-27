@@ -10,7 +10,7 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-car-company-profile",
   templateUrl: "./car-company-profile.component.html",
-  styleUrls: ["./car-company-profile.component.css"]
+  styleUrls: ["./car-company-profile.component.css"],
 })
 export class CarCompanyProfileComponent implements OnInit {
   carCompany: CarCompany;
@@ -34,12 +34,12 @@ export class CarCompanyProfileComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.companyId = +params["id"];
 
-      this.carService.fetchCarCompany(this.companyId).subscribe(data => {
+      this.carService.fetchCarCompany(this.companyId).subscribe((data) => {
         this.carCompany = data as CarCompany;
         //load available cars
-        this.carService.getCarsOfCompany(this.companyId).subscribe(data => {
+        this.carService.getCarsOfCompany(this.companyId).subscribe((data) => {
           this.availableCars = (data as Car[]).filter(
-            x => x.isReserved === false
+            (x) => x.isReserved === false
           );
         });
         this.isLoaded = true;
@@ -67,13 +67,13 @@ export class CarCompanyProfileComponent implements OnInit {
     );
 
     this.carService.makeReservation(reservation).subscribe(
-      res => {
+      (res) => {
         this.toastrService.success(
           "You made a quick reservation!",
           "Car rented"
         );
       },
-      err => {
+      (err) => {
         this.toastrService.error(
           "Error while making a quick reservation",
           "Error"
@@ -99,7 +99,7 @@ export class CarCompanyProfileComponent implements OnInit {
 
     this.quickReservationForm = new FormGroup({
       startDate: new FormControl(startDate, Validators.required),
-      endDate: new FormControl(endDate, Validators.required)
+      endDate: new FormControl(endDate, Validators.required),
     });
   }
 

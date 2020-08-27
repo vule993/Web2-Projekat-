@@ -12,13 +12,20 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./create-avio-company.component.html",
   styleUrls: [
     "./create-avio-company.component.css",
-    "../../../register/register.component.css"
-  ]
+    "../../../register/register.component.css",
+  ],
 })
 export class CreateAvioCompanyComponent implements OnInit {
   createCompanyForm: FormGroup;
   selectedValue: UserModel;
   admins: UserModel[];
+
+  center: google.maps.LatLngLiteral = {
+    lat: 51.678418,
+    lng: 7.809007,
+  };
+  zoom = 2;
+  locationChosen = false;
 
   constructor(
     private userService: UsersService,
@@ -26,11 +33,20 @@ export class CreateAvioCompanyComponent implements OnInit {
     private toastrService: ToastrService
   ) {}
 
+  placeMarker(event) {
+    this.center = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    };
+
+    this.locationChosen = true;
+  }
+
   ngOnInit(): void {
     this.userService
       .getAllUsers()
       .subscribe(
-        users => (this.admins = users.filter(u => u.status == "AvioAdmin"))
+        (users) => (this.admins = users.filter((u) => u.status == "AvioAdmin"))
       );
 
     this.initForm();
@@ -40,9 +56,11 @@ export class CreateAvioCompanyComponent implements OnInit {
     const address = new Address(
       this.createCompanyForm.value["country"],
       this.createCompanyForm.value["city"],
-      this.createCompanyForm.value["street"]
+      this.createCompanyForm.value["street"],
+      this.center.lat,
+      this.center.lng
     );
-
+    debugger;
     //uzimam admina, umesto email-a
     //let admin = this.admins.filter(a => a.email == this.selectedValue.email)[0];
 
@@ -67,7 +85,7 @@ export class CreateAvioCompanyComponent implements OnInit {
           "Succesfull"
         );
       },
-      err => {
+      (err) => {
         this.toastrService.error(
           "Ooops",
           "Something went wrong while creating new avio company."
@@ -91,7 +109,7 @@ export class CreateAvioCompanyComponent implements OnInit {
       street: new FormControl(street, Validators.required),
       city: new FormControl(city, Validators.required),
       country: new FormControl(country, Validators.required),
-      admins: new FormControl(admins, Validators.required)
+      admins: new FormControl(admins, Validators.required),
     });
   }
 }
