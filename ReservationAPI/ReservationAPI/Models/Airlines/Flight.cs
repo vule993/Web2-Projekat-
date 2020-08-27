@@ -21,5 +21,7 @@ namespace ReservationAPI.Models.Airlines
         public string OtherServices { get; set; }
         public string Price { get; set; }
         public string Luggage { get; set; }
+        public int RateNo { get; set; }
+        public double Rating { get; set; }
     }
 }

@@ -178,6 +178,26 @@ namespace ReservationAPI.Services
             }
         }
 
+        public async Task<bool> UpdateFlight(Flight flight)
+        {
+            try
+            {
+                //var f = (await _context.Flight.ToListAsync()).FirstOrDefault(x => x.Id == flight.Id);
+                _context.Flight.Update(flight);
+                await _context.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+
+            
+        }
+
+
         public async Task<bool> CreateFlight(Flight flight)
         {
             try
@@ -224,7 +244,8 @@ namespace ReservationAPI.Services
                             SeatStatus = seat.SeatStatus,
                         };
 
-                        await _context.Seat.AddAsync(seat);
+                        //await _context.Seat.AddAsync(s);
+                        r.Seats.Add(s);
                     }
 
                     await _context.Row.AddAsync(r);

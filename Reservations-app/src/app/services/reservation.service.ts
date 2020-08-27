@@ -11,131 +11,35 @@ import { BehaviorSubject } from "rxjs";
 import { CarsService } from "./cars.service";
 import { SeatConfiguration } from "../models/Seat-configuration.model";
 import { S_IFDIR } from "constants";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
 export class ReservationService {
-  private _allReservations = new BehaviorSubject<Reservation[]>([
-    new Reservation(
-      1,
-      null,
-      new CarReservation(
-        this.carService.getCar(1),
-        this.carService.getCarCompany(1),
-        "01-Jun-2020",
-        "25-Jul-2020",
-        1,
-        this.carService.getPrice(
-          this.carService.getCar(2).category,
-          this.calculateNumOfDays(
-            this.parseDate("02-07-2020"),
-            this.parseDate("25-07-2020")
-          )
-        ),
-        "",
-        1
-      ),
-      false,
-      false
-    ),
-    new Reservation(
-      2,
-      null,
-      new CarReservation(
-        this.carService.getCar(2),
-        this.carService.getCarCompany(2),
-        "05-Aug-2020",
-        "23-Aug-2020",
-        2,
-        this.carService.getPrice(
-          this.carService.getCar(2).category,
-          this.calculateNumOfDays(
-            this.parseDate("05-08-2020"),
-            this.parseDate("23-08-2020")
-          )
-        ),
-        "",
-        2
-      ),
-      false,
-      false
-    ),
-  ]);
-  allReservations = this._allReservations.asObservable();
+  baseUrl = "http://localhost:5000/api/Reservations/";
 
-  carReservations: CarReservation[] = [
-    new CarReservation(
-      this.carService.getCar(1),
-      this.carService.getCarCompany(1),
-      "01-Jun-2020",
-      "25-Jul-2020",
-      2,
-      this.carService.getPrice(
-        this.carService.getCar(2).category,
-        this.calculateNumOfDays(
-          this.parseDate("02-07-2020"),
-          this.parseDate("25-07-2020")
-        )
-      ),
-      "",
-      1
-    ),
-    new CarReservation(
-      this.carService.getCar(1),
-      this.carService.getCarCompany(1),
-      "03-Jun-2020",
-      "25-Jul-2020",
-      1,
-      this.carService.getPrice(
-        this.carService.getCar(2).category,
-        this.calculateNumOfDays(
-          this.parseDate("02-07-2020"),
-          this.parseDate("25-07-2020")
-        )
-      ),
-      "",
-      2
-    ),
-    new CarReservation(
-      this.carService.getCar(2),
-      this.carService.getCarCompany(2),
-      "05-Aug-2020",
-      "23-Aug-2020",
-      2,
-      this.carService.getPrice(
-        this.carService.getCar(2).category,
-        this.calculateNumOfDays(
-          this.parseDate("05-08-2020"),
-          this.parseDate("23-08-2020")
-        )
-      ),
-      "",
-      2
-    ),
-  ];
-
-  constructor(private carService: CarsService) {}
+  constructor(private _http: HttpClient, private carService: CarsService) {}
 
   loadAllReservations() {
-    return this.allReservations;
+    return this._http.get(this.baseUrl + "Reservations");
   }
-  addReservation(reservation: Reservation) {
-    this._allReservations.getValue().push(reservation);
-  }
-  removeReservation(id: number) {
-    this._allReservations.getValue().forEach((reservation, index) => {
-      if (reservation.id === id) {
-        this._allReservations.getValue().splice(index, 1);
-      }
-    });
-  }
-  getSpecificReservation(id: number) {
-    return this.carReservations.find((c) => c.id == id);
-  }
-  getNumberOfReservations() {
-    return this._allReservations.getValue().length;
-  }
+  // addReservation(reservation: Reservation) {
+  //   this._allReservations.getValue().push(reservation);
+  // }
+  // removeReservation(id: number) {
+  //   this._allReservations.getValue().forEach((reservation, index) => {
+  //     if (reservation.id === id) {
+  //       this._allReservations.getValue().splice(index, 1);
+  //     }
+  //   });
+  // }
+  // getSpecificReservation(id: number) {
+  //   return this.carReservations.find((c) => c.id == id);
+  // }
+  // getNumberOfReservations() {
+  //   return this._allReservations.getValue().length;
+  // }
 
   calculateNumOfDays(first, second) {
     // Take the difference between the dates and divide by milliseconds per day.

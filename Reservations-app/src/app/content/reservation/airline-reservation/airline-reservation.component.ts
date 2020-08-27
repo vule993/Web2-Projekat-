@@ -42,6 +42,7 @@ export class AirlineReservationComponent implements OnInit {
   finish() {
     debugger;
     let i = this.flight;
+
     //   //load specific car reservations based on a airline reservation...
     //   let destination = this.reservation.airlineReservation.flight.destinations[
     //     this.reservation.airlineReservation.flight.destinations.length - 1

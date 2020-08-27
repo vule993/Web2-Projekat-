@@ -17,6 +17,8 @@ export class Flight {
     public destinations: Destination[],
     public otherServices: string,
     public price: string,
-    public luggage: string
+    public luggage: string,
+    public rateNo: number = 0,
+    public rating: number = 0
   ) {}
 }

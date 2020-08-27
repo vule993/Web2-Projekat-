@@ -73,8 +73,8 @@ import { CLIENT_ID } from "./const/constants";
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider(CLIENT_ID)
-  }
+    provider: new GoogleLoginProvider(CLIENT_ID),
+  },
 ]);
 
 export function provideConfig() {
@@ -83,9 +83,11 @@ export function provideConfig() {
 import { ProfilePanelComponent } from "./content/profile/profile-panel/profile-panel.component";
 import { CreateCarCompanyComponent } from "./content/admin-panel/head-admin/create-car-company/create-car-company.component";
 import { CreateAvioCompanyComponent } from "./content/admin-panel/head-admin/create-avio-company/create-avio-company.component";
-import { MailConfirmationComponent } from './content/mail-confirmation/mail-confirmation.component';
-import { UserListComponent } from './content/user-list/user-list.component';
-import { EditOtherServicesComponent } from './content/admin-panel/admin-flights/edit-other-services/edit-other-services.component';
+import { MailConfirmationComponent } from "./content/mail-confirmation/mail-confirmation.component";
+import { UserListComponent } from "./content/user-list/user-list.component";
+import { EditOtherServicesComponent } from "./content/admin-panel/admin-flights/edit-other-services/edit-other-services.component";
+import { AgmCoreModule } from "@agm/core";
+import { GoogleMapsModule } from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -141,34 +143,38 @@ import { EditOtherServicesComponent } from './content/admin-panel/admin-flights/
     CreateAvioCompanyComponent,
     MailConfirmationComponent,
     UserListComponent,
-    EditOtherServicesComponent
+    EditOtherServicesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      progressBar: true
+      progressBar: true,
     }),
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     SafePipeModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyBZhO0XUcDOC_A7gaubpG6M9nHQlSqiEoY",
+    }),
+    GoogleMapsModule,
   ],
   providers: [
     UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: AuthServiceConfig,
-      useFactory: provideConfig
-    }
+      useFactory: provideConfig,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
