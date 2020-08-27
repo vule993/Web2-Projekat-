@@ -155,7 +155,9 @@ namespace ReservationAPI.Controllers
             {
                 City = airlineCompany.Address.City,
                 Country = airlineCompany.Address.Country,
-                Street = airlineCompany.Address.Street
+                Street = airlineCompany.Address.Street,
+                Lat = airlineCompany.Address.Lat,
+                Lon = airlineCompany.Address.Lon
             };
             _context.Address.Add(address);
 

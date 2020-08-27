@@ -75,6 +75,12 @@ namespace ReservationAPI
                 o.MemoryBufferThreshold = int.MaxValue;
             });
 
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+
 
             //customize validations
             services.Configure<IdentityOptions>(options =>
