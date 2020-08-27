@@ -249,7 +249,8 @@ namespace ReservationAPI.Services
                             SeatStatus = seat.SeatStatus,
                         };
 
-                        //await _context.Seat.AddAsync(s);
+                        await _context.Seat.AddAsync(s);
+                        await _context.SaveChangesAsync();
                         r.Seats.Add(s);
                     }
 

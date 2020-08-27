@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   serverAddress: "http://localhost:5000",
+  cancelAirlineReservationBefore: 3, //three hours before flight user can cancel flight
 };
 
 /*

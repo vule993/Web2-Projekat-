@@ -137,7 +137,7 @@ export class EditFlightsComponent implements OnInit {
         0,
         planeType as PlaneType
       );
-
+      debugger;
       $("#seatConfigPreview").slideDown(750);
     });
   }
