@@ -53,6 +53,23 @@ export class AirlineReservationComponent implements OnInit {
       let reservation;
       this.selectedSeats.forEach((seat) => {
         //za svkaog coveka na sedistu pravim rezervaciju
+
+        var today = new Date();
+        var date =
+          today.getFullYear() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getDate();
+        var time =
+          today.getHours() -
+          environment.cancelAirlineReservationBefore +
+          ":" +
+          today.getMinutes() +
+          ":" +
+          today.getSeconds();
+        var dateTime = date + " " + time;
+
         reservation = new Reservation(
           0,
           new AirlineReservation(
