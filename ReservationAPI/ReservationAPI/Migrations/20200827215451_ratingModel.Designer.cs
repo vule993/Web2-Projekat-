@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200827215451_ratingModel")]
+    partial class ratingModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -773,8 +775,6 @@ namespace ReservationAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarCompanyId");
-
                     b.HasIndex("CarId");
 
                     b.ToTable("Ratings");
@@ -964,10 +964,6 @@ namespace ReservationAPI.Migrations
 
             modelBuilder.Entity("ReservationAPI.Models.Shared.Rating", b =>
                 {
-                    b.HasOne("ReservationAPI.Models.Rent_a_Car.CarCompany", null)
-                        .WithMany("Rates")
-                        .HasForeignKey("CarCompanyId");
-
                     b.HasOne("ReservationAPI.Models.Rent_a_Car.Car", null)
                         .WithMany("Rates")
                         .HasForeignKey("CarId");
