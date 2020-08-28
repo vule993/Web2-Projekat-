@@ -38,7 +38,7 @@ export class DisplaySeatsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.selectedSeatService.setSelectedSeats([]);
     this.currentUrl = window.location.href;
-    debugger;
+
     if (this.currentSeatConfig != undefined) {
       this.planeType = this.currentSeatConfig.planeType;
       this.seats = this.currentSeatConfig.seats;
@@ -86,7 +86,6 @@ export class DisplaySeatsComponent implements OnInit {
       col_number
     ] as Seat;
 
-    debugger;
     if (this.currentUrl.includes("avio/flights")) {
       //na kreiranju leta
       if (seat.forFastReservation) {

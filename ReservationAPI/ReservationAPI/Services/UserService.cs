@@ -32,15 +32,36 @@ namespace ReservationAPI.Services
             var user = await _userManager.FindByEmailAsync(newFriends.UsersEmail);
             var friend = await _userManager.FindByEmailAsync(newFriends.FriendsEmail);
 
-            if (!user.Friends.Contains(friend))
+            foreach(var currFriend in user.Friends)
             {
-                user.Friends.Add(friend);
+                if(currFriend.Email == friend.Email)
+                {
+                    return new { Message = "You are already friends!" };
+                }
             }
 
-            if (!friend.Friends.Contains(user))
+            user.Friends.Add(new Friend() { 
+                Email = friend.Email
+            });
+
+
+
+
+
+            foreach (var currFriend in friend.Friends)
             {
-                friend.Friends.Add(user);
+                if (currFriend.Email == user.Email)
+                {
+                    return new { Message = "You are already friends!" };
+                }
             }
+            friend.Friends.Add(new Friend()
+            {
+                Email = user.Email
+            });
+
+
+           
 
             await _context.SaveChangesAsync();
 
@@ -72,9 +93,11 @@ namespace ReservationAPI.Services
             var role = await _userManager.GetRolesAsync(user);
             List<UserModel> friends = new List<UserModel>();
 
-            foreach (var friend in user.Friends)
-            {
+            User friend;
 
+            foreach (var friendModel in user.Friends)
+            {
+                friend = await _userManager.FindByEmailAsync(friendModel.Email);
                 um = new UserModel()
                 {
                     FirstName = friend.FirstName,
@@ -151,8 +174,11 @@ namespace ReservationAPI.Services
                 return null;
             }
 
-            foreach (var friend in user.Friends)
+            User friend;
+
+            foreach (var friendModel in user.Friends)
             {
+                friend = await _userManager.FindByEmailAsync(friendModel.Email);
                 var role = await _userManager.GetRolesAsync(friend);
 
                 friends.Add(new UserModel()
@@ -178,14 +204,21 @@ namespace ReservationAPI.Services
             var friend = await _userManager.FindByEmailAsync(unFriends.FriendsEmail);
 
 
-            if (user.Friends.Contains(friend))
+            foreach (var currFriend in user.Friends)
             {
-                user.Friends.Remove(friend);
+                if (currFriend.Email == friend.Email)
+                {
+                    user.Friends.Remove(currFriend);
+                }
             }
 
-            if (friend.Friends.Contains(user))
+
+            foreach (var currFriend in friend.Friends)
             {
-                friend.Friends.Remove(user);
+                if (currFriend.Email == user.Email)
+                {
+                    friend.Friends.Remove(currFriend);
+                }
             }
 
 

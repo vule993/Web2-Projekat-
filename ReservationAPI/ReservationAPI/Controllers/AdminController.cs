@@ -92,7 +92,7 @@ namespace ReservationAPI.Controllers
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
-                Friends = new List<User>(),
+                Friends = new List<Friend>(),
                 Reservations = new List<Reservation>()
             };
 

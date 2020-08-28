@@ -14,8 +14,14 @@
 }
 .form-control {
   width: 30vw;
+  font-size: 1vw;
 }
-
+.button-success {
+  font-size: 1vw !important;
+}
+.btn {
+  font-size: 1vw;
+}
 .item {
   background-color: #fff;
   color: #513f9f;

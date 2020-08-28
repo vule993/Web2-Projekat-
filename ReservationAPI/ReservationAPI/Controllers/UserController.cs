@@ -65,7 +65,7 @@ namespace ReservationAPI.Controllers
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
-                Friends = new List<User>(),
+                Friends = new List<Friend>(),
                 Reservations = new List<Reservation>()
             };
 
@@ -276,9 +276,11 @@ namespace ReservationAPI.Controllers
             List<UserModel> friends = new List<UserModel>();
             UserModel um;
 
+            User friend;
 
-            foreach (var friend in user.Friends)
+            foreach (var friendModel in user.Friends)
             {
+                friend = await _userManager.FindByEmailAsync(friendModel.Email);
 
                 um = new UserModel()
                 {

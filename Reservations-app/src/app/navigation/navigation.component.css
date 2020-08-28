@@ -32,8 +32,21 @@ nav {
 #navigation li {
   height: 4.2vw;
 }
-#navigation li img {
+#image {
+  margin-top: 1.1vw;
+  margin-left: 1vw;
+  background-color: red;
+  width: 2vw;
   height: 2vw;
+  overflow: hidden;
+  border-radius: 50vw;
+}
+#image > img {
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+}
+#navigation img {
+  width: 2vw;
   margin-top: 1.1vw;
   margin-left: 1vw;
 }
@@ -41,8 +54,10 @@ nav {
   position: relative;
   border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
-#notifications img {
+#notifications > img {
   padding: 0 1vw 0 0;
+  width: 3vw !important;
+  height: 2vw !important;
 }
 #notifications span {
   position: absolute;

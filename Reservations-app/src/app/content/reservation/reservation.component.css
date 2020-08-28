@@ -8,6 +8,7 @@ h2 {
   padding: 2vw 0;
   color: #4d3d9d;
   text-align: center;
+  font-size: 3vw;
 }
 .result {
   width: 100%;
@@ -17,6 +18,7 @@ h2 {
   margin: 1vw 0;
 }
 .result h6 {
+  font-size: 1.2vw;
   margin: 0.8vw 0;
 }
 .result > div {
@@ -42,7 +44,8 @@ h2 {
   margin: 0.5vw 1vw;
 }
 .result .btn {
-  margin-top: 10.3vw;
+  margin-top: 10vw;
+  font-size: 1.2vw !important;
   width: 100%;
 }
 #space {

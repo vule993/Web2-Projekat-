@@ -8,9 +8,61 @@
   <div id="friends-selector" class="fright">
     <div id="message">
       Select
-      {{ selectedSeats?.length < 1 ? 0 : selectedSeatsNo - 1 }} friends
+      {{
+        selectedSeatsNo == situatedUsersNo
+          ? "0"
+          : selectedSeatsNo - situatedUsersNo
+      }}
+      friends
     </div>
-    <div class="friends">
+    <div class="friends overflow-hidden">
+      <!-- 
+
+
+       -->
+      <div class="form-group overflow-hidden">
+        <input
+          type="text"
+          id="firstName"
+          class="form-control fleft"
+          placeholder="First name"
+        />
+
+        <input
+          type="text"
+          autocomplete="off"
+          id="lastName"
+          class="form-control fleft"
+          placeholder="Last name"
+        />
+
+        <input
+          type="text"
+          autocomplete="off"
+          id="email"
+          class="form-control fleft"
+          placeholder="Email"
+        />
+
+        <input
+          type="text"
+          autocomplete="off"
+          id="passportNo"
+          class="form-control fleft"
+          placeholder="Passport no."
+        />
+
+        <!-- <select class="form-control fleft" id="seatNo">
+          <option value="*">Seat</option>
+          <option value="34">34</option>
+        </select> -->
+
+        <button class="btn-success fleft">Add</button>
+      </div>
+      <!-- 
+
+
+       -->
       <div
         *ngFor="let user of users"
         class="friend overflow-hidden"

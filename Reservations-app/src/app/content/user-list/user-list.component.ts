@@ -32,6 +32,7 @@ export class UserListComponent implements OnInit {
   }
 
   isFriend(email: string): boolean {
+    debugger;
     for (let i = 0; i < this.currentUSersFriends.length; i++) {
       if (this.currentUSersFriends[i].email == email) {
         return true;
@@ -47,7 +48,7 @@ export class UserListComponent implements OnInit {
 
   addFriend(friendsEmail: string) {
     this._userService
-      .addFriend(localStorage.getItem("email"), friendsEmail)
+      .addFriend(localStorage.getItem("userId"), friendsEmail)
       .subscribe();
 
     this.currentUSersFriends.push(
@@ -82,8 +83,12 @@ export class UserListComponent implements OnInit {
       this.allUsers = users;
       this.filteredUsers = users;
     });
+
     this._userService
       .getAllFriends(localStorage.getItem("userId"))
-      .subscribe((friends) => (this.currentUSersFriends = friends));
+      .subscribe((friends) => {
+        debugger;
+        this.currentUSersFriends = friends;
+      });
   }
 }

@@ -55,7 +55,7 @@
   padding: 0.1vw 0.5vw;
 }
 .results .list-group-item > div:last-of-type {
-  width: 8vw;
+  width: 9vw;
   margin-top: -0.25vw;
 }
 .results .num {
@@ -70,7 +70,7 @@
   overflow: hidden;
 }
 .image img {
-  height: 2.5vw;
+  width: 2.5vw;
 }
 .list-group-flush .btn {
   height: 2.2vw !important;

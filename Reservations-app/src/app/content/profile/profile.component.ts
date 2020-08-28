@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"]
+  styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
   activeTab;
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
   ) {
     //router sluzi da skeniram url svaki put kad se promeni -> tako cu znati da li je
     //profil samo za gledanje ili je to moj profil
-    router.events.subscribe(val => {
+    router.events.subscribe((val) => {
       let fullUrl = window.location.href;
       this.viewProfile = fullUrl.includes("profile-view") ? true : false;
     });
@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
       }
 
       $("#pr-picture").css({
-        "background-image": "url(" + this.profilePicture + ")"
+        "background-image": "url(" + this.profilePicture + ")",
       });
 
       //preostalo: friends
@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit {
 
     this.reader.onloadend = () => {
       $("#preview").css({
-        "background-image": "url(" + this.reader.result + ")"
+        "background-image": "url(" + this.reader.result + ")",
       });
     };
 
@@ -128,23 +128,23 @@ export class ProfileComponent implements OnInit {
     }
 
     formData.append("file", this.fileToUpload, this.fileToUpload.name);
-    formData.append("email", localStorage.getItem("email"));
+    formData.append("email", localStorage.getItem("userId"));
     formData.append("type", "profilePicture");
     formData.append("name", "");
 
     this._http
       .post(this.baseUrl, formData, {
         reportProgress: true,
-        observe: "events"
+        observe: "events",
       })
-      .subscribe(event => {
+      .subscribe((event) => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round((100 * event.loaded) / event.total);
         } else if (event.type === HttpEventType.Response) {
           this.message = "Upload success!";
           this.onUploadFinished.emit(event.body);
           $("#pr-picture").css({
-            "background-image": "url(" + this.reader.result + ")"
+            "background-image": "url(" + this.reader.result + ")",
           });
         }
       });

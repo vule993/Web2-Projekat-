@@ -15,11 +15,13 @@
 }
 .search img,
 .filter img {
+  margin-top: 0.4vw;
   width: 1.8vw;
   height: 1.8vw;
 }
 .form-control {
   margin: 0 0.5vw;
+  font-size: 1.2vw;
 }
 .departTime .returnTime {
   width: 3vw !important;
@@ -54,5 +56,10 @@
 }
 .result .btn {
   margin-top: 4.3vw;
+
   width: 100%;
+}
+.btn-success {
+  font-size: 1.2vw !important;
+  padding: 0.5vw 1.2vw !important;
 }

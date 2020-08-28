@@ -25,7 +25,9 @@ export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter();
   suggestedCars: CarReservation[] = [];
   @Input() flight: Flight;
-  selectedSeatsNo;
+  selectedSeatsNo = 0;
+  situatedUsersNo = 0;
+  currentUserSituated = false;
   selectedSeats: Seat[] = [];
   users;
   //da znam da l da odma saljem rez il da cekam rent a car
@@ -46,6 +48,10 @@ export class AirlineReservationComponent implements OnInit {
   finishAirlineReservation() {
     debugger;
     let i = this.flight;
+
+    /*
+    
+    */
 
     if (this.takeRentACar) {
       //prikazi rc
@@ -122,10 +128,24 @@ export class AirlineReservationComponent implements OnInit {
   onCheck(event, user: UserModel) {
     let element = event.currentTarget.lastElementChild;
     if ($(element).hasClass("uncheck")) {
-      if (this.selectedSeatsNo - 1 < 1) {
+      //prvo provera da li ima gde da se sedne
+      if (this.situatedUsersNo == this.selectedSeatsNo) {
+        alert("Popunjena su sva selektovana mesta!");
         return;
       }
-
+      //provera da li je smesten user koji zove sve ostale
+      if (!this.currentUserSituated) {
+        alert("dodajem glavnog");
+        this.selectedSeats[0].passenger = new Passenger(
+          0,
+          user.email,
+          user.firstName,
+          user.lastName,
+          "JMBG",
+          true
+        );
+      }
+      //onda idu ostali
       //dodajem coveka na sediste
       $(element).removeClass("uncheck");
       $(element).addClass("check");
@@ -140,7 +160,7 @@ export class AirlineReservationComponent implements OnInit {
             "passportNumber",
             true
           );
-          this.selectedSeatsNo--;
+          this.situatedUsersNo++;
           break;
         }
       }
@@ -152,14 +172,14 @@ export class AirlineReservationComponent implements OnInit {
         //ovo promenjeno nakon update-a
         if (s.passenger.userEmail == user.email) {
           s.passenger = null; //ako je to taj user -> skidam passenger-a
-          this.selectedSeatsNo++;
+          this.situatedUsersNo--;
           break;
         }
       }
     }
-    this.selectedSeatsNo = this.selectedSeats.filter(
-      (seat) => seat.passenger == null
-    ).length;
+    // this.selectedSeatsNo = this.selectedSeats.filter(
+    //   (seat) => seat.passenger == null
+    // ).length;
   }
   ngOnInit(): void {
     this.userService
@@ -181,9 +201,10 @@ export class AirlineReservationComponent implements OnInit {
         );
       })
       .delay(50);
-    debugger;
+
     this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
       this.selectedSeats = allSeats;
+      debugger;
       if (allSeats != null)
         this.selectedSeatsNo = this.selectedSeats.filter(
           (seat) => seat.passenger == null

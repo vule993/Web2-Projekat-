@@ -20,9 +20,7 @@
                 class="fleft"
                 alt="ikonica"
               />
-              <a class="fleft" routerLink="companies/airlines">
-                Companies
-              </a>
+              <a class="fleft" routerLink="companies/airlines"> Companies </a>
             </li>
           </ul>
         </div>
@@ -45,8 +43,10 @@
               <img src="../../assets/face.png" class="fleft" alt="car-admin" />
               <a routerLink="admin/car/edit-company" class="fleft">Admin Car</a>
             </li>
-            <li *ngIf="checkIfLoggedIn()">
-              <img src="{{ profilePictureDecide() }}" class="fleft" />
+            <li *ngIf="checkIfLoggedIn()" class="overflow-hidden">
+              <div id="image" class="fleft">
+                <img src="{{ profilePictureDecide() }}" class="fleft" />
+              </div>
 
               <a routerLink="profile" class="fleft">Profile</a>
             </li>
