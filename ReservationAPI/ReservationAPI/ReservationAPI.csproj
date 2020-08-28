@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20200825001908_PlaneType.Designer.cs" />
     <Compile Remove="Migrations\20200828003815_UndoAllChanges.cs" />
     <Compile Remove="Migrations\20200828003815_UndoAllChanges.Designer.cs" />
+    <Compile Remove="Migrations\20200828203456_TestMigration.cs" />
+    <Compile Remove="Migrations\20200828203456_TestMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
