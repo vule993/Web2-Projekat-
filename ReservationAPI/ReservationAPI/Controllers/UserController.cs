@@ -162,6 +162,8 @@ namespace ReservationAPI.Controllers
             {
                 //get user
                 var socialUser = await _userManager.FindByNameAsync(validation.apiTokenInfo.email);
+                var role = await _userManager.GetRolesAsync(socialUser);
+                IdentityOptions options = new IdentityOptions();
 
                 if (socialUser == null)
                 {
@@ -181,7 +183,7 @@ namespace ReservationAPI.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]{
                         new Claim("UserID", socialUser.Email),
-
+                        new Claim(options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(
