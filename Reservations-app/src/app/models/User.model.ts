@@ -1,4 +1,5 @@
 import { Reservation } from "./Reservation.model";
+import { Friend } from "./Friend.model";
 
 export class UserModel {
   constructor(
@@ -11,7 +12,7 @@ export class UserModel {
     public street: string,
     public phoneNumber: string,
     public status: string, //1->head admin 2->car-admin 3->avio-admin 4->user
-    public friends: UserModel[] = [],
+    public friends: Friend[] = [],
     public reservations: Reservation[] = [],
     public id?: number
   ) {}
