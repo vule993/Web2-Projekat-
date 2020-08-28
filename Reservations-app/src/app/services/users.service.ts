@@ -7,11 +7,11 @@ import { SocialUser } from "angularx-social-login";
 import { STORAGE_USER_ID_KEY } from "../const/constants";
 
 const options = {
-  headers: new HttpHeaders().append("Content-Type", "application/json")
+  headers: new HttpHeaders().append("Content-Type", "application/json"),
 };
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UsersService {
   constructor(private httpClient: HttpClient) {}
@@ -42,14 +42,14 @@ export class UsersService {
   addFriend(userEmail: string, friendEmail: string) {
     return this.httpClient.put(this.baseURL + "/User/AddFriend", {
       UsersEmail: userEmail,
-      FriendsEmail: friendEmail
+      FriendsEmail: friendEmail,
     });
   }
 
   removeFriend(userEmail: string, friendEmail: string) {
     return this.httpClient.put(this.baseURL + "/User/RemoveFriend", {
       UsersEmail: userEmail,
-      FriendsEmail: friendEmail
+      FriendsEmail: friendEmail,
     });
   }
 
@@ -57,6 +57,12 @@ export class UsersService {
     //this.allUsers().push(user);
 
     return this.httpClient.post(this.baseURL + "/User/Register", user);
+  }
+
+  registerGuest(user: FormModel) {
+    //this.allUsers().push(user);
+
+    return this.httpClient.post(this.baseURL + "/User/RegisterGuset", user);
   }
 
   loginUser(formData) {
@@ -83,7 +89,7 @@ export class UsersService {
     );
     var userRole = payload.role;
 
-    allowedRoles.forEach(element => {
+    allowedRoles.forEach((element) => {
       if (userRole == element) {
         isMatch = true;
         return false;
@@ -96,7 +102,7 @@ export class UsersService {
   confirmEmail(email: string) {
     return this.httpClient
       .post<string>(this.baseURL + "/User/ConfirmEmail", {
-        email
+        email,
       })
       .toPromise();
   }

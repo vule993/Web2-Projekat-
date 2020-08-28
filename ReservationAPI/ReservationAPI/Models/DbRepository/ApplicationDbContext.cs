@@ -34,7 +34,7 @@ namespace ReservationAPI.Models.DbRepository
         public DbSet<AirlineReservation> AirlineReservation { get; set; }
         public DbSet<Destination> Destination { get; set; }
         public DbSet<Flight> Flight { get; set; }
-        public DbSet<Passenger> Passenger { get; set; }
+        //public DbSet<Passenger> Passenger { get; set; }
         public DbSet<Row> Row { get; set; }
         public DbSet<Seat> Seat { get; set; }
         public DbSet<SeatConfiguration> SeatConfiguration { get; set; }

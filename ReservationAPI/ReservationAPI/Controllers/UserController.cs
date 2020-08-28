@@ -92,6 +92,55 @@ namespace ReservationAPI.Controllers
             }
         }
 
+
+
+        //POST : /api/User/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterGuest")]
+        public async Task<Object> PostGuest(UserModel request)
+        {
+            request.Status = "Guest";
+       
+            var newUser = new User()
+            {
+                UserName = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Street = request.Street,
+                City = request.City,
+                Image = request.Image,
+                Friends = new List<Friend>(),
+                Reservations = new List<Reservation>()
+            };
+
+            try
+            {
+                var result = await _userManager.CreateAsync(newUser, request.Password);
+
+                if (result.Succeeded)
+                {
+                    var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+
+                    await SendEmail(newUser.Email);
+                }
+
+                var roleResult = await _userManager.AddToRoleAsync(newUser, request.Status);
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR in registering new guest. -> {ex.Message}");
+                throw ex;
+            }
+        }
+
+
+
         //POST : /api/User/Login
         [HttpPost]
         [Route("Login")]
@@ -100,15 +149,7 @@ namespace ReservationAPI.Controllers
             //use usemanager to check if we have user with given username
             var user = await _userManager.FindByNameAsync(model.Email);
 
-
-
-
-
-
             //zakomentarisano za potrebe testiranja
-
-
-
 
             //if (!user.EmailConfirmed)
             //{
