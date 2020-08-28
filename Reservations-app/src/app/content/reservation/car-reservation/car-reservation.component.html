@@ -1,88 +1,64 @@
-<div id="panel-wrapper" class="overflow-hidden">
-  <h2 class="fleft">Choose rent-a-car</h2>
+<div class="results">
   <div class="result overflow-hidden" *ngFor="let offer of carOffers">
     <div class="fleft">
       <div>
-        <h6>Drive Termin</h6>
-
+        <h6>Mark</h6>
         <span>
-          <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ offer.startDate }}
+          <img src="../../../../assets/site/icons/car.png" alt="" />
+          {{ offer.car.mark }}
         </span>
-
+      </div>
+      <div>
+        <h6>Description</h6>
         <span>
-          <img src="../../../../assets/site/icons/calendar.png" alt="" />
-          {{ offer.endDate }}
+          <img src="../../../../assets/site/icons/description.png" alt="" />
+          {{ offer.description }}
+        </span>
+        <h6>Company</h6>
+        <span>
+          {{ offer.carCompany.name }}
         </span>
       </div>
     </div>
 
     <div class="fleft separator">
       <div>
-        <h6>Category</h6>
+        <h6>Category plan</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
-          {{ offer.car.category.toUpperCase() }}
+          {{ offer.car.category }}
         </span>
       </div>
       <div>
-        <h6>Total price</h6>
+        <h6>Prise (per day)</h6>
         <span>
           <img src="../../../../assets/site/icons/discount.png" alt="" />
           {{ offer.car.price }}$
         </span>
       </div>
     </div>
-
-    <!---->
-
     <div class="fleft">
       <div>
-        <h6>Car</h6>
-        <span>
-          <img src="../../../../assets/site/icons/car.png" alt="" />
-          {{ offer.car.mark }}
-        </span>
         <h6>Number of seats</h6>
         <span>
           <img src="../../../../assets/site/icons/seat.png" alt="" />
           {{ offer.car.seats }}
         </span>
       </div>
-    </div>
-
-    <div class="fleft separator">
       <div>
-        <h6>Our Location</h6>
+        <h6>Year</h6>
         <span>
-          <img src="../../../../assets/site/icons/location.png" alt="" />
-          {{ offer.carCompany.address }},
-          {{ offer.carCompany.city }}
-        </span>
-        <h6>Company rating</h6>
-        <span>
-          <img src="../../../../assets/site/icons/like.png" alt="" />
-          {{ offer.carCompany.rating }}
+          <img src="../../../../assets/site/icons/calendar.png" alt="" />
+          {{ offer.car.year }}
         </span>
       </div>
-    </div>
 
-    <div class="fleft">
-      <h6>Company</h6>
-      <a routerLink="/companies/car-companies/{{ offer.carCompany.id }}">
-        <span>
-          <img src="../../../../assets/site/icons/car.png" alt="" />
-          {{ offer.carCompany.name }}
-        </span>
-      </a>
-
-      <button
-        class="btn btn-success fright"
-        (click)="AddCarReservation(offer.car.id)"
-      >
-        Include this car
+      <!-- <a routerLink="/reservation/{{ offer.car.id }}">
+              <button class="btn btn-success fright">Book IT</button>
+            </a> -->
+      <button>
+        Book IT
       </button>
-      <!-- {{ suggestedCars.length > 0 ? suggestedCars[0].id : "cao" }} -->
     </div>
   </div>
 </div>

@@ -93,70 +93,10 @@
       <!-- fali metoda (click)="finish()" -->
     </div>
   </div>
-  <div id="finish">
-    <div class="results">
-      <div class="result overflow-hidden" *ngFor="let offer of carOffers">
-        <div class="fleft">
-          <div>
-            <h6>Mark</h6>
-            <span>
-              <img src="../../../../assets/site/icons/car.png" alt="" />
-              {{ offer.car.mark }}
-            </span>
-          </div>
-          <div>
-            <h6>Description</h6>
-            <span>
-              <img src="../../../../assets/site/icons/description.png" alt="" />
-              {{ offer.description }}
-            </span>
-            <h6>Company</h6>
-            <span>
-              {{ offer.carCompany.name }}
-            </span>
-          </div>
-        </div>
-
-        <div class="fleft separator">
-          <div>
-            <h6>Category plan</h6>
-            <span>
-              <img src="../../../../assets/site/icons/discount.png" alt="" />
-              {{ offer.car.category }}
-            </span>
-          </div>
-          <div>
-            <h6>Prise (per day)</h6>
-            <span>
-              <img src="../../../../assets/site/icons/discount.png" alt="" />
-              {{ offer.car.price }}$
-            </span>
-          </div>
-        </div>
-        <div class="fleft">
-          <div>
-            <h6>Number of seats</h6>
-            <span>
-              <img src="../../../../assets/site/icons/seat.png" alt="" />
-              {{ offer.car.seats }}
-            </span>
-          </div>
-          <div>
-            <h6>Year</h6>
-            <span>
-              <img src="../../../../assets/site/icons/calendar.png" alt="" />
-              {{ offer.car.year }}
-            </span>
-          </div>
-
-          <!-- <a routerLink="/reservation/{{ offer.car.id }}">
-                <button class="btn btn-success fright">Book IT</button>
-              </a> -->
-          <button>
-            Book IT
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
+<div id="finish" class="finishDiv">
+  <app-car-reservation
+    style="padding-top: 30vw;"
+    [carOffers]="carOffers"
+  ></app-car-reservation>
 </div>
