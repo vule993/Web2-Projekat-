@@ -13,13 +13,15 @@ import { FlightsService } from "src/app/services/flights.service";
 import { Flight } from "src/app/models/Flight.model";
 import { environment } from "src/environments/environment";
 import { AirlineReservation } from "src/app/models/AirlineReservation";
+import { Car } from "src/app/models/car.model";
+import { CarOffer } from "src/app/models/carOffer.model";
 
 declare var $: any;
 
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
-  styleUrls: ["./airline-reservation.component.css"],
+  styleUrls: ["./airline-reservation.component.css"]
 })
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter();
@@ -30,6 +32,9 @@ export class AirlineReservationComponent implements OnInit {
   currentUserSituated = false;
   selectedSeats: Seat[] = [];
   users;
+  allCarsToShow: Car[] = [];
+  carCompany: CarCompany;
+  carOffers: CarOffer[] = [];
   //da znam da l da odma saljem rez il da cekam rent a car
   takeRentACar = false;
   constructor(
@@ -55,9 +60,40 @@ export class AirlineReservationComponent implements OnInit {
 
     if (this.takeRentACar) {
       //prikazi rc
+      //load cars
+      this.carService.fetchCars().subscribe(data => {
+        this.allCarsToShow = (data as Car[]).filter(c => !c.isReserved);
+
+        this.allCarsToShow.forEach(c => {
+          this.carService.fetchCarCompanyByCarId(c.id).subscribe(company => {
+            this.carCompany = company as CarCompany;
+
+            let carOffer = new CarOffer(
+              c.description,
+              c,
+              this.carCompany,
+              c.id
+            );
+            this.carOffers.push(carOffer);
+
+            //this.resultsLoaded = true;
+            console.log(this.carOffers);
+          });
+        });
+      });
+
+      this.event.emit(this.carOffers);
+      $("#finish").slideDown(1200);
+      $("html, body").animate(
+        {
+          scrollTop: $("#finish").offset().top
+        },
+        1200
+      );
+      debugger;
     } else {
       let reservation;
-      this.selectedSeats.forEach((seat) => {
+      this.selectedSeats.forEach(seat => {
         //za svkaog coveka na sedistu pravim rezervaciju
 
         var today = new Date();
@@ -184,30 +220,32 @@ export class AirlineReservationComponent implements OnInit {
   ngOnInit(): void {
     this.userService
       .getAllFriends(localStorage.getItem("userId"))
-      .subscribe((users) => (this.users = users));
+      .subscribe(users => (this.users = users));
     //this.users = this.userService.getAllUsers();
 
     $(window)
-      .resize(function () {
-        let h = +$("#seat-picker").css("height").split("px")[0];
+      .resize(function() {
+        let h = +$("#seat-picker")
+          .css("height")
+          .split("px")[0];
 
         $("#friends-selector").css({ height: h + "px" });
         $(".friends").css({ height: h - 100 + "px" });
         $("html, body").animate(
           {
-            scrollTop: $("#proceed").offset().top,
+            scrollTop: $("#proceed").offset().top
           },
           1200
         );
       })
       .delay(50);
 
-    this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
+    this.selectedSeatService.selectedSeats.subscribe(allSeats => {
       this.selectedSeats = allSeats;
       debugger;
       if (allSeats != null)
         this.selectedSeatsNo = this.selectedSeats.filter(
-          (seat) => seat.passenger == null
+          seat => seat.passenger == null
         ).length;
     });
   }

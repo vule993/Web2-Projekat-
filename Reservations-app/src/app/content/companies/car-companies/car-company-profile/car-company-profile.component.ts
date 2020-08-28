@@ -18,7 +18,7 @@ export class CarCompanyProfileComponent implements OnInit {
   companyId: number;
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue: number;
-  iframeSrc: string;
+  //iframeSrc: string;
   isLoaded: boolean = false;
   selectedCar: Car;
   quickReservationForm: FormGroup;
@@ -95,13 +95,13 @@ export class CarCompanyProfileComponent implements OnInit {
   countStar(star) {
     this.selectedValue = star;
     console.log("Value of star", star);
-    this.carCompany.rating = star; //nece ovako moci
+    //this.carCompany.rating = star; //nece ovako moci
   }
 
-  createURL() {
+  /* createURL() {
     this.iframeSrc = `https://maps.google.com/maps?q=${this.carCompany.city}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
     return this.iframeSrc;
-  }
+  } */
 
   initForm() {
     let startDate = null;
