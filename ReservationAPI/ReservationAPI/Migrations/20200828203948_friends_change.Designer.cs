@@ -10,8 +10,8 @@ using ReservationAPI.Models.DbRepository;
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200828164900_LatLon")]
-    partial class LatLon
+    [Migration("20200828203948_friends_change")]
+    partial class friends_change
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
