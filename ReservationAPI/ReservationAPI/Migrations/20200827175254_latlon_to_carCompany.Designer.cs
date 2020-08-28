@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200827175254_latlon_to_carCompany")]
+    partial class latlon_to_carCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -613,26 +615,6 @@ namespace ReservationAPI.Migrations
                     b.ToTable("SeatConfiguration");
                 });
 
-            modelBuilder.Entity("ReservationAPI.Models.Friend", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Friend");
-                });
-
             modelBuilder.Entity("ReservationAPI.Models.Rent_a_Car.Car", b =>
                 {
                     b.Property<long>("Id")
@@ -772,34 +754,6 @@ namespace ReservationAPI.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("ReservationAPI.Models.Shared.Rating", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("CarCompanyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CarId")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("Rate")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarCompanyId");
-
-                    b.HasIndex("CarId");
-
-                    b.ToTable("Ratings");
-                });
-
             modelBuilder.Entity("ReservationAPI.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -818,6 +772,11 @@ namespace ReservationAPI.Migrations
 
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("UserId");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -961,13 +920,6 @@ namespace ReservationAPI.Migrations
                         .HasForeignKey("PlaneTypeId");
                 });
 
-            modelBuilder.Entity("ReservationAPI.Models.Friend", b =>
-                {
-                    b.HasOne("ReservationAPI.Models.User", null)
-                        .WithMany("Friends")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("ReservationAPI.Models.Rent_a_Car.Car", b =>
                 {
                     b.HasOne("ReservationAPI.Models.Rent_a_Car.CarCompany", null)
@@ -982,17 +934,6 @@ namespace ReservationAPI.Migrations
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ReservationAPI.Models.Shared.Rating", b =>
-                {
-                    b.HasOne("ReservationAPI.Models.Rent_a_Car.CarCompany", null)
-                        .WithMany("Rates")
-                        .HasForeignKey("CarCompanyId");
-
-                    b.HasOne("ReservationAPI.Models.Rent_a_Car.Car", null)
-                        .WithMany("Rates")
-                        .HasForeignKey("CarId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.User", b =>

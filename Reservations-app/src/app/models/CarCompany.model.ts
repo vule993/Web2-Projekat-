@@ -11,6 +11,8 @@ export class CarCompany {
     public city: string,
     public thumbnail: string,
     public cars: Car[],
-    public admin: string = null
+    public admin: string = null,
+    public lat: number = 0,
+    public lon: number = 0
   ) {}
 }
