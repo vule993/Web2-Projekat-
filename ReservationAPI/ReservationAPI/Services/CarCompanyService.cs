@@ -3,6 +3,8 @@ using ReservationAPI.Models;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.Models.Shared;
+using ReservationAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +95,27 @@ namespace ReservationAPI.Services
 
             carCompany.Cars.Add(car);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<double> rateCompany(RatingModel model)
+        {
+            var company = await _context.FindAsync<CarCompany>(model.CarCompanyId);
+
+            var rating = new Rating()
+            {
+                Rate = model.Rate,
+                CarCompanyId = model.CarCompanyId,
+                UserEmail = model.UserEmail
+            };
+
+            company.Rates.Add(rating);
+            _context.Ratings.Add(rating);
+            var avg = company.Rates.Where(c => c.CarCompanyId == rating.CarCompanyId).Average(c => c.Rate);
+
+            company.Rating = avg;
+            _context.SaveChanges();
+
+            return avg;
         }
     }
 }

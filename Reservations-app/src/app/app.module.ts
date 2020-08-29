@@ -73,8 +73,8 @@ import { CLIENT_ID } from "./const/constants";
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider(CLIENT_ID),
-  },
+    provider: new GoogleLoginProvider(CLIENT_ID)
+  }
 ]);
 
 export function provideConfig() {
@@ -143,14 +143,14 @@ import { GoogleMapsModule } from "@angular/google-maps";
     CreateAvioCompanyComponent,
     MailConfirmationComponent,
     UserListComponent,
-    EditOtherServicesComponent,
+    EditOtherServicesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      progressBar: true,
+      progressBar: true
     }),
     MaterialModule,
     FormsModule,
@@ -159,22 +159,22 @@ import { GoogleMapsModule } from "@angular/google-maps";
     HttpClientModule,
     SocialLoginModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyBZhO0XUcDOC_A7gaubpG6M9nHQlSqiEoY",
+      apiKey: "AIzaSyBZhO0XUcDOC_A7gaubpG6M9nHQlSqiEoY"
     }),
-    GoogleMapsModule,
+    GoogleMapsModule
   ],
   providers: [
     UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true,
+      multi: true
     },
     {
       provide: AuthServiceConfig,
-      useFactory: provideConfig,
-    },
+      useFactory: provideConfig
+    }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

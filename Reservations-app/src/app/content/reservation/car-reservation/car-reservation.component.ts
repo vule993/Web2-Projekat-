@@ -27,12 +27,4 @@ export class CarReservationComponent implements OnInit {
     //   this.carReservation = data.find((reservation) => reservation.id == id);
     // });
   }
-
-  AddCarReservation(id: string) {
-    // console.log("id rezervacije: " + id);
-    // this.reservation.carReservation = this.reservationService.getSpecificReservation(
-    //   +id
-    // );
-    //ovo je finalna rezervacija sa avio + car rezervacijom
-  }
 }
