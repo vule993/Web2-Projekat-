@@ -31,9 +31,6 @@
   width: 7vw;
   height: 4vw;
 }
-
-.friend .image {
-}
 .friend .image img {
   margin-top: -0.5vw;
   width: 3vw;
@@ -52,6 +49,7 @@
 }
 .btn {
   font-size: 1vw;
+  margin-top: -0.2vw;
   height: 2.5vw;
 }
 
