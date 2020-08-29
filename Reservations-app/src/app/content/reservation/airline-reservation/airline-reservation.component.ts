@@ -15,6 +15,8 @@ import { Car } from "src/app/models/car.model";
 import { CarOffer } from "src/app/models/carOffer.model";
 import { FormModel } from "src/app/models/formModel";
 import { InviteFriend } from "src/app/models/InviteFriend.model";
+import { ThrowStmt } from "@angular/compiler";
+import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
 
 declare var $: any;
 
@@ -125,13 +127,19 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   createReservation() {
-    let reservation;
+    let reservation: Reservation;
     this.selectedSeats.forEach((seat) => {
       //za svkaog coveka na sedistu pravim rezervaciju
 
       //31-August-2020  format
       let date = this.flight.startDate.split("-");
       let time = this.flight.startTime.split(":");
+
+      let rowWidth =
+        this.flight.seatConfiguration.planeType.segmentOneWidth +
+        this.flight.seatConfiguration.planeType.segmentTwoWidth +
+        this.flight.seatConfiguration.planeType.segmentThreeWidth +
+        this.flight.seatConfiguration.planeType.segmentFourWidth;
 
       reservation = new Reservation(
         0,
@@ -140,15 +148,19 @@ export class AirlineReservationComponent implements OnInit {
           this.flight,
           seat.passenger,
           this.cancelDateCalculate(3).toString(),
-          0,
-          0,
+          Math.ceil(seat.seatNo / rowWidth) - 1,
+          Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
         ),
         null,
         false,
         false
       );
-
+      alert("red: " + reservation.airlineReservation.rowNumber);
+      alert(
+        "kolona (rbr sedista u redu): " +
+          reservation.airlineReservation.seatNumber
+      );
       //this.reservationService.createReservation(reservation).subscribe();
     });
   }
@@ -219,6 +231,7 @@ export class AirlineReservationComponent implements OnInit {
       $(element).removeClass("check");
       $(element).addClass("uncheck");
       for (let s of this.selectedSeats) {
+        if (s.passenger == null) continue;
         if (s.passenger.email == user.email) {
           if (s.passenger.email == localStorage.getItem("userId")) {
             this.currentUserSituated = false;

@@ -15,46 +15,44 @@
   width: 87%;
   height: 2.5vw;
 }
-.list-group-flush .list-group-item > div {
-  padding: 0.3vw 0;
-  width: 10vw;
-  height: 2.2vw;
-  font-size: 1vw;
-  /* background-color: rebeccapurple; */
+
+#friends {
+  overflow: auto;
+  height: 26vw;
+}
+.friend {
+  height: 4vw;
+}
+.friend > div {
+  justify-content: center;
+  padding-top: 1vw;
   text-align: center;
+  margin: 0 0.25vw;
+  width: 7vw;
+  height: 4vw;
 }
-.list-group-flush .list-group-item > div:first-of-type {
-  margin: 0 0.5vw;
-  width: 32vw;
-  /* background-color: rebeccapurple; */
+.friend .image img {
+  margin-top: -0.5vw;
+  width: 3vw;
+}
+.friend .user {
   text-align: left;
+
+  width: 24vw;
 }
-.name {
-  padding: 0.1vw 0.5vw;
-}
-.list-group-flush .list-group-item > div:last-of-type {
-  width: 8vw;
-  margin-top: -0.25vw;
+.friend .city {
+  width: 16vw;
 }
 
-.image {
-  margin-top: -0.4vw;
-  height: 2.5vw;
-  width: 2.5vw;
-  border-radius: 2vw;
-  overflow: hidden;
-}
-.image img {
-  width: 2.5vw;
-}
-.list-group-flush .btn {
-  height: 2.2vw !important;
-  padding: 0;
-  width: 7vw !important;
-}
-ul li:nth-child(even) {
-  background-color: rgba(67, 48, 154, 0.2);
+.friend > div > span {
+  margin-top: 4vw;
 }
 .btn {
-  font-size: 0.8vw;
+  font-size: 1vw;
+  margin-top: -0.2vw;
+  height: 2.5vw;
+}
+
+.friend:nth-child(even) {
+  background-color: rgba(67, 48, 154, 0.3);
 }

@@ -14,6 +14,7 @@ export class UserModel {
     public status: string, //1->head admin 2->car-admin 3->avio-admin 4->user
     public friends: Friend[] = [],
     public reservations: Reservation[] = [],
-    public id?: number
+    public id?: number,
+    public Id?: string
   ) {}
 }

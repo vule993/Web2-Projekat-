@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200829114516_ChangePassengerTypeToString")]
+    partial class ChangePassengerTypeToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -266,8 +268,8 @@ namespace ReservationAPI.Migrations
                     b.Property<long?>("FlightId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("PassengerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("PassengerEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RowNumber")
                         .HasColumnType("int");
@@ -278,8 +280,6 @@ namespace ReservationAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FlightId");
-
-                    b.HasIndex("PassengerId");
 
                     b.ToTable("AirlineReservation");
                 });
@@ -585,8 +585,8 @@ namespace ReservationAPI.Migrations
                     b.Property<bool>("ForFastReservation")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PassengerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("PassengerEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("RowId")
                         .HasColumnType("bigint");
@@ -598,8 +598,6 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PassengerId");
 
                     b.HasIndex("RowId");
 
@@ -903,10 +901,6 @@ namespace ReservationAPI.Migrations
                     b.HasOne("ReservationAPI.Models.Airlines.Flight", "Flight")
                         .WithMany()
                         .HasForeignKey("FlightId");
-
-                    b.HasOne("ReservationAPI.Models.User", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId");
                 });
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Destination", b =>
@@ -959,10 +953,6 @@ namespace ReservationAPI.Migrations
 
             modelBuilder.Entity("ReservationAPI.Models.Airlines.Seat", b =>
                 {
-                    b.HasOne("ReservationAPI.Models.User", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId");
-
                     b.HasOne("ReservationAPI.Models.Airlines.Row", null)
                         .WithMany("Seats")
                         .HasForeignKey("RowId");

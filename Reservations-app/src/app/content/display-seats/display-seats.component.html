@@ -10,10 +10,10 @@
           seat_index === col1 + col2 + col3 - 1 ||
           seat_index === col1 + col2 + col3 + col4 - 1,
 
+        'quick-seat': seat.forFastReservation && seat.passenger == null,
         'taken-seat': seat.seatStatus == 'TAKEN',
         'free-seat': seat.seatStatus == 'FREE',
-        'confirmed-seat': seat.seatStatus == 'CONFIRMED',
-        'quick-seat': seat.forFastReservation
+        'confirmed-seat': seat.seatStatus == 'CONFIRMED'
       }"
       (click)="onSeatClick(seat.seatNo)"
       [attr.title]="

@@ -37,4 +37,8 @@ export class SeatsConfigService {
     //return this.AllSeatConfigurations.length;
     return 0;
   }
+
+  updateSeat(seat) {
+    return this._httpClient.put(this.baseURL + "UpdateSeat", seat);
+  }
 }
