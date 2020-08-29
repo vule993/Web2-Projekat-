@@ -11,6 +11,7 @@ namespace ReservationAPI.Models
         public UserModel()
         {
             Friends = new List<UserModel>();
+
         }
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -24,6 +25,7 @@ namespace ReservationAPI.Models
         public string Status { get; set; }  //1->head admin 2->car-admin 3->avio-admin 4->user
         public virtual List<UserModel> Friends { get; set; }
         public virtual List<Reservation> Reservations { get; set; }
+        public string PassportNo { get; set; }
 
     }
 }

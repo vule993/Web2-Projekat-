@@ -15,6 +15,8 @@
     <Compile Remove="Migrations\20200828003815_UndoAllChanges.Designer.cs" />
     <Compile Remove="Migrations\20200828203456_TestMigration.cs" />
     <Compile Remove="Migrations\20200828203456_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200829075543_FlightCompanyRatingModels.cs" />
+    <Compile Remove="Migrations\20200829075543_FlightCompanyRatingModels.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

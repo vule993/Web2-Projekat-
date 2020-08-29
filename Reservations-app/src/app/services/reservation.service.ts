@@ -24,9 +24,9 @@ export class ReservationService {
   loadAllReservations() {
     return this._http.get(this.baseUrl + "Reservations");
   }
-  // addReservation(reservation: Reservation) {
-  //   this._allReservations.getValue().push(reservation);
-  // }
+  createReservation(reservation: Reservation) {
+    return this._http.put(this.baseUrl + "CreateReservation", reservation);
+  }
   // removeReservation(id: number) {
   //   this._allReservations.getValue().forEach((reservation, index) => {
   //     if (reservation.id === id) {

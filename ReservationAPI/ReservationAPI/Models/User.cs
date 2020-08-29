@@ -29,6 +29,7 @@ namespace ReservationAPI.Models
         public string Image { get; set; }
         public virtual List<Friend> Friends { get; set; }
         public virtual List<Reservation> Reservations { get; set; }
+        public string PassportNo { get; set; }
 
     }
 }

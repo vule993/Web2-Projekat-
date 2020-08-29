@@ -27,7 +27,7 @@ namespace ReservationAPI.Services
             _emailSender = emailSender;
         }
 
-        public async Task<object> AddFriend(AddFriendViewModel newFriends)
+        public async Task<object> AddFriend(AddFriendModel newFriends)
         {
             var user = await _userManager.FindByEmailAsync(newFriends.UsersEmail);
             var friend = await _userManager.FindByEmailAsync(newFriends.FriendsEmail);
@@ -110,7 +110,8 @@ namespace ReservationAPI.Services
                     PhoneNumber = friend.PhoneNumber,
                     Image = friend.Image,
                     Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
-                    Reservations = friend.Reservations
+                    Reservations = friend.Reservations,
+                    PassportNo = friend.PassportNo
                 };
 
                 friends.Add(um);
@@ -127,7 +128,8 @@ namespace ReservationAPI.Services
                 Status = role.FirstOrDefault(),
                 PhoneNumber = user.PhoneNumber,
                 Image = user.Image,
-                Friends = friends
+                Friends = friends,
+                PassportNo = user.PassportNo
 
             };
 
@@ -156,7 +158,8 @@ namespace ReservationAPI.Services
                     Status = status,
                     Image = user.Image,
                     Friends = new List<UserModel>(),
-                    Reservations = user.Reservations
+                    Reservations = user.Reservations,
+                    PassportNo = user.PassportNo
                 };
                 allUsers.Add(u);
             }
@@ -175,6 +178,7 @@ namespace ReservationAPI.Services
             }
 
             User friend;
+            var generatedId = 0;
 
             foreach (var friendModel in user.Friends)
             {
@@ -183,6 +187,7 @@ namespace ReservationAPI.Services
 
                 friends.Add(new UserModel()
                 {
+                    Id = ++generatedId,
                     FirstName = friend.FirstName,
                     LastName = friend.LastName,
                     Email = friend.Email,
@@ -190,15 +195,16 @@ namespace ReservationAPI.Services
                     Image = friend.Image,
                     City = friend.City,
                     PhoneNumber = friend.PhoneNumber,
-                    Status = role.FirstOrDefault().ToString()
+                    Status = role.FirstOrDefault().ToString(),
+                    PassportNo = friend.PassportNo
                 });
             }
 
-            return friends;
+            return friends.OrderByDescending(f => f.Id).ToList();
         }
 
 
-        public async Task<object> RemoveFriend(AddFriendViewModel unFriends)
+        public async Task<object> RemoveFriend(AddFriendModel unFriends)
         {
             var user = await _userManager.FindByEmailAsync(unFriends.UsersEmail);
             var friend = await _userManager.FindByEmailAsync(unFriends.FriendsEmail);

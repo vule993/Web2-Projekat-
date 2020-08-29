@@ -67,7 +67,7 @@ h2 {
   color: #4d3d9d;
 }
 #rent-a-car > label {
-  margin-right: 0.2vw;
+  margin-right: 0.5vw;
 }
 .btn {
   font-size: 1.2vw !important;
@@ -102,4 +102,7 @@ h2 {
 } */
 .form-group > button {
   margin: 0 !important;
+}
+#finish {
+  margin-top: 12vw;
 }

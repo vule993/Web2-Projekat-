@@ -27,6 +27,7 @@ export class DisplaySeatsComponent implements OnInit {
   currentUrl: string;
 
   selectedSeats = []; //seats that are marked
+  unSelectedSeats = []; //seats that are unmarked
 
   @Input() currentSeatConfig: SeatConfiguration;
 
@@ -106,19 +107,27 @@ export class DisplaySeatsComponent implements OnInit {
       } else if (seat.forFastReservation) {
         return;
       } else if (seat.seatStatus == "TAKEN") {
+        //ako je taken i klikne se => oslobadja se ovde se puni unselected seats
         this.selectedSeats.forEach((s, index) => {
           if (s.seatNo == seat.seatNo) {
             this.selectedSeats.splice(index, 1);
+            this.unSelectedSeats.push(seat);
             seat.seatStatus = "FREE";
           }
         });
       } else if (seat.seatStatus == "FREE") {
+        this.unSelectedSeats.forEach((unSeat, index) => {
+          if (unSeat.seatNo == seat.seatNo) {
+            this.unSelectedSeats.splice(index, 1);
+          }
+        });
         this.selectedSeats.push(seat);
         seat.seatStatus = "TAKEN";
       }
     }
 
     this.selectedSeatService.setSelectedSeats(this.selectedSeats);
+    this.selectedSeatService.setUnSelectedSeats(this.unSelectedSeats);
 
     this.seats = this.currentSeatConfig.seats;
   }

@@ -32,7 +32,6 @@ export class UserListComponent implements OnInit {
   }
 
   isFriend(email: string): boolean {
-    debugger;
     for (let i = 0; i < this.currentUSersFriends.length; i++) {
       if (this.currentUSersFriends[i].email == email) {
         return true;
@@ -79,15 +78,16 @@ export class UserListComponent implements OnInit {
         })
         .indexOf(localStorage.getItem("userId"));
       users.splice(id, 1);
+      //uklanjam guest usere, oni se dodaju samo onome ko ih kreira
+
       //setujem potrebne promenljive
-      this.allUsers = users;
-      this.filteredUsers = users;
+      this.allUsers = users.filter((user) => user.status != "Guest");
+      this.filteredUsers = users.filter((user) => user.status != "Guest");
     });
 
     this._userService
       .getAllFriends(localStorage.getItem("userId"))
       .subscribe((friends) => {
-        debugger;
         this.currentUSersFriends = friends;
       });
   }

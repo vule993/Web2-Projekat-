@@ -6,6 +6,7 @@ export class FormModel {
     public Password: string,
     public City: string,
     public Street: string,
-    public PhoneNumber: string
+    public PhoneNumber: string,
+    public PassportNo?: string
   ) {}
 }

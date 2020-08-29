@@ -66,7 +66,8 @@ namespace ReservationAPI.Controllers
                 City = model.City,
                 Image = model.Image,
                 Friends = new List<Friend>(),
-                Reservations = new List<Reservation>()
+                Reservations = new List<Reservation>(),
+                PassportNo = model.PassportNo
             };
 
             try
@@ -98,28 +99,30 @@ namespace ReservationAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("RegisterGuest")]
-        public async Task<Object> PostGuest(UserModel request)
+        public async Task<Object> PostGuest(InviteFriendModel request)
         {
-            request.Status = "Guest";
+            request.User.Status = "Guest";
        
             var newUser = new User()
             {
-                UserName = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                Street = request.Street,
-                City = request.City,
-                Image = request.Image,
+                UserName = request.User.Email,
+                FirstName = request.User.FirstName,
+                LastName = request.User.LastName,
+                Email = request.User.Email,
+                PhoneNumber = request.User.PhoneNumber,
+                Street = request.User.Street,
+                City = request.User.City,
+                Image = request.User.Image,
                 Friends = new List<Friend>(),
-                Reservations = new List<Reservation>()
+                Reservations = new List<Reservation>(),
+                PassportNo = request.User.PassportNo
             };
 
             try
             {
-                var result = await _userManager.CreateAsync(newUser, request.Password);
+                var result = await _userManager.CreateAsync(newUser, request.User.Password);
 
+                //?????
                 if (result.Succeeded)
                 {
                     var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
@@ -127,7 +130,20 @@ namespace ReservationAPI.Controllers
                     await SendEmail(newUser.Email);
                 }
 
-                var roleResult = await _userManager.AddToRoleAsync(newUser, request.Status);
+                var roleResult = await _userManager.AddToRoleAsync(newUser, request.User.Status);
+
+
+                //mutual add friends
+
+                await _userService.AddFriend(new AddFriendModel()
+                {
+                    UsersEmail = request.User.Email,
+                    FriendsEmail = request.InitiatorsEmail
+                });
+
+
+
+
 
                 return Ok(result);
 
@@ -337,7 +353,8 @@ namespace ReservationAPI.Controllers
                     PhoneNumber = friend.PhoneNumber,
                     Image = friend.Image,
                     Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
-                    Reservations = friend.Reservations
+                    Reservations = friend.Reservations,
+                    PassportNo = friend.PassportNo
                 };
 
                 friends.Add(um);
@@ -355,7 +372,8 @@ namespace ReservationAPI.Controllers
                 Status = role.FirstOrDefault().ToString(),
                 PhoneNumber = user.PhoneNumber,
                 Image = user.Image,
-                Friends = friends
+                Friends = friends,
+                PassportNo = user.PassportNo
             };
 
             return returnUser;
@@ -436,7 +454,7 @@ namespace ReservationAPI.Controllers
 
         [HttpPut]
         [Route("AddFriend")]
-        public async Task<object> AddFriend(AddFriendViewModel newFriends)
+        public async Task<object> AddFriend(AddFriendModel newFriends)
         {
             try
             {
@@ -452,7 +470,7 @@ namespace ReservationAPI.Controllers
 
         [HttpPut]
         [Route("RemoveFriend")]
-        public async Task<object> RemoveFriend(AddFriendViewModel unFriends)
+        public async Task<object> RemoveFriend(AddFriendModel unFriends)
         {
             try
             {

@@ -129,10 +129,7 @@
   </div>
   <div id="space"></div>
   <div *ngIf="loaded" id="proceed" class="overflow-hidden display-none">
-    <app-airline-reservation
-      (event)="suggestedCars = $event"
-      [flight]="flight"
-    ></app-airline-reservation>
+    <app-airline-reservation [flight]="flight"></app-airline-reservation>
   </div>
   <div class="space"></div>
 

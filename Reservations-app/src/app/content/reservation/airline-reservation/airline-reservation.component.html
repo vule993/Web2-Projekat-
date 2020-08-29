@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div id="book-flight" class="wrapper overflow-hidden">
   <h2 class="fleft">Choose your seats!</h2>
 
   <div id="seat-picker" class="fleft overflow-hidden">
@@ -8,11 +8,7 @@
   <div id="friends-selector" class="fright">
     <div id="message">
       Select
-      {{
-        selectedSeatsNo == situatedUsersNo
-          ? "0"
-          : selectedSeatsNo - situatedUsersNo
-      }}
+      {{ friendsToSelectNo() - 1 < 0 ? "0" : friendsToSelectNo() }}
       friends
     </div>
     <div class="friends overflow-hidden">
@@ -57,7 +53,7 @@
           <option value="34">34</option>
         </select> -->
 
-        <button class="btn-success fleft">Add</button>
+        <button class="btn-success fleft" (click)="addGuest()">Add</button>
       </div>
       <!-- 
 
@@ -68,7 +64,7 @@
         class="friend overflow-hidden"
         (click)="onCheck($event, user)"
       >
-        <div class="fleft uncheck">
+        <div id="userId{{ user.id }}" class="fleft uncheck">
           {{ user?.firstName + " " + user?.lastName }}
         </div>
       </div>
@@ -94,9 +90,9 @@
     </div>
   </div>
 </div>
-<div id="finish" class="finishDiv">
+<div id="cars" class="finishDiv">
   <app-car-reservation
-    style="padding-top: 30vw;"
+    style="padding-top: 30vw"
     [carOffers]="carOffers"
   ></app-car-reservation>
 </div>

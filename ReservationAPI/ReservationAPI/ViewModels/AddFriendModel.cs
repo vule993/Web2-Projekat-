@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReservationAPI.ViewModels
 {
-    public class AddFriendViewModel
+    public class AddFriendModel
     {
         public String UsersEmail { get; set; }
         public String FriendsEmail { get; set; }

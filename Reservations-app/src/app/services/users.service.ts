@@ -5,6 +5,7 @@ import { FormModel } from "../models/formModel";
 import { Observable } from "rxjs";
 import { SocialUser } from "angularx-social-login";
 import { STORAGE_USER_ID_KEY } from "../const/constants";
+import { InviteFriend } from "../models/InviteFriend.model";
 
 const options = {
   headers: new HttpHeaders().append("Content-Type", "application/json"),
@@ -59,10 +60,10 @@ export class UsersService {
     return this.httpClient.post(this.baseURL + "/User/Register", user);
   }
 
-  registerGuest(user: FormModel) {
+  registerGuest(users: InviteFriend) {
     //this.allUsers().push(user);
 
-    return this.httpClient.post(this.baseURL + "/User/RegisterGuset", user);
+    return this.httpClient.post(this.baseURL + "/User/RegisterGuest", users);
   }
 
   loginUser(formData) {
