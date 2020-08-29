@@ -219,6 +219,7 @@ export class AirlineReservationComponent implements OnInit {
       $(element).removeClass("check");
       $(element).addClass("uncheck");
       for (let s of this.selectedSeats) {
+        if (s.passenger == null) continue;
         if (s.passenger.email == user.email) {
           if (s.passenger.email == localStorage.getItem("userId")) {
             this.currentUserSituated = false;
