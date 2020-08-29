@@ -1,13 +1,18 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using NuGet.Frameworks;
+using ReservationAPI.Models;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
+using ReservationAPI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
@@ -18,9 +23,11 @@ namespace ReservationAPI.Services
     public class AirlinesService : IAirlines
     {
         private readonly ApplicationDbContext _context;
-        public AirlinesService(ApplicationDbContext context)
+        private UserManager<User> _userManager;
+        public AirlinesService(ApplicationDbContext context,UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         #region COMPANY PROFILE
@@ -336,6 +343,29 @@ namespace ReservationAPI.Services
         {
             throw new NotImplementedException();
         }
+
+
+        public async Task<object> UpdateSeat(FastReservationFlightModel seatRequest)
+        {
+            var seat = (await _context.Seat.ToListAsync()).FirstOrDefault(s => s.Id == seatRequest.Id);
+            var user = (await _context.Users.ToListAsync()).FirstOrDefault(u => u.Email == seatRequest.UserEmail);
+            var role = await _userManager.GetRolesAsync(user);
+            try
+            {
+                seat.Passenger = user;
+                seat.SeatStatus = "TAKEN";
+                await _context.SaveChangesAsync();
+            }catch(DbException dex)
+            {
+                Console.WriteLine(dex);
+                return HttpStatusCode.InternalServerError;
+            }
+
+
+            return seat;
+        }
+
+
         #endregion
 
 
@@ -458,6 +488,8 @@ namespace ReservationAPI.Services
                 return false;
             }
         }
+
+        
 
         #endregion
 

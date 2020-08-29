@@ -228,6 +228,15 @@ namespace ReservationAPI.Controllers
         {
             return await _service.CreateSeatConfiguration(seatConfiguration);
         }
+
+        [HttpPut]
+        [Route("UpdateSeat")]
+        public async Task<object> UpdateSeat(FastReservationFlightModel seat)
+        {
+            return await _service.UpdateSeat(seat);
+        }
+
+
         #endregion
 
 

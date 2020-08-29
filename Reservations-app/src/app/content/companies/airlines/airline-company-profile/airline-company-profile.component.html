@@ -14,7 +14,7 @@
         class="scroll-prompt"
         scroll-prompt=""
         ng-show="showPrompt"
-        style="opacity: 1;"
+        style="opacity: 1"
       >
         <div class="scroll-prompt-arrow-container">
           <div class="scroll-prompt-arrow">
@@ -91,56 +91,39 @@
                 <th scope="col">From</th>
                 <th scope="col">To</th>
                 <th scope="col">Flight date</th>
-                <th scope="col">Return date</th>
-                <th scope="col">Free seats</th>
+                <th scope="col">Seat number</th>
                 <th scope="col">Price</th>
+                <th scope="col">Discount</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let reservation of getReservationsWithDiscount()">
+              <tr *ngFor="let seat of fastSeats; let i = index">
                 <td>
+                  {{ i + 1 }}
                   <i
                     class="far fa-bookmark fa-2x"
                     data-fa-transform="shrink-3 up-5"
                   ></i>
                 </td>
                 <td class="table-padding">
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .city
-                  }}
+                  {{ seat.startDestination.city }}
                 </td>
                 <td class="table-padding">
-                  {{
-                    reservation.airlineReservation.flight.endingDestination.city
-                  }}
+                  {{ seat.endDestination.city }}
                 </td>
                 <td class="table-padding">
-                  {{ reservation.airlineReservation.flight.startDate }}
+                  {{ seat.dateAndTime }}
                 </td>
                 <td class="table-padding">
-                  {{ reservation.airlineReservation.flight.returnDate }}
+                  {{ seat.seatNo }}
                 </td>
-                <td class="table-padding">
-                  {{
-                    reservation.airlineReservation.flight.startingDestination
-                      .airportName
-                  }}
-                </td>
-                <td class="table-padding">
-                  {{ reservation.airlineReservation.flight.price }}$
-                </td>
+                <td class="table-padding">{{ seat.price }}$</td>
+                <td class="table-padding">{{ seat.discount }}%</td>
                 <td>
-                  <a
-                    routerLink="/reservation/{{
-                      reservation.airlineReservation.id
-                    }}"
-                  >
-                    <button class="btn btn-success">
-                      Book Me
-                    </button>
-                  </a>
+                  <button (click)="reserve(seat)" class="btn btn-success">
+                    Book Me
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -199,7 +182,7 @@
               <ul
                 class="list-inline rating-list"
                 *ngFor="let star of stars"
-                style="display: inline-block;"
+                style="display: inline-block"
               >
                 <li
                   (click)="countStar(star)"

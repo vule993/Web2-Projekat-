@@ -8,24 +8,26 @@
   <button class="btn btn-success">Search</button>
 </div>
 
-<ul class="list-group list-group-flush">
-  <li *ngFor="let user of friends" class="list-group-item overflow-hidden">
-    <div class="fleft">
-      <div class="fleft image">
-        <img src="{{ checkPhoto(user) }}" />
-      </div>
-      <div class="name fleft">
-        {{ user.firstName + " " + user.lastName }}
-      </div>
+<div id="friends" class="">
+  <div *ngFor="let user of friends" class="friend overflow-hidden">
+    <!--  -->
+    <div class="fleft image">
+      <img src="{{ checkPhoto(user) }}" />
     </div>
-    <div class="fleft">{{ user.status }}</div>
-    <div class="fleft">
-      {{ user.city }}
+
+    <div class="fleft user overflow-hidden">
+      <span>{{ user.firstName + " " + user.lastName }}</span>
+    </div>
+    <div class="fleft status">
+      <span>{{ user.status }}</span>
+    </div>
+    <div class="fleft overflow-hidden city">
+      <span>{{ user.city }}</span>
     </div>
     <div class="fright">
       <button class="btn btn-success" (click)="removeFriend(user.email)">
         Remove
       </button>
     </div>
-  </li>
-</ul>
+  </div>
+</div>

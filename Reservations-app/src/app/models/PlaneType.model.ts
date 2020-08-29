@@ -10,7 +10,7 @@ export class PlaneType {
     public segmentFourWidth: number = 0
   ) {}
 
-  getRowWidth() {
+  public getRowWidth(): number {
     return (
       this.segmentOneWidth +
       this.segmentTwoWidth +

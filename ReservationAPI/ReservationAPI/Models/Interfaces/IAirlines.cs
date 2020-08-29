@@ -1,4 +1,5 @@
 ﻿using ReservationAPI.Models.Airlines;
+using ReservationAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,8 @@ namespace ReservationAPI.Models.Interfaces
         Task<SeatConfiguration> GetSeatConfiguration(string id);
         Task<bool> CreateSeatConfiguration(SeatConfiguration seatConfiguraiton);
         Task<bool> DeleteSeatConfiguration(long id);
+
+        Task<object> UpdateSeat(FastReservationFlightModel seatRequest);
         #endregion
 
         #region PLANE TYPES
