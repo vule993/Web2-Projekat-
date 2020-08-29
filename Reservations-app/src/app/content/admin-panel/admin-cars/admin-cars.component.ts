@@ -23,13 +23,13 @@ export class AdminCarsComponent implements OnInit {
       new Link("../../assets/site/icons/car-white.png", "CARS", "cars")
     );
 
-    this.links.push(
+    /* this.links.push(
       new Link(
         "../../../../assets/site/icons/discount-white.png",
         "PRICE LIST",
         "price-list"
       )
-    );
+    ); */
     this.links.push(
       new Link(
         "../../../../assets/site/icons/statistics-white.png",

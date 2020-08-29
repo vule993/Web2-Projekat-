@@ -47,7 +47,7 @@
               class="far fa-lightbulb fa-4x"
               data-fa-transform="shrink-3 up-5"
             ></i>
-            <h3>Booking car</h3>
+            <h3>Fast booking</h3>
           </div>
         </div>
 
@@ -63,7 +63,7 @@
         <div class="col-md-4">
           <div class="usluga">
             <i class="fas fa-cogs fa-4x" data-fa-transform="shrink-3 up-5"></i>
-            <h3>Cheap Prices</h3>
+            <h3>Cheaper Prices</h3>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@
           <table class="table table-hover table-condensed">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">Photo</th>
+        
                 <th scope="col">Mark</th>
                 <th scope="col">Description</th>
                 <th scope="col">Year</th>
@@ -99,14 +99,7 @@
             <!--Ovde ce ipak da se izlistavaju rezervacije ove kompanije-->
             <tbody *ngIf="isLoaded">
               <tr *ngFor="let car of availableCars; let i = index">
-                <td>
-                  <img
-                    src="{{ car.image }}"
-                    class="img-responsive"
-                    style="width: 5vw; height: 5vh;"
-                    alt="slika auta"
-                  />
-                </td>
+                
                 <td>{{ car.mark }}</td>
                 <td>{{ car.description }}</td>
                 <td>{{ car.year }}</td>
