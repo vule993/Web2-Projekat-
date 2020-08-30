@@ -22,6 +22,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using ReservationAPI.Models;
+using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Services;
@@ -55,6 +56,8 @@ namespace ReservationAPI
             services.AddScoped<ICarCompany, CarCompanyService>();
             services.AddTransient<IMailService, SendEmailService>();
             services.AddScoped<IAirlines, AirlinesService>();
+            services.AddScoped<IReservation, ReservationService>();
+            services.AddScoped<IAirlineReservation, AirlineReservationService>();
 
             services.AddIdentity<User, IdentityRole>(
                     config =>

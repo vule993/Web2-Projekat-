@@ -14,6 +14,7 @@ namespace ReservationAPI.Models.Airlines
         public string ConfirmDate { get; set; }             // datum potvrdjivanja leta kako bi se u statistici obradili podaci
         public int SeatNumber { get; set; }                 // broj sedista npr. 0-100
         public int RowNumber { get; set; }                  // broj reda
+        public int Rating { get; set; }                  
 
     }
 }

@@ -1,73 +1,57 @@
-<ul class="list-group list-group-flush">
-  <li class="list-group-item overflow-hidden">
+<ul class="list-group list-group-flush overflow-auto">
+  <li *ngFor="let r of myReservations" class="list-group-item overflow-hidden">
     <div class="fleft">
-      <img src="../../../assets/site/icons/location.png" width="23" />
-      Brasil, Rio de Janeiro
+      <img src="../../../../assets/site/icons/reservations.png" width="23" />
+      {{
+        r.airlineReservation.flight.destinations[
+          r.airlineReservation.flight.destinations.length - 1
+        ].city +
+          "," +
+          r.airlineReservation.flight.destinations[
+            r.airlineReservation.flight.destinations.length - 1
+          ].country
+      }}
     </div>
-    <div class="fleft">24-Jan-2018</div>
-    <div class="fleft">
-      <img src="../../../assets/site/icons/seat.png" width="23" />
-      24c
-    </div>
-    <div class="fright">
-      <button class="btn btn-success">Invite</button>
-    </div>
-  </li>
 
-  <li class="list-group-item">
-    <div class="fleft">
-      <img src="../../../assets/site/icons/location.png" width="23" />
-      China, Bejing
+    <div *ngIf="r.airlineReservation.rating == 0" class="fleft">
+      <div class="form-group">
+        <select
+          id="id{{ r.id }}"
+          (change)="rateFlight('#id' + r.id, r)"
+          class="form-control"
+        >
+          <option value="*">Rate</option>
+          <option *ngFor="let star of stars" value="{{ star }}">
+            {{ star }}
+          </option>
+        </select>
+      </div>
     </div>
-    <div class="fleft">20-Sep-2018</div>
-    <div class="fleft">
-      <img src="../../../assets/site/icons/seat.png" width="23" />
-      4c
+
+    <div
+      *ngIf="r.airlineReservation.rating > 0"
+      class="rating fleft overflow-hidden"
+    >
+      <div
+        *ngFor="let star of stars"
+        class="star fleft"
+        [ngClass]="{ starChecked: r.airlineReservation.rating >= star }"
+      ></div>
+    </div>
+
+    <div class="fright">
+      {{ r.airlineReservation.flight.startDate }}
     </div>
     <div class="fright">
-      <button class="btn btn-success">Invite</button>
-    </div>
-  </li>
-  <li class="list-group-item">
-    <div class="fleft">
-      <img src="../../../assets/site/icons/location.png" width="23" />
-      Russia, Moscow
-    </div>
-    <div class="fleft">11-Sep-2017</div>
-    <div class="fleft">
       <img src="../../../assets/site/icons/seat.png" width="23" />
-      01d
+      {{
+        r.airlineReservation.flight.seatConfiguration.seats[
+          r.airlineReservation.rowNumber
+        ].seats[r.airlineReservation.seatNumber].seatNo
+      }}
     </div>
-    <div class="fright">
+    <!-- <div class="fright">
       <button class="btn btn-success">Invite</button>
-    </div>
-  </li>
-  <li class="list-group-item">
-    <div class="fleft">
-      <img src="../../../assets/site/icons/location.png" width="23" />
-      Australia, Melbourne
-    </div>
-    <div class="fleft">04-Feb-2016</div>
-    <div class="fleft">
-      <img src="../../../assets/site/icons/seat.png" width="23" />
-      13d
-    </div>
-    <div class="fright">
-      <button class="btn btn-success">Invite</button>
-    </div>
-  </li>
-  <li class="list-group-item">
-    <div class="fleft">
-      <img src="../../../assets/site/icons/location.png" width="23" />
-      France, Paris
-    </div>
-    <div class="fleft">11-Dec-2015</div>
-    <div class="fleft">
-      <img src="../../../assets/site/icons/seat.png" width="23" />
-      32a
-    </div>
-    <div class="fright">
-      <button class="btn btn-success">Invite</button>
-    </div>
+    </div> -->
   </li>
 </ul>

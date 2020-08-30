@@ -15,6 +15,7 @@ export class UserModel {
     public friends: Friend[] = [],
     public reservations: Reservation[] = [],
     public id?: number,
-    public Id?: string
+    public Id?: string,
+    public passportNo?: string
   ) {}
 }

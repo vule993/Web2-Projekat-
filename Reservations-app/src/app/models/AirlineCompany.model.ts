@@ -17,6 +17,9 @@ export class AirlineCompany {
     //public discounts: string[],
     public seatConfigurations: SeatConfiguration[],
     public likes: number,
-    public adminEmail: string
+    public adminEmail: string,
+    public rateNo?: number,
+    public rateSum?: number,
+    public rating?: number
   ) {}
 }

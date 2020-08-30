@@ -1,7 +1,10 @@
+ul {
+  height: 27.5vw;
+}
 .list-group-flush .list-group-item > div {
   padding: 0.3vw 0;
   width: 10vw;
-  height: 2.2vw;
+  height: 3.2vw;
   font-size: 1vw;
   /* background-color: rebeccapurple; */
   text-align: center;
@@ -16,7 +19,7 @@
   padding: 0.1vw 0.5vw;
 }
 .list-group-flush .list-group-item > div:last-of-type {
-  width: 8vw;
+  width: 7vw;
   margin-top: -0.25vw;
 }
 .list-group-flush .btn {
@@ -29,4 +32,36 @@ ul li:nth-child(even) {
 }
 .btn {
   font-size: 0.8vw;
+}
+.rating {
+  margin: 0 !important;
+}
+#rate {
+  padding: 0.1vw !important;
+}
+.form.group {
+  /* width: 1vw !important;
+  height: 1vw !important; */
+  margin: 0;
+  margin-top: -1vw !important;
+}
+.form-control {
+  width: 9.4vw;
+  height: 2vw;
+  padding: 0 !important;
+}
+
+.rating {
+  height: 3vw;
+}
+.star {
+  margin: 0.3vw 0.1vw;
+  width: 1.7vw;
+  height: 1.7vw;
+  background-image: url("../../../../assets/site/icons/unstar.png");
+  background-repeat: no-repeat;
+  background-size: 1.7vw;
+}
+.starChecked {
+  background-image: url("../../../../assets/site/icons/star.png");
 }

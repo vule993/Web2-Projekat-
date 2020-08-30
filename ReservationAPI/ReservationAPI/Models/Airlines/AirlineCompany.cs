@@ -18,12 +18,18 @@ namespace ReservationAPI.Models.Airlines
         public virtual List<SeatConfiguration> SeatConfigurations { get; set; }
         public long Likes { get; set; }
         public String AdminEmail { get; set; }
+        public int RateNo { get; set; }
+        public int RateSum { get; set; }
+        public double Rating { get; set; }
 
         public AirlineCompany()
         {
             Destinations = new List<Destination>();
             Flights = new List<Reservation>();
             SeatConfigurations = new List<SeatConfiguration>();
+            RateNo = 0;
+            RateSum = 0;
+            Rating = 0;
         }
     }
 }

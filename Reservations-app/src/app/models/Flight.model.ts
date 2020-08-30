@@ -19,6 +19,7 @@ export class Flight {
     public price: string,
     public luggage: string,
     public rateNo: number = 0,
+    public rateSum: number = 0,
     public rating: number = 0
   ) {}
 }

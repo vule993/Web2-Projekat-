@@ -105,11 +105,11 @@ export class AirlineReservationComponent implements OnInit {
     this.takeRentACar ? this.prepareCars() : this.createReservation();
   }
 
-  cancelDateCalculate(differenceHours) {
-    //31-August-2020  format
-    let date = this.flight.startDate.split("-");
-    let time = this.flight.startTime.split(":");
-
+  cancelDateCalculate(
+    differenceHours,
+    date: string[] = [],
+    time: string[] = []
+  ) {
     let dateObject = new Date();
 
     dateObject.setDate(+date[0]);
@@ -128,6 +128,7 @@ export class AirlineReservationComponent implements OnInit {
 
   createReservation() {
     let reservation: Reservation;
+
     this.selectedSeats.forEach((seat) => {
       //za svkaog coveka na sedistu pravim rezervaciju
 
@@ -147,7 +148,7 @@ export class AirlineReservationComponent implements OnInit {
           0,
           this.flight,
           seat.passenger,
-          this.cancelDateCalculate(3).toString(),
+          this.cancelDateCalculate(3, date, time).toString(),
           Math.ceil(seat.seatNo / rowWidth) - 1,
           Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
@@ -156,12 +157,8 @@ export class AirlineReservationComponent implements OnInit {
         false,
         false
       );
-      alert("red: " + reservation.airlineReservation.rowNumber);
-      alert(
-        "kolona (rbr sedista u redu): " +
-          reservation.airlineReservation.seatNumber
-      );
-      //this.reservationService.createReservation(reservation).subscribe();
+
+      this.reservationService.createReservation(reservation).subscribe();
     });
   }
 

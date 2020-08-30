@@ -11,7 +11,10 @@ namespace ReservationAPI.Models.Airlines
         public virtual PlaneType PlaneType { get; set; }
         public virtual List<Row> Seats { get; set; }
 
-       
+        public int GetRowWidth()
+        {
+            return PlaneType.getRowWidth();
+        }
 
     }
 }

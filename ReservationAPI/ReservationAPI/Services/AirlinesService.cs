@@ -8,9 +8,11 @@ using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.ViewModels;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -81,6 +83,62 @@ namespace ReservationAPI.Services
             _context.AirlineCompany.Remove(company);
             await _context.SaveChangesAsync();
         }
+
+
+        public async Task<object> RateCompany(FlightCompanyRating rating)
+        {
+            AirlineCompany company;
+            try
+            {
+                company = (await _context.AirlineCompany.ToListAsync()).FirstOrDefault(c => c.Id == rating.CompanyId);
+            }catch(Exception e)
+            {
+                Trace.WriteLine(e.ToString());
+                return HttpStatusCode.BadRequest;
+            }
+
+            var rate = new FlightCompanyRating()
+            {
+                CompanyId = rating.CompanyId,
+                Rating = rating.Rating,
+                UserEmail = rating.UserEmail
+            };
+
+
+            try
+            {
+                await _context.CompanyRatings.AddAsync(rate);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbException dex)
+            {
+                Trace.WriteLine(dex.ToString());
+                return HttpStatusCode.InternalServerError;
+            }
+
+            company.RateNo = company.RateNo + 1;
+            company.RateSum = company.RateSum + rating.Rating;
+            company.Rating = company.RateSum / company.RateNo;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }catch(DbException dex)
+            {
+                Trace.WriteLine(dex.ToString());
+                return HttpStatusCode.InternalServerError;
+            }
+
+
+            return company;
+        }
+
+        public async Task<List<FlightCompanyRating>> GetAllCompanyRatings(long id)
+        {
+            return (await _context.CompanyRatings.ToListAsync()).FindAll(x=>x.CompanyId == id);
+        }
+
+
         #endregion
 
 
@@ -228,7 +286,8 @@ namespace ReservationAPI.Services
                     {
                         Address = d.Address,
                         City = d.City,
-                        AirportName = d.AirportName
+                        AirportName = d.AirportName,
+                        Country = d.Country
                     };
 
                     await _context.Destination.AddAsync(destination);
@@ -342,27 +401,6 @@ namespace ReservationAPI.Services
         public Task<bool> DeleteSeatConfiguration(long id)
         {
             throw new NotImplementedException();
-        }
-
-
-        public async Task<object> UpdateSeat(FastReservationFlightModel seatRequest)
-        {
-            var seat = (await _context.Seat.ToListAsync()).FirstOrDefault(s => s.Id == seatRequest.Id);
-            var user = (await _context.Users.ToListAsync()).FirstOrDefault(u => u.Email == seatRequest.UserEmail);
-            var role = await _userManager.GetRolesAsync(user);
-            try
-            {
-                seat.Passenger = user;
-                seat.SeatStatus = "TAKEN";
-                await _context.SaveChangesAsync();
-            }catch(DbException dex)
-            {
-                Console.WriteLine(dex);
-                return HttpStatusCode.InternalServerError;
-            }
-
-
-            return seat;
         }
 
 
@@ -490,6 +528,8 @@ namespace ReservationAPI.Services
         }
 
         
+
+
 
         #endregion
 

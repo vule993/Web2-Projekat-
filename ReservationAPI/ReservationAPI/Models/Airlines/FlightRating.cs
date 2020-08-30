@@ -9,7 +9,7 @@ namespace ReservationAPI.Models.Airlines
     {
         public int Id { get; set; }
         public string UserEmail { get; set; }
-        public int FlightId { get; set; }
+        public long FlightId { get; set; }
         public int Rating { get; set; }
     }
 }

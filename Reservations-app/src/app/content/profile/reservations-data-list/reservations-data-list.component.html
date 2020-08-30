@@ -1,31 +1,33 @@
-<ul class="list-group list-group-flush">
-  <li class="list-group-item overflow-hidden">
+<ul class="list-group list-group-flush overflow-auto">
+  <li *ngFor="let r of myReservations" class="list-group-item overflow-hidden">
     <div class="fleft">
       <img src="../../../../assets/site/icons/reservations.png" width="23" />
-      UK, London
+      {{
+        r.airlineReservation.flight.destinations[
+          r.airlineReservation.flight.destinations.length - 1
+        ].city +
+          "," +
+          r.airlineReservation.flight.destinations[
+            r.airlineReservation.flight.destinations.length - 1
+          ].country
+      }}
     </div>
-    <div class="fleft">20-Jun-2020</div>
-    <div class="fleft">
-      <img src="../../../assets/site/icons/seat.png" width="23" />
-      14d
-    </div>
-    <div class="fright">
-      <button class="btn btn-success">Invite</button>
-    </div>
-  </li>
 
-  <li class="list-group-item">
-    <div class="fleft">
-      <img src="../../../../assets/site/icons/reservations.png" width="23" />
-      Italy, Milano
-    </div>
-    <div class="fleft">20-Sep-2020</div>
-    <div class="fleft">
-      <img src="../../../assets/site/icons/seat.png" width="23" />
-      29c
+    <div class="fright">
+      <button (click)="cancelReservation(r)" class="btn btn-success">
+        Cancel
+      </button>
     </div>
     <div class="fright">
-      <button class="btn btn-success">Invite</button>
+      {{ r.airlineReservation.flight.startDate }}
+    </div>
+    <div class="fright">
+      <img src="../../../assets/site/icons/seat.png" width="23" />
+      {{
+        r.airlineReservation.flight.seatConfiguration.seats[
+          r.airlineReservation.rowNumber
+        ].seats[r.airlineReservation.seatNumber].seatNo
+      }}
     </div>
   </li>
 </ul>

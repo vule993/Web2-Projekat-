@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace ReservationAPI.Models.Interfaces
 {
+    /*AIRLINE COMPANY*/
     public interface IAirlines
     {
         #region CompanyProfile
@@ -16,6 +17,8 @@ namespace ReservationAPI.Models.Interfaces
         Task<AirlineCompany> GetCompanyById(string id);
         Task<IEnumerable<AirlineCompany>> GetAllCompanies();
         Task DeleteCompany(long id);
+        Task <object> RateCompany(FlightCompanyRating rating);
+        Task<List<FlightCompanyRating>> GetAllCompanyRatings(long id);
         #endregion
 
         #region DESTINATIONS
@@ -42,7 +45,6 @@ namespace ReservationAPI.Models.Interfaces
         Task<bool> CreateSeatConfiguration(SeatConfiguration seatConfiguraiton);
         Task<bool> DeleteSeatConfiguration(long id);
 
-        Task<object> UpdateSeat(FastReservationFlightModel seatRequest);
         #endregion
 
         #region PLANE TYPES

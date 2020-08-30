@@ -42,11 +42,13 @@ namespace ReservationAPI.Models.DbRepository
         public DbSet<PlaneType> PlaneType { get; set; }
         public DbSet<AvailableDestination> AvailableDestination { get; set; }
         public DbSet<AvailableService> AvailableService { get; set; }
+
+        public DbSet<FlightRating> FlightRating { get; set; }
+        public DbSet<FlightCompanyRating> CompanyRatings { get; set; }
         ////shared
         public DbSet<Address> Address { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<FlightRating> FlightRating { get; set; }
-        public DbSet<CompanyRating> CompanyRatings { get; set; }
+        public DbSet<Reservation> Reservation { get; set; }
 
         ////public DbSet<Company> Companies { get; set; }       //ne znam da l je ovo potrebno
         //public DbSet<Notification> Notifications { get; set; }

@@ -27,7 +27,6 @@ namespace ReservationAPI.Controllers
 
 
         #region COMPANY PROFILE
-
         
         [HttpGet]
         [Route("GetCompanyById/{id}")]
@@ -103,6 +102,21 @@ namespace ReservationAPI.Controllers
 
             return Ok(new { message = "Avio company deleted", company = company });
         }
+
+
+        [HttpPost]
+        [Route("RateCompany")]
+        public async Task<object> RateCompany(FlightCompanyRating rating)
+        {
+            return await _service.RateCompany(rating);
+        }
+        [HttpGet]
+        [Route("GetAllCompanyRatings/{id}")]
+        public async Task<List<FlightCompanyRating>> GetAllCompanyRatings(long id)
+        {
+            return await _service.GetAllCompanyRatings(id);
+        }
+
         #endregion
 
 
@@ -229,12 +243,7 @@ namespace ReservationAPI.Controllers
             return await _service.CreateSeatConfiguration(seatConfiguration);
         }
 
-        [HttpPut]
-        [Route("UpdateSeat")]
-        public async Task<object> UpdateSeat(FastReservationFlightModel seat)
-        {
-            return await _service.UpdateSeat(seat);
-        }
+        
 
 
         #endregion

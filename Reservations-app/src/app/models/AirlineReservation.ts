@@ -9,6 +9,7 @@ export class AirlineReservation {
     public deadlineForCanceling: string,
     public rowNumber: number,
     public seatNumber: number,
-    public confirmDate: string = ""
+    public confirmDate: string = "",
+    public rating: number = 0
   ) {}
 }

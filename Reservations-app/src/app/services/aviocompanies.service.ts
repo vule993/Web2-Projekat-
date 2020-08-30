@@ -5,6 +5,7 @@ import { Address } from "../models/address.model";
 import { Destination } from "../models/Destination.model";
 import { UserModel } from "../models/User.model";
 import { HttpClient } from "@angular/common/http";
+import { CompanyRating } from "../models/CompanyRating.model";
 
 @Injectable({
   providedIn: "root",
@@ -31,5 +32,13 @@ export class AviocompaniesService {
   }
   getCompanyById(id: string) {
     return this.httpClient.get(this.baseURL + "Airlines/GetCompanyById/" + id);
+  }
+  rateAvioCompany(rate: CompanyRating) {
+    return this.httpClient.post(this.baseURL + "Airlines/RateCompany", rate);
+  }
+  getAllCompanyRatings(companyId: number) {
+    return this.httpClient.get(
+      this.baseURL + "Airlines/GetAllCompanyRatings/" + companyId
+    );
   }
 }

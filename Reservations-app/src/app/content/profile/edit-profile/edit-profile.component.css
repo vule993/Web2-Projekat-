@@ -2,7 +2,7 @@ form > div {
   display: flex;
   justify-content: space-around;
   height: 5vw;
-  padding: 0.8vw 0;
+  padding-top: 0.2vw;
 }
 .form-group {
   width: 28vw !important;
@@ -37,6 +37,10 @@ form > div {
   background-image: url("../../../../assets/site/icons/phone.png");
   background-size: cover;
 }
+.form-group .passport-icon {
+  background-image: url("../../../../assets/site/icons/passport.png");
+  background-size: cover;
+}
 /*  */
 .form-group input {
   height: 2.5vw;
@@ -49,8 +53,12 @@ form > div {
   color: black;
 }
 
-.btn {
+div > .btn,
+.btn-success button {
+  margin: 0 auto;
+  padding: 0.2vw 1vw !important;
   width: 10vw;
+  font-size: 1vw !important;
 }
 
 .btn-success:hover {

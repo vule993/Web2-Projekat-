@@ -1,4 +1,5 @@
 import { Destination } from "./Destination.model";
+import { Flight } from "./Flight.model";
 
 export class FastReservationFlight {
   constructor(
@@ -6,9 +7,12 @@ export class FastReservationFlight {
     public startDestination: Destination,
     public endDestination: Destination,
     public dateAndTime: string,
-    public seatNo: number,
     public price: string,
     public discount: number,
+    public flightId: number,
+    public seatNo: number,
+    public rowNumber: number,
+    public deadlineForCanceling,
     public userEmail?: string
   ) {}
 }

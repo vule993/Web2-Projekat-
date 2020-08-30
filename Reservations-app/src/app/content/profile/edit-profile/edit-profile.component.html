@@ -68,7 +68,21 @@
         />
       </div>
     </div>
+    <!--  -->
+    <div>
+      <div class="form-group">
+        <div class="passport-icon"></div>
+        <input
+          type="text"
+          class="form-control"
+          id="passport"
+          placeholder="Passport no."
+          value="{{ currentUser.passportNo }}"
+        />
+      </div>
+    </div>
 
+    <!--  -->
     <div>
       <div class="form-group">
         <div class="password-icon"></div>
@@ -88,15 +102,11 @@
           placeholder="Confirm password"
         />
       </div>
-    </div>
-    <div>
-      <button
-        type="button"
-        (click)="updateUser()"
-        class="btn btn-success overflow-hidden"
-      >
-        Edit
-      </button>
+      <div>
+        <button (click)="updateUser()" class="btn-success overflow-hidden">
+          Edit
+        </button>
+      </div>
     </div>
   </form>
 </div>

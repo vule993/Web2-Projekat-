@@ -10,7 +10,7 @@ import { UserModel } from "src/app/models/User.model";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
 
         this.toastr.success("Succesfully logged in", "Login Success");
       },
-      err => {
+      (err) => {
         if (err.status == 400) {
           //bad req
           this.toastr.error(
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   LoginWithGoogle() {
-    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then(socialusers => {
+    this.OAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then((socialusers) => {
       console.log(socialusers);
 
       this.userService.socialLogin(socialusers).then((res: any) => {
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = new FormGroup({
       email: new FormControl(email, Validators.required),
-      password: new FormControl(password, Validators.required)
+      password: new FormControl(password, Validators.required),
     });
   }
 }

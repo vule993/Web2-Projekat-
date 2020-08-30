@@ -11,7 +11,7 @@ namespace ReservationAPI.Models.Airlines
         public long Id { get; set; }
         public virtual AirlineReservation AirlineReservation { get; set; }
         public virtual CarReservation CarReservation { get; set; }
-        public bool Taken { get; set; }
-        public bool IsFinished { get; set; }
+        public bool Taken { get; set; }         //da li je otkazana
+        public bool IsFinished { get; set; }    //da li je zavrsena
     }
 }

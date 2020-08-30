@@ -185,6 +185,7 @@
                 style="display: inline-block"
               >
                 <li
+                  *ngIf="!ifRated"
                   (click)="countStar(star)"
                   [ngClass]="{ selected: star <= selectedValue }"
                 >
