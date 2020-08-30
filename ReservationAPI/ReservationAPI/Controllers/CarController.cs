@@ -113,8 +113,8 @@ namespace ReservationAPI.Controllers
         {
             try
             {
-                await _repository.MakeReservation(carReservationModel);
-                
+                var res = await _repository.MakeReservation(carReservationModel);
+                return Ok(res);
             }
             catch(Exception e)
             {
@@ -122,7 +122,6 @@ namespace ReservationAPI.Controllers
                 return BadRequest(new { message = "Failed to make car reservation." });
             }
 
-            return Ok();
         }
     }
 }

@@ -7,6 +7,7 @@ using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels.RentACar;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -22,11 +23,13 @@ namespace ReservationAPI.Services
     {
         private readonly ApplicationDbContext _context;
         private UserManager<User> _userManager;
+        private ICarRepository _carService;
 
-        public ReservationService(ApplicationDbContext context, UserManager<User> userManager)
+        public ReservationService(ApplicationDbContext context, UserManager<User> userManager, ICarRepository carService)
         {
             _context = context;
             _userManager = userManager;
+            _carService = carService;
         }
 
         public async Task<object> CancelReservation(Reservation reservationToCancel)
@@ -71,16 +74,15 @@ namespace ReservationAPI.Services
             var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == reservation.AirlineReservation.Flight.Id);
             var seat = flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber];
 
-
             AirlineReservation airlineReservation;
+            CarReservation carReservation;
 
             try
             {
                 seat.Passenger = user;
                 seat.SeatStatus = "TAKEN";
+          
                 await _context.SaveChangesAsync();
-
-                /*ovde aco zauzmi auto, kao i ja sediste*/
 
                 if (reservation.AirlineReservation == null)
                 {
@@ -103,24 +105,26 @@ namespace ReservationAPI.Services
                 }
                 
 
-                CarReservation carReservation;
-                
                 if(reservation.CarReservation == null)
                 {
                     carReservation = null;
                 }
                 else
                 {
-                    carReservation = new CarReservation()
+                    
+                    var carResModel = new CarReservationModel()
                     {
-                        StartDate = reservation.CarReservation.StartDate,
-                        EndDate = reservation.CarReservation.EndDate,
-                        FullPrice = reservation.CarReservation.FullPrice,
-                        CarId = reservation.CarReservation.CarId,
                         Car = reservation.CarReservation.Car,
+                        CarId = reservation.CarReservation.CarId,
+                        EndDate = reservation.CarReservation.EndDate,
+                        StartDate = reservation.CarReservation.StartDate,
+                        FullPrice = reservation.CarReservation.FullPrice,
                         UserEmail = reservation.CarReservation.UserEmail
                     };
-                    await _context.SaveChangesAsync();
+
+                    carReservation = await _carService.MakeReservation(carResModel);
+                    //_context.CarReservations.Add(carReservation);
+                    //await _context.SaveChangesAsync();
                 }
 
 

@@ -17,21 +17,24 @@ import { FormModel } from "src/app/models/formModel";
 import { InviteFriend } from "src/app/models/InviteFriend.model";
 import { ThrowStmt } from "@angular/compiler";
 import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 declare var $: any;
 
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
-  styleUrls: ["./airline-reservation.component.css"],
+  styleUrls: ["./airline-reservation.component.css"]
 })
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter(); //???
-  suggestedCars: CarReservation[] = [];
   allCarsToShow: Car[] = [];
   carCompany: CarCompany;
   carOffers: CarOffer[] = [];
+  carCompanies: CarCompany[] = [];
+  carReservation: CarReservation;
   takeRentACar = false;
+  CarReservationForm: FormGroup;
 
   @Input() flight: Flight;
   currentUser: UserModel;
@@ -51,7 +54,7 @@ export class AirlineReservationComponent implements OnInit {
     "September",
     "October",
     "November",
-    "December",
+    "December"
   ];
 
   constructor(
@@ -68,7 +71,7 @@ export class AirlineReservationComponent implements OnInit {
       $("#finish").slideUp(1200);
       $("html, body").animate(
         {
-          scrollTop: $("#space").offset().top + $("#space").outerHeight(true),
+          scrollTop: $("#space").offset().top + $("#space").outerHeight(true)
         },
         1200
       );
@@ -76,29 +79,79 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   prepareCars() {
-    this.carService.fetchCars().subscribe((data) => {
-      this.allCarsToShow = (data as Car[]).filter((c) => !c.isReserved);
+    //load car companies
+    this.carService.getCarCompanies().subscribe(data => {
+      this.carCompanies = data as CarCompany[];
+      this.carCompanies.forEach(cp => {
+        if (
+          cp.city ==
+          this.flight.destinations[this.flight.destinations.length - 1].city
+        ) {
+          this.carService.getCarsOfCompany(cp.id).subscribe(cars => {
+            this.allCarsToShow = (cars as Car[]).filter(c => !c.isReserved);
+            this.carOffers = [];
+
+            this.allCarsToShow.forEach(c => {
+              this.carService
+                .fetchCarCompanyByCarId(c.id)
+                .subscribe(company => {
+                  this.carCompany = company as CarCompany;
+
+                  let carOffer = new CarOffer(
+                    c.description,
+                    c,
+                    this.carCompany,
+                    c.id
+                  );
+                  this.carOffers.push(carOffer);
+                });
+            });
+          });
+        }
+      });
+    });
+
+    //promeniti logiku, uzeti kompaniju na toj lokaciji gde user putuje i onda izlistati auta od te kompanije???
+    /* this.carService.fetchCars().subscribe(data => {
+      this.allCarsToShow = (data as Car[]).filter(c => !c.isReserved);
 
       this.carOffers = [];
 
-      this.allCarsToShow.forEach((c) => {
-        this.carService.fetchCarCompanyByCarId(c.id).subscribe((company) => {
+      this.allCarsToShow.forEach(c => {
+        this.carService.fetchCarCompanyByCarId(c.id).subscribe(company => {
           this.carCompany = company as CarCompany;
 
           let carOffer = new CarOffer(c.description, c, this.carCompany, c.id);
           this.carOffers.push(carOffer);
         });
       });
-    });
+    }); */
 
     //this.event.emit(this.carOffers);
     $("#cars").slideDown(1200);
     $("html, body").animate(
       {
-        scrollTop: $("#cars").offset().top,
+        scrollTop: $("#cars").offset().top
       },
       1200
     );
+  }
+
+  MakeCarReservation(selectedOffer: CarOffer) {
+    let startDate = this.CarReservationForm.value["startDate"];
+    let endDate = this.CarReservationForm.value["endDate"];
+
+    this.carReservation = new CarReservation(
+      selectedOffer.car,
+      selectedOffer.carCompany,
+      startDate,
+      endDate,
+      selectedOffer.car.id,
+      selectedOffer.car.price * this.calcuatePrice(endDate, startDate),
+      localStorage.getItem("userId")
+    );
+
+    this.createReservation();
   }
 
   finishAirlineReservation() {
@@ -123,13 +176,13 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   getMonth(month: string): number {
-    return this.months.findIndex((m) => m == month);
+    return this.months.findIndex(m => m == month);
   }
 
   createReservation() {
     let reservation: Reservation;
 
-    this.selectedSeats.forEach((seat) => {
+    this.selectedSeats.forEach(seat => {
       //za svkaog coveka na sedistu pravim rezervaciju
 
       //31-August-2020  format
@@ -153,7 +206,7 @@ export class AirlineReservationComponent implements OnInit {
           Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
         ),
-        null,
+        this.carReservation,
         false,
         false
       );
@@ -189,17 +242,17 @@ export class AirlineReservationComponent implements OnInit {
           localStorage.getItem("userId")
         )
       )
-      .subscribe((result) => {
+      .subscribe(result => {
         this.userService
           .getAllFriends(localStorage.getItem("userId"))
-          .subscribe((friends) => {
+          .subscribe(friends => {
             this.users = friends;
           });
       });
   }
 
   friendsToSelectNo() {
-    return this.selectedSeats.filter((seat) => seat.passenger == null).length; //-1 za usera koji selektuje
+    return this.selectedSeats.filter(seat => seat.passenger == null).length; //-1 za usera koji selektuje
   }
 
   onCheck(event, user: UserModel) {
@@ -242,29 +295,32 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initForm();
     //resetujem cekirana sedista
     this.selectedSeatService.setSelectedSeats([]);
     this.selectedSeatService.setUnSelectedSeats([]);
 
     this.userService
       .getAllFriends(localStorage.getItem("userId"))
-      .subscribe((users) => {
+      .subscribe(users => {
         this.users = users;
       });
 
-    this.userService.getUserProfile().subscribe((user) => {
+    this.userService.getUserProfile().subscribe(user => {
       this.currentUser = user;
     });
 
     $(window)
-      .resize(function () {
-        let h = +$("#seat-picker").css("height").split("px")[0];
+      .resize(function() {
+        let h = +$("#seat-picker")
+          .css("height")
+          .split("px")[0];
 
         $("#friends-selector").css({ height: h + "px" });
         $(".friends").css({ height: h - 100 + "px" });
         $("html, body").animate(
           {
-            scrollTop: $("#proceed").offset().top,
+            scrollTop: $("#proceed").offset().top
           },
           1200
         );
@@ -272,10 +328,10 @@ export class AirlineReservationComponent implements OnInit {
       .delay(50);
 
     //sta ako decekira sediste dok user sedi na njemu
-    this.selectedSeatService.unSelectedSeats.subscribe((unSelectedSeats) => {
+    this.selectedSeatService.unSelectedSeats.subscribe(unSelectedSeats => {
       debugger;
       //osloboditi usere sa sedista promeniti im check i isprazniti observable
-      (unSelectedSeats as Seat[]).forEach((seat) => {
+      (unSelectedSeats as Seat[]).forEach(seat => {
         if (seat.passenger != null) {
           //i ovde uklanjamo inicijatora
           if (seat.passenger.email == localStorage.getItem("userId")) {
@@ -293,7 +349,7 @@ export class AirlineReservationComponent implements OnInit {
       });
     });
     //sta ako cekira sediste
-    this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
+    this.selectedSeatService.selectedSeats.subscribe(allSeats => {
       this.selectedSeats = allSeats;
 
       //dodajem glavnog ako ima gde da sedne
@@ -308,6 +364,25 @@ export class AirlineReservationComponent implements OnInit {
           }
         }
       }
+    });
+  }
+
+  calcuatePrice(date1: Date, date2: Date) {
+    let oneDay = 1000 * 60 * 60 * 24;
+    let difference = Math.abs(
+      new Date(date1).getTime() - new Date(date2).getTime()
+    );
+
+    return Math.round(difference / oneDay);
+  }
+
+  initForm(){
+    let startDate = null;
+    let endDate = null;
+
+    this.CarReservationForm = new FormGroup({
+      startDate: new FormControl(startDate, Validators.required),
+      endDate: new FormControl(endDate, Validators.required)
     });
   }
 }

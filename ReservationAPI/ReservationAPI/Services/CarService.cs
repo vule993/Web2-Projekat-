@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels;
 using ReservationAPI.ViewModels.RentACar;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace ReservationAPI.Services
             return cars;
         }
 
-        public async Task MakeReservation(CarReservationModel reservation)
+        public async Task<CarReservation> MakeReservation(CarReservationModel reservation)
         {
             Car car = await GetCar(reservation.CarId);
             car.IsReserved = true;
@@ -85,6 +86,8 @@ namespace ReservationAPI.Services
             await _emailSender.SendEmailAsync(carReservation.UserEmail,
                 "Succesfull car reservation!",
                 $"<h2>Congratulations!</h2><p>You made a successful car reservation. Your {carReservation.Car.Mark} is ready to go!</p>");
+
+            return carReservation;
         }
 
         public async Task UpdateCar(Car car)
@@ -93,6 +96,9 @@ namespace ReservationAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        
+        public async Task<double> rateCar(RatingModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
