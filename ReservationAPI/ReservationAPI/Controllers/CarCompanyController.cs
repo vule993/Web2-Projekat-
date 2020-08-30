@@ -165,5 +165,22 @@ namespace ReservationAPI.Controllers
             return Ok(new { message = "Car company updated.", company = company });
 
         }
+
+        
+        [HttpPost]
+        [Route("RateCompany")]
+        public async Task<object> RateThisCompany([FromBody] RatingModel model)
+        {
+            try
+            {
+                double result = await _repository.rateCompany(model);
+                return Ok(result);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"ERROR with rating car company. -> {e.Message}");
+                return BadRequest(new { Message = $"ERROR with rating car company. -> {e.Message}" });
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { CarReservation } from "../models/CarReservation";
+import { CarRate } from "../models/carRate.model";
 
 @Injectable({
   providedIn: "root"
@@ -133,6 +134,13 @@ export class CarsService {
     return this.httpClient.post(
       this.baseURL + "/Car/MakeReservation",
       carReservation
+    );
+  }
+
+  rateCompany(ratingModel: CarRate) {
+    return this.httpClient.post(
+      this.baseURL + "/CarCompany/RateCompany",
+      ratingModel
     );
   }
 

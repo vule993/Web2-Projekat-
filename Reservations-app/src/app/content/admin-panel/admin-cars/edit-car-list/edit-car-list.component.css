@@ -1,3 +1,18 @@
+.wrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1vw;
+}
+
+.editBtn {
+  width: 7vw !important;
+}
+.deleteBtn {
+  width: 7vw !important;
+}
+
 .addCarBtn {
   background-color: rgb(80, 63, 158) !important;
 }

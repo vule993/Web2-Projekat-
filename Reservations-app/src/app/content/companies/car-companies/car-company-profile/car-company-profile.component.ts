@@ -6,6 +6,7 @@ import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { Car } from "src/app/models/car.model";
 import { CarReservation } from "src/app/models/CarReservation";
 import { ToastrService } from "ngx-toastr";
+import { CarRate } from "src/app/models/carRate.model";
 
 @Component({
   selector: "app-car-company-profile",
@@ -96,6 +97,23 @@ export class CarCompanyProfileComponent implements OnInit {
     this.selectedValue = star;
     console.log("Value of star", star);
     //this.carCompany.rating = star; //nece ovako moci
+    let rate = new CarRate(
+      star,
+      localStorage.getItem("userId"),
+      0,
+      this.carCompany.id
+    );
+    this.carService.rateCompany(rate).subscribe();
+  }
+
+  rateCompany(){
+    let rate = new CarRate(
+      this.selectedValue,
+      localStorage.getItem("userId"),
+      0,
+      this.carCompany.id
+    );
+    this.carService.rateCompany(rate).subscribe();
   }
 
   /* createURL() {

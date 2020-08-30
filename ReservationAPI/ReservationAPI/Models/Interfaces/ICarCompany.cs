@@ -1,4 +1,5 @@
 ﻿using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace ReservationAPI.Models.Interfaces
         Task UpdateCarCompany(CarCompany carCompany);
 
         Task AddCarToCompany(long carId, long carCompanyId);
+
+        Task<double> rateCompany(RatingModel model);
     }
 }
