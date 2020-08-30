@@ -119,7 +119,7 @@ export class AirlineCompanyProfileComponent implements OnInit {
           f.seatConfiguration.seats.forEach((row) => {
             row.seats.forEach((seat) => {
               //ako je sediste za brzu rez i ako je slobodno
-              if (seat.forFastReservation && seat.passenger == null) {
+              if (seat.forFastReservation && seat.passengerEmail == "") {
                 let rowWidth =
                   f.seatConfiguration.planeType.segmentOneWidth +
                   f.seatConfiguration.planeType.segmentTwoWidth +
@@ -174,19 +174,7 @@ export class AirlineCompanyProfileComponent implements OnInit {
           "",
           ""
         ),
-        new UserModel(
-          "",
-          "",
-          localStorage.getItem("userId"),
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          [],
-          []
-        ),
+        localStorage.getItem("userId"),
         seat.deadlineForCanceling,
         seat.rowNumber,
         seat.seatNo,

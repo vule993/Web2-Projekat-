@@ -60,7 +60,7 @@ export class ReservationsDataListComponent implements OnInit {
       (reservations as Reservation[]).forEach((r) => {
         if (
           (r.airlineReservation != null &&
-            r.airlineReservation.passenger.email ==
+            r.airlineReservation.passengerEmail ==
               localStorage.getItem("userId")) ||
           (r.carReservation != null &&
             r.carReservation.userEmail == localStorage.getItem("userId"))

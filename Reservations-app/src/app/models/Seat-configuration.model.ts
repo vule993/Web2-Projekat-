@@ -20,7 +20,7 @@ export class SeatConfiguration {
           0,
           false,
           "FREE",
-          null,
+          "",
           i * this.getRowWidth() + j + 1
         );
       }

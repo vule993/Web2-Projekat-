@@ -5,7 +5,7 @@ export class AirlineReservation {
   constructor(
     public id: number,
     public flight: Flight,
-    public passenger: UserModel,
+    public passengerEmail: string,
     public deadlineForCanceling: string,
     public rowNumber: number,
     public seatNumber: number,

@@ -35,16 +35,25 @@ namespace ReservationAPI.Services
         public async Task<object> CancelReservation(Reservation reservationToCancel)
         {
             var reservation = (await _context.Reservation.ToListAsync()).FirstOrDefault(r => r.Id == reservationToCancel.Id);
+            var airlineReservation = (await _context.AirlineReservation.ToListAsync()).FirstOrDefault(ar => ar.Id == reservationToCancel.AirlineReservation.Id);
+            var seatConfiguration = (await _context.SeatConfiguration.ToListAsync()).FirstOrDefault(sc => sc.Id == airlineReservation.Flight.SeatConfiguration.Id);
+            Seat seat = airlineReservation.Flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber];
+            var s = (await _context.Seat.ToListAsync()).FirstOrDefault(sc => sc.Id == seat.Id);
             try
             {
-                reservation.AirlineReservation.Flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber].Passenger = null;
-                reservation.AirlineReservation.Flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber].SeatStatus = "FREE";
-                reservation.AirlineReservation.Passenger = null;
+                seat.SeatStatus = "FREE";
+                seat.PassengerEmail = "";
+
+                _context.Seat.Update(seat);
+
+                //_context.Update(seat);
+                airlineReservation.PassengerEmail = "";
+                await _context.SaveChangesAsync();
                 //ovde treba odustati i od car-a ako je tako po specifikaciji
             }
             catch (Exception e)
             {
-                Trace.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
                 return HttpStatusCode.BadRequest;
             }
 
@@ -52,6 +61,9 @@ namespace ReservationAPI.Services
             try
             {
                 _context.Remove(reservation);
+                await _context.SaveChangesAsync();
+
+                _context.Remove(airlineReservation);
                 await _context.SaveChangesAsync();
             }
             catch (DbException dex)
@@ -67,7 +79,7 @@ namespace ReservationAPI.Services
         public async Task<object> CreateReservation(Reservation reservation)
         {
             //var seat = (await _context.Seat.ToListAsync()).FirstOrDefault(s => s.Id == seatRequest.Id);
-            var user = (await _userManager.FindByEmailAsync(reservation.AirlineReservation.Passenger.Email));
+            var user = (await _userManager.FindByEmailAsync(reservation.AirlineReservation.PassengerEmail));
             var role = await _userManager.GetRolesAsync(user);
             
             //red i vrsta => rowNo seatNo
@@ -79,7 +91,7 @@ namespace ReservationAPI.Services
 
             try
             {
-                seat.Passenger = user;
+                seat.PassengerEmail = user.Email;
                 seat.SeatStatus = "TAKEN";
           
                 await _context.SaveChangesAsync();
@@ -93,7 +105,7 @@ namespace ReservationAPI.Services
                     airlineReservation = new AirlineReservation()
                     {
                         Flight = flight,
-                        Passenger = user,
+                        PassengerEmail = user.Email,
                         DeadlineForCanceling = reservation.AirlineReservation.DeadlineForCanceling,
                         RowNumber = reservation.AirlineReservation.RowNumber,
                         SeatNumber = reservation.AirlineReservation.SeatNumber,
@@ -197,7 +209,7 @@ namespace ReservationAPI.Services
             var rating = new FlightRating()
             {
                 Rating = flightRating.Rating,
-                FlightId = flightRating.Id,
+                FlightId = flight.Id,
                 UserEmail = flightRating.UserEmail
             };
 
@@ -208,6 +220,8 @@ namespace ReservationAPI.Services
                 flight.Rating = flight.RateSum / flight.RateNo;
 
                 reservation.AirlineReservation.Rating = flightRating.Rating;
+
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -215,19 +229,8 @@ namespace ReservationAPI.Services
                 return HttpStatusCode.BadRequest;
             }
 
-            try
-            {
-                await _context.FlightRating.AddAsync(rating);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbException dex)
-            {
-                Trace.WriteLine(dex.Message);
-                return HttpStatusCode.InternalServerError;
-            }
-
-            
-
+            await _context.FlightRating.AddAsync(rating);
+            await _context.SaveChangesAsync();
 
             return rating;
         }

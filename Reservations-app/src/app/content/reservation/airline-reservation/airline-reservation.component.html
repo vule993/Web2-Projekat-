@@ -60,11 +60,11 @@
 
        -->
       <div
-        *ngFor="let user of users"
+        *ngFor="let user of users; let i = index"
         class="friend overflow-hidden"
         (click)="onCheck($event, user)"
       >
-        <div id="userId{{ user.id }}" class="fleft uncheck">
+        <div id="userId{{ i }}" class="fleft uncheck">
           {{ user?.firstName + " " + user?.lastName }}
         </div>
       </div>

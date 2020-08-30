@@ -310,7 +310,7 @@ namespace ReservationAPI.Services
                         s = new Seat()
                         {
                             ForFastReservation = seat.ForFastReservation,
-                            Passenger = seat.Passenger,
+                            PassengerEmail = seat.PassengerEmail,
                             SeatNo = seat.SeatNo,
                             SeatStatus = seat.SeatStatus,
                         };
