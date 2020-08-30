@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200829110903_ChangeAirlineReservationModel1.Designer.cs" />
     <Compile Remove="Migrations\20200829112434_UndoChanges.cs" />
     <Compile Remove="Migrations\20200829112434_UndoChanges.Designer.cs" />
+    <Compile Remove="Migrations\20200830173300_NullablePassenger.cs" />
+    <Compile Remove="Migrations\20200830173300_NullablePassenger.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

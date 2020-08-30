@@ -60,7 +60,7 @@ export class ArchiveDataListComponent implements OnInit {
   }
   rateFlight(reservationId: string, reservation: Reservation) {
     let rate = $(reservationId).val();
-
+    debugger;
     let flightRating = new FlightRating(
       0,
       localStorage.getItem("userId"),
@@ -78,7 +78,7 @@ export class ArchiveDataListComponent implements OnInit {
       (reservations as Reservation[]).forEach((r) => {
         if (
           (r.airlineReservation != null &&
-            r.airlineReservation.passenger.email ==
+            r.airlineReservation.passengerEmail ==
               localStorage.getItem("userId")) ||
           (r.carReservation != null &&
             r.carReservation.userEmail == localStorage.getItem("userId"))

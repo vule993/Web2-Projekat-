@@ -5,7 +5,7 @@ export class Seat {
     public id: number,
     public forFastReservation: boolean,
     public seatStatus: string /*  "FREE" or "TAKEN" or "CONFIRMED"  */,
-    public passenger: UserModel, //?????
+    public passengerEmail: string, //?????
     public seatNo: number = -1
   ) {}
 }

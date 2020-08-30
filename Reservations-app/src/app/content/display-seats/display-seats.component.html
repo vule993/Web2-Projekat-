@@ -16,11 +16,7 @@
         'confirmed-seat': seat.seatStatus == 'CONFIRMED'
       }"
       (click)="onSeatClick(seat.seatNo)"
-      [attr.title]="
-        seat.passenger != null
-          ? seat.passenger.firstName + ' ' + seat.passenger.lastName
-          : ''
-      "
+      [attr.title]="seat.passengerEmail"
     >
       {{ seat.seatNo }}
     </div>

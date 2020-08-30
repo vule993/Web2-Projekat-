@@ -37,7 +37,7 @@ export class AirlineReservationComponent implements OnInit {
   currentUser: UserModel;
   currentUserSituated = false;
   selectedSeats: Seat[] = [];
-  users;
+  users: UserModel[];
 
   public months = [
     "January",
@@ -147,7 +147,7 @@ export class AirlineReservationComponent implements OnInit {
         new AirlineReservation(
           0,
           this.flight,
-          seat.passenger,
+          seat.passengerEmail,
           this.cancelDateCalculate(3, date, time).toString(),
           Math.ceil(seat.seatNo / rowWidth) - 1,
           Math.ceil((seat.seatNo - 1) % rowWidth),
@@ -199,7 +199,8 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   friendsToSelectNo() {
-    return this.selectedSeats.filter((seat) => seat.passenger == null).length; //-1 za usera koji selektuje
+    return this.selectedSeats.filter((seat) => seat.passengerEmail == "")
+      .length; //-1 za usera koji selektuje
   }
 
   onCheck(event, user: UserModel) {
@@ -217,8 +218,8 @@ export class AirlineReservationComponent implements OnInit {
       $(element).addClass("check");
 
       for (let s of this.selectedSeats) {
-        if (s.passenger == null) {
-          s.passenger = user;
+        if (s.passengerEmail == "") {
+          s.passengerEmail = user.email;
 
           break;
         }
@@ -228,12 +229,12 @@ export class AirlineReservationComponent implements OnInit {
       $(element).removeClass("check");
       $(element).addClass("uncheck");
       for (let s of this.selectedSeats) {
-        if (s.passenger == null) continue;
-        if (s.passenger.email == user.email) {
-          if (s.passenger.email == localStorage.getItem("userId")) {
+        if (s.passengerEmail == "") continue;
+        if (s.passengerEmail == user.email) {
+          if (s.passengerEmail == localStorage.getItem("userId")) {
             this.currentUserSituated = false;
           }
-          s.passenger = null; //ako je to taj user -> skidam passenger-a
+          s.passengerEmail = ""; //ako je to taj user -> skidam passenger-a
 
           break;
         }
@@ -276,18 +277,25 @@ export class AirlineReservationComponent implements OnInit {
       debugger;
       //osloboditi usere sa sedista promeniti im check i isprazniti observable
       (unSelectedSeats as Seat[]).forEach((seat) => {
-        if (seat.passenger != null) {
+        if (seat.passengerEmail != "") {
           //i ovde uklanjamo inicijatora
-          if (seat.passenger.email == localStorage.getItem("userId")) {
+          if (seat.passengerEmail == localStorage.getItem("userId")) {
             this.currentUserSituated = false;
-            seat.passenger = null;
+            seat.passengerEmail = "";
             return; //prekidam da ne pukne greska sa uklanjanjem id-a
           }
 
-          $("#userId" + seat.passenger.id).removeClass("check");
-          $("#userId" + seat.passenger.id).addClass("uncheck");
+          let passengerIndex = 0;
+          this.users.forEach((user, index) => {
+            if (user.email == seat.passengerEmail) {
+              passengerIndex = index;
+            }
+          });
+          alert(passengerIndex);
+          $("#userId" + passengerIndex).removeClass("check");
+          $("#userId" + passengerIndex).addClass("uncheck");
 
-          seat.passenger = null;
+          seat.passengerEmail = "";
           return;
         }
       });
@@ -301,8 +309,8 @@ export class AirlineReservationComponent implements OnInit {
       if (!this.currentUserSituated && this.friendsToSelectNo() > 0) {
         alert("dodajem glavnog");
         for (let s of this.selectedSeats) {
-          if (s.passenger == null) {
-            s.passenger = this.currentUser;
+          if (s.passengerEmail == "") {
+            s.passengerEmail = this.currentUser.email;
             this.currentUserSituated = true;
             break;
           }
