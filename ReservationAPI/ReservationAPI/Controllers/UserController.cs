@@ -165,12 +165,10 @@ namespace ReservationAPI.Controllers
             //use usemanager to check if we have user with given username
             var user = await _userManager.FindByNameAsync(model.Email);
 
-            //zakomentarisano za potrebe testiranja
-
-            //if (!user.EmailConfirmed)
-            //{
-            //    return BadRequest(new { Message = "Email is not confirmed!" });
-            //}
+            if (!user.EmailConfirmed)
+            {
+                return BadRequest(new { Message = "Email is not confirmed!" });
+            }
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
