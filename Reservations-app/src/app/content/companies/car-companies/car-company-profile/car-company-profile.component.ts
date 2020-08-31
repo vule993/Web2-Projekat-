@@ -7,6 +7,8 @@ import { Car } from "src/app/models/car.model";
 import { CarReservation } from "src/app/models/CarReservation";
 import { ToastrService } from "ngx-toastr";
 import { CarRate } from "src/app/models/carRate.model";
+import { Reservation } from "src/app/models/Reservation.model";
+import { ReservationService } from "src/app/services/reservation.service";
 
 @Component({
   selector: "app-car-company-profile",
@@ -33,7 +35,8 @@ export class CarCompanyProfileComponent implements OnInit {
   constructor(
     private carService: CarsService,
     private route: ActivatedRoute,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private reservationService: ReservationService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +70,7 @@ export class CarCompanyProfileComponent implements OnInit {
   MakeQuickReservation() {
     let startDate = this.quickReservationForm.value["startDate"];
     let endDate = this.quickReservationForm.value["endDate"];
-    let reservation = new CarReservation(
+    let carReservation = new CarReservation(
       this.selectedCar,
       this.carCompany,
       startDate,
@@ -77,7 +80,9 @@ export class CarCompanyProfileComponent implements OnInit {
       localStorage.getItem("userId")
     );
 
-    this.carService.makeReservation(reservation).subscribe(
+    let reservation = new Reservation(0, null, carReservation);
+
+    this.reservationService.createReservation(reservation).subscribe(
       res => {
         this.toastrService.success(
           "You made a quick reservation!",
@@ -91,6 +96,21 @@ export class CarCompanyProfileComponent implements OnInit {
         );
       }
     );
+
+    /* this.carService.makeReservation(reservation).subscribe(
+      res => {
+        this.toastrService.success(
+          "You made a quick reservation!",
+          "Car rented"
+        );
+      },
+      err => {
+        this.toastrService.error(
+          "Error while making a quick reservation",
+          "Error"
+        );
+      }
+    ); */
   }
 
   countStar(star) {
@@ -106,7 +126,7 @@ export class CarCompanyProfileComponent implements OnInit {
     this.carService.rateCompany(rate).subscribe();
   }
 
-  rateCompany(){
+  rateCompany() {
     let rate = new CarRate(
       this.selectedValue,
       localStorage.getItem("userId"),

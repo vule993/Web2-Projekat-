@@ -8,6 +8,8 @@ import { ToastrService } from "ngx-toastr";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CarReservation } from "src/app/models/CarReservation";
 import { Router } from "@angular/router";
+import { Reservation } from "src/app/models/Reservation.model";
+import { ReservationService } from "src/app/services/reservation.service";
 
 declare var $: any;
 @Component({
@@ -39,7 +41,8 @@ export class CarCompaniesComponent implements OnInit {
   constructor(
     private carService: CarsService,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private reservationService: ReservationService
   ) {}
 
   ngOnInit(): void {
@@ -188,7 +191,7 @@ export class CarCompaniesComponent implements OnInit {
     let startDate = this.CarReservationForm.value["startDate"];
     let endDate = this.CarReservationForm.value["endDate"];
 
-    let reservation = new CarReservation(
+    let carReservation = new CarReservation(
       this.selectedOffer.car,
       this.selectedOffer.carCompany,
       startDate,
@@ -198,7 +201,19 @@ export class CarCompaniesComponent implements OnInit {
       localStorage.getItem("userId")
     );
 
-    this.carService.makeReservation(reservation).subscribe(
+    let reservation = new Reservation(0, null, carReservation);
+
+    this.reservationService.createReservation(reservation).subscribe(
+      res => {
+        this.toastrService.success("You made a car reservation!", "Car rented");
+        this.carOffers.splice(this.carOffers.indexOf(this.selectedOffer));
+      },
+      err => {
+        this.toastrService.error("Error while making a reservation", "Error");
+      }
+    );
+
+    /* this.carService.makeReservation(reservation).subscribe(
       res => {
         this.toastrService.success("You made a car reservation!", "Car rented");
         this.carOffers.splice(this.carOffers.indexOf(this.selectedOffer)); //proveriti ovo jos
@@ -208,7 +223,7 @@ export class CarCompaniesComponent implements OnInit {
       err => {
         this.toastrService.error("Error while making a reservation", "Error");
       }
-    );
+    ); */
   }
 
   //help function for calculating fullPrice

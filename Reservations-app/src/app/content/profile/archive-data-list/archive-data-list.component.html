@@ -12,12 +12,30 @@
           ].country
       }}
     </div>
+    <div class="fleft">
+      car:
+      {{ r.carReservation.car.mark }}
+    </div>
 
     <div *ngIf="r.airlineReservation.rating == 0" class="fleft">
       <div class="form-group">
         <select
           id="id{{ r.id }}"
           (change)="rateFlight('#id' + r.id, r)"
+          class="form-control"
+        >
+          <option value="*">Rate</option>
+          <option *ngFor="let star of stars" value="{{ star }}">
+            {{ star }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div *ngIf="r.carReservation.car.rating == 0" class="fleft">
+      <div class="form-group">
+        <select
+          id="id{{ r.carReservation.car.id }}"
+          (change)="rateCar('#id' + r.carReservation.car.id, r)"
           class="form-control"
         >
           <option value="*">Rate</option>
@@ -36,6 +54,17 @@
         *ngFor="let star of stars"
         class="star fleft"
         [ngClass]="{ starChecked: r.airlineReservation.rating >= star }"
+      ></div>
+    </div>
+
+    <div
+      *ngIf="r.carReservation.car.rating > 0"
+      class="rating fleft overflow-hidden"
+    >
+      <div
+        *ngFor="let star of stars"
+        class="star fleft"
+        [ngClass]="{ starChecked: r.carReservation.car.rating >= star }"
       ></div>
     </div>
 

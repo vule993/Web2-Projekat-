@@ -36,7 +36,7 @@ namespace ReservationAPI.Services
         public async Task<object> AcceptReservation(long reservationId)
         {
             var reservation = (await _context.Reservation.ToListAsync()).FirstOrDefault(r => r.Id == reservationId);
-            if(reservation != null)
+            if (reservation != null)
             {
                 reservation.Status = "CONFIRMED";
                 reservation.AirlineReservation.Flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber].SeatStatus = "CONFIRMED";
@@ -108,25 +108,23 @@ namespace ReservationAPI.Services
 
         public async Task<object> CreateReservation(Reservation reservation, string initiatorEmail)
         {
-
-            var user = (await _userManager.FindByEmailAsync(reservation.AirlineReservation.PassengerEmail));    //user koji sedi
-            //ako je to taj user treba mu postaviti status rezervacije na CONFIRMED da bi bila vidljiva na profilu
-
-            var role = await _userManager.GetRolesAsync(user);
-            
-            //red i vrsta => rowNo seatNo
-            var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == reservation.AirlineReservation.Flight.Id);
-            var seat = flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber];
-
             AirlineReservation airlineReservation;
             CarReservation carReservation;
+            User user;
+
+            if (reservation.AirlineReservation != null)
+            {
+                user = (await _userManager.FindByEmailAsync(reservation.AirlineReservation.PassengerEmail));    //user koji sedi                                                                                                                       //ako je to taj user treba mu postaviti status rezervacije na CONFIRMED da bi bila vidljiva na profilu
+                var role = await _userManager.GetRolesAsync(user);
+            }
+            else
+            {
+                user = await _userManager.FindByEmailAsync(reservation.CarReservation.UserEmail);
+            }
+
 
             try
             {
-                seat.PassengerEmail = user.Email;
-                seat.SeatStatus = "TAKEN";
-          
-                await _context.SaveChangesAsync();
 
                 if (reservation.AirlineReservation == null)
                 {
@@ -134,6 +132,15 @@ namespace ReservationAPI.Services
                 }
                 else
                 {
+                    //red i vrsta => rowNo seatNo
+                    var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == reservation.AirlineReservation.Flight.Id);
+                    var seat = flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber];
+
+
+                    seat.PassengerEmail = user.Email;
+                    seat.SeatStatus = "TAKEN";
+
+                    await _context.SaveChangesAsync();
                     airlineReservation = new AirlineReservation()
                     {
                         Flight = flight,
@@ -147,15 +154,14 @@ namespace ReservationAPI.Services
                     await _context.AirlineReservation.AddAsync(airlineReservation);
                     await _context.SaveChangesAsync();
                 }
-                
 
-                if(reservation.CarReservation == null)
+
+                if (reservation.CarReservation == null)
                 {
                     carReservation = null;
                 }
                 else
                 {
-                    
                     var carResModel = new CarReservationModel()
                     {
                         Car = reservation.CarReservation.Car,
@@ -167,8 +173,7 @@ namespace ReservationAPI.Services
                     };
 
                     carReservation = await _carService.MakeReservation(carResModel);
-                    //_context.CarReservations.Add(carReservation);
-                    //await _context.SaveChangesAsync();
+
                 }
 
 
@@ -176,7 +181,7 @@ namespace ReservationAPI.Services
                 {
                     AirlineReservation = airlineReservation,
                     CarReservation = carReservation,
-                    Status = (user.Email == initiatorEmail) ? "CONFIRMED": reservation.Status,           //da li je napustena tj otkazana (UNCONFIRMED polje iz Ang)
+                    Status = (user.Email == initiatorEmail) ? "CONFIRMED" : reservation.Status,           //da li je napustena tj otkazana (UNCONFIRMED polje iz Ang)
                     IsFinished = reservation.IsFinished  //na osnovu ovoga znamo da li je zavrsena
                 };
 
@@ -204,7 +209,7 @@ namespace ReservationAPI.Services
             {
                 reservation = (await _context.Reservation.ToListAsync()).FirstOrDefault(r => r.Id == reservationId);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Trace.WriteLine(e.ToString());
                 return HttpStatusCode.BadRequest;
@@ -215,7 +220,8 @@ namespace ReservationAPI.Services
             try
             {
                 await _context.SaveChangesAsync();
-            }catch(DbException dex)
+            }
+            catch (DbException dex)
             {
                 Trace.WriteLine(dex.ToString());
                 return HttpStatusCode.InternalServerError;

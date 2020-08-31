@@ -87,8 +87,10 @@ export class AirlineReservationComponent implements OnInit {
       this.carCompanies = data as CarCompany[];
       this.carCompanies.forEach((cp) => {
         if (
-          cp.city ==
-          this.flight.destinations[this.flight.destinations.length - 1].city
+          cp.city.toLowerCase() ==
+          this.flight.destinations[
+            this.flight.destinations.length - 1
+          ].city.toLowerCase()
         ) {
           this.carService.getCarsOfCompany(cp.id).subscribe((cars) => {
             this.allCarsToShow = (cars as Car[]).filter((c) => !c.isReserved);
@@ -213,6 +215,11 @@ export class AirlineReservationComponent implements OnInit {
       );
       //probacu da notifikacije kreiram na back-u
       //
+      if (this.takeRentACar) {
+        //let r = new Reservation(0, null, this.carReservation);
+        //this.reservationService.createReservation(reservation).subscribe();
+        reservation.carReservation = this.carReservation;
+      }
 
       this.reservationService.createReservation(reservation).subscribe((r) => {
         notification = new ReservationNotification(

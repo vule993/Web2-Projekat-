@@ -3,13 +3,15 @@ import { Reservation } from "src/app/models/Reservation.model";
 import { ReservationService } from "src/app/services/reservation.service";
 import { environment } from "src/environments/environment";
 import { FlightRating } from "src/app/models/FlightRating.model";
+import { CarRate } from "src/app/models/carRate.model";
+import { CarsService } from "src/app/services/cars.service";
 
 declare var $: any;
 
 @Component({
   selector: "app-archive-data-list",
   templateUrl: "./archive-data-list.component.html",
-  styleUrls: ["./archive-data-list.component.css"],
+  styleUrls: ["./archive-data-list.component.css"]
 })
 export class ArchiveDataListComponent implements OnInit {
   myReservations: Reservation[] = [];
@@ -27,13 +29,16 @@ export class ArchiveDataListComponent implements OnInit {
     "September",
     "October",
     "November",
-    "December",
+    "December"
   ];
 
-  constructor(private _reservationService: ReservationService) {}
+  constructor(
+    private _reservationService: ReservationService,
+    private carService: CarsService
+  ) {}
 
   getMonth(month: string): number {
-    return this.months.findIndex((m) => m == month);
+    return this.months.findIndex(m => m == month);
   }
   //ako je trenutno vreme presisalo vreme rezervacije vraca true
   checkDatePass(
@@ -73,9 +78,18 @@ export class ArchiveDataListComponent implements OnInit {
     reservation.airlineReservation.rating = rate;
   }
 
+  rateCar(carId: string, reservation: Reservation) {
+    let rate = $(carId).val();
+    let carRate = new CarRate(+rate, localStorage.getItem("userId"), +carId);
+
+    this.carService.rateCar(carRate).subscribe();
+
+    reservation.carReservation.car.rating = rate;
+  }
+
   ngOnInit(): void {
-    this._reservationService.getAllReservations().subscribe((reservations) => {
-      (reservations as Reservation[]).forEach((r) => {
+    this._reservationService.getAllReservations().subscribe(reservations => {
+      (reservations as Reservation[]).forEach(r => {
         if (
           (r.airlineReservation != null &&
             r.airlineReservation.passengerEmail ==
@@ -95,6 +109,18 @@ export class ArchiveDataListComponent implements OnInit {
               //ako je prosao datum a status joj jos nije promenjen ide u status finished
               this._reservationService.finishReservation(r.id).subscribe();
             }
+            this.myReservations.push(r);
+          }
+
+          var currentDate = new Date();
+          console.log(
+            "my end date: " +
+              new Date(r.carReservation.endDate) +
+              " js date now: " +
+              currentDate
+          );
+          //car reservazija
+          if (new Date(r.carReservation.endDate) >= currentDate) {
             this.myReservations.push(r);
           }
         }

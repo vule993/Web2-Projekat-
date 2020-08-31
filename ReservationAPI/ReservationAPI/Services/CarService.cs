@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.Models.Shared;
 using ReservationAPI.ViewModels;
 using ReservationAPI.ViewModels.RentACar;
 using System;
@@ -98,7 +99,23 @@ namespace ReservationAPI.Services
 
         public async Task<double> rateCar(RatingModel model)
         {
-            throw new NotImplementedException();
+            var car = await _context.FindAsync<CarCompany>(model.CarId);
+
+            var rating = new Rating()
+            {
+                CarId = car.Id,
+                Rate = model.Rate,
+                UserEmail = model.UserEmail
+            };
+
+            car.Rates.Add(rating);
+            _context.Ratings.Add(rating);
+            var avg = car.Rates.Where(c => c.CarId == rating.CarId).Average(c => c.Rate);
+
+            car.Rating = avg;
+            _context.SaveChanges();
+
+            return avg;
         }
     }
 }
