@@ -1,4 +1,5 @@
 ﻿using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels;
 using ReservationAPI.ViewModels.RentACar;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace ReservationAPI.Models.Interfaces
 
         Task<IEnumerable<Car>> GetCars();
 
-        Task MakeReservation(CarReservationModel reservation);
+        Task<CarReservation> MakeReservation(CarReservationModel reservation);
+
+        Task<double> rateCar(RatingModel model);
     }
 }

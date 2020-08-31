@@ -19,6 +19,7 @@ import { ThrowStmt } from "@angular/compiler";
 import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
 import { ReservationNotification } from "src/app/models/ReservationNotification";
 import { NotificationService } from "src/app/services/notification.service";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 declare var $: any;
 
@@ -29,11 +30,13 @@ declare var $: any;
 })
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter(); //???
-  suggestedCars: CarReservation[] = [];
   allCarsToShow: Car[] = [];
   carCompany: CarCompany;
   carOffers: CarOffer[] = [];
+  carCompanies: CarCompany[] = [];
+  carReservation: CarReservation;
   takeRentACar = false;
+  CarReservationForm: FormGroup;
 
   @Input() flight: Flight;
   currentUser: UserModel;
@@ -79,20 +82,53 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   prepareCars() {
-    this.carService.fetchCars().subscribe((data) => {
-      this.allCarsToShow = (data as Car[]).filter((c) => !c.isReserved);
+    //load car companies
+    this.carService.getCarCompanies().subscribe((data) => {
+      this.carCompanies = data as CarCompany[];
+      this.carCompanies.forEach((cp) => {
+        if (
+          cp.city ==
+          this.flight.destinations[this.flight.destinations.length - 1].city
+        ) {
+          this.carService.getCarsOfCompany(cp.id).subscribe((cars) => {
+            this.allCarsToShow = (cars as Car[]).filter((c) => !c.isReserved);
+            this.carOffers = [];
+
+            this.allCarsToShow.forEach((c) => {
+              this.carService
+                .fetchCarCompanyByCarId(c.id)
+                .subscribe((company) => {
+                  this.carCompany = company as CarCompany;
+
+                  let carOffer = new CarOffer(
+                    c.description,
+                    c,
+                    this.carCompany,
+                    c.id
+                  );
+                  this.carOffers.push(carOffer);
+                });
+            });
+          });
+        }
+      });
+    });
+
+    //promeniti logiku, uzeti kompaniju na toj lokaciji gde user putuje i onda izlistati auta od te kompanije???
+    /* this.carService.fetchCars().subscribe(data => {
+      this.allCarsToShow = (data as Car[]).filter(c => !c.isReserved);
 
       this.carOffers = [];
 
-      this.allCarsToShow.forEach((c) => {
-        this.carService.fetchCarCompanyByCarId(c.id).subscribe((company) => {
+      this.allCarsToShow.forEach(c => {
+        this.carService.fetchCarCompanyByCarId(c.id).subscribe(company => {
           this.carCompany = company as CarCompany;
 
           let carOffer = new CarOffer(c.description, c, this.carCompany, c.id);
           this.carOffers.push(carOffer);
         });
       });
-    });
+    }); */
 
     //this.event.emit(this.carOffers);
     $("#cars").slideDown(1200);
@@ -102,6 +138,23 @@ export class AirlineReservationComponent implements OnInit {
       },
       1200
     );
+  }
+
+  MakeCarReservation(selectedOffer: CarOffer) {
+    let startDate = this.CarReservationForm.value["startDate"];
+    let endDate = this.CarReservationForm.value["endDate"];
+
+    this.carReservation = new CarReservation(
+      selectedOffer.car,
+      selectedOffer.carCompany,
+      startDate,
+      endDate,
+      selectedOffer.car.id,
+      selectedOffer.car.price * this.calcuatePrice(endDate, startDate),
+      localStorage.getItem("userId")
+    );
+
+    this.createReservation();
   }
 
   finishAirlineReservation() {
@@ -156,7 +209,7 @@ export class AirlineReservationComponent implements OnInit {
           Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
         ),
-        null
+        this.carReservation
       );
       //probacu da notifikacije kreiram na back-u
       //
@@ -277,6 +330,7 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initForm();
     //resetujem cekirana sedista
     this.selectedSeatService.setSelectedSeats([]);
     this.selectedSeatService.setUnSelectedSeats([]);
@@ -358,6 +412,25 @@ export class AirlineReservationComponent implements OnInit {
           return;
         }
       }
+    });
+  }
+
+  calcuatePrice(date1: Date, date2: Date) {
+    let oneDay = 1000 * 60 * 60 * 24;
+    let difference = Math.abs(
+      new Date(date1).getTime() - new Date(date2).getTime()
+    );
+
+    return Math.round(difference / oneDay);
+  }
+
+  initForm() {
+    let startDate = null;
+    let endDate = null;
+
+    this.CarReservationForm = new FormGroup({
+      startDate: new FormControl(startDate, Validators.required),
+      endDate: new FormControl(endDate, Validators.required),
     });
   }
 }
