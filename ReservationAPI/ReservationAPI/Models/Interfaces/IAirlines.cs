@@ -40,6 +40,13 @@ namespace ReservationAPI.Models.Interfaces
         Task<object> GetFlight(long id);
         #endregion
 
+        #region DISCOUNTS
+        Task<IEnumerable<Discount>> GetAllDiscounts();
+        Task<Discount> GetDiscount(string id);
+        Task<bool> CreateDiscount(Discount discount);
+        Task<object> DeleteDiscount(long id);
+        #endregion
+
         #region SEAT CONFIGURATIONS
         Task<IEnumerable<SeatConfiguration>> GetAllSeatConfigurations();
         Task<SeatConfiguration> GetSeatConfiguration(string id);

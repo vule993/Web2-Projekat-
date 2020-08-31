@@ -77,9 +77,9 @@ export class EditFlightsComponent implements OnInit {
         );
       });
 
-    this.discountsData.allDiscounts.subscribe(
-      (allDiscounts) => (this.allDiscounts = allDiscounts)
-    );
+    this.discountsData
+      .getAllDiscounts()
+      .subscribe((allDiscounts) => (this.allDiscounts = allDiscounts));
 
     this.planeTypeService
       .getAllPlaneTypes()

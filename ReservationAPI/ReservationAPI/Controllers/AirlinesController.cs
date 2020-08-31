@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using ReservationAPI.Models;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.ViewModels;
@@ -221,6 +222,36 @@ namespace ReservationAPI.Controllers
 
         #endregion
 
+
+        #region DISCOUNTS
+
+        [HttpGet]
+        [Route("GetAllDiscounts")]
+        public async Task<IEnumerable<Discount>> GetAllDiscounts()
+        {
+            return await _service.GetAllDiscounts();
+        }
+
+        [HttpGet]
+        [Route("GetDiscount/{id}")]
+        public async Task<Discount> GetDiscount(string id)
+        {
+            return await _service.GetDiscount(id);
+        }
+
+        [HttpPut]
+        [Route("CreateDiscount")]
+        public async Task<object> CreateDiscount(Discount discount)
+        {
+            return await _service.CreateDiscount(discount);
+        }
+        [HttpGet]
+        [Route("DeleteDiscount/{id}")]
+        public async Task<object> DeleteDiscount(long id)
+        {
+            return await _service.DeleteDiscount(id);
+        }
+        #endregion
 
 
         #region SEAT CONFIGURATIONS
