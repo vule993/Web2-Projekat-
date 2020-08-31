@@ -23,9 +23,13 @@
     <Compile Remove="Migrations\20200829112434_UndoChanges.Designer.cs" />
     <Compile Remove="Migrations\20200830173300_NullablePassenger.cs" />
     <Compile Remove="Migrations\20200830173300_NullablePassenger.Designer.cs" />
+    <Compile Remove="Migrations\20200830235321_ReservaionNotificationAdded_ReservationAdapted.cs" />
+    <Compile Remove="Migrations\20200830235321_ReservaionNotificationAdded_ReservationAdapted.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />

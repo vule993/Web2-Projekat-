@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationAPI.Models.DbRepository;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class AuthenticationContextModelSnapshot : ModelSnapshot
+    [Migration("20200831033108_ReservaionNotificationAdded_ReservationAdapted1")]
+    partial class ReservaionNotificationAdded_ReservationAdapted1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,11 +467,11 @@ namespace ReservationAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("FlightId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Rating")
                         .HasColumnType("int");
-
-                    b.Property<long>("ReservationId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(max)");

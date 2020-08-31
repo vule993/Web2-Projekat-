@@ -58,6 +58,7 @@ namespace ReservationAPI
             services.AddScoped<IAirlines, AirlinesService>();
             services.AddScoped<IReservation, ReservationService>();
             services.AddScoped<IAirlineReservation, AirlineReservationService>();
+            services.AddScoped<INotification, NotificationService>();
 
             services.AddIdentity<User, IdentityRole>(
                     config =>

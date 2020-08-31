@@ -54,6 +54,11 @@ nav {
   position: relative;
   border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
+#notification #bell {
+  width: 2vw !important;
+  height: 5vw !important;
+  background-color: green !important;
+}
 #notifications > img {
   padding: 0 1vw 0 0;
   width: 3vw !important;

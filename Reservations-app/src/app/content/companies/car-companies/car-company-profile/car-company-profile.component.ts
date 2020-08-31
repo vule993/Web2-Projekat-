@@ -80,7 +80,7 @@ export class CarCompanyProfileComponent implements OnInit {
       localStorage.getItem("userId")
     );
 
-    let reservation = new Reservation(0, null, carReservation, false, false);
+    let reservation = new Reservation(0, null, carReservation);
 
     this.reservationService.createReservation(reservation).subscribe(
       res => {

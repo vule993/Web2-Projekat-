@@ -1,14 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, SimpleChanges } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { UsersService } from "../services/users.service";
+import { ReservationNotification } from "../models/ReservationNotification";
+import { NotificationService } from "../services/notification.service";
+import { ReservationService } from "../services/reservation.service";
 
 declare var $: any;
 
 @Component({
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
-  styleUrls: ["./navigation.component.css"]
+  styleUrls: ["./navigation.component.css"],
 })
 export class NavigationComponent implements OnInit {
   open = true;
@@ -16,21 +19,73 @@ export class NavigationComponent implements OnInit {
 
   serverAddress = environment.serverAddress;
   profilePicture;
+  notifications: ReservationNotification[] = [];
+  notificationCount: number = 0;
+  constructor(
+    private router: Router,
+    private userService: UsersService,
+    private _notificationService: NotificationService,
+    private _reservationService: ReservationService
+  ) {}
 
-  constructor(private router: Router, private userService: UsersService) {}
+  ngOnChanges(changes: SimpleChanges) {
+    // changes.prop contains the old and the new value...
+  }
+  //
+  acceptNotification(notification: ReservationNotification) {
+    this._reservationService
+      .acceptReservation(notification.reservationId)
+      .subscribe((x) => {
+        this._notificationService
+          .resolveNotification(notification.id)
+          .subscribe();
+      });
+  }
+  //
+  declineNotification(notification: ReservationNotification) {
+    this._reservationService
+      .declineReservation(notification.reservationId)
+      .subscribe((x) => {
+        this._notificationService
+          .resolveNotification(notification.id)
+          .subscribe();
+      });
+  }
+
+  ngOnInit(): void {
+    debugger;
+    this._notificationService
+      .getAllReservationNotifications(localStorage.getItem("userId"))
+      .subscribe((notifications) => {
+        (notifications as ReservationNotification[]).forEach((n) => {
+          debugger;
+          if (n.status == 0)
+            this.notificationCount = this.notificationCount + 1;
+          if (n.status != 2) this.notifications.push(n); //2 je da je resolvovana notifikacija
+        });
+
+        this.notificationCount = this.notifications.length;
+      });
+  }
 
   onNotificationClick() {
     if (this.notificationsOpen) {
-      $(document).ready(function() {
-        $("#notifications-list").fadeIn("slow", function() {});
+      $(document).ready(function () {
+        $("#notifications-list").fadeIn("slow", function () {});
       });
     } else {
-      $(document).ready(function() {
-        $("#notifications-list").fadeOut("slow", function() {});
+      $(document).ready(function () {
+        $("#notifications-list").fadeOut("slow", function () {});
       });
     }
 
     this.notificationsOpen = this.notificationsOpen ? false : true;
+    //setujem ih na vidjene da se ne prikazuju u prozoru
+    this.notifications.forEach((n) => {
+      this._notificationService
+        .markReservationNotificationAsViewd(n.id)
+        .subscribe();
+    });
   }
 
   onClick(event) {
@@ -62,8 +117,6 @@ export class NavigationComponent implements OnInit {
       this.open = false;
     }
   }
-
-  ngOnInit(): void {}
 
   chechIfAdmin() {
     if (this.userService.roleMatch(["Admin"])) {

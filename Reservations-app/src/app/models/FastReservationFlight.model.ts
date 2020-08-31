@@ -10,6 +10,7 @@ export class FastReservationFlight {
     public price: string,
     public discount: number,
     public flightId: number,
+    public seatMark: string,
     public seatNo: number,
     public rowNumber: number,
     public deadlineForCanceling,

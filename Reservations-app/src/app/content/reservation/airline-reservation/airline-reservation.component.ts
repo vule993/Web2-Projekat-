@@ -3,7 +3,7 @@ import { Reservation } from "src/app/models/Reservation.model";
 import { SelectedseatsService } from "src/app/services/selectedseats.service";
 import { UsersService } from "src/app/services/users.service";
 import { UserModel } from "src/app/models/User.model";
-import { Seat } from "src/app/models/Seat.model";
+import { Seat, Row } from "src/app/models/Seat.model";
 import { CarsService } from "src/app/services/cars.service";
 import { CarCompany } from "src/app/models/CarCompany.model";
 import { ReservationService } from "src/app/services/reservation.service";
@@ -17,6 +17,8 @@ import { FormModel } from "src/app/models/formModel";
 import { InviteFriend } from "src/app/models/InviteFriend.model";
 import { ThrowStmt } from "@angular/compiler";
 import { SeatConfiguration } from "src/app/models/Seat-configuration.model";
+import { ReservationNotification } from "src/app/models/ReservationNotification";
+import { NotificationService } from "src/app/services/notification.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 declare var $: any;
@@ -61,7 +63,8 @@ export class AirlineReservationComponent implements OnInit {
     private selectedSeatService: SelectedseatsService,
     private userService: UsersService,
     private carService: CarsService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private _notificationService: NotificationService
   ) {}
 
   proceedToRentACar() {
@@ -84,8 +87,10 @@ export class AirlineReservationComponent implements OnInit {
       this.carCompanies = data as CarCompany[];
       this.carCompanies.forEach(cp => {
         if (
-          cp.city ==
-          this.flight.destinations[this.flight.destinations.length - 1].city
+          cp.city.toLowerCase() ==
+          this.flight.destinations[
+            this.flight.destinations.length - 1
+          ].city.toLowerCase()
         ) {
           this.carService.getCarsOfCompany(cp.id).subscribe(cars => {
             this.allCarsToShow = (cars as Car[]).filter(c => !c.isReserved);
@@ -181,7 +186,7 @@ export class AirlineReservationComponent implements OnInit {
 
   createReservation() {
     let reservation: Reservation;
-
+    let notification: ReservationNotification;
     this.selectedSeats.forEach(seat => {
       //za svkaog coveka na sedistu pravim rezervaciju
 
@@ -206,13 +211,33 @@ export class AirlineReservationComponent implements OnInit {
           Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
         ),
-        this.carReservation,
-        false,
-        false
+        this.carReservation
       );
+      //probacu da notifikacije kreiram na back-u
+      //
 
-      this.reservationService.createReservation(reservation).subscribe();
+      this.reservationService.createReservation(reservation).subscribe(r => {
+        notification = new ReservationNotification(
+          0,
+          localStorage.getItem("userId"),
+          seat.passengerEmail,
+          (r as Reservation).id,
+          localStorage.getItem("userId") + " invites you to a trip!",
+          0
+        );
+        debugger;
+        this._notificationService
+          .createReservationNotification(notification)
+          .subscribe();
+      });
     });
+
+    //evo ubacio sam ja
+
+    if (this.takeRentACar) {
+      let r = new Reservation(0, null, this.carReservation);
+      this.reservationService.createReservation(reservation).subscribe(r => {});
+    }
   }
 
   addGuest() {
@@ -252,8 +277,7 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   friendsToSelectNo() {
-    return this.selectedSeats.filter((seat) => seat.passengerEmail == "")
-      .length; //-1 za usera koji selektuje
+    return this.selectedSeats.filter(seat => seat.passengerEmail == "").length; //-1 za usera koji selektuje
   }
 
   onCheck(event, user: UserModel) {
@@ -261,20 +285,25 @@ export class AirlineReservationComponent implements OnInit {
     if ($(element).hasClass("uncheck")) {
       //prvo provera da li ima gde da se sedne
       if (this.friendsToSelectNo() <= 0) {
-        alert("Popunjena su sva selektovana mesta!");
+        alert("Please check more seats!");
         return;
-      }
+      } else {
+        if (this.checkIfAlreadyReserved(user)) {
+          alert("This user already reserved a ticket for this flight!");
+          return;
+        } else {
+          //onda idu ostali
+          //dodajem coveka na sediste
+          $(element).removeClass("uncheck");
+          $(element).addClass("check");
 
-      //onda idu ostali
-      //dodajem coveka na sediste
-      $(element).removeClass("uncheck");
-      $(element).addClass("check");
+          for (let s of this.selectedSeats) {
+            if (s.passengerEmail == "") {
+              s.passengerEmail = user.email;
 
-      for (let s of this.selectedSeats) {
-        if (s.passengerEmail == "") {
-          s.passengerEmail = user.email;
-
-          break;
+              break;
+            }
+          }
         }
       }
     } else {
@@ -293,6 +322,19 @@ export class AirlineReservationComponent implements OnInit {
         }
       }
     }
+  }
+
+  checkIfAlreadyReserved(user: UserModel): boolean {
+    let rows: Row[] = this.flight.seatConfiguration.seats;
+
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < rows[i].seats.length; j++) {
+        if (rows[i].seats[j].passengerEmail == user.email) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   ngOnInit(): void {
@@ -332,7 +374,7 @@ export class AirlineReservationComponent implements OnInit {
     this.selectedSeatService.unSelectedSeats.subscribe(unSelectedSeats => {
       debugger;
       //osloboditi usere sa sedista promeniti im check i isprazniti observable
-      (unSelectedSeats as Seat[]).forEach((seat) => {
+      (unSelectedSeats as Seat[]).forEach(seat => {
         if (seat.passengerEmail != "") {
           //i ovde uklanjamo inicijatora
           if (seat.passengerEmail == localStorage.getItem("userId")) {
@@ -347,7 +389,7 @@ export class AirlineReservationComponent implements OnInit {
               passengerIndex = index;
             }
           });
-          alert(passengerIndex);
+          //alert(passengerIndex);
           $("#userId" + passengerIndex).removeClass("check");
           $("#userId" + passengerIndex).addClass("uncheck");
 
@@ -364,12 +406,20 @@ export class AirlineReservationComponent implements OnInit {
 
       if (!this.currentUserSituated && this.friendsToSelectNo() > 0) {
         alert("dodajem glavnog");
-        for (let s of this.selectedSeats) {
-          if (s.passengerEmail == "") {
-            s.passengerEmail = this.currentUser.email;
-            this.currentUserSituated = true;
-            break;
+
+        if (!this.checkIfAlreadyReserved(this.currentUser)) {
+          for (let s of this.selectedSeats) {
+            if (s.passengerEmail == "") {
+              s.passengerEmail = this.currentUser.email;
+              this.currentUserSituated = true;
+              break;
+            }
           }
+        } else {
+          alert(
+            "You are already reserved your ticket! You can call friends! :)"
+          );
+          return;
         }
       }
     });
@@ -384,7 +434,7 @@ export class AirlineReservationComponent implements OnInit {
     return Math.round(difference / oneDay);
   }
 
-  initForm(){
+  initForm() {
     let startDate = null;
     let endDate = null;
 

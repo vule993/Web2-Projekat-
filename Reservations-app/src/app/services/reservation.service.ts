@@ -27,6 +27,13 @@ export class ReservationService {
   cancelReservation(reservation: Reservation) {
     return this._http.put(this.baseUrl + "CancelReservation", reservation);
   }
+  acceptReservation(id: number) {
+    return this._http.get(this.baseUrl + "AcceptReservation/" + id);
+  }
+  declineReservation(id: number) {
+    return this._http.get(this.baseUrl + "DeclineReservation/" + id);
+  }
+
   calculateNumOfDays(first, second) {
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.

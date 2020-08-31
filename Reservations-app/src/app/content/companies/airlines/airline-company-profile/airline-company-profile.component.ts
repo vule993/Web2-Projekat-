@@ -39,6 +39,8 @@ export class AirlineCompanyProfileComponent implements OnInit {
 
   ifRated: boolean = false;
 
+  isOnFlight: Boolean = false;
+
   center: google.maps.LatLngLiteral = {
     lat: 51.678418,
     lng: 7.809007,
@@ -70,11 +72,7 @@ export class AirlineCompanyProfileComponent implements OnInit {
   getMonth(month: string): number {
     return this.months.findIndex((m) => m == month);
   }
-  cancelDateCalculate(
-    differenceHours,
-    date: string[] = [],
-    time: string[] = []
-  ) {
+  dateCalculate(date: string[] = [], time: string[] = [], differenceHours = 0) {
     let dateObject = new Date();
 
     dateObject.setDate(+date[0]);
@@ -113,6 +111,15 @@ export class AirlineCompanyProfileComponent implements OnInit {
       let fs: FastReservationFlight;
       (flights as Flight[]).forEach((flight) => {
         let f: Flight = flight;
+
+        let flightDate = this.dateCalculate(
+          f.startDate.split("-"),
+          f.startTime.split(":")
+        );
+        let currenDate = new Date();
+
+        if (flightDate < currenDate) return;
+
         debugger;
         //ako je ova kompanija
         if (f.avioCompany.id == this.currentCompany.id) {
@@ -133,12 +140,13 @@ export class AirlineCompanyProfileComponent implements OnInit {
                   f.price,
                   f.discount,
                   f.id,
+                  seat.seatNo.toString(),
                   Math.ceil(seat.seatNo / rowWidth) - 1,
                   Math.ceil((seat.seatNo - 1) % rowWidth),
-                  this.cancelDateCalculate(
-                    3,
+                  this.dateCalculate(
                     f.startDate.split("-"),
-                    f.startTime.split(":")
+                    f.startTime.split(":"),
+                    3
                   ),
                   localStorage.getItem("userId")
                 );
@@ -151,46 +159,66 @@ export class AirlineCompanyProfileComponent implements OnInit {
     });
   }
 
+  checkIfAlreadyOnFlight(rows: Row[]): boolean {
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < rows[i].seats.length; j++) {
+        if (rows[i].seats[j].passengerEmail == localStorage.getItem("userId"))
+          return true;
+      }
+    }
+
+    return false;
+  }
+
   reserve(seat: FastReservationFlight) {
     //this.seatConfigService.updateSeat(seat).subscribe();
 
-    let reservation = new Reservation(
-      0,
-      new AirlineReservation(
+    this.flightService.getFlight(seat.flightId).subscribe((flight) => {
+      if (
+        this.checkIfAlreadyOnFlight((flight as Flight).seatConfiguration.seats)
+      ) {
+        alert("You already have reservation for this flight!");
+        return;
+      }
+      //ako prodje dodajem
+      let reservation = new Reservation(
         0,
-        new Flight(
-          seat.flightId,
-          null,
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
+        new AirlineReservation(
           0,
-          null,
-          null,
-          "",
-          "",
+          new Flight(
+            seat.flightId,
+            null,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            0,
+            null,
+            null,
+            "",
+            "",
+            ""
+          ),
+          localStorage.getItem("userId"),
+          seat.deadlineForCanceling,
+          seat.rowNumber,
+          seat.seatNo,
           ""
         ),
-        localStorage.getItem("userId"),
-        seat.deadlineForCanceling,
-        seat.rowNumber,
-        seat.seatNo,
-        ""
-      ),
-      null,
-      false,
-      false
-    );
+        null,
+        "UNCONFIRMED",
+        false
+      );
 
-    this._reservationService.createReservation(reservation).subscribe();
+      this._reservationService.createReservation(reservation).subscribe();
 
-    this.fastSeats.forEach((fs, index) => {
-      if (fs.id == seat.id) {
-        this.fastSeats.splice(index, 1);
-      }
+      this.fastSeats.forEach((fs, index) => {
+        if (fs.id == seat.id) {
+          this.fastSeats.splice(index, 1);
+        }
+      });
     });
   }
 

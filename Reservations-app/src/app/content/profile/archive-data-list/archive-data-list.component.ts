@@ -69,7 +69,7 @@ export class ArchiveDataListComponent implements OnInit {
     let flightRating = new FlightRating(
       0,
       localStorage.getItem("userId"),
-      reservation.airlineReservation.flight.id,
+      reservation.id,
       rate
     );
 

@@ -1,3 +1,11 @@
+.avg-rate {
+  font-size: 4vw;
+  padding: 1vw 3vw;
+  color: #4c3d9e;
+}
+#selector > .form-control {
+  width: 15vw !important;
+}
 h2 {
   text-align: center;
   color: #4c3d9e;

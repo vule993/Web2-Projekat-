@@ -26,7 +26,7 @@
         </div>
 
         <div class="fright">
-          <ul>
+          <ul class="fleft">
             <li *ngIf="checkIfLoggedIn() && chechIfAdmin()">
               <img src="../../assets/face.png" class="fleft" />
               <a routerLink="admin/head-admin/profile" class="fleft"
@@ -71,87 +71,54 @@
               />
               <a routerLink="register" class="fleft">Registration</a>
             </li>
-            <li id="notifications" (click)="onNotificationClick()">
-              <span>5</span>
-              <img src="../../assets/site/icons/bell-white.png" class="fleft" />
 
-              <div id="notifications-list">
-                <div id="viewport">
-                  <div class="overflow-hidden">
-                    <a routerLink="" class="fleft"
-                      >Vukasin Radic te je pozvao na putovanje!</a
-                    >
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/check.png" />
-                    </a>
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/cancel.png"
-                    /></a>
-                  </div>
-
-                  <div class="overflow-hidden">
-                    <a routerLink="" class="fleft"
-                      >Aleksandar Novakovic salje pozivnicu za prijateljstvo!</a
-                    >
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/check.png" />
-                    </a>
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/cancel.png"
-                    /></a>
-                  </div>
-
-                  <div class="overflow-hidden">
-                    <a routerLink="" class="fleft"
-                      >Vukasin Radic te je pozvao na putovanje!</a
-                    >
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/check.png" />
-                    </a>
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/cancel.png"
-                    /></a>
-                  </div>
-
-                  <div class="overflow-hidden">
-                    <a routerLink="" class="fleft"
-                      >Vukasin Radic te je pozvao na putovanje!</a
-                    >
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/check.png" />
-                    </a>
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/cancel.png"
-                    /></a>
-                  </div>
-
-                  <div class="overflow-hidden">
-                    <a routerLink="" class="fleft"
-                      >Vukasin Radic te je pozvao na putovanje!</a
-                    >
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/check.png" />
-                    </a>
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/cancel.png"
-                    /></a>
-                  </div>
-
-                  <div class="overflow-hidden">
-                    <a routerLink="" class="fleft"
-                      >Vukasin Radic te je pozvao na putovanje!</a
-                    >
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/check.png" />
-                    </a>
-                    <a routerLink="" class="fleft">
-                      <img src="../../assets/site/icons/cancel.png"
-                    /></a>
-                  </div>
-                </div>
-              </div>
-            </li>
+            <!--  -->
           </ul>
+
+          <div id="notifications" class="fright">
+            <div
+              id="bell"
+              (click)="onNotificationClick()"
+              class="fleft overflow-hidden"
+            >
+              <span
+                *ngIf="notificationCount != 0 && notificationCount != undefined"
+                >{{ notificationCount }}</span
+              >
+              <img src="../../assets/site/icons/bell-white.png" />
+            </div>
+
+            <div id="notifications-list">
+              <div id="viewport">
+                <!--
+          
+          
+                              -->
+                <div *ngFor="let n of notifications" class="overflow-hidden">
+                  <a routerLink="" class="fleft">{{ n.message }}</a>
+                  <a
+                    (click)="acceptNotification(n)"
+                    routerLink=""
+                    class="fleft"
+                  >
+                    <img src="../../assets/site/icons/check.png" />
+                  </a>
+
+                  <a
+                    (click)="declineNotification(n)"
+                    routerLink=""
+                    class="fleft"
+                  >
+                    <img src="../../assets/site/icons/cancel.png"
+                  /></a>
+                </div>
+                <!--
+          
+          
+                              -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
