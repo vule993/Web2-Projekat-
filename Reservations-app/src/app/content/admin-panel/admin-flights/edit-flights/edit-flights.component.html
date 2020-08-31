@@ -52,9 +52,12 @@
 
     <select id="discount" class="form-control short-input short-margin fleft">
       <option value="0">Select discount</option>
-      <option *ngFor="let discount of allDiscounts" value="{{ discount }}"
-        >{{ discount }}%</option
+      <option
+        *ngFor="let discount of allDiscounts"
+        value="{{ discount.value }}"
       >
+        {{ discount.value }}%
+      </option>
     </select>
 
     <select
@@ -66,8 +69,9 @@
       <option
         *ngFor="let planeType of allPlaneTypes"
         value="{{ planeType.id }}"
-        >{{ planeType.name }}</option
       >
+        {{ planeType.name }}
+      </option>
     </select>
   </div>
 

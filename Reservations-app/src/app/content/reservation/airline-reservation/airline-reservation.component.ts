@@ -26,7 +26,7 @@ declare var $: any;
 @Component({
   selector: "app-airline-reservation",
   templateUrl: "./airline-reservation.component.html",
-  styleUrls: ["./airline-reservation.component.css"]
+  styleUrls: ["./airline-reservation.component.css"],
 })
 export class AirlineReservationComponent implements OnInit {
   @Output() event = new EventEmitter(); //???
@@ -56,7 +56,7 @@ export class AirlineReservationComponent implements OnInit {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
 
   constructor(
@@ -74,7 +74,7 @@ export class AirlineReservationComponent implements OnInit {
       $("#finish").slideUp(1200);
       $("html, body").animate(
         {
-          scrollTop: $("#space").offset().top + $("#space").outerHeight(true)
+          scrollTop: $("#space").offset().top + $("#space").outerHeight(true),
         },
         1200
       );
@@ -83,23 +83,23 @@ export class AirlineReservationComponent implements OnInit {
 
   prepareCars() {
     //load car companies
-    this.carService.getCarCompanies().subscribe(data => {
+    this.carService.getCarCompanies().subscribe((data) => {
       this.carCompanies = data as CarCompany[];
-      this.carCompanies.forEach(cp => {
+      this.carCompanies.forEach((cp) => {
         if (
           cp.city.toLowerCase() ==
           this.flight.destinations[
             this.flight.destinations.length - 1
           ].city.toLowerCase()
         ) {
-          this.carService.getCarsOfCompany(cp.id).subscribe(cars => {
-            this.allCarsToShow = (cars as Car[]).filter(c => !c.isReserved);
+          this.carService.getCarsOfCompany(cp.id).subscribe((cars) => {
+            this.allCarsToShow = (cars as Car[]).filter((c) => !c.isReserved);
             this.carOffers = [];
 
-            this.allCarsToShow.forEach(c => {
+            this.allCarsToShow.forEach((c) => {
               this.carService
                 .fetchCarCompanyByCarId(c.id)
-                .subscribe(company => {
+                .subscribe((company) => {
                   this.carCompany = company as CarCompany;
 
                   let carOffer = new CarOffer(
@@ -136,7 +136,7 @@ export class AirlineReservationComponent implements OnInit {
     $("#cars").slideDown(1200);
     $("html, body").animate(
       {
-        scrollTop: $("#cars").offset().top
+        scrollTop: $("#cars").offset().top,
       },
       1200
     );
@@ -181,13 +181,13 @@ export class AirlineReservationComponent implements OnInit {
   }
 
   getMonth(month: string): number {
-    return this.months.findIndex(m => m == month);
+    return this.months.findIndex((m) => m == month);
   }
 
   createReservation() {
     let reservation: Reservation;
     let notification: ReservationNotification;
-    this.selectedSeats.forEach(seat => {
+    this.selectedSeats.forEach((seat) => {
       //za svkaog coveka na sedistu pravim rezervaciju
 
       //31-August-2020  format
@@ -221,7 +221,7 @@ export class AirlineReservationComponent implements OnInit {
         reservation.carReservation = this.carReservation;
       }
 
-      this.reservationService.createReservation(reservation).subscribe(r => {
+      this.reservationService.createReservation(reservation).subscribe((r) => {
         notification = new ReservationNotification(
           0,
           localStorage.getItem("userId"),
@@ -235,7 +235,18 @@ export class AirlineReservationComponent implements OnInit {
           .createReservationNotification(notification)
           .subscribe();
       });
-    });
+    }); //kraj petlje
+
+    //evo ubacio sam ja
+
+    // if (this.takeRentACar) {
+    //   let r = new Reservation(0, null, this.carReservation);
+    //   this.reservationService
+    //     .createReservation(reservation)
+    //     .subscribe((r) => {});
+    // }
+
+    window.location.href = "http://localhost:4200/profile/friends";
   }
 
   addGuest() {
@@ -243,6 +254,16 @@ export class AirlineReservationComponent implements OnInit {
     let lastName = $("#lastName").val();
     let email = $("#email").val();
     let passportNo = $("#passportNo").val();
+
+    if (email == undefined || email == "") {
+      alert("Email is required!");
+      return;
+    }
+
+    if (passportNo == undefined || passportNo == "") {
+      alert("Passport number is required!");
+      return;
+    }
 
     $("#firstName").val("");
     $("#lastName").val("");
@@ -265,17 +286,18 @@ export class AirlineReservationComponent implements OnInit {
           localStorage.getItem("userId")
         )
       )
-      .subscribe(result => {
+      .subscribe((result) => {
         this.userService
           .getAllFriends(localStorage.getItem("userId"))
-          .subscribe(friends => {
+          .subscribe((friends) => {
             this.users = friends;
           });
       });
   }
 
   friendsToSelectNo() {
-    return this.selectedSeats.filter(seat => seat.passengerEmail == "").length; //-1 za usera koji selektuje
+    return this.selectedSeats.filter((seat) => seat.passengerEmail == "")
+      .length; //-1 za usera koji selektuje
   }
 
   onCheck(event, user: UserModel) {
@@ -343,25 +365,23 @@ export class AirlineReservationComponent implements OnInit {
 
     this.userService
       .getAllFriends(localStorage.getItem("userId"))
-      .subscribe(users => {
+      .subscribe((users) => {
         this.users = users;
       });
 
-    this.userService.getUserProfile().subscribe(user => {
+    this.userService.getUserProfile().subscribe((user) => {
       this.currentUser = user;
     });
 
     $(window)
-      .resize(function() {
-        let h = +$("#seat-picker")
-          .css("height")
-          .split("px")[0];
+      .resize(function () {
+        let h = +$("#seat-picker").css("height").split("px")[0];
 
         $("#friends-selector").css({ height: h + "px" });
         $(".friends").css({ height: h - 100 + "px" });
         $("html, body").animate(
           {
-            scrollTop: $("#proceed").offset().top
+            scrollTop: $("#proceed").offset().top,
           },
           1200
         );
@@ -369,10 +389,10 @@ export class AirlineReservationComponent implements OnInit {
       .delay(50);
 
     //sta ako decekira sediste dok user sedi na njemu
-    this.selectedSeatService.unSelectedSeats.subscribe(unSelectedSeats => {
+    this.selectedSeatService.unSelectedSeats.subscribe((unSelectedSeats) => {
       debugger;
       //osloboditi usere sa sedista promeniti im check i isprazniti observable
-      (unSelectedSeats as Seat[]).forEach(seat => {
+      (unSelectedSeats as Seat[]).forEach((seat) => {
         if (seat.passengerEmail != "") {
           //i ovde uklanjamo inicijatora
           if (seat.passengerEmail == localStorage.getItem("userId")) {
@@ -397,13 +417,19 @@ export class AirlineReservationComponent implements OnInit {
       });
     });
     //sta ako cekira sediste
-    this.selectedSeatService.selectedSeats.subscribe(allSeats => {
+    this.selectedSeatService.selectedSeats.subscribe((allSeats) => {
       this.selectedSeats = allSeats;
 
       //dodajem glavnog ako ima gde da sedne
 
       if (!this.currentUserSituated && this.friendsToSelectNo() > 0) {
         alert("dodajem glavnog");
+        if (
+          this.currentUser.passportNo == null ||
+          this.currentUser.passportNo == undefined ||
+          this.currentUser.passportNo == ""
+        )
+          alert("Update your passport number on your profile!");
 
         if (!this.checkIfAlreadyReserved(this.currentUser)) {
           for (let s of this.selectedSeats) {
@@ -438,7 +464,7 @@ export class AirlineReservationComponent implements OnInit {
 
     this.CarReservationForm = new FormGroup({
       startDate: new FormControl(startDate, Validators.required),
-      endDate: new FormControl(endDate, Validators.required)
+      endDate: new FormControl(endDate, Validators.required),
     });
   }
 }

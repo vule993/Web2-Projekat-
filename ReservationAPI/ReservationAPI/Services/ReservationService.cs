@@ -39,6 +39,7 @@ namespace ReservationAPI.Services
             if (reservation != null)
             {
                 reservation.Status = "CONFIRMED";
+                reservation.AirlineReservation.Flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber].SeatStatus = "CONFIRMED";
                 await _context.SaveChangesAsync();
             }
             return HttpStatusCode.BadRequest;

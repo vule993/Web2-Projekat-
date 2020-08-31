@@ -21,6 +21,6 @@ export class DiscountService {
     return this._http.get(this.baseURL + "GetAllDiscounts");
   }
   deleteDiscount(d: number) {
-    return this._http.get(this.baseURL + "CreateDiscount/" + d);
+    return this._http.get(this.baseURL + "DeleteDiscount/" + d);
   }
 }

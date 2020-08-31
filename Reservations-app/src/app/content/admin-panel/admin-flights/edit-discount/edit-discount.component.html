@@ -17,14 +17,14 @@
   <div class="overflow-hidden">
     <div *ngFor="let discount of allDiscounts" class="item">
       <span class="fleft">{{ discount.value }}%</span>
-      <a href="" class="overflow-hidden">
+      <div class="overflow-hidden">
         <img
           (click)="removeDiscount(discount.id)"
           class="fright"
           src="../../../../../assets/site/icons/cancel.png"
           alt=""
         />
-      </a>
+      </div>
     </div>
   </div>
 </div>

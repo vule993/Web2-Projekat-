@@ -19,19 +19,14 @@ export class EditDiscountComponent implements OnInit {
         .getAllDiscounts()
         .subscribe((d) => (this.allDiscounts = d as Discount[]));
     });
-    this.allDiscounts.push(d);
   }
 
   removeDiscount(id) {
-    this.discountService.deleteDiscount(id).subscribe((x) => {
+    debugger;
+    this.discountService.deleteDiscount(+id).subscribe((x) => {
       this.discountService
         .getAllDiscounts()
         .subscribe((d) => (this.allDiscounts = d as Discount[]));
-    });
-    this.allDiscounts.forEach((d, index) => {
-      if (d.id == id) {
-        this.allDiscounts.splice(index, 1);
-      }
     });
   }
   ngOnInit(): void {

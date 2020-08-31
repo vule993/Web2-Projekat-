@@ -376,7 +376,7 @@ namespace ReservationAPI.Services
 
         public async Task<IEnumerable<Discount>> GetAllDiscounts()
         {
-            return await _context.Discount.ToListAsync();
+            return (await _context.Discount.ToListAsync()).FindAll(d => d.Status);
         }
 
         public async Task<Discount> GetDiscount(string id)
@@ -406,7 +406,7 @@ namespace ReservationAPI.Services
                 discount.Status = false;
                 await _context.SaveChangesAsync();
 
-                return discount;
+                return HttpStatusCode.OK;
             }catch(Exception e)
             {
                 Console.WriteLine(e.Message);

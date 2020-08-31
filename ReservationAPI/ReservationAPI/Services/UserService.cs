@@ -266,7 +266,8 @@ namespace ReservationAPI.Services
                     user.City = userModel.City;
                 if (userModel.Image != "")
                     user.Image = userModel.Image;
-
+                if (userModel.PassportNo != "")
+                    user.PassportNo = userModel.PassportNo;
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
 
