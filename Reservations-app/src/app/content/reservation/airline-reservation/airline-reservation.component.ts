@@ -229,6 +229,15 @@ export class AirlineReservationComponent implements OnInit {
           .subscribe();
       });
     });
+
+    //evo ubacio sam ja
+
+    if (this.takeRentACar) {
+      let r = new Reservation(0, null, this.carReservation);
+      this.reservationService
+        .createReservation(reservation)
+        .subscribe((r) => {});
+    }
   }
 
   addGuest() {
