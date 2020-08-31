@@ -209,7 +209,7 @@ export class AirlineReservationComponent implements OnInit {
           Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
         ),
-        this.carReservation
+        null
       );
       //probacu da notifikacije kreiram na back-u
       //
@@ -238,6 +238,8 @@ export class AirlineReservationComponent implements OnInit {
         .createReservation(reservation)
         .subscribe((r) => {});
     }
+
+    window.location.href = "http://localhost:4200/profile/friends";
   }
 
   addGuest() {
@@ -245,6 +247,16 @@ export class AirlineReservationComponent implements OnInit {
     let lastName = $("#lastName").val();
     let email = $("#email").val();
     let passportNo = $("#passportNo").val();
+
+    if (email == undefined || email == "") {
+      alert("Email is required!");
+      return;
+    }
+
+    if (passportNo == undefined || passportNo == "") {
+      alert("Passport number is required!");
+      return;
+    }
 
     $("#firstName").val("");
     $("#lastName").val("");

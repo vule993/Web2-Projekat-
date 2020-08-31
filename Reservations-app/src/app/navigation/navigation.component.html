@@ -95,22 +95,22 @@
           
                               -->
                 <div *ngFor="let n of notifications" class="overflow-hidden">
-                  <a routerLink="" class="fleft">{{ n.message }}</a>
-                  <a
+                  <div class="fleft">{{ n.message }}</div>
+                  <div
                     (click)="acceptNotification(n)"
                     routerLink=""
                     class="fleft"
                   >
                     <img src="../../assets/site/icons/check.png" />
-                  </a>
+                  </div>
 
-                  <a
+                  <div
                     (click)="declineNotification(n)"
                     routerLink=""
                     class="fleft"
                   >
-                    <img src="../../assets/site/icons/cancel.png"
-                  /></a>
+                    <img src="../../assets/site/icons/cancel.png" />
+                  </div>
                 </div>
                 <!--
           

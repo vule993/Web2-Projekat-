@@ -13,11 +13,21 @@
       }}
     </div>
 
-    <div class="fright">
+    <div
+      class="fright"
+      *ngIf="
+        !checkDatePass(
+          r.airlineReservation.flight.startDate,
+          r.airlineReservation.flight.startTime,
+          3
+        )
+      "
+    >
       <button (click)="cancelReservation(r)" class="btn btn-success">
         Cancel
       </button>
     </div>
+
     <div class="fright">
       {{ r.airlineReservation.flight.startDate }}
     </div>
