@@ -239,12 +239,12 @@ export class AirlineReservationComponent implements OnInit {
 
     //evo ubacio sam ja
 
-    if (this.takeRentACar) {
-      let r = new Reservation(0, null, this.carReservation);
-      this.reservationService
-        .createReservation(reservation)
-        .subscribe((r) => {});
-    }
+    // if (this.takeRentACar) {
+    //   let r = new Reservation(0, null, this.carReservation);
+    //   this.reservationService
+    //     .createReservation(reservation)
+    //     .subscribe((r) => {});
+    // }
 
     window.location.href = "http://localhost:4200/profile/friends";
   }
