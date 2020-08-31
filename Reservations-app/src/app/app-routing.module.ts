@@ -43,7 +43,7 @@ import { UserListComponent } from "./content/user-list/user-list.component";
 import { EditOtherServicesComponent } from "./content/admin-panel/admin-flights/edit-other-services/edit-other-services.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "companies/airlines", pathMatch: "full" },
+  { path: "", redirectTo: "home", pathMatch: "full" },
 
   { path: "home", component: HomeComponent },
   { path: "login", component: LoginComponent },
@@ -52,13 +52,13 @@ const routes: Routes = [
   {
     path: "admin-panel",
     component: AdminPanelComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   // ovo je samo za redirect, airlines je default komponenta za stranicu companies
   {
     path: "companies",
     redirectTo: "companies/airlines",
-    pathMatch: "full",
+    pathMatch: "full"
   },
   {
     path: "companies",
@@ -67,30 +67,30 @@ const routes: Routes = [
       { path: "airlines", component: AirlinesComponent },
       { path: "airlines/:id", component: AirlineCompanyProfileComponent },
       { path: "car-companies", component: CarCompaniesComponent },
-      { path: "car-companies/:id", component: CarCompanyProfileComponent },
-    ],
+      { path: "car-companies/:id", component: CarCompanyProfileComponent }
+    ]
   },
   {
     path: "users-list",
     component: UserListComponent,
     canActivate: [AuthGuard],
-    data: { permittedRoles: ["User", "Admin", "AvioAdmin", "CarAdmin"] },
+    data: { permittedRoles: ["User", "Admin", "AvioAdmin", "CarAdmin"] }
   },
   {
     path: "flight/:id",
-    component: ReservationComponent,
+    component: ReservationComponent
   },
   {
     path: "avio-reservation/:id",
     component: ReservationComponent,
     canActivate: [AuthGuard],
-    data: { permittedRoles: ["User"] },
+    data: { permittedRoles: ["User"] }
   },
   {
     path: "car-reservation/:id",
     component: CarReservationComponent,
     canActivate: [AuthGuard],
-    data: { permittedRoles: ["User"] },
+    data: { permittedRoles: ["User"] }
   },
   {
     path: "profile",
@@ -107,26 +107,26 @@ const routes: Routes = [
     children: [
       {
         path: "friends",
-        component: FriendsDataListComponent,
+        component: FriendsDataListComponent
       },
       {
         path: "archive",
-        component: ArchiveDataListComponent,
+        component: ArchiveDataListComponent
       },
       {
         path: "reservations",
-        component: ReservationsDataListComponent,
+        component: ReservationsDataListComponent
       },
       {
         path: "edit-profile",
-        component: EditProfileComponent,
-      },
-    ],
+        component: EditProfileComponent
+      }
+    ]
   },
   {
     //ovo ce biti url kada neko zeli da doda nekoga, pa ce se prikazati samo info, tj bez edit menija
     path: "profile-view",
-    component: ProfileComponent,
+    component: ProfileComponent
   },
   {
     path: "admin",
@@ -149,9 +149,9 @@ const routes: Routes = [
           { path: "create-car-company", component: CreateCarCompanyComponent },
           {
             path: "create-avio-company",
-            component: CreateAvioCompanyComponent,
-          },
-        ],
+            component: CreateAvioCompanyComponent
+          }
+        ]
       },
       {
         path: "avio",
@@ -166,8 +166,8 @@ const routes: Routes = [
           { path: "discount", component: EditDiscountComponent },
           { path: "seat-config", component: EditSeatsComponent },
           { path: "other-services", component: EditOtherServicesComponent },
-          { path: "business-report", component: EditBusinessReportComponent },
-        ],
+          { path: "business-report", component: EditBusinessReportComponent }
+        ]
       },
       {
         path: "car",
@@ -179,15 +179,15 @@ const routes: Routes = [
           { path: "edit-company", component: EditCarProfileComponent },
           { path: "cars", component: EditCarListComponent },
           { path: "price-list", component: EditCarPricesComponent },
-          { path: "statistics", component: EditCarStatisticsComponent },
-        ],
-      },
-    ],
-  },
+          { path: "statistics", component: EditCarStatisticsComponent }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
