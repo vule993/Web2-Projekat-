@@ -372,6 +372,51 @@ namespace ReservationAPI.Services
         #endregion
 
 
+        #region DISCOUNTS
+
+        public async Task<IEnumerable<Discount>> GetAllDiscounts()
+        {
+            return await _context.Discount.ToListAsync();
+        }
+
+        public async Task<Discount> GetDiscount(string id)
+        {
+            return (await _context.Discount.ToListAsync()).FirstOrDefault(x => x.Id == Int64.Parse(id));
+        }
+
+        public async Task<bool> CreateDiscount(Discount discount)
+        {
+            try
+            {
+                _context.Discount.Add(discount);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<object> DeleteDiscount(long id)
+        {
+            try
+            {
+                var discount = _context.Discount.ToList().FirstOrDefault(x => x.Id == id);
+                discount.Status = false;
+                await _context.SaveChangesAsync();
+
+                return discount;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return HttpStatusCode.BadRequest;
+            }
+        }
+        #endregion
+
+
+
         #region SEAT CONFIGURATIONS
 
         public async Task<IEnumerable<SeatConfiguration>> GetAllSeatConfigurations()

@@ -2,7 +2,7 @@
   <div class="add-item overflow-hidden">
     <div class="form-group">
       <input
-        [(ngModel)]="newDiscount"
+        id="discount"
         type="text"
         class="form-control"
         placeholder="Enter discount percents"
@@ -16,10 +16,10 @@
   </div>
   <div class="overflow-hidden">
     <div *ngFor="let discount of allDiscounts" class="item">
-      <span class="fleft">{{ discount }}%</span>
+      <span class="fleft">{{ discount.value }}%</span>
       <a href="" class="overflow-hidden">
         <img
-          (click)="removeDiscount(discount)"
+          (click)="removeDiscount(discount.id)"
           class="fright"
           src="../../../../../assets/site/icons/cancel.png"
           alt=""
