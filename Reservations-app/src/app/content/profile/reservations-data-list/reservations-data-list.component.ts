@@ -52,12 +52,21 @@ export class ReservationsDataListComponent implements OnInit {
 
     return dateObject < now;
   }
+
   cancelReservation(reservation: Reservation) {
     this._reservationService.cancelReservation(reservation).subscribe();
+    this.myReservations.forEach((r, index) => {
+      if (r.id == reservation.id) {
+        this.myReservations.splice(index, 1);
+      }
+    });
   }
+
   ngOnInit(): void {
     this._reservationService.getAllReservations().subscribe((reservations) => {
       (reservations as Reservation[]).forEach((r) => {
+        if (r.status != "CONFIRMED") return;
+
         if (
           (r.airlineReservation != null &&
             r.airlineReservation.passengerEmail ==
@@ -78,6 +87,7 @@ export class ReservationsDataListComponent implements OnInit {
               this._reservationService.finishReservation(r.id).subscribe();
             }
           } else {
+            debugger;
             this.myReservations.push(r);
           }
         }

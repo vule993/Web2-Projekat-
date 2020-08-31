@@ -15,7 +15,7 @@ namespace ReservationAPI.ViewModels
         public string Price { get; set; }
         public int Discount { get; set; }
         public string UserEmail { get; set; }
-
+        public int SeatMark { get; set; }     //broj sedista u redu   (ako je sirina reda 7 => 0-6)
         public int SeatNo { get; set; }     //broj sedista u redu   (ako je sirina reda 7 => 0-6)
         public int RowNumber { get; set; }  //broj reda
         public int FlightId { get; set; }

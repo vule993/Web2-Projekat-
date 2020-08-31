@@ -13,6 +13,9 @@ export class FlightsService {
     return this._httpClient.put(this.baseURL + "CreateFlight", flight);
   }
 
+  getFlight(id: number) {
+    return this._httpClient.get(this.baseURL + "GetFlight/" + id);
+  }
   getAllFlights() {
     return this._httpClient.get(this.baseURL + "GetAllFlights");
   }

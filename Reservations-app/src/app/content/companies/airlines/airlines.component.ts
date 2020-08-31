@@ -20,7 +20,7 @@ export class AirlinesComponent implements OnInit {
   //
   allFlightsToShow: Flight[];
 
-  allFlights: Flight[];
+  allFlights: Flight[] = [];
   allReservationsPreFilter: Flight[];
   //
   allDestinations: Destination[];
@@ -30,6 +30,21 @@ export class AirlinesComponent implements OnInit {
     hints: ["Likes", "Address", "Description"],
     values: [],
   };
+
+  public months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   constructor(
     private allAirlineCompaniesData: AviocompaniesService,
@@ -140,6 +155,21 @@ export class AirlinesComponent implements OnInit {
 
   openFlight(id: number) {}
 
+  getMonth(month: string): number {
+    return this.months.findIndex((m) => m == month);
+  }
+  dateCalculate(date: string[] = [], time: string[] = [], differenceHours = 0) {
+    let dateObject = new Date();
+
+    dateObject.setDate(+date[0]);
+    dateObject.setMonth(this.getMonth(date[1]));
+    dateObject.setFullYear(+date[2]);
+
+    dateObject.setHours(+time[0] - differenceHours);
+    dateObject.setMinutes(+time[1]);
+
+    return dateObject;
+  }
   ngOnInit(): void {
     this.destinationService
       .getAll()
@@ -149,7 +179,18 @@ export class AirlinesComponent implements OnInit {
 
     this._flightsService.getAllFlights().subscribe((flights) => {
       debugger;
-      this.allFlights = flights as Flight[];
+      (flights as Flight[]).forEach((f) => {
+        //
+        let flightDate = this.dateCalculate(
+          f.startDate.split("-"),
+          f.startTime.split(":")
+        );
+        let currenDate = new Date();
+
+        if (flightDate < currenDate) return;
+
+        this.allFlights.push(f);
+      });
     });
 
     this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {

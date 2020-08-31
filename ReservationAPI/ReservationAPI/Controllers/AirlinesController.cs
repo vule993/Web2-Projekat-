@@ -215,7 +215,10 @@ namespace ReservationAPI.Controllers
             return Unauthorized();
         }
 
-        
+        [HttpGet]
+        [Route("GetFlight/{id}")]
+        public async Task<object> GetFlight(long id) => await _service.GetFlight(id);
+
         #endregion
 
 

@@ -6,7 +6,7 @@ export class Reservation {
     public id: number,
     public airlineReservation: AirlineReservation,
     public carReservation: CarReservation,
-    public taken: boolean = false,
+    public status: string = "UNCONFIRMED",
     public isFinished: boolean = false
   ) {}
 }

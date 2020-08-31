@@ -37,6 +37,7 @@ namespace ReservationAPI.Models.Interfaces
         Task<IEnumerable<Flight>> GetAllFlights();
         Task<bool> CreateFlight(Flight flight);
         Task<bool> DeleteFlight(long id);
+        Task<object> GetFlight(long id);
         #endregion
 
         #region SEAT CONFIGURATIONS

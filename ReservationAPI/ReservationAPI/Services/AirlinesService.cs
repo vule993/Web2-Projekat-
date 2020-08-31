@@ -118,7 +118,7 @@ namespace ReservationAPI.Services
 
             company.RateNo = company.RateNo + 1;
             company.RateSum = company.RateSum + rating.Rating;
-            company.Rating = company.RateSum / company.RateNo;
+            company.Rating = (double)company.RateSum / company.RateNo;
 
             try
             {
@@ -368,6 +368,11 @@ namespace ReservationAPI.Services
         public Task<bool> DeleteFlight(long id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<object> GetFlight(long id)
+        {
+            return (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == id);
         }
 
         #endregion
