@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Chart } from "chart.js";
+import { FlightsService } from "src/app/services/flights.service";
+import { AviocompaniesService } from "src/app/services/aviocompanies.service";
+import { AirlineCompany } from "src/app/models/AirlineCompany.model";
+import { Flight } from "src/app/models/Flight.model";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 @Component({
   selector: "app-edit-business-report",
   templateUrl: "./edit-business-report.component.html",
@@ -7,9 +12,24 @@ import { Chart } from "chart.js";
 })
 export class EditBusinessReportComponent implements OnInit {
   chart = [];
-  constructor() {}
+  company: AirlineCompany;
+  flights: Flight[] = [];
+  constructor(
+    private _flightService: FlightsService,
+    private _avioService: AviocompaniesService
+  ) {}
 
   ngOnInit(): void {
+    this._avioService
+      .getCompany(localStorage.getItem("userId"))
+      .subscribe((company) => {
+        this.company = company as AirlineCompany;
+        debugger;
+        this._flightService.getAllFlights().subscribe((f) => {
+          this.flights = f as Flight[];
+        });
+      });
+
     this.chart[0] = new Chart("canvas", {
       type: "line",
       data: {

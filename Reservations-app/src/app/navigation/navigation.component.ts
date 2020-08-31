@@ -53,6 +53,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger;
     this._notificationService
       .getAllReservationNotifications(localStorage.getItem("userId"))
       .subscribe((notifications) => {

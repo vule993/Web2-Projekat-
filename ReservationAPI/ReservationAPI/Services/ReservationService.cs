@@ -230,13 +230,13 @@ namespace ReservationAPI.Services
 
         public async Task<object> RateReservation(FlightRating flightRating)
         {
-            var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == flightRating.FlightId);
-            var reservation = (await _context.Reservation.ToListAsync()).FirstOrDefault(r => r.AirlineReservation.Flight.Id == flight.Id);
-            
+            //var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == flightRating.FlightId);
+            var reservation = (await _context.Reservation.ToListAsync()).FirstOrDefault(r => r.Id == flightRating.ReservationId);
+            var flight = reservation.AirlineReservation.Flight;
             var rating = new FlightRating()
             {
                 Rating = flightRating.Rating,
-                FlightId = flight.Id,
+                ReservationId = reservation.Id,
                 UserEmail = flightRating.UserEmail
             };
 
