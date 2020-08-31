@@ -211,10 +211,15 @@ export class AirlineReservationComponent implements OnInit {
           Math.ceil((seat.seatNo - 1) % rowWidth),
           "datum potvrde za statistiku"
         ),
-        this.carReservation
+        null
       );
       //probacu da notifikacije kreiram na back-u
       //
+      if (this.takeRentACar) {
+        //let r = new Reservation(0, null, this.carReservation);
+        //this.reservationService.createReservation(reservation).subscribe();
+        reservation.carReservation = this.carReservation;
+      }
 
       this.reservationService.createReservation(reservation).subscribe(r => {
         notification = new ReservationNotification(
@@ -231,13 +236,6 @@ export class AirlineReservationComponent implements OnInit {
           .subscribe();
       });
     });
-
-    //evo ubacio sam ja
-
-    if (this.takeRentACar) {
-      let r = new Reservation(0, null, this.carReservation);
-      this.reservationService.createReservation(reservation).subscribe(r => {});
-    }
   }
 
   addGuest() {
