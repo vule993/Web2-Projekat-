@@ -235,7 +235,7 @@ export class AirlineReservationComponent implements OnInit {
           .createReservationNotification(notification)
           .subscribe();
       });
-    });
+    }); //kraj petlje
 
     //evo ubacio sam ja
 
@@ -424,6 +424,12 @@ export class AirlineReservationComponent implements OnInit {
 
       if (!this.currentUserSituated && this.friendsToSelectNo() > 0) {
         alert("dodajem glavnog");
+        if (
+          this.currentUser.passportNo == null ||
+          this.currentUser.passportNo == undefined ||
+          this.currentUser.passportNo == ""
+        )
+          alert("Update your passport number on your profile!");
 
         if (!this.checkIfAlreadyReserved(this.currentUser)) {
           for (let s of this.selectedSeats) {
