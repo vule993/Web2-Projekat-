@@ -62,4 +62,11 @@ export class AdminService {
       this.baseURL + "/CarCompany/GetCompanyByEmail/" + admin
     );
   }
+
+  editCompany(carCompany: CarCompany) {
+    return this.httpClient.post(
+      this.baseURL + "/CarCompany/EditCompany",
+      carCompany
+    );
+  }
 }

@@ -1,10 +1,15 @@
 <div class="col-cm" *ngIf="dataLoaded">
-  <form id="editCarCompanyForm">
+  <form
+    id="editCarCompanyForm"
+    [formGroup]="editCompanyForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="form-group">
       <div class="username-icon"></div>
       <input
         type="text"
         class="form-control"
+        formControlName="companyName"
         placeholder="Company name"
         value="{{ carCompany.name }}"
       />
@@ -14,6 +19,7 @@
       <input
         type="text"
         class="form-control"
+        formControlName="companyAddress"
         placeholder="Company address"
         value="{{ carCompany.address }}"
       />
@@ -23,12 +29,19 @@
       <textarea
         form="editCarCompanyForm"
         class="form-control"
+        formControlName="description"
         placeholder="About Company"
         >{{ carCompany.description }}</textarea
       >
     </div>
     <div class="form-group">
-      <button class="btn btn-success fright">Save info</button>
+      <button
+        type="submit"
+        [disabled]="!editCompanyForm.valid"
+        class="btn btn-success fright"
+      >
+        Save info
+      </button>
     </div>
   </form>
 </div>

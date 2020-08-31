@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ReservationAPI.Models.DbRepository;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
 using ReservationAPI.ViewModels;
@@ -18,10 +19,12 @@ namespace ReservationAPI.Controllers
     public class CarCompanyController : ControllerBase
     {
         private readonly ICarCompany _repository;
+        private ApplicationDbContext _context;
 
-        public CarCompanyController(ICarCompany repository)
+        public CarCompanyController(ICarCompany repository, ApplicationDbContext context)
         {
             _repository = repository;
+            _context = context;
         }
 
 
@@ -164,6 +167,22 @@ namespace ReservationAPI.Controllers
 
             return Ok(new { message = "Car company updated.", company = company });
 
+        }
+
+
+        [HttpPost]
+        [Route("EditCompany")]
+        public void EditCompany([FromBody] CarCompany carCompany)
+        {
+            try
+            {
+                _context.CarCompanies.Update(carCompany);
+                _context.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error while updating car company: [{e.Message}]");
+            }
         }
 
         

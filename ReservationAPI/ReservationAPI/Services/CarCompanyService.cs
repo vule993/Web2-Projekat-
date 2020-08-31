@@ -108,6 +108,14 @@ namespace ReservationAPI.Services
                 UserEmail = model.UserEmail
             };
 
+            foreach(var r in company.Rates)
+            {
+                if(r.UserEmail == rating.UserEmail)
+                {
+                    return -1;
+                }
+            }
+
             company.Rates.Add(rating);
             _context.Ratings.Add(rating);
             var avg = company.Rates.Where(c => c.CarCompanyId == rating.CarCompanyId).Average(c => c.Rate);

@@ -133,7 +133,14 @@ export class CarCompanyProfileComponent implements OnInit {
       0,
       this.carCompany.id
     );
-    this.carService.rateCompany(rate).subscribe();
+    this.carService.rateCompany(rate).subscribe(res => {
+      if ((res as number) === -1) {
+        this.toastrService.warning(
+          "Sorry, you already rated this company",
+          "Can't rate this company"
+        );
+      }
+    });
   }
 
   /* createURL() {
