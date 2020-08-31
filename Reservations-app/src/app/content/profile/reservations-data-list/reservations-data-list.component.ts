@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
 @Component({
   selector: "app-reservations-data-list",
   templateUrl: "./reservations-data-list.component.html",
-  styleUrls: ["./reservations-data-list.component.css"],
+  styleUrls: ["./reservations-data-list.component.css"]
 })
 export class ReservationsDataListComponent implements OnInit {
   myReservations: Reservation[] = [];
@@ -22,13 +22,13 @@ export class ReservationsDataListComponent implements OnInit {
     "September",
     "October",
     "November",
-    "December",
+    "December"
   ];
 
   constructor(private _reservationService: ReservationService) {}
 
   getMonth(month: string): number {
-    return this.months.findIndex((m) => m == month);
+    return this.months.findIndex(m => m == month);
   }
   //ako je trenutno vreme presisalo vreme rezervacije vraca true
   checkDatePass(
@@ -56,8 +56,8 @@ export class ReservationsDataListComponent implements OnInit {
     this._reservationService.cancelReservation(reservation).subscribe();
   }
   ngOnInit(): void {
-    this._reservationService.getAllReservations().subscribe((reservations) => {
-      (reservations as Reservation[]).forEach((r) => {
+    this._reservationService.getAllReservations().subscribe(reservations => {
+      (reservations as Reservation[]).forEach(r => {
         if (
           (r.airlineReservation != null &&
             r.airlineReservation.passengerEmail ==

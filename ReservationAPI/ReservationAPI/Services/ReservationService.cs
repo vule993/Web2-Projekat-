@@ -78,30 +78,31 @@ namespace ReservationAPI.Services
 
         public async Task<object> CreateReservation(Reservation reservation)
         {
-            //var seat = (await _context.Seat.ToListAsync()).FirstOrDefault(s => s.Id == seatRequest.Id);
-            var user = (await _userManager.FindByEmailAsync(reservation.AirlineReservation.PassengerEmail));
-            var role = await _userManager.GetRolesAsync(user);
             
-            //red i vrsta => rowNo seatNo
-            var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == reservation.AirlineReservation.Flight.Id);
-            var seat = flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber];
-
             AirlineReservation airlineReservation;
             CarReservation carReservation;
 
             try
             {
-                seat.PassengerEmail = user.Email;
-                seat.SeatStatus = "TAKEN";
-          
-                await _context.SaveChangesAsync();
-
                 if (reservation.AirlineReservation == null)
                 {
                     airlineReservation = null;
                 }
                 else
                 {
+                    //var seat = (await _context.Seat.ToListAsync()).FirstOrDefault(s => s.Id == seatRequest.Id);
+                    var user = (await _userManager.FindByEmailAsync(reservation.AirlineReservation.PassengerEmail));
+                    var role = await _userManager.GetRolesAsync(user);
+
+                    //red i vrsta => rowNo seatNo
+                    var flight = (await _context.Flight.ToListAsync()).FirstOrDefault(f => f.Id == reservation.AirlineReservation.Flight.Id);
+                    var seat = flight.SeatConfiguration.Seats[reservation.AirlineReservation.RowNumber].Seats[reservation.AirlineReservation.SeatNumber];
+
+                    seat.PassengerEmail = user.Email;
+                    seat.SeatStatus = "TAKEN";
+
+                    await _context.SaveChangesAsync();
+
                     airlineReservation = new AirlineReservation()
                     {
                         Flight = flight,
@@ -123,7 +124,8 @@ namespace ReservationAPI.Services
                 }
                 else
                 {
-                    
+                    var user = await _userManager.FindByEmailAsync(reservation.CarReservation.UserEmail);
+
                     var carResModel = new CarReservationModel()
                     {
                         Car = reservation.CarReservation.Car,
@@ -135,8 +137,7 @@ namespace ReservationAPI.Services
                     };
 
                     carReservation = await _carService.MakeReservation(carResModel);
-                    //_context.CarReservations.Add(carReservation);
-                    //await _context.SaveChangesAsync();
+                    
                 }
 
 

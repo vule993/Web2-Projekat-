@@ -144,6 +144,10 @@ export class CarsService {
     );
   }
 
+  rateCar(ratingModel: CarRate) {
+    return this.httpClient.post(this.baseURL + "/Car/RateCar", ratingModel);
+  }
+
   fetchCar(id: number) {
     return this.httpClient.get<Car>(this.baseURL + "/Car/" + id);
   }

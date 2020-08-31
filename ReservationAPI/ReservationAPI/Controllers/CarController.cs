@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models.Interfaces;
 using ReservationAPI.Models.Rent_a_Car;
+using ReservationAPI.ViewModels;
 using ReservationAPI.ViewModels.RentACar;
 
 namespace ReservationAPI.Controllers
@@ -122,6 +123,23 @@ namespace ReservationAPI.Controllers
                 return BadRequest(new { message = "Failed to make car reservation." });
             }
 
+        }
+
+
+        [HttpPost]
+        [Route("RateCar")]
+        public async Task<object> RateThisCar([FromBody] RatingModel model)
+        {
+            try
+            {
+                double result = await _repository.rateCar(model);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERROR with rating car. -> {e.Message}");
+                return BadRequest(new { Message = $"ERROR with rating car. -> {e.Message}" });
+            }
         }
     }
 }
