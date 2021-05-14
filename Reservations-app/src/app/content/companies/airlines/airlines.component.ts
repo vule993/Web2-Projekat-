@@ -178,7 +178,6 @@ export class AirlinesComponent implements OnInit {
       );
 
     this._flightsService.getAllFlights().subscribe((flights) => {
-      debugger;
       (flights as Flight[]).forEach((f) => {
         //
         let flightDate = this.dateCalculate(

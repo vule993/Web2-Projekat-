@@ -92,7 +92,7 @@ namespace ReservationAPI.Controllers
                 Street = model.Street,
                 City = model.City,
                 Image = model.Image,
-                Friends = new List<Friend>(),
+                //Friends = new List<Friend>(),
                 Reservations = new List<Reservation>()
             };
 
@@ -128,7 +128,7 @@ namespace ReservationAPI.Controllers
                 a.LastName = admin.LastName;
                 a.Email = admin.Email;
                 a.City = admin.City;
-                a.Friends = admin.Friends;
+                //a.Friends = admin.Friends;
                 a.Image = admin.Image;
                 //a.PasswordHash = admin.PasswordHash;
                 a.PhoneNumber = admin.PhoneNumber;

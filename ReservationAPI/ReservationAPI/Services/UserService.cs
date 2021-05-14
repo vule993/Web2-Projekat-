@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using ReservationAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ReservationAPI.Services
@@ -29,39 +31,21 @@ namespace ReservationAPI.Services
 
         public async Task<object> AddFriend(AddFriendModel newFriends)
         {
-            var user = await _userManager.FindByEmailAsync(newFriends.UsersEmail);
-            var friend = await _userManager.FindByEmailAsync(newFriends.FriendsEmail);
+            var user1 = await _userManager.FindByEmailAsync(newFriends.UsersEmail);
+            var user2 = await _userManager.FindByEmailAsync(newFriends.FriendsEmail);
 
-            foreach(var currFriend in user.Friends)
+            var friends = _context.Friend.ToList().Find(x => x.User1Email == user1.Email && x.User2Email == user2.Email);
+
+            if (friends != null)
             {
-                if(currFriend.Email == friend.Email)
-                {
-                    return new { Message = "You are already friends!" };
-                }
+                return new { Message = "You are already friends!" };
             }
 
-            user.Friends.Add(new Friend() { 
-                Email = friend.Email
-            });
-
-
-
-
-
-            foreach (var currFriend in friend.Friends)
-            {
-                if (currFriend.Email == user.Email)
-                {
-                    return new { Message = "You are already friends!" };
-                }
-            }
-            friend.Friends.Add(new Friend()
-            {
-                Email = user.Email
-            });
-
-
-           
+            _context.Friend.Add(
+                new Friend() {
+                    User1Email = user1.Email,
+                    User2Email = user2.Email
+                });
 
             await _context.SaveChangesAsync();
 
@@ -84,40 +68,54 @@ namespace ReservationAPI.Services
 
         public async Task<object> Get(string email)
         {
-            UserModel um;
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
                 return (new { message = "User does not exist." });
 
             var role = await _userManager.GetRolesAsync(user);
-            List<UserModel> friends = new List<UserModel>();
 
-            User friend;
+            //ovde su sve veze iz koje treba izvaditi korisnike kao user modele
+            List<Friend> friends = _context.Friend.ToList().FindAll(x => x.User1Email == user.Email || x.User2Email == user.Email);
 
-            foreach (var friendModel in user.Friends)
+            //Lista koju vracam
+            List<UserModel> friendsToReturn = new List<UserModel>();
+
+            foreach (var friend in friends)
             {
-                friend = await _userManager.FindByEmailAsync(friendModel.Email);
-                um = new UserModel()
+                String friendsEmail = "";
+                //onda je email prijatelja user2
+                if (friend.User1Email == user.Email)
                 {
-                    FirstName = friend.FirstName,
-                    LastName = friend.LastName,
-                    Email = friend.Email,
-                    Password = friend.PasswordHash,
-                    City = friend.City,
-                    Street = friend.Street,
-                    Status = role.ToString(),
-                    PhoneNumber = friend.PhoneNumber,
-                    Image = friend.Image,
-                    Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
-                    Reservations = friend.Reservations,
-                    PassportNo = friend.PassportNo
-                };
+                    friendsEmail = friend.User2Email;
+                }
+                //onda je email prijatelja user1
+                if (friend.User2Email == user.Email)
+                {
+                    friendsEmail = friend.User1Email;
+                }
 
-                friends.Add(um);
+                User friendInfo = _context.Users.ToList().Find(x => x.Email == friendsEmail);
+                friendsToReturn.Add(
+                        new UserModel()
+                        {
+                            FirstName = friendInfo.FirstName,
+                            LastName = friendInfo.LastName,
+                            Email = friendInfo.Email,
+                            Password = friendInfo.PasswordHash,
+                            City = friendInfo.City,
+                            Street = friendInfo.Street,
+                            Status = role.ToString(),
+                            PhoneNumber = friendInfo.PhoneNumber,
+                            Image = friendInfo.Image,
+                            Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
+                            Reservations = friendInfo.Reservations,
+                            PassportNo = friendInfo.PassportNo
+                        }
+                    );
             }
 
-            var userModel = new UserModel()
+            UserModel userModel = new UserModel()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -128,13 +126,17 @@ namespace ReservationAPI.Services
                 Status = role.FirstOrDefault(),
                 PhoneNumber = user.PhoneNumber,
                 Image = user.Image,
-                Friends = friends,
+                Friends = friendsToReturn,
                 PassportNo = user.PassportNo
 
             };
 
             return userModel;
         }
+
+ 
+            
+        
 
         public async Task<List<UserModel>> GetAll()
         {
@@ -167,66 +169,36 @@ namespace ReservationAPI.Services
             return allUsers;
         }
 
-        public async Task<object> GetAllFriends(string email)
+        public async Task<List<UserModel>> GetAllFriends(string email, User loggedUser)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            List<UserModel> friends = new List<UserModel>();
+            
+            List<UserModel> allFriends = new List<UserModel>();
+            List<Friend> friendLinks = _context.Friend.ToList().FindAll(x => x.User1Email == email || x.User2Email == email);
+            
 
-            if(user == null)
+            foreach(var friendLink in friendLinks)
             {
-                return null;
+                var friend = (friendLink.User1Email == loggedUser.Email) ? await _userManager.FindByEmailAsync(friendLink.User2Email) : await _userManager.FindByEmailAsync(friendLink.User1Email);
+                var role = (await _userManager.GetRolesAsync(friend)).FirstOrDefault().ToString();
+                allFriends.Add(new UserModel(friend, role));
             }
-
-            User friend;
-            var generatedId = 0;
-
-            foreach (var friendModel in user.Friends)
-            {
-                friend = await _userManager.FindByEmailAsync(friendModel.Email);
-                var role = await _userManager.GetRolesAsync(friend);
-
-                friends.Add(new UserModel()
-                {
-                    Id = ++generatedId,
-                    FirstName = friend.FirstName,
-                    LastName = friend.LastName,
-                    Email = friend.Email,
-                    Street = friend.Street,
-                    Image = friend.Image,
-                    City = friend.City,
-                    PhoneNumber = friend.PhoneNumber,
-                    Status = role.FirstOrDefault().ToString(),
-                    PassportNo = friend.PassportNo
-                });
-            }
-
-            return friends.OrderByDescending(f => f.Id).ToList();
+            return allFriends;
         }
-
 
         public async Task<object> RemoveFriend(AddFriendModel unFriends)
         {
-            var user = await _userManager.FindByEmailAsync(unFriends.UsersEmail);
-            var friend = await _userManager.FindByEmailAsync(unFriends.FriendsEmail);
+            User user = await _userManager.FindByEmailAsync(unFriends.UsersEmail);
+            User friend = await _userManager.FindByEmailAsync(unFriends.FriendsEmail);
 
+            Friend friendToRemove = _context
+                .Friend
+                .ToList()
+                .Find(
+                    x => x.User1Email == user.Email && x.User2Email == friend.Email ||
+                    x.User1Email == friend.Email && x.User2Email == user.Email
+                );
 
-            foreach (var currFriend in user.Friends)
-            {
-                if (currFriend.Email == friend.Email)
-                {
-                    user.Friends.Remove(currFriend);
-                }
-            }
-
-
-            foreach (var currFriend in friend.Friends)
-            {
-                if (currFriend.Email == user.Email)
-                {
-                    friend.Friends.Remove(currFriend);
-                }
-            }
-
+            _context.Friend.Remove(friendToRemove);
 
             await _context.SaveChangesAsync();
 

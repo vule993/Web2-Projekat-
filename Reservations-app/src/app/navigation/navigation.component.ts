@@ -53,12 +53,10 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     this._notificationService
       .getAllReservationNotifications(localStorage.getItem("userId"))
       .subscribe((notifications) => {
         (notifications as ReservationNotification[]).forEach((n) => {
-          debugger;
           if (n.status == 0)
             this.notificationCount = this.notificationCount + 1;
           if (n.status != 2) this.notifications.push(n); //2 je da je resolvovana notifikacija

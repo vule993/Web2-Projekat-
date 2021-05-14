@@ -31,6 +31,7 @@ export class UsersService {
     //need to append jwt token into this request -> this is now done in auth.interceptor
 
     let a = this.httpClient.get<UserModel>(this.baseURL + "/User/Profile");
+    debugger;
     return a;
   }
 

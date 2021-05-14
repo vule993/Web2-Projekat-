@@ -13,7 +13,7 @@ namespace ReservationAPI.Models
     {
         public User()
         {
-            Friends = new List<Friend>();
+            //Friends = new List<Friend>();
         }
         
         [Column(TypeName = "nvarchar(50)")]
@@ -27,7 +27,7 @@ namespace ReservationAPI.Models
         public string City { get; set; }
 
         public string Image { get; set; }
-        public virtual List<Friend> Friends { get; set; }
+        //public virtual List<Friend> Friends { get; set; }
         public virtual List<Reservation> Reservations { get; set; }
         public string PassportNo { get; set; }
 

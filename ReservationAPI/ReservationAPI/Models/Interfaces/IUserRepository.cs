@@ -14,7 +14,7 @@ namespace ReservationAPI.Models.Interfaces
         Task SendEmail(string email);
         Task<object> Get(string email);
         Task<object> Update(int id, UserModel userModel);
-        Task<object> GetAllFriends(String email);
+        Task<List<UserModel>> GetAllFriends(String email, User loggedUser);
         Task<object> AddFriend(AddFriendModel newFriends);
         Task<object> RemoveFriend(AddFriendModel unFriends);
     }

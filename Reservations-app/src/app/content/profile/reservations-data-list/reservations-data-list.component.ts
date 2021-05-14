@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
 @Component({
   selector: "app-reservations-data-list",
   templateUrl: "./reservations-data-list.component.html",
-  styleUrls: ["./reservations-data-list.component.css"]
+  styleUrls: ["./reservations-data-list.component.css"],
 })
 export class ReservationsDataListComponent implements OnInit {
   myReservations: Reservation[] = [];
@@ -22,17 +22,16 @@ export class ReservationsDataListComponent implements OnInit {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
 
   constructor(private _reservationService: ReservationService) {}
 
   getMonth(month: string): number {
-    return this.months.findIndex(m => m == month);
+    return this.months.findIndex((m) => m == month);
   }
   //ako je trenutno vreme presisalo vreme rezervacije vraca true
   checkDatePass(startDate, startTime, differenceHours = 0) {
-    debugger;
     let date = startDate?.split("-");
     let time = startTime?.split(":");
 
@@ -60,8 +59,9 @@ export class ReservationsDataListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._reservationService.getAllReservations().subscribe(reservations => {
-      (reservations as Reservation[]).forEach(r => {
+    this._reservationService.getAllReservations().subscribe((reservations) => {
+      (reservations as Reservation[]).forEach((r) => {
+        debugger;
         if (r.status != "CONFIRMED") return;
 
         if (
@@ -71,7 +71,6 @@ export class ReservationsDataListComponent implements OnInit {
           (r.carReservation != null &&
             r.carReservation.userEmail == localStorage.getItem("userId"))
         ) {
-          debugger;
           //moja rzervacija, sad ispitujem da li je prosao termin
           if (
             this.checkDatePass(

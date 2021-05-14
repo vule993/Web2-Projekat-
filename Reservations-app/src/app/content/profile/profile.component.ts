@@ -54,25 +54,32 @@ export class ProfileComponent implements OnInit {
     this.activeTab = fullUrl.split("/")[4];
     let email = localStorage.getItem("userId");
     console.log("Ulogovan je: " + email);
-    this.userService.getUserProfile().subscribe((user: UserModel) => {
-      this.currentUser = <UserModel>user;
 
-      //ovo videti
-      if (this.currentUser.image != undefined && this.currentUser.image != "") {
-        this.profilePicture =
-          environment.serverAddress +
-          "/Resources/Users/" +
-          this.currentUser.image;
-      } else {
-        this.profilePicture = "../../assets/face.png";
-      }
+    this.currentUser = <UserModel>JSON.parse(localStorage.getItem("user"));
+    debugger;
+    // this.userService.getUserProfile().subscribe((user: UserModel) => {
+    //   this.currentUser = <UserModel>user;
 
-      $("#pr-picture").css({
-        "background-image": "url(" + this.profilePicture + ")",
-      });
+    //ovo videti
+    if (
+      this.currentUser.image != undefined &&
+      this.currentUser.image != "" &&
+      this.currentUser.image != null
+    ) {
+      this.profilePicture =
+        environment.serverAddress +
+        "/Resources/Users/" +
+        this.currentUser.image;
+    } else {
+      this.profilePicture = "../../assets/face.png";
+    }
 
-      //preostalo: friends
+    $("#pr-picture").css({
+      "background-image": "url(" + this.profilePicture + ")",
     });
+
+    //preostalo: friends
+    // });
   }
 
   // setuje koji je tab selektovan kako bi dobio drugaciji background

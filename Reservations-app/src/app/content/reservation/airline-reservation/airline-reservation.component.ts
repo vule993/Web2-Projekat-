@@ -369,9 +369,7 @@ export class AirlineReservationComponent implements OnInit {
         this.users = users;
       });
 
-    this.userService.getUserProfile().subscribe((user) => {
-      this.currentUser = user;
-    });
+    this.currentUser = JSON.parse(localStorage.getItem("user"));
 
     $(window)
       .resize(function () {

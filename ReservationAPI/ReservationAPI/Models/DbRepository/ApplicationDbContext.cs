@@ -51,6 +51,7 @@ namespace ReservationAPI.Models.DbRepository
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
         public DbSet<ReservationNotification> ReservationNotification { get; set; }
+        public DbSet<Friend> Friend { get; set; }
 
         ////public DbSet<Company> Companies { get; set; }       //ne znam da l je ovo potrebno
         //public DbSet<Notification> Notifications { get; set; }

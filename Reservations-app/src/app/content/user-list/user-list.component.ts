@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
 export class UserListComponent implements OnInit {
   allUsers;
   filteredUsers;
-  currentUSersFriends: UserModel[];
+  currentUSersFriends;
 
   serverAddress = environment.serverAddress;
 
@@ -30,29 +30,41 @@ export class UserListComponent implements OnInit {
       }
     });
   }
-
+  /**
+   * Returns if users are friends
+   *
+   * @param email - email from current user from all users loop
+   * @returns Returns if user with passed email is friend with logged user.
+   *
+   * @beta
+   */
   isFriend(email: string): boolean {
     for (let i = 0; i < this.currentUSersFriends.length; i++) {
       if (this.currentUSersFriends[i].email == email) {
         return true;
       }
     }
-    // this.currentUSersFriends.forEach((friend) => {
-    //   if (friend.email == email) {
-    //     return true;
-    //   }
-    // });
+
     return false;
   }
 
   addFriend(friendsEmail: string) {
+    //pozivam servis koji azurira bazu podataka
     this._userService
       .addFriend(localStorage.getItem("userId"), friendsEmail)
       .subscribe();
 
+    //dodajem u trenutnu listu kako bi promene bile odmah vidljive
     this.currentUSersFriends.push(
       (this.allUsers as UserModel[]).find((user) => user.email == friendsEmail)
     );
+
+    //dodajem u localstorage da bi se prikazivalo na svako osvezavanje stranice
+    let loggedUser = JSON.parse(localStorage.getItem("user")) as UserModel;
+    loggedUser.friends.push(
+      (this.allUsers as UserModel[]).find((user) => user.email == friendsEmail)
+    );
+    localStorage.setItem("user", JSON.stringify(loggedUser));
   }
 
   removeFriend(friendsEmail: string) {
@@ -60,23 +72,37 @@ export class UserListComponent implements OnInit {
       .removeFriend(localStorage.getItem("userId"), friendsEmail)
       .subscribe();
 
+    //uklanjanje iz lokalne liste kako bi se prikaz azurirao
     let id = this.currentUSersFriends
       .map(function (x) {
         return x.email;
       })
       .indexOf(friendsEmail);
     this.currentUSersFriends.splice(id, 1);
+
+    let user = <UserModel>JSON.parse(localStorage.getItem("user"));
+    var friendsWithoutUnfriended = user.friends.filter(function (
+      friend,
+      index,
+      arr
+    ) {
+      return friend.email != friendsEmail; //sve vrati koji nisu uklonjeni prijatelj
+    });
+    this.currentUSersFriends = user.friends;
   }
 
   ngOnInit(): void {
+    let currentUsersEmail = localStorage.getItem("userId");
     this._userService.getAllUsers().subscribe((users) => {
       //pronalazim id trenutno ulogovanog korisnika
       //uklanjam ga iz liste korisnika jer nece dodavati samog sebe
+
       let id = users
         .map(function (x) {
           return x.email;
         })
-        .indexOf(localStorage.getItem("userId"));
+        .indexOf(currentUsersEmail);
+
       users.splice(id, 1);
       //uklanjam guest usere, oni se dodaju samo onome ko ih kreira
 
@@ -84,11 +110,8 @@ export class UserListComponent implements OnInit {
       this.allUsers = users.filter((user) => user.status != "Guest");
       this.filteredUsers = users.filter((user) => user.status != "Guest");
     });
-
-    this._userService
-      .getAllFriends(localStorage.getItem("userId"))
-      .subscribe((friends) => {
-        this.currentUSersFriends = friends;
-      });
+    this._userService.getAllFriends(currentUsersEmail).subscribe((friends) => {
+      this.currentUSersFriends = friends;
+    });
   }
 }

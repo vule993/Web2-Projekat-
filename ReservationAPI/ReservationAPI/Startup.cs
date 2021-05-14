@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using ReservationAPI.Hubs;
 using ReservationAPI.Models;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
@@ -43,6 +45,15 @@ namespace ReservationAPI
         {
             //Inject AppSettings
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+
+
+            //CORS Cross otigins resource sharing
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()));
+
 
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(
@@ -100,7 +111,10 @@ namespace ReservationAPI
                 }
             );
 
-            services.AddCors();
+            
+
+            services.AddSignalR();
+
 
             //JWT Auth
 
@@ -124,7 +138,6 @@ namespace ReservationAPI
                     ClockSkew = TimeSpan.Zero //time span between server and client
                 };
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -138,20 +151,20 @@ namespace ReservationAPI
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseCors(builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"])
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-            );
-            app.UseCors(options =>
-            {
+            app.UseCors("CorsPolicy");
+            //app.UseCors(builder => builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"])
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod()
+            //);
+            //app.UseCors(options =>
+            //{
 
-                options.WithOrigins("https://accounts.google.com")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-            });
+            //    options.WithOrigins("https://accounts.google.com")
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod();
+            //});
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
 
@@ -167,6 +180,7 @@ namespace ReservationAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/notification");
             });
         }
     }
