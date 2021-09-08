@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -20,7 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-
+using ReservationAPI.DTOs;
 using ReservationAPI.Models;
 using ReservationAPI.Models.Airlines;
 using ReservationAPI.Models.DbRepository;
@@ -36,26 +37,30 @@ namespace ReservationAPI.Controllers
         private UserManager<User> _userManager;
         private readonly ApplicationSettings _appSettings;
         private ApplicationDbContext _context;
+        private readonly IMapper _mapper;
         private IUserRepository _userService;
-        
 
-        public UserController(IUserRepository userRepository, UserManager<User> userManager, ApplicationDbContext context, IConfiguration config, IOptions<ApplicationSettings> appSettings)
+        public UserController(
+            IUserRepository userRepository, 
+            UserManager<User> userManager, 
+            ApplicationDbContext context, 
+            IConfiguration config, 
+            IOptions<ApplicationSettings> appSettings,
+            IMapper mapper)
         {
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _context = context;
+            _mapper = mapper;
             _userService = userRepository;
-            
         }
 
-
         #region Register and login operations
-
         //POST : /api/User/Register
         [HttpPost]
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<Object> PostUser(UserModel model)
+        public async Task<ActionResult<UserDTO>> PostUser(UserModel model)
         {
             model.Status = "User";
             //model.Status = "Admin";
@@ -163,45 +168,43 @@ namespace ReservationAPI.Controllers
         //POST : /api/User/Login
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<ActionResult<UserDTO>> Login(LoginModel model)
         {
-            //use usemanager to check if we have user with given username
             var user = await _userManager.FindByEmailAsync(model.Email);
 
-            if (!user.EmailConfirmed)
-            {
-                return BadRequest(new { Message = "Email is not confirmed!" });
-            }
+            if (user == null) return Unauthorized("Please check your credentials.");
+            if (!user.EmailConfirmed) return BadRequest(new { Message = "Email is not confirmed!" });
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                //check for roles of this user
-                var role = await _userManager.GetRolesAsync(user); //put this role to the claims
-                IdentityOptions options = new IdentityOptions();
+                var role = await _userManager.GetRolesAsync(user);
 
+                IdentityOptions options = new IdentityOptions();
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]{
                         new Claim("UserID", user.Email),
                         new Claim(options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
-
-                    Expires = DateTime.UtcNow.AddDays(1), //after 1 day
-
+                    Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)),
                             SecurityAlgorithms.HmacSha256Signature)
                 };
 
-
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                var userModel = new UserModel();
-                await userModel.PopulateUserModel(user, _userManager, _context);
-                return Ok(new { token, userModel });
+                //var userModel = new UserModel();
+                //await userModel.PopulateUserModel(user, _userManager, _context);
+                var userDTO = new UserDTO();
+                _mapper.Map(user, userDTO);
+                userDTO.Token = token;
+
+
+                return Ok(userDTO);
             }
             else
             {

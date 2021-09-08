@@ -34,19 +34,18 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
         localStorage.setItem("token", res.token); //save token
-        localStorage.setItem("userId", res.userModel.email);
+        localStorage.setItem("userId", res.email);
 
-        localStorage.setItem("id", res.userModel.id.toString());
-        localStorage.setItem("firstName", res.userModel.firstName);
-        localStorage.setItem("lastName", res.userModel.lastName);
-        localStorage.setItem("email", res.userModel.email);
-        localStorage.setItem("phoneNumber", res.userModel.phoneNumber);
-        localStorage.setItem("city", res.userModel.city);
-        localStorage.setItem("street", res.userModel.street);
-        localStorage.setItem("image", res.userModel.image);
+        localStorage.setItem("id", res.id.toString());
+        localStorage.setItem("firstName", res.firstName);
+        localStorage.setItem("lastName", res.lastName);
+        localStorage.setItem("email", res.email);
+        localStorage.setItem("phoneNumber", res.phoneNumber);
+        localStorage.setItem("city", res.city);
+        localStorage.setItem("street", res.street);
+        localStorage.setItem("image", res.image);
 
-        localStorage.setItem("user", JSON.stringify(res.userModel));
-        debugger;
+        localStorage.setItem("user", JSON.stringify(res));
 
         if (this.userService.roleMatch(["Admin"])) {
           this.router.navigateByUrl("admin/head-admin/profile");

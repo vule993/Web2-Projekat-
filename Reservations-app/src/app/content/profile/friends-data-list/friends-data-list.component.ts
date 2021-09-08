@@ -37,6 +37,5 @@ export class FriendsDataListComponent implements OnInit {
       .subscribe((data) => {
         this.friends = data;
       });
-    debugger;
   }
 }

@@ -8,8 +8,8 @@ namespace ReservationAPI.Models
     public class Friend
     {
         public long Id { get; set; }
-        public string User1Email { get; set; }
-        public string User2Email { get; set; }
+    //    public string User1Email { get; set; }
+    //    public string User2Email { get; set; }
 
     }
 }

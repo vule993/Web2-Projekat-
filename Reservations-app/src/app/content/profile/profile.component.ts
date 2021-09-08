@@ -56,7 +56,6 @@ export class ProfileComponent implements OnInit {
     console.log("Ulogovan je: " + email);
 
     this.currentUser = <UserModel>JSON.parse(localStorage.getItem("user"));
-    debugger;
     // this.userService.getUserProfile().subscribe((user: UserModel) => {
     //   this.currentUser = <UserModel>user;
 

@@ -31,15 +31,15 @@ namespace ReservationAPI.Models
         }
         public async Task<bool> PopulateUserModel(User user, UserManager<User> manager, ApplicationDbContext context)
         {
-            var friends = context.Friend.ToList().FindAll(x => x.User1Email == user.Email || x.User2Email == user.Email);
+            //var friends = context.Friend.ToList().FindAll(x => x.User1Email == user.Email || x.User2Email == user.Email);
             var allFriends = new List<UserModel>();
             User friendModel = null;
-            foreach(var friend in friends)
-            {
-                //ako je user1email isti kao ovaj tekuci korisnik koji se logovao uzimam onog drugog(prijatelj)
-                friendModel = (friend.User1Email == user.Email) ? await manager.FindByEmailAsync(friend.User2Email) : await manager.FindByEmailAsync(friend.User1Email);
-                allFriends.Add(new UserModel(friendModel, (await manager.GetRolesAsync(friendModel)).FirstOrDefault().ToString()));
-            }
+            //foreach(var friend in friends)
+            //{
+            //    //ako je user1email isti kao ovaj tekuci korisnik koji se logovao uzimam onog drugog(prijatelj)
+            //    friendModel = (friend.User1Email == user.Email) ? await manager.FindByEmailAsync(friend.User2Email) : await manager.FindByEmailAsync(friend.User1Email);
+            //    allFriends.Add(new UserModel(friendModel, (await manager.GetRolesAsync(friendModel)).FirstOrDefault().ToString()));
+            //}
 
             FirstName = user.FirstName;
             LastName = user.LastName;

@@ -25,9 +25,21 @@
     <Compile Remove="Migrations\20200830173300_NullablePassenger.Designer.cs" />
     <Compile Remove="Migrations\20200830235321_ReservaionNotificationAdded_ReservationAdapted.cs" />
     <Compile Remove="Migrations\20200830235321_ReservaionNotificationAdded_ReservationAdapted.Designer.cs" />
+    <Compile Remove="Migrations\20210907115834_UserFriend.cs" />
+    <Compile Remove="Migrations\20210907115834_UserFriend.Designer.cs" />
+    <Compile Remove="Migrations\20210907122734_UserFriend.cs" />
+    <Compile Remove="Migrations\20210907122734_UserFriend.Designer.cs" />
+    <Compile Remove="Migrations\20210907123000_UserFriend.cs" />
+    <Compile Remove="Migrations\20210907123000_UserFriend.Designer.cs" />
+    <Compile Remove="Migrations\20210907125827_UserFriend1.cs" />
+    <Compile Remove="Migrations\20210907125827_UserFriend1.Designer.cs" />
+    <Compile Remove="Migrations\20210908064831_UserFriend.cs" />
+    <Compile Remove="Migrations\20210908064831_UserFriend.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />

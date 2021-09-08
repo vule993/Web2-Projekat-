@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ReservationAPI.Entities;
 using ReservationAPI.Models.Airlines;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,9 @@ namespace ReservationAPI.Models
         //public virtual List<Friend> Friends { get; set; }
         public virtual List<Reservation> Reservations { get; set; }
         public string PassportNo { get; set; }
+
+        public virtual ICollection <UserFriend> MyFriends { get; set; }
+
 
     }
 }
