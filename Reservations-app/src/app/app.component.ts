@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
       return;
     }
     this.notificationsService.startConnection();
-    this.notificationsService.addTransferNotificationDataListener();
     this.startHttpRequest();
   }
   private startHttpRequest = () => {

@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   serverAddress: "http://localhost:5000",
+  apiUrl: "http://localhost:5001/api/",
+  hubUrl: "http://localhost:5001/hubs/",
   cancelAirlineReservationBefore: 3, //three hours before flight user can cancel flight
 };
 

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.userService.loginUser(this.loginForm.value).subscribe(
-      (res: any) => {
+      (res: UserModel) => {
         localStorage.setItem("token", res.token); //save token
         localStorage.setItem("userId", res.email);
 

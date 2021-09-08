@@ -53,7 +53,6 @@ export class UserListComponent implements OnInit {
     this._userService
       .addFriend(localStorage.getItem("userId"), friendsEmail)
       .subscribe();
-
     //dodajem u trenutnu listu kako bi promene bile odmah vidljive
     this.currentUSersFriends.push(
       (this.allUsers as UserModel[]).find((user) => user.email == friendsEmail)
@@ -61,6 +60,7 @@ export class UserListComponent implements OnInit {
 
     //dodajem u localstorage da bi se prikazivalo na svako osvezavanje stranice
     let loggedUser = JSON.parse(localStorage.getItem("user")) as UserModel;
+
     loggedUser.friends.push(
       (this.allUsers as UserModel[]).find((user) => user.email == friendsEmail)
     );
@@ -81,14 +81,10 @@ export class UserListComponent implements OnInit {
     this.currentUSersFriends.splice(id, 1);
 
     let user = <UserModel>JSON.parse(localStorage.getItem("user"));
-    var friendsWithoutUnfriended = user.friends.filter(function (
-      friend,
-      index,
-      arr
-    ) {
-      return friend.email != friendsEmail; //sve vrati koji nisu uklonjeni prijatelj
-    });
-    this.currentUSersFriends = user.friends;
+    var friendsWithoutUnfriended = user.friends.filter(
+      (friend) => friend.email != friendsEmail //sve vrati koji nisu uklonjeni prijatelj
+    );
+    this.currentUSersFriends = friendsWithoutUnfriended;
   }
 
   ngOnInit(): void {

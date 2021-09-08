@@ -3,6 +3,7 @@ import { Friend } from "./Friend.model";
 
 export class UserModel {
   constructor(
+    public token: string,
     public firstName: string,
     public lastName: string,
     public email: string,
