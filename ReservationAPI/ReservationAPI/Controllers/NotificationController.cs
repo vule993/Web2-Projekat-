@@ -21,17 +21,12 @@ namespace ReservationAPI.Controllers
     [ApiController]
     public class NotificationController : ControllerBase
     {
-        private INotification _notificationService;
-        private IReservation _reservationService;
-        private UserManager<User> _userManager;
-        private IHubContext<NotificationsHub> _notificationsHub;
-        private static ApplicationDbContext _context;
-        private static int i = 0;
-        public NotificationController(ApplicationDbContext context, IHubContext<NotificationsHub> notificationsHub, UserManager<User> userManager, INotification notificationService, IReservation reservationService)
+        private readonly INotification _notificationService;
+        private readonly UserManager<User> _userManager;
+        private readonly IHubContext<NotificationsHub> _notificationsHub;
+        public NotificationController(IHubContext<NotificationsHub> notificationsHub, UserManager<User> userManager, INotification notificationService)
         {
-            _context = context;
             _userManager = userManager;
-            _reservationService = reservationService;
             _notificationService = notificationService;
             _notificationsHub = notificationsHub;
         }
@@ -39,8 +34,8 @@ namespace ReservationAPI.Controllers
         [HttpGet]
         public async Task<object> Get()
         {
-            SqlDependency dependency = new SqlDependency();
-            dependency.OnChange += new OnChangeEventHandler(dbNotificationOnChange);
+            SqlDependency dependency = new();
+            dependency.OnChange += new OnChangeEventHandler(DbNotificationOnChange);
 
 
             var user = await _userManager.FindByEmailAsync("avioadmin@outlook.com");
@@ -60,7 +55,7 @@ namespace ReservationAPI.Controllers
             return new { Message = "Success!"};
         }
 
-        private void dbNotificationOnChange(object sender, SqlNotificationEventArgs e)
+        private void DbNotificationOnChange(object sender, SqlNotificationEventArgs e)
         {
             Console.WriteLine("Hello World!");
         }
@@ -69,8 +64,6 @@ namespace ReservationAPI.Controllers
         [Route("GetAllNotifications/{email}")]
         public async Task<List<ReservationNotification>> GetAllReservationNotifications(string email)
         {
-            //var timerManager = new TimerManager(() => _notificationsHub.Clients.All.SendAsync("transfernotificationsdata", ++i));
-            //return Ok(new { Message = "Request completed!" });
             return await _notificationService.GetAllReservationNotifications(email);
         }
 
@@ -95,18 +88,6 @@ namespace ReservationAPI.Controllers
         {
             return await _notificationService.ResolveNotification(notificationId);
         }
-        //[HttpGet]
-        //[Route("MarkReservationNotificationAsChecked/{notificationId}")]
-        //public async Task<object> MarkReservationNotificationAsChecked(long notificationId)
-        //{
-        //    return await _notificationService.MarkReservationNotificationAsViewd(notificationId);
-        //}
 
-        //[HttpGet]
-        //[Route("MarkReservationNotificationAsViewd/{notificationId}")]
-        //public async Task<object> MarkReservationNotificationAsCanceled(long notificationId)
-        //{
-        //    return await _notificationService.MarkReservationNotificationAsViewd(notificationId);
-        //}
     }
 }

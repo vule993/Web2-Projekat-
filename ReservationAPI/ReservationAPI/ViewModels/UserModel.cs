@@ -33,7 +33,6 @@ namespace ReservationAPI.Models
         {
             //var friends = context.Friend.ToList().FindAll(x => x.User1Email == user.Email || x.User2Email == user.Email);
             var allFriends = new List<UserModel>();
-            User friendModel = null;
             //foreach(var friend in friends)
             //{
             //    //ako je user1email isti kao ovaj tekuci korisnik koji se logovao uzimam onog drugog(prijatelj)

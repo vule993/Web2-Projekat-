@@ -18,12 +18,10 @@ namespace ReservationAPI.Services
     {
 
         private readonly ApplicationDbContext _context;
-        private UserManager<User> _userManager;
 
-        public NotificationService(ApplicationDbContext context, UserManager<User> userManager)
+        public NotificationService(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
 

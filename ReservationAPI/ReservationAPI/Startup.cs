@@ -35,12 +35,14 @@ namespace ReservationAPI
                 .WithOrigins("http://localhost:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()));
+                .AllowCredentials()
+            ));
             services.AddControllers();
 
             //Extensions
             services.AddApplicationServices(Configuration);
             services.AddIdentityServices(Configuration);
+
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>

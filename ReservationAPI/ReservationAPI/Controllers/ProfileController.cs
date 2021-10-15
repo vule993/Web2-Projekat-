@@ -19,10 +19,6 @@ namespace ReservationAPI.Controllers
             _service = service;
         }
 
-        public async Task<object> EditProfile([FromBody]UserModel user)
-        {
-
-            return new object();
-        }
+        
     }
 }

@@ -69,8 +69,7 @@ namespace ReservationAPI.Controllers
             catch (DbException dex)
             {
                 Console.WriteLine($"ERROR with registering car admin. -> {dex.Message}");
-                throw dex;
-
+                return null;
             }
         }
 
@@ -107,7 +106,7 @@ namespace ReservationAPI.Controllers
             catch (DbUpdateException ex)
             {
                 Console.WriteLine($"ERROR in registering new user. -> {ex.Message}");
-                throw ex;
+                return null;
             }
 
         }
