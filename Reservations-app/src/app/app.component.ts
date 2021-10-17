@@ -27,11 +27,11 @@ export class AppComponent implements OnInit {
     this.startHttpRequest();
   }
   private startHttpRequest = () => {
-    this.http
-      .get(environment.serverAddress + "/api/notification")
-      .subscribe((res) => {
-        //debugger;
-        console.log(res);
-      });
+    // this.http
+    //   .get(environment.serverAddress + "/api/notification")
+    //   .subscribe((res) => {
+    //     //debugger;
+    //     console.log(res);
+    //   });
   };
 }

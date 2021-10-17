@@ -322,66 +322,39 @@ namespace ReservationAPI.Controllers
         }
 
         //GET: /api/User/Profile
-        //[HttpGet]
-        //[Authorize]
-        //[Route("Profile")]
-        //public async Task<Object> GetUserProfile()
-        //{
-        //    //auth user -> need to access UserID from claims...
+        [HttpGet]
+        [Authorize]
+        [Route("Profile")]
+        public async Task<Object> GetUserProfile()
+        {
+            //auth user -> need to access UserID from claims...
 
-        //    //string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
-        //    //var user = await _userManager.FindByEmailAsync(userID);  //userID je zapravo email u claimsu...
+            string userID = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByEmailAsync(userID);  //userID je zapravo email u claimsu...
 
-        //    //var role = await _userManager.GetRolesAsync(user);
+            var role = await _userManager.GetRolesAsync(user);
 
-        //    //List<UserModel> friends = new List<UserModel>();
-        //    //UserModel um;
+            List<UserModel> friends = new List<UserModel>();
 
-        //    //User friend;
+            UserModel returnUser = new UserModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.PasswordHash,
+                City = user.City,
+                Street = user.Street,
+                Status = role.FirstOrDefault().ToString(),
+                PhoneNumber = user.PhoneNumber,
+                Image = user.Image,
+                Friends = friends,
+                PassportNo = user.PassportNo
+            };
 
-        //    //foreach (var friendModel in user.Friends)
-        //    //{
-        //    //    friend = await _userManager.FindByEmailAsync(friendModel.Email);
+            return returnUser;
+            //return null;
 
-        //    //    um = new UserModel()
-        //    //    {
-        //    //        FirstName = friend.FirstName,
-        //    //        LastName = friend.LastName,
-        //    //        Email = friend.Email,
-        //    //        Password = friend.PasswordHash,
-        //    //        City = friend.City,
-        //    //        Street = friend.Street,
-        //    //        Status = role.FirstOrDefault().ToString(),
-        //    //        PhoneNumber = friend.PhoneNumber,
-        //    //        Image = friend.Image,
-        //    //        Friends = new List<UserModel>(),         //prijatelji nece moci da vide prijatelje prijatelja
-        //    //        Reservations = friend.Reservations,
-        //    //        PassportNo = friend.PassportNo
-        //    //    };
-
-        //    //    friends.Add(um);
-
-        //    //}
-
-        //    //UserModel returnUser = new UserModel()
-        //    //{
-        //    //    FirstName = user.FirstName,
-        //    //    LastName = user.LastName,
-        //    //    Email = user.Email,
-        //    //    Password = user.PasswordHash,
-        //    //    City = user.City,
-        //    //    Street = user.Street,
-        //    //    Status = role.FirstOrDefault().ToString(),
-        //    //    PhoneNumber = user.PhoneNumber,
-        //    //    Image = user.Image,
-        //    //    Friends = friends,
-        //    //    PassportNo = user.PassportNo
-        //    //};
-
-        //    //return returnUser;
-        //    return null;
-
-        //}
+        }
 
         #endregion
 

@@ -9,9 +9,9 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./user-list.component.css"],
 })
 export class UserListComponent implements OnInit {
-  allUsers;
-  filteredUsers;
-  currentUSersFriends;
+  allUsers = [];
+  filteredUsers = [];
+  currentUSersFriends = [];
 
   serverAddress = environment.serverAddress;
 

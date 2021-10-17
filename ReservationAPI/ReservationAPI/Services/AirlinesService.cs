@@ -152,7 +152,7 @@ namespace ReservationAPI.Services
         
         public async Task<IEnumerable<Destination>> GetDestinations()
         {
-            var destinations = await _context.Destination.ToListAsync();
+            var destinations = (await _context.Destination.ToListAsync()).GroupBy(field=>field.AirportName).Select(destinations=>destinations.First()).ToList();
             return destinations;
         }
 

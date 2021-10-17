@@ -14,6 +14,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this._userService.getUserProfile().subscribe((user) => {
+      debugger
       this.currentUser = <UserModel>user;
     });
   }

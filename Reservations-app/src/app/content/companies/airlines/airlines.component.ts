@@ -18,12 +18,12 @@ export class AirlinesComponent implements OnInit {
   returnCalendar: any;
   allAvioCompanies: AirlineCompany[] = [];
   //
-  allFlightsToShow: Flight[];
+  allFlightsToShow: Flight[] = [];
 
   allFlights: Flight[] = [];
-  allReservationsPreFilter: Flight[];
+  allReservationsPreFilter: Flight[] = [];
   //
-  allDestinations: Destination[];
+  allDestinations: Destination[] = [];
 
   sliderData = {
     title: "All companies",
@@ -53,6 +53,7 @@ export class AirlinesComponent implements OnInit {
   ) {}
 
   searchFlights() {
+    debugger
     this.allFlightsToShow = this.allFlights;
     if ($("#departDate").val() != "") {
       this.allFlightsToShow = this.allFlightsToShow.filter(
@@ -172,9 +173,12 @@ export class AirlinesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.destinationService
-      .getAll()
-      .subscribe(
-        (destinations) => (this.allDestinations = destinations as Destination[])
+    .getAll()
+    .subscribe(
+      (destinations) => {
+          debugger;
+          this.allDestinations = destinations as Destination[]
+        }
       );
 
     this._flightsService.getAllFlights().subscribe((flights) => {
