@@ -29,7 +29,8 @@ namespace ReservationAPI.Extensions
             services.AddScoped<INotification, NotificationService>();
 
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(config.GetConnectionString("HomeConnection"))
+                //options => options.UseSqlServer(config.GetConnectionString("HomeConnection"))
+                options => options.UseSqlServer(config.GetConnectionString("IdentityConnection"))
             );
 
             //file upload

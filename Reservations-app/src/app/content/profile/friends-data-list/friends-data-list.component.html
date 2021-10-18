@@ -1,33 +1,28 @@
 <div class="friends-searchbar">
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Search users..."
-    value=""
-  />
-  <button class="btn btn-success">Search</button>
+    <input type="text" class="form-control" placeholder="Search users..." value="" (keypress)="search($event)" />
+    <button class="btn btn-success">Search</button>
 </div>
 
 <div id="friends" class="">
-  <div *ngFor="let user of friends" class="friend overflow-hidden">
-    <!--  -->
-    <div class="fleft image">
-      <img src="{{ checkPhoto(user) }}" />
-    </div>
+    <div *ngFor="let user of friendsToDisplay" class="friend overflow-hidden">
+        <!--  -->
+        <div class="fleft image">
+            <img src="{{ checkPhoto(user) }}" />
+        </div>
 
-    <div class="fleft user overflow-hidden">
-      <span>{{ user.firstName + " " + user.lastName }}</span>
-    </div>
-    <div class="fleft status">
-      <span>{{ user.status }}</span>
-    </div>
-    <div class="fleft overflow-hidden city">
-      <span>{{ user.city }}</span>
-    </div>
-    <div class="fright">
-      <button class="btn btn-success" (click)="removeFriend(user.email)">
+        <div class="fleft user overflow-hidden">
+            <span>{{ user.firstName + " " + user.lastName }}</span>
+        </div>
+        <div class="fleft status">
+            <span>{{ user.status }}</span>
+        </div>
+        <div class="fleft overflow-hidden city">
+            <span>{{ user.city }}</span>
+        </div>
+        <div class="fright">
+            <button class="btn btn-success" (click)="removeFriend(user.email)">
         Remove
       </button>
+        </div>
     </div>
-  </div>
 </div>

@@ -182,18 +182,8 @@ export class AirlinesComponent implements OnInit {
       );
 
     this._flightsService.getAllFlights().subscribe((flights) => {
-      (flights as Flight[]).forEach((f) => {
-        //
-        let flightDate = this.dateCalculate(
-          f.startDate.split("-"),
-          f.startTime.split(":")
-        );
-        let currenDate = new Date();
-
-        if (flightDate < currenDate) return;
-
-        this.allFlights.push(f);
-      });
+      this.allFlights = flights as Flight[]
+    
     });
 
     this.allAirlineCompaniesData.getAllCompanies().subscribe((data) => {

@@ -239,7 +239,8 @@ namespace ReservationAPI.Services
 
         public async Task<IEnumerable<Flight>> GetAllFlights()
         {
-            return await _context.Flight.ToListAsync();
+            var flights = await _context.Flight.ToListAsync();
+            return flights;
         }
 
         public async Task<bool> UpdateFlight(Flight flight)

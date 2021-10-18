@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ANALYZE_FOR_ENTRY_COMPONENTS } from "@angular/core";
 import { UserModel } from "src/app/models/User.model";
 import { UsersService } from "src/app/services/users.service";
 import { environment } from "src/environments/environment";
@@ -9,7 +9,8 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./friends-data-list.component.css"],
 })
 export class FriendsDataListComponent implements OnInit {
-  friends: UserModel[];
+  friends: UserModel[] = [];
+  friendsToDisplay: UserModel[] = [];
   constructor(private userService: UsersService) {}
 
   removeFriend(email: string) {
@@ -28,6 +29,10 @@ export class FriendsDataListComponent implements OnInit {
       return "../../assets/face.png";
     }
   }
+  search(event: any){
+    debugger
+    alert(event.target.value)
+  }
   ngOnInit(): void {
     // this.userService.getAllFriends("vule993@outlook.com").subscribe((data) => {
     //   this.friends = data;
@@ -35,7 +40,8 @@ export class FriendsDataListComponent implements OnInit {
     this.userService
       .getAllFriends(localStorage.getItem("userId"))
       .subscribe((data) => {
-        this.friends = data;
+        this.friends = data as UserModel[];
+        this.friendsToDisplay = data as UserModel[];
       });
   }
 }
